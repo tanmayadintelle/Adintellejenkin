@@ -554,7 +554,7 @@ public class LoginStepsDefinition4 {
 		    WebElement RateField = driver.findElement(By.xpath("//*[@id='action-dialog-delete']/div/table/tr/td[8]/input"));
 		    RateField.clear();
 			RateField.sendKeys(Rate);
-		    RateField.sendKeys(Keys.ENTER);
+//		    RateField.sendKeys(Keys.ENTER);
 		    driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div")).click();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[9]/span[2]")));
 		    driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[9]/span[2]")).click();
