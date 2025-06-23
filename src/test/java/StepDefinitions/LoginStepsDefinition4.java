@@ -60,7 +60,7 @@ public class LoginStepsDefinition4 {
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
 	    // Add preferences to Chrome options
 	    options.setExperimentalOption("prefs", prefs);
-	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());s
+	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 	    String downloadDir = "D:\\fd\\btladintelleautomation\\BTLoutputs\\" + timestamp;
 
 	    File downloadFolder = new File(downloadDir);
