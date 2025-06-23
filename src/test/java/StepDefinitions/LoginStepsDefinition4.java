@@ -50,11 +50,12 @@ public class LoginStepsDefinition4 {
 
 	    // Write code here that turns the phrase above into concrete actions
 		ChromeOptions options = new ChromeOptions();
-//		options.addArguments("--headless=new");  // or "--headless=chrome" for newer versions
-//		options.addArguments("--no-sandbox");
+		options.addArguments("--headless=new");  // or "--headless=chrome" for newer versions
+		options.addArguments("--no-sandbox");
 //		options.addArguments("--disable-gpu");
-//		options.addArguments("--disable-dev-shm-usage");
-
+		options.addArguments("--remote-allow-origins=*");
+		options.addArguments("--disable-dev-shm-usage");
+		options.addArguments("--window-size=1920,1080");
 	    // Create a HashMap for preferences
 	    HashMap<String, Object> prefs = new HashMap<>();    
 	    // Block notifications by setting the preference value to 2 (block)
