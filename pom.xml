@@ -1,21 +1,88 @@
-<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>BDDFramework</groupId>
   <artifactId>BDDFramework</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <dependencies><!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
-<dependency>
-    <groupId>io.cucumber</groupId>
-    <artifactId>cucumber-java</artifactId>
-    <version>7.19.0</version>
-</dependency>
-<project>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+  <dependencies>
+    <!-- Cucumber -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>7.19.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-testng</artifactId>
+      <version>7.19.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit</artifactId>
+      <version>7.14.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- TestNG & JUnit -->
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>7.10.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Selenium -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>4.25.0</version>
+    </dependency>
+
+    <!-- Apache POI -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>5.2.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>5.2.3</version>
+    </dependency>
+
+    <!-- BrowserMob Proxy -->
+    <dependency>
+      <groupId>net.lightbody.bmp</groupId>
+      <artifactId>browsermob-core</artifactId>
+      <version>2.1.5</version>
+    </dependency>
+
+    <!-- Log4j Core -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.20.0</version>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
+      <!-- Compiler Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -26,79 +93,18 @@
           <target>1.8</target>
         </configuration>
       </plugin>
+
+      <!-- Surefire Plugin for TestNG -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M5</version>
+        <configuration>
+          <suiteXmlFiles>
+            <suiteXmlFile>testng.xml</suiteXmlFile>
+          </suiteXmlFiles>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
-</project>
-<dependency>
-  <groupId>org.apache.logging.log4j</groupId>
-  <artifactId>log4j-core</artifactId>
-  <version>2.20.0</version>
-</dependency>
-
-<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-testng -->
-<dependency>
-    <groupId>io.cucumber</groupId>
-    <artifactId>cucumber-testng</artifactId>
-    <version>7.19.0</version>
-    <scope>test</scope>
-</dependency>
-
-
-<!-- https://mvnrepository.com/artifact/org.testng/testng -->
-<dependency>
-    <groupId>org.testng</groupId>
-    <artifactId>testng</artifactId>
-    <version>7.10.2</version>
-    <scope>test</scope>
-</dependency>
- <dependency>
-        <groupId>io.cucumber</groupId>
-        <artifactId>cucumber-junit</artifactId>
-        <version>7.14.0</version>
-        <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.13.2</version>
-        <scope>test</scope>
-    </dependency>
-<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
-<dependency>
-    <groupId>org.seleniumhq.selenium</groupId>
-    <artifactId>selenium-java</artifactId>
-    <version>4.25.0</version>
-</dependency>
-<dependency>
-        <groupId>org.apache.poi</groupId>
-        <artifactId>poi</artifactId>
-        <version>5.2.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.poi</groupId>
-        <artifactId>poi-ooxml</artifactId>
-        <version>5.2.3</version>
-    </dependency>
-    <dependency>
-    <groupId>net.lightbody.bmp</groupId>
-    <artifactId>browsermob-core</artifactId>
-    <version>2.1.5</version>
-</dependency>
-
-   
-  </dependencies>
-<build>
-  <plugins>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-surefire-plugin</artifactId>
-      <version>3.0.0-M5</version>
-      <configuration>
-        <suiteXmlFiles>
-          <suiteXmlFile>testng.xml</suiteXmlFile>
-        </suiteXmlFiles>
-      </configuration>
-    </plugin>
-  </plugins>
-</build>
 </project>
