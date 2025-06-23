@@ -50,21 +50,17 @@ public class LoginStepsDefinition4 {
 
 	    // Write code here that turns the phrase above into concrete actions
 		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--headless=new");  // or "--headless=chrome" for newer versions
-		options.addArguments("--no-sandbox");
-		options.addArguments("--disable-gpu");
-		options.addArguments("--start-maximized");
 		options.addArguments("--remote-allow-origins=*");
-		options.addArguments("--disable-dev-shm-usage");
-		options.addArguments("--disable-extensions");
-		options.addArguments("--window-size=1920,1080");
+		options.addArguments("--start-maximized");
+		options.addArguments("--disable-gpu");
+		options.addArguments("--no-sandbox");
 	    // Create a HashMap for preferences
 	    HashMap<String, Object> prefs = new HashMap<>();    
 	    // Block notifications by setting the preference value to 2 (block)
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
 	    // Add preferences to Chrome options
 	    options.setExperimentalOption("prefs", prefs);
-	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());s
 	    String downloadDir = "D:\\fd\\btladintelleautomation\\BTLoutputs\\" + timestamp;
 
 	    File downloadFolder = new File(downloadDir);
