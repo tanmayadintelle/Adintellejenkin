@@ -549,9 +549,9 @@ public class LoginStepsDefinition4 {
 	         
 			String Rate = row.getCell(7).toString();//*[@id="action-dialog-delete"]/div/table/tr/td[8]/input
 			System.out.println("Rate is"+Rate);
-			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[8]/input")));
-			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[8]/input")));
-		    WebElement RateField = driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[8]/input"));
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='action-dialog-delete']/div/table/tr/td[8]/input")));
+			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='action-dialog-delete']/div/table/tr/td[8]/input")));
+		    WebElement RateField = driver.findElement(By.xpath("//*[@id='action-dialog-delete']/div/table/tr/td[8]/input"));
 		    RateField.clear();
 			RateField.sendKeys(Rate);
 		    RateField.sendKeys(Keys.ENTER);
