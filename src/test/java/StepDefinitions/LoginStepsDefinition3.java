@@ -97,7 +97,7 @@ public class LoginStepsDefinition3 {
 		    waitload1.until(ExpectedConditions.elementToBeClickable(By.name("password")));
 		    
 			WebElement passwordField = driver.findElement(By.name("password")); 
-			passwordField.sendKeys("Password@123456");
+			passwordField.sendKeys("Citi5bank$123456");
 			waitload1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"login_button_text_active\"]")));
 			driver.findElement(By.xpath("//*[@id=\"login_button_text_active\"]")).click();
 		    Thread.sleep(3000);
@@ -270,7 +270,7 @@ public class LoginStepsDefinition3 {
 			// Extract the date from Excel (ensure it's trimmed and without decimals)
 			String dateFromExcel1 = row.getCell(21).toString().trim();
 
-			// Remove any decimal point if present (e.g., convert "20.0" to "20")
+			// Remove any decimal point if appresent (e.g., convert "20.0" to "20")
 			dateFromExcel1 = dateFromExcel1.split("\\.")[0].trim();
 
 			// Debugging: Print the date to ensure it is correct
@@ -1129,24 +1129,24 @@ public class LoginStepsDefinition3 {
 		   
 		    System.out.println("Estimate approved");
 		    Thread.sleep(2000);
-		    
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("(//img[contains(@src, 'view-icon.svg')])[last()]"))).click();
-		    
-		    
-		    WebElement iframedoc = wait1.until(ExpectedConditions.presenceOfElementLocated(By.id("iframe-doc-viewer")));
-
-		    // Scroll the iframe into view (this simulates user scrolling to view the PDF)
-		    
-		    wait1.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id("iframe-doc-viewer")));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", iframedoc);
-		    Thread.sleep(2000); // Scroll down by 500px
-		    
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.id("open-button"))).click();
-		    WebElement closeImageElement = driver.findElement(By.xpath("//img[@src='./assets/img/svg/close-cross.svg']"));
-
-			 // Click the image element
-			    closeImageElement.click();
-		    
+//		    
+//		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("(//img[contains(@src, 'view-icon.svg')])[last()]"))).click();
+//		    
+//		    
+//		    WebElement iframedoc = wait1.until(ExpectedConditions.presenceOfElementLocated(By.id("iframe-doc-viewer")));
+//
+//		    // Scroll the iframe into view (this simulates user scrolling to view the PDF)
+//		    
+//		    wait1.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id("iframe-doc-viewer")));
+//		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", iframedoc);
+//		    Thread.sleep(2000); // Scroll down by 500px
+//		    
+//		    wait1.until(ExpectedConditions.elementToBeClickable(By.id("open-button"))).click();
+//		    WebElement closeImageElement = driver.findElement(By.xpath("//img[@src='./assets/img/svg/close-cross.svg']"));
+//
+//			 // Click the image element
+//			    closeImageElement.click();
+//		    
 		    WebDriverWait waitloadeditestimateactionnnn = new WebDriverWait(driver, Duration.ofSeconds(60));			   
 		    waitloadeditestimateactionnnn.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
@@ -1406,6 +1406,7 @@ public class LoginStepsDefinition3 {
 		    System.out.println("Created Vendor PO");
 		   // WebDriverWait waitload8 = new WebDriverWait(driver, Duration.ofSeconds(60));			   
 		    Thread.sleep(2000);
+		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/action_icon.svg']")));
 		    //waitload8.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/action_icon.svg']")));
 		    driver.findElement(By.xpath("//img[@src='./assets/img/svg/action_icon.svg']")).click();
 		    Thread.sleep(2000);

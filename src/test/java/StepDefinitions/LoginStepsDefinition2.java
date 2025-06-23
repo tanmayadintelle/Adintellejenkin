@@ -66,9 +66,15 @@ public class LoginStepsDefinition2 {
 	    // Block notifications by setting the preference value to 2 (block)
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
 	    // Add preferences to Chrome options
-	    options.setExperimentalOption("prefs", prefs);
+//	    options.setExperimentalOption("prefs", prefs);
+//	    
+//	    options.addArguments("--headless=new"); // Use new headless for better rendering
+//	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+//	    options.addArguments("--window-size=1920,1080");
+//	    options.addArguments("--no-sandbox");
+//	    options.addArguments("--disable-dev-shm-usage");
+//	    options.addArguments("--remote-allow-origins=*");
 	    driver =new ChromeDriver(options);
-	    options.addArguments("--incognito");
 	    System.out.print("WebDriver initalized");
 	    driver.get("https://pro.adintelle.com/v7/m-box/campaign"); 
 	    System.out.print("Website opened");
@@ -121,7 +127,7 @@ public class LoginStepsDefinition2 {
 	        }
 //		    driver.findElement(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/m-login-warning-dialog/div/div[2]/div[2]/div/button/div/span")).click();
 		    
-		    WebDriverWait waitload2 = new WebDriverWait(driver, Duration.ofSeconds(30));
+		    WebDriverWait waitload2 = new WebDriverWait(driver, Duration.ofSeconds(60));
 			  
 		    waitload2.until(ExpectedConditions.elementToBeClickable(By.className("show_collapse_icon")));
 		    WebElement elementarrow = driver.findElement(By.className("show_collapse_icon"));
@@ -134,7 +140,7 @@ public class LoginStepsDefinition2 {
 	        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/m-modules/div[1]/div/div/m-app-chat/div/div[2]/m-my-apps/div/div[3]/div/div/div[1]/div[1]/span/span[2]")));
 	      
 	        Thread.sleep(5000);// Replace with your iframe ID
-
+	        
 	        driver.findElement(By.xpath("/html/body/m-modules/div[1]/div/div/m-app-chat/div/div[2]/m-my-apps/div/div[3]/div/div/div[1]/div[1]/span/span[2]")).click();
 	    
 	        JavascriptExecutor jls = (JavascriptExecutor) driver;
