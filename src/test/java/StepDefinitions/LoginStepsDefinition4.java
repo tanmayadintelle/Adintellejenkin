@@ -52,9 +52,11 @@ public class LoginStepsDefinition4 {
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--headless=new");  // or "--headless=chrome" for newer versions
 		options.addArguments("--no-sandbox");
-//		options.addArguments("--disable-gpu");
+		options.addArguments("--disable-gpu");
+		options.addArguments("--start-maximized");
 		options.addArguments("--remote-allow-origins=*");
 		options.addArguments("--disable-dev-shm-usage");
+		options.addArguments("--disable-extensions");
 		options.addArguments("--window-size=1920,1080");
 	    // Create a HashMap for preferences
 	    HashMap<String, Object> prefs = new HashMap<>();    
