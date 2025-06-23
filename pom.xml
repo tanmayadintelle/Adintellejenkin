@@ -59,11 +59,7 @@
     <version>2.1.5</version>
 </dependency>
 
-    <dependency>
-    	<groupId>xyz</groupId>
-    	<artifactId>xyzz</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
-    </dependency>
+   
   </dependencies>
 <build>
   <plugins>
