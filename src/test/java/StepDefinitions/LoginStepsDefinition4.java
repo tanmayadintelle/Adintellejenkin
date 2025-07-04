@@ -231,7 +231,7 @@ public class LoginStepsDefinition4 {
 			waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[3]/div/div/mat-datepicker-toggle/button/span[3]")));		
 			WebElement calendarButton111 = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[3]/div/div/mat-datepicker-toggle/button/span[3]"));
 			calendarButton111.click();
-			
+		
 			// Read the value "10" from the Excel sheet (ensure this is the exact value)
 			String dateFromExcel11 = row.getCell(45).toString().trim();
 
@@ -549,9 +549,9 @@ public class LoginStepsDefinition4 {
 	         
 			String Rate = row.getCell(7).toString();//*[@id="action-dialog-delete"]/div/table/tr/td[8]/input
 			System.out.println("Rate is"+Rate);
-			wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("Rate")));
-			wait1.until(ExpectedConditions.elementToBeClickable(By.name("Rate")));
-		    WebElement RateField = driver.findElement(By.name("Rate"));
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='action-dialog-delete']/div/table/tr/td[8]/input")));
+			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='action-dialog-delete']/div/table/tr/td[8]/input")));
+		    WebElement RateField = driver.findElement(By.xpath("//*[@id='action-dialog-delete']/div/table/tr/td[8]/input"));
 		    RateField.clear();
 			RateField.sendKeys(Rate);
 //		    RateField.sendKeys(Keys.ENTER);
@@ -1675,7 +1675,9 @@ public class LoginStepsDefinition4 {
 
 			 Thread.sleep(2000);
 			
-		    
+			 wait.until(ExpectedConditions.invisibilityOfElementLocated(
+					    By.cssSelector("div.cdk-overlay-backdrop.cdk-overlay-dark-backdrop")
+					));
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/butt-vendor-bill.svg']")));
 		    WebElement element12 = driver.findElement(By.cssSelector("img[src='./assets/img/svg/butt-vendor-bill.svg']"));
 			 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element12);
