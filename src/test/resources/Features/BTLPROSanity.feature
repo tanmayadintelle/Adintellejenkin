@@ -1,4 +1,4 @@
-@Sanity
+
 Feature: Check if BTL pro flow is working fine
 Feature: Automation of existing BTL page
 

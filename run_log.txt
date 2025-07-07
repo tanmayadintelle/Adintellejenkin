@@ -15,11 +15,11 @@
 [INFO] Nothing to compile - all classes are up to date
 [INFO] 
 [INFO] --- resources:3.3.1:testResources (default-testResources) @ BDDFramework ---
-[INFO] Copying 9 resources from src\test\resources to target\test-classes
+[INFO] Copying 10 resources from src\test\resources to target\test-classes
 [INFO] 
 [INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ BDDFramework ---
 [INFO] Changes detected - recompiling the module!
-[INFO] Compiling 10 source files to D:\fd\btladintelleautomation\target\test-classes
+[INFO] Compiling 11 source files to D:\fd\btladintelleautomation\target\test-classes
 [INFO] 
 [INFO] --- surefire:3.0.0-M5:test (default-test) @ BDDFramework ---
 [INFO] 
@@ -30,75 +30,3 @@
 SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
 SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
-
-@Sanity
-Scenario Outline: Check if BTL pro flow is working fine # src/test/resources/Features/BTLPROSanity.feature:5
-?? Template already exists at: D:\fd\btladintelleautomation\Automation Sanity Result\Template\TestResults.xlsx
-? Created result Excel file: D:\fd\btladintelleautomation\Automation Sanity Result\TestResults_04072025_180819.xlsx
-Jul 04, 2025 6:08:32 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
-WARNING: Unable to find CDP implementation matching 137
-Jul 04, 2025 6:08:33 PM org.openqa.selenium.chromium.ChromiumDriver lambda$new$5
-WARNING: Unable to find version of CDP to use for 137.0.7151.122. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.25.0` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
-WebDriver initalizedWebsite openedWarning button clicked.
-Logged in
-SVG icon not found. Continuing without clicking.
-Inside iframe
-Inside New Job activity
-Date to click: 2
-Date to click: 1
-Date to click: 20
-Modify created job
-Date to click: 2
-Date to click (First): 1
-Date to click (Second): 24
-Job modified, navigating to add new activites
-Rate is500
-  Given User completes BTL pro sanity flow              # StepDefinitions.LoginStepsDefinition4.user_is_on_login_page()
-      org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.xpath: //*[@id='action-dialog-delete']/div/table/tr/td[8]/input (tried for 60 second(s) with 500 milliseconds interval)
-Build info: version: '4.25.0', revision: '8a8aea2337'
-System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '23.0.2'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 137.0.7151.122, chrome: {chromedriverVersion: 137.0.7151.119 (e0ac9d12dff..., userDataDir: C:\WINDOWS\SystemTemp\scope...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:51971}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:51971/devtoo..., se:cdpVersion: 137.0.7151.122, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 883b794e9ba2b7b2a17bf0f983b552b6
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:228)
-	at StepDefinitions.LoginStepsDefinition4.user_is_on_login_page(LoginStepsDefinition4.java:552)
-	at ?.User completes BTL pro sanity flow(file:///D:/fd/btladintelleautomation/src/test/resources/Features/BTLPROSanity.feature:6)
-
-  And Close the chrome Browser                          # StepDefinitions.LoginStepsDefinition4.close_the_browser()
-? Excel updated: Check if BTL pro flow is working fine = Fail at 04-07-2025 18:12:32
-[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 257.869 s <<< FAILURE! - in TestSuite
-[ERROR] TestRunner.CucumberTestRunner.runScenario["Check if BTL pro flow is working fine", "Check if BTL pro flow is working fine"](1)  Time elapsed: 253.674 s  <<< FAILURE!
-org.openqa.selenium.TimeoutException: 
-Expected condition failed: waiting for visibility of element located by By.xpath: //*[@id='action-dialog-delete']/div/table/tr/td[8]/input (tried for 60 second(s) with 500 milliseconds interval)
-Build info: version: '4.25.0', revision: '8a8aea2337'
-System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '23.0.2'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 137.0.7151.122, chrome: {chromedriverVersion: 137.0.7151.119 (e0ac9d12dff..., userDataDir: C:\WINDOWS\SystemTemp\scope...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:51971}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:51971/devtoo..., se:cdpVersion: 137.0.7151.122, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 883b794e9ba2b7b2a17bf0f983b552b6
-
-[INFO] 
-[INFO] Results:
-[INFO] 
-[ERROR] Failures: 
-[ERROR]   CucumberTestRunner.runScenario » Timeout Expected condition failed: waiting fo...
-[INFO] 
-[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0
-[INFO] 
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  04:28 min
-[INFO] Finished at: 2025-07-04T18:12:34+05:30
-[INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M5:test (default-test) on project BDDFramework: There are test failures.
-[ERROR] 
-[ERROR] Please refer to D:\fd\btladintelleautomation\target\surefire-reports for the individual test results.
-[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
-[ERROR] -> [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

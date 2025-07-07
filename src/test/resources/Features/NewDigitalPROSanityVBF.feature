@@ -1,5 +1,5 @@
-Feature: Automation for new digital on pro link
-Scenario Outline: Check if digital flow on pro is working fine
+Feature: Automation for new digital on pro link for Vendor Billing flow
+Scenario Outline: Check if digital flow on pro(VBF) is working fine
 Given User logs in and navigate to digital page
 When User creates a new job and adds a campaign
 And User creates estimate with outputs
