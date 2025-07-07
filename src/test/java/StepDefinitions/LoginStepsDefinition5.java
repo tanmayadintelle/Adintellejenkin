@@ -2291,6 +2291,10 @@ public class LoginStepsDefinition5 {
  		 	}
  		 	Thread.sleep(3000);
  		 	
+ 			Actions actions1 = new Actions(driver);
+ 			for (int i = 0; i < 5; i++) {
+ 			    actions1.sendKeys(Keys.PAGE_DOWN).perform();
+ 			}
  		   js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
  		   wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loadingModalClientBill")));
  		   new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
