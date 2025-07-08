@@ -1675,7 +1675,10 @@ public class LoginStepsDefinition4 {
 
 			 Thread.sleep(2000);
 			
-		    
+			 Actions actions = new Actions(driver);
+				for (int i = 0; i < 5; i++) {
+				    actions.sendKeys(Keys.DOWN).perform();
+				}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/butt-vendor-bill.svg']")));
 		    WebElement element12 = driver.findElement(By.cssSelector("img[src='./assets/img/svg/butt-vendor-bill.svg']"));
 			 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element12);
