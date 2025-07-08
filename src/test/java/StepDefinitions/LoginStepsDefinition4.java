@@ -14,9 +14,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.OutputType;
 import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,17 +25,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
-import com.google.common.io.Files;
-
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -57,16 +50,10 @@ public class LoginStepsDefinition4 {
 
 	    // Write code here that turns the phrase above into concrete actions
 		ChromeOptions options = new ChromeOptions();
-//		options.addArguments("--remote-allow-origins=*");
-//		options.addArguments("--start-maximized");
-//		options.addArguments("--disable-gpu");
-//		options.addArguments("--no-sandbox");
-		
-		options.addArguments("--headless=new");  // use new headless mode
-		options.addArguments("--window-size=1920,1080");  // set resolution
+		options.addArguments("--remote-allow-origins=*");
+		options.addArguments("--start-maximized");
 		options.addArguments("--disable-gpu");
 		options.addArguments("--no-sandbox");
-		options.addArguments("--disable-dev-shm-usage");
 	    // Create a HashMap for preferences
 	    HashMap<String, Object> prefs = new HashMap<>();    
 	    // Block notifications by setting the preference value to 2 (block)
@@ -74,7 +61,7 @@ public class LoginStepsDefinition4 {
 	    // Add preferences to Chrome options
 	    options.setExperimentalOption("prefs", prefs);
 	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String downloadDir = "D:\\fd\\btladintelleautomation\\BTLoutputs\\" + timestamp;
+	    String downloadDir = "D:\\fd\\btladintelleautomation\\BTLoutputs" + timestamp;
 
 	    File downloadFolder = new File(downloadDir);
 	    if (!downloadFolder.exists()) {
@@ -244,7 +231,7 @@ public class LoginStepsDefinition4 {
 			waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[3]/div/div/mat-datepicker-toggle/button/span[3]")));		
 			WebElement calendarButton111 = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[3]/div/div/mat-datepicker-toggle/button/span[3]"));
 			calendarButton111.click();
-		
+			
 			// Read the value "10" from the Excel sheet (ensure this is the exact value)
 			String dateFromExcel11 = row.getCell(45).toString().trim();
 
@@ -335,7 +322,7 @@ public class LoginStepsDefinition4 {
 			 WebElement fileInput = driver.findElement(By.id("file"));
 
 		       
-		     String filePath = "C:\\Users\\Dipti\\Desktop\\automation file upload\\sig.png";  
+		     String filePath = "C:\\Users\\Dipti\\Desktop\\sig.png";  
 
 		     fileInput.sendKeys(filePath);
 		     
@@ -345,7 +332,6 @@ public class LoginStepsDefinition4 {
 		         // Wait until it's clickable
 		         WebElement element = wait1.until(ExpectedConditions.elementToBeClickable(elementXpath));
 		         
-		         
 		         try {
 		        	 try {
 		        		    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
@@ -354,9 +340,7 @@ public class LoginStepsDefinition4 {
 		        		} catch (Exception ignored) {
 		        		    // If not present, ignore
 		        		}
-		        	 
 		        	 wait.until(ExpectedConditions.elementToBeClickable(element));
-		        	 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
 		             element.click(); // Try normal click
 		         } catch (ElementClickInterceptedException e) {
 		             System.out.println("Normal click failed, trying JS click due to intercept...");
@@ -379,7 +363,6 @@ public class LoginStepsDefinition4 {
 			
 			
 			 WebElement jobTitleElement = driver.findElement(By.cssSelector("td.job-title-text"));
-			 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", jobTitleElement);
 		     String jobTitle = jobTitleElement.getText();
 		     wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-dashboard/div/div[1]/div/div/span[1]")));
 			 driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-dashboard/div/div[1]/div/div/span[1]")).click();
@@ -502,49 +485,19 @@ public class LoginStepsDefinition4 {
 			 WebElement fileInputt = driver.findElement(By.id("file"));
 
 		       
-			// Path to the file you want to upload
-			 String filePathh = "C:\\Users\\Dipti\\Desktop\\automation file upload\\sig.png";
+		     String filePathh = "C:\\Users\\Dipti\\Desktop\\sig.png";  
 
-			 // Upload the file
-			 fileInputt.sendKeys(filePathh);
-
-			 // Use a safer relative XPath for the upload/confirm button
-			 By uploadButton = By.xpath("//app-add-attachment//span[contains(text(),'Upload')]");
-
-			 try {
-			     // Wait for the button to be clickable
-			     WebElement element = wait1.until(ExpectedConditions.elementToBeClickable(uploadButton));
-
-			     // Scroll the element into view (important for headless mode)
-			     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-			     Thread.sleep(300);  // Allow layout to stabilize
-
-			     try {
-			         // Try normal click
-			         element.click();
-			     } catch (ElementClickInterceptedException e) {
-			         // Fallback to JS click if normal click fails
-			         System.out.println("Normal click failed, trying JavaScript click...");
-			         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
-			     }
-
-			 } catch (TimeoutException e) {
-			     System.out.println("Upload button not clickable.");
-			     // Optional: Take screenshot for debugging
-			   
-			 }
-
-			 Thread.sleep(5000);  // Wait for the upload to complete (adjust if needed)
-
+		     fileInputt.sendKeys(filePathh);
+			
+		     wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/div/div/app-add-attachment/form/div/div[5]/div/div/span[2]")));
+			driver.findElement(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/div/div/app-add-attachment/form/div/div[5]/div/div/span[2]")).click();
+		    Thread.sleep(5000);
 			System.out.println("Job modified, navigating to add new activites"); 
 			Thread.sleep(4000);		
 			wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 			
 			driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
+			
 			WebDriverWait waitload3 = new WebDriverWait(driver, Duration.ofSeconds(60));
 		    waitload3.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-dashboard > div > div:nth-child(2) > div > div > div:nth-child(2)")));
 		    driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-dashboard > div > div:nth-child(2) > div > div > div:nth-child(2)")).click();
@@ -552,15 +505,9 @@ public class LoginStepsDefinition4 {
 		   
 		    JavascriptExecutor jslo = (JavascriptExecutor) driver;
 	        jslo.executeScript("window.scrollBy(0, document.body.scrollHeight)");
-	        try {
-	            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-	            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-	        } catch (Exception ignored) {}
+	        
 	        wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/addactivity.svg']")));
-	        try {
-	            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-	            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-	        } catch (Exception ignored) {}
+	        
 		    driver.findElement(By.xpath("//img[@src='./assets/img/svg/addactivity.svg']")).click();
 		    Thread.sleep(2000);
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@aria-autocomplete='list']")));
@@ -568,106 +515,47 @@ public class LoginStepsDefinition4 {
 		    Thread.sleep(2000);
 		    inputField.click();
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    String activity = row.getCell(3).toString();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[1]/ng-select/div/div/div[2]/input")));
 		    WebElement activityField = driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[1]/ng-select/div/div/div[2]/input")); // Replace with actual ID
 		    Thread.sleep(2000);
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", activityField);
 			activityField.sendKeys(activity);
 		    activityField.sendKeys(Keys.ENTER);
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div")));
 		    driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div")).click();
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("description")));
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    String remark = row.getCell(4).toString();
 		    WebElement remarkField = driver.findElement(By.name("description"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", remarkField);
 			remarkField.sendKeys(remark);
 			remarkField.sendKeys(Keys.TAB);
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div")).click();	
+			driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div")).click();			
 			
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
 		    String HSN = row.getCell(5).toString();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[6]/ng-select/div/div/div[2]/input")));
 		    WebElement HSNField = driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[6]/ng-select/div/div/div[2]/input"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", HSNField);
 			HSNField.sendKeys(HSN);
 		    HSNField.sendKeys(Keys.ENTER);
-		    String qtyValue = row.getCell(6).toString();
-
-		    try {
-		        // Step 1: Wait for overlays to disappear
-		        try {
-		            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		        } catch (Exception ignored) {}
-
-		        // Step 2: Ensure the field exists in the DOM
-		        WebElement qtyField = wait.until(
-		            ExpectedConditions.presenceOfElementLocated(By.name("quantity")));
-
-		        // Step 3: Scroll it into view
-		        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", qtyField);
-		        Thread.sleep(300);
-
-		        // Optional highlight for debugging
-		        ((JavascriptExecutor) driver).executeScript("arguments[0].style.border='2px solid blue'", qtyField);
-
-		        // Step 4: Wait until it's clickable
-		        wait.until(ExpectedConditions.elementToBeClickable(qtyField));
-
-		        // Step 5: Interact with it
-		        qtyField.clear();
-		        qtyField.sendKeys(qtyValue);
-		        qtyField.sendKeys(Keys.ENTER);
-
-		        // Step 6: Click elsewhere to trigger blur/save
-		        driver.findElement(By.xpath("//*[@id='action-dialog-delete']/div")).click();
-
-		    } catch (TimeoutException te) {
-		        System.out.println("❌ Quantity field not clickable");
-		       
-		    }
+		    
+		    String Quantity1 = row.getCell(6).toString();
+		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("quantity")));
+		    WebElement QuantityField = driver.findElement(By.name("quantity"));
+			QuantityField.sendKeys(Quantity1);
+		    QuantityField.sendKeys(Keys.ENTER);
+		    driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div")).click();
+			Thread.sleep(2000);
 			Thread.sleep(6000);
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
+	         
 			String Rate = row.getCell(7).toString();//*[@id="action-dialog-delete"]/div/table/tr/td[8]/input
 			System.out.println("Rate is"+Rate);
-			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='action-dialog-delete']/div/table/tr/td[8]/input")));
-			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='action-dialog-delete']/div/table/tr/td[8]/input")));
-		    WebElement RateField = driver.findElement(By.xpath("//*[@id='action-dialog-delete']/div/table/tr/td[8]/input"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", RateField);
-
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("Rate")));
+			wait1.until(ExpectedConditions.elementToBeClickable(By.name("Rate")));
+		    WebElement RateField = driver.findElement(By.name("Rate"));
 		    RateField.clear();
 			RateField.sendKeys(Rate);
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
 //		    RateField.sendKeys(Keys.ENTER);
 		    driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div")).click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[9]/span[2]")));
 		    driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[9]/span[2]")).click();
 		    
@@ -691,10 +579,6 @@ public class LoginStepsDefinition4 {
 	         
 	         // Ensure the element is clickable
 	         WebDriverWait wait12 = new WebDriverWait(driver, Duration.ofSeconds(60));
-	         try {
-	             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-	             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-	         } catch (Exception ignored) {}
 	         wait12.until(ExpectedConditions.elementToBeClickable(lastEditButton));
 
 	         // Click the last "Edit" button
@@ -710,77 +594,52 @@ public class LoginStepsDefinition4 {
 	     
 	     	Thread.sleep(2000);
 		    String activity1 = row.getCell(22).toString();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[1]/ng-select/div/div/div[3]/input")));
 		    WebElement activityField1 = driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[1]/ng-select/div/div/div[3]/input")); // Replace with actual ID
 			activityField1.clear();
-			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", activity1);
 			activityField1.sendKeys(activity1);
 		    activityField1.sendKeys(Keys.ENTER);
 		    activityField1.sendKeys(Keys.TAB);
 		    //driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[9]/span[2]")).click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 		    Thread.sleep(2000);
 		    String remark1mod = row.getCell(23).toString();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("description")));
 		    WebElement remarkField1mod = driver.findElement(By.name("description"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", remarkField1mod);
 		    remarkField1mod.clear();
 			remarkField1mod.sendKeys(remark1mod);
 			remarkField1mod.sendKeys(Keys.TAB);
 			
 			//driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[9]/span[2]")).click();
 
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
+			
 			//wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[1]/ng-select/div/div/div[3]/input"))).click();
 		    String HSNmod = row.getCell(24).toString();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[6]/ng-select/div/div/div[2]/input")));
 		    WebElement HSNFieldmod = driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[6]/ng-select/div/div/div[2]/input"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", HSNFieldmod);
 		    HSNFieldmod.clear();		    
 			HSNFieldmod.sendKeys(HSNmod);
 		    HSNFieldmod.sendKeys(Keys.ENTER);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+
+		    String Quantity1mod = row.getCell(25).toString();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("quantity")));
-		    String Quantity1mod = row.getCell(25).toString();	    
 		    WebElement QuantityFieldmod = driver.findElement(By.name("quantity"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", QuantityFieldmod);
+		    
 		    QuantityFieldmod.clear();
 			QuantityFieldmod.sendKeys(Quantity1mod);
 		    QuantityFieldmod.sendKeys(Keys.ENTER);
 		    QuantityFieldmod.sendKeys(Keys.TAB);
 		    //driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[9]/span[2]")).click();
 		  
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+			
 			String Ratemod = row.getCell(26).toString();
 		    WebElement RateFieldmod = driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[8]/input"));
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[8]/input")));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", Ratemod);
-
 		    RateFieldmod.clear();
 
 		    RateFieldmod.clear();
 			RateFieldmod.sendKeys(Ratemod);
 		    RateFieldmod.sendKeys(Keys.ENTER);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[9]/span[2]")));
 		    driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[9]/span[2]")).click();
 		    
@@ -791,10 +650,6 @@ public class LoginStepsDefinition4 {
 		    System.out.println("Activty modified");
 		    Thread.sleep(4000);
 		    WebDriverWait waitload5 = new WebDriverWait(driver, Duration.ofSeconds(60));			   
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    waitload5.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/add-cost.svg']")));
 		    JavascriptExecutor jsl = (JavascriptExecutor) driver;
 	        WebElement element = driver.findElement(By.xpath("//img[@src='./assets/img/svg/add-cost.svg']"));
@@ -807,80 +662,51 @@ public class LoginStepsDefinition4 {
 	        
 //		    driver.findElement(By.xpath("//*[@id=\"newActivitydiv\"]/div[2]/span/img")).click();
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    String subactivity = row.getCell(8).toString();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[2]/ng-select/div/div/div[2]/input")));
-		    WebElement subactivityField = driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[2]/ng-select/div/div/div[2]/input"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", subactivityField);// Replace with actual ID
+		    WebElement subactivityField = driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[2]/ng-select/div/div/div[2]/input")); // Replace with actual ID
 			subactivityField.sendKeys(subactivity);
 		    subactivityField.sendKeys(Keys.ENTER);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[4]/ng-select/div/div/div[2]/input")));
 		    String vendor = row.getCell(9).toString();
 		    WebElement vendorfield = driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[4]/ng-select/div/div/div[2]/input")); // Replace with actual ID
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", vendorfield);
+			
 			vendorfield.sendKeys(vendor);
 		    vendorfield.sendKeys(Keys.ENTER);
 		    
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 		    String remark1 = row.getCell(10).toString();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("description")));
 		    WebElement remarkField1 = driver.findElement(By.name("description"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", remarkField1);
 			remarkField1.sendKeys(remark1);
 			remarkField1.sendKeys(Keys.TAB);
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
 			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[11]/span[2]")));
 			driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[11]/span[2]")).click();
 			Thread.sleep(2000);
 		    String HSN1 = row.getCell(11).toString();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[7]/ng-select/div/div/div[3]/input")));
 		    WebElement HSNField1 = driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[7]/ng-select/div/div/div[3]/input"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", HSNField1);
+		    
 			HSNField1.sendKeys(HSN1);
 		    HSNField1.sendKeys(Keys.ENTER);//*[@id=\"action-dialog-delete\"]/div/table/tr/td[7]/ng-select/div/div/div[3]/input
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("quantity")));
 		    String Quantity11 = row.getCell(12).toString();
+		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("quantity")));
 		    WebElement QuantityField1 = driver.findElement(By.name("quantity"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", QuantityField1);
 			QuantityField1.sendKeys(Quantity11);
 		    QuantityField1.sendKeys(Keys.ENTER);
 		    Thread.sleep(2000);
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div")));
 		    driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div")).click();
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("Rate")));
 			String Rate1 = row.getCell(13).toString();
+			wait1.until(ExpectedConditions.elementToBeClickable(By.name("Rate")));
 		    WebElement RateField1 = driver.findElement(By.name("Rate"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", RateField1);
+		    
 		    RateField1.clear();
 			RateField1.sendKeys(Rate1);
 		    RateField1.sendKeys(Keys.ENTER);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[11]/span[2]")));
 		    
 		    
@@ -905,10 +731,6 @@ public class LoginStepsDefinition4 {
 
 			    // Ensure the element is clickable
 			    WebDriverWait wait05 = new WebDriverWait(driver, Duration.ofSeconds(60));
-			    try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
 			    wait05.until(ExpectedConditions.elementToBeClickable(lastModifyButton));
 
 			    // Click the last "Modify" button
@@ -922,75 +744,57 @@ public class LoginStepsDefinition4 {
 			  
 			  
 			  //MOdify subactivity starts here
-			  try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
-			  wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#action-dialog-delete > div > table > tr > td:nth-child(2) > ng-select > div > div > div.ng-input > input[type=text]")));
+			  
+			  
 			  String subactivitymod = row.getCell(27).toString();
+			  wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#action-dialog-delete > div > table > tr > td:nth-child(2) > ng-select > div > div > div.ng-input > input[type=text]")));
 			  WebElement subactivityFieldmod = driver.findElement(By.cssSelector("#action-dialog-delete > div > table > tr > td:nth-child(2) > ng-select > div > div > div.ng-input > input[type=text]"));
-			  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", subactivitymod);
+			  
 			  subactivityFieldmod.sendKeys(subactivitymod);
 			  subactivityFieldmod.clear();
 			  subactivityFieldmod.sendKeys(Keys.ENTER);
 			  Thread.sleep(2000);
-			  try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
-			  wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#action-dialog-delete > div > table > tr > td:nth-child(4) > ng-select > div > div > div.ng-input > input[type=text]")));
+
 			  String vendormod = row.getCell(28).toString();
+			  wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#action-dialog-delete > div > table > tr > td:nth-child(4) > ng-select > div > div > div.ng-input > input[type=text]")));
 			  WebElement vendorfieldmod = driver.findElement(By.cssSelector("#action-dialog-delete > div > table > tr > td:nth-child(4) > ng-select > div > div > div.ng-input > input[type=text]"));
-			  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", vendorfieldmod);
+			  
 			  vendorfieldmod.clear();
 			  vendorfieldmod.sendKeys(vendormod);
 			  vendorfieldmod.sendKeys(Keys.ENTER);
 			  Thread.sleep(2000);
-			  try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
-			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("description")));
+
 			  String remark1mods = row.getCell(29).toString();
+			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("description")));
 			  WebElement remarkField1mods = driver.findElement(By.name("description"));
-			  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", remarkField1mods);
 			  remarkField1mods.clear();
 			  remarkField1mods.sendKeys(remark1mods);
 			  remarkField1mods.sendKeys(Keys.TAB);
-			  try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
-			  wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#action-dialog-delete > div > table > tr > td:nth-child(7) > ng-select > div > div > div.ng-input > input[type=text]")));
+			  
+
 			  String HSN1mods = row.getCell(30).toString();
+			  wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#action-dialog-delete > div > table > tr > td:nth-child(7) > ng-select > div > div > div.ng-input > input[type=text]")));
 			  WebElement HSNField1mods = driver.findElement(By.cssSelector("#action-dialog-delete > div > table > tr > td:nth-child(7) > ng-select > div > div > div.ng-input > input[type=text]"));
-			  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", HSNField1mods);
+			 
 			  HSNField1mods.clear();
 			  HSNField1mods.sendKeys(HSN1mods);
 			  HSNField1mods.sendKeys(Keys.ENTER);
 			  Thread.sleep(2000);
-			  try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
-			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("quantity")));
+
 			  String Quantity11mods = row.getCell(31).toString();
+			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("quantity")));
 			  WebElement QuantityField1mods = driver.findElement(By.name("quantity"));
-			  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", QuantityField1mods);
+			  
 			  QuantityField1mods.clear();
 			  Thread.sleep(2000);		 
 			  QuantityField1mods.sendKeys(Quantity11mods);
 			  QuantityField1mods.sendKeys(Keys.ENTER);
 			  Thread.sleep(2000);
-			  try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
-			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("Rate")));
+
 			  String Rate1mods = row.getCell(32).toString();
+			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("Rate")));
 			  WebElement RateField1mods = driver.findElement(By.name("Rate"));
 			  Thread.sleep(2000);
-			  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", RateField1mods);
 			  RateField1mods.clear();
 			  RateField1mods.sendKeys(Rate1mods);
 			  RateField1mods.sendKeys(Keys.ENTER);
@@ -1022,61 +826,39 @@ public class LoginStepsDefinition4 {
 		    
 		    //driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[1]/div/mat-sidenav-content/div/div/table/thead/tr/th[1]/input")).click();
 		    js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-		    WebDriverWait waitload61 = new WebDriverWait(driver, Duration.ofSeconds(60));	
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    WebDriverWait waitload61 = new WebDriverWait(driver, Duration.ofSeconds(60));			   
 		    waitload61.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#planning > div > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")));
 		    js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/AdditionalLineItems.svg']")));
 		    WebElement imageadl = driver.findElement(By.cssSelector("img[src='./assets/img/svg/AdditionalLineItems.svg']"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", imageadl);
 		    imageadl.click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 		      Thread.sleep(2000);
-		      wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[3]/div/table/tr/td[2]/ng-select/div/div/div[2]/input")));
 		      String itemtype = row.getCell(33).toString();
+		      wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[3]/div/table/tr/td[2]/ng-select/div/div/div[2]/input")));
 			  WebElement itemtypes = driver.findElement(By.xpath("//*[@id=\"selection1\"]/div[3]/div/table/tr/td[2]/ng-select/div/div/div[2]/input"));
-			  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", itemtypes);
+			  
 			  itemtypes.sendKeys(Keys.ENTER);
 			  itemtypes.sendKeys(itemtype);
 			  itemtypes.sendKeys(Keys.ENTER);
 			  itemtypes.sendKeys(Keys.ENTER);
 			  
-			  try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
-			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("adddescription")));
+
 			  String description = row.getCell(34).toString();
+			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("adddescription")));
 			  WebElement descriptions = driver.findElement(By.name("adddescription"));
-			  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", descriptions);
+			 
 			  descriptions.clear();
 			  descriptions.sendKeys(description);
 			  descriptions.sendKeys(Keys.ENTER);
-			  try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
-			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("lineitemAmount")));
+		    
 			  String amount = row.getCell(35).toString();
+			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("lineitemAmount")));
 			  WebElement amounts = driver.findElement(By.name("lineitemAmount"));
-			  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", amounts);
+			
 			  
 			  amounts.sendKeys(amount);
 			  amounts.sendKeys(Keys.ENTER);
-			  try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
 			  wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#selection1 > div.row.ng-star-inserted > div > table > tr > td:nth-child(8) > span")));
 			  driver.findElement(By.cssSelector("#selection1 > div.row.ng-star-inserted > div > table > tr > td:nth-child(8) > span")).click();
 			  Thread.sleep(5000); 
@@ -1085,71 +867,54 @@ public class LoginStepsDefinition4 {
 		  JavascriptExecutor jszoomi = (JavascriptExecutor) driver;
 		     jszoomi.executeScript("document.body.style.zoom='75%'");
 			     Thread.sleep(1000);
-			     try {
-			         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			     } catch (Exception ignored) {}
+			 
 			     WebElement activityfromestimate = driver.findElement(By.xpath("//img[@src='./assets/img/svg/addactivity.svg']"));
 			  activityfromestimate.click();
-			  try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
+
 		    
 		    //Addactivityinsideest
-			  wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div[2]/div/div[1]/div[1]/div[1]/div[1]/ng-select/div/div/div[2]/input")));
+		    
 		    String activityinest = row.getCell(36).toString();
-		   
+		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div[2]/div/div[1]/div[1]/div[1]/div[1]/ng-select/div/div/div[2]/input")));
 		    WebElement activityFieldinest = driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div[2]/div/div[1]/div[1]/div[1]/div[1]/ng-select/div/div/div[2]/input")); // Replace with actual ID
 			
 		    Thread.sleep(2000);
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", activityFieldinest);
+			 
 			activityFieldinest.sendKeys(activityinest);
 		    activityFieldinest.sendKeys(Keys.ENTER);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#action-dialog-delete > div:nth-child(3) > div > div > span")));
 		    driver.findElement(By.cssSelector("#action-dialog-delete > div:nth-child(3) > div > div > span")).click();
 			
 			
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div[2]/div/div[1]/div[3]/div[1]/div/ng-select/div/div/div[2]/input")));
+			
 		    String HSNinest = row.getCell(38).toString();
+		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div[2]/div/div[1]/div[3]/div[1]/div/ng-select/div/div/div[2]/input")));
 		    WebElement HSNFieldinest = driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div[2]/div/div[1]/div[3]/div[1]/div/ng-select/div/div/div[2]/input"));    
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", HSNFieldinest);
-		    HSNFieldinest.sendKeys(HSNinest);
+			HSNFieldinest.sendKeys(HSNinest);
 		    HSNFieldinest.sendKeys(Keys.ENTER);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("Rate")));
+		    
+			
 			String Rateinest = row.getCell(40).toString();
+			 wait1.until(ExpectedConditions.elementToBeClickable(By.name("Rate")));
 		    WebElement RateFieldinest = driver.findElement(By.name("Rate"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", RateFieldinest);
 		    RateFieldinest.clear();
 			RateFieldinest.sendKeys(Rateinest);
 		    RateFieldinest.sendKeys(Keys.ENTER);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("quantity")));
+			
+			
 		    String Quantity1inest = row.getCell(39).toString();
+		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("quantity")));
 		    WebElement QuantityFieldinest = driver.findElement(By.name("quantity"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", QuantityFieldinest);
+		    
 			QuantityFieldinest.sendKeys(Quantity1inest);
 		    QuantityFieldinest.sendKeys(Keys.ENTER);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
-		    wait1.until(ExpectedConditions.visibilityOfElementLocated(By.name("description")));
+		    
+			
 		    String remarkinest = row.getCell(37).toString();
+		    wait1.until(ExpectedConditions.visibilityOfElementLocated(By.name("description")));
+		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("description")));
 		    WebElement remarkFieldinest = driver.findElement(By.name("description"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", remarkFieldinest);
 		    remarkFieldinest.clear();
 			remarkFieldinest.sendKeys(remarkinest);
 			
@@ -1161,24 +926,13 @@ public class LoginStepsDefinition4 {
 			 		    
 		    System.out.println("Added activity inside estimate");
 		    
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 		
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#planning > div > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")));
 			driver.findElement(By.cssSelector("#planning > div > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")).click();
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
 			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
 			//driver.findElement(By.cssSelector("#planning > div > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")).click();
 			driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
 			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[2]/div/div/div/mat-datepicker-toggle/button/span[3]")));
 			WebElement calendarButton1 = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[2]/div/div/div/mat-datepicker-toggle/button/span[3]"));
 			calendarButton1.click();
@@ -1193,20 +947,13 @@ public class LoginStepsDefinition4 {
 			Thread.sleep(2000);
 			// Ensure the calendar is visible and wait until the "10" element is clickable
 			WebDriverWait wait112 = new WebDriverWait(driver, Duration.ofSeconds(60));
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
 			WebElement dateElement110 = wait112.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='mat-calendar-body-cell-content mat-focus-indicator' and contains(text(),'" + dateFromExcel110 + "')]")));
 			
 			dateElement110.click();
 			
 			
 			
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
+			
 			String docname = row.getCell(42).toString();
 			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[4]/div/input")));
 		    WebElement docnames = driver.findElement(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[4]/div/input"));
@@ -1215,10 +962,7 @@ public class LoginStepsDefinition4 {
 			docnames.sendKeys(docname);
 		    docnames.sendKeys(Keys.ENTER);
 		    
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+			
 			String header = row.getCell(43).toString();
 			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[5]/div/textarea")));
 		    WebElement headers = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[5]/div/textarea"));
@@ -1226,129 +970,78 @@ public class LoginStepsDefinition4 {
 		    headers.clear();
 			headers.sendKeys(header);
 		    headers.sendKeys(Keys.ENTER);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 			String footer = row.getCell(44).toString();
 			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[6]/div/textarea")));
 		    WebElement footers = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[6]/div/textarea"));
 		    footers.clear();
 			footers.sendKeys(footer);
 		    footers.sendKeys(Keys.ENTER);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
 		    
 		    WebDriverWait waitloadeditestimateaction = new WebDriverWait(driver, Duration.ofSeconds(60));			   
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    waitloadeditestimateaction.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
 		    driver.findElement(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")).click();
 		    Thread.sleep(2000);
 		    WebDriverWait waitloadeditestimate = new WebDriverWait(driver, Duration.ofSeconds(60));			   
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    waitloadeditestimate.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg//modify-icon.svg']")));
 		    driver.findElement(By.cssSelector("img[src='./assets/img/svg//modify-icon.svg']")).click();
 		    Thread.sleep(2000);
 		    
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {} 
+		    
 		    String remarkmodestimate = row.getCell(56).toString();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("Description")));
 		    WebElement remarkFieldmodestimate = driver.findElement(By.name("Description"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", remarkFieldmodestimate);
 		    remarkFieldmodestimate.clear();
 			remarkFieldmodestimate.sendKeys(remarkmodestimate);
 			remarkFieldmodestimate.sendKeys(Keys.TAB);
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
+
 		    String HSNmodestimate = row.getCell(57).toString();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"planning\"]/div/table/tbody/tr[1]/td[6]/ng-select/div/div/div[3]/input")));
 		    WebElement HSNFieldmodestimate = driver.findElement(By.xpath("//*[@id=\"planning\"]/div/table/tbody/tr[1]/td[6]/ng-select/div/div/div[3]/input"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", HSNFieldmodestimate);
 		    HSNFieldmodestimate.clear();
 			HSNFieldmodestimate.sendKeys(HSNmodestimate);
 		    HSNFieldmodestimate.sendKeys(Keys.ENTER);
 		   
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 		    String Quantity1modestimate = row.getCell(58).toString();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("qty")));
 		    WebElement QuantityFieldmodestimate = driver.findElement(By.name("qty"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", QuantityFieldmodestimate);
 		    QuantityFieldmodestimate.clear();
 			QuantityFieldmodestimate.sendKeys(Quantity1modestimate);
 		    QuantityFieldmodestimate.sendKeys(Keys.ENTER);
 		    //driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div")).click();
 			Thread.sleep(2000);
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
 			String Ratemodestimate = row.getCell(59).toString();
 			wait1.until(ExpectedConditions.elementToBeClickable(By.name("rate")));
 		    WebElement RateFieldmodestimate = driver.findElement(By.name("rate"));
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", RateFieldmodestimate);
 		    Thread.sleep(2000);
 		    RateFieldmodestimate.clear();
 			RateFieldmodestimate.sendKeys(Ratemodestimate);
 		    RateFieldmodestimate.sendKeys(Keys.ENTER);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='client-estimate']/table/tbody/tr/td[4]/span[1]")));
 		    WebElement elementToClick = driver.findElement(By.xpath("//*[@id='client-estimate']/table/tbody/tr/td[4]/span[1]"));
 		    elementToClick.click();
 		    
 		   
 			  
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+
 			  String descriptionsmodest = row.getCell(61).toString();
 			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("adddescription")));
 			  WebElement descriptionsmodestimate = driver.findElement(By.name("adddescription"));
-			  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", descriptionsmodestimate);
 			  descriptionsmodestimate.clear();
 			  descriptionsmodestimate.sendKeys(descriptionsmodest);
 			  descriptionsmodestimate.sendKeys(Keys.ENTER);
-			  try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
+		    
 			  String amountmodestimate = row.getCell(62).toString();
 			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("lineitemAmount")));
 			  WebElement amountsmodestimate = driver.findElement(By.name("lineitemAmount"));
-			  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", amountsmodestimate);
 			  amountsmodestimate.clear();
 			  amountsmodestimate.sendKeys(amountmodestimate);
 			  amountsmodestimate.sendKeys(Keys.ENTER); 
@@ -1356,29 +1049,18 @@ public class LoginStepsDefinition4 {
 			  
 			 
 			  WebDriverWait wait12 = new WebDriverWait(driver, Duration.ofSeconds(60));
-			  try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
+			  
 			  WebElement elementToClick12 = wait12.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#selection1 > div:nth-child(3) > div > table > tr > td:nth-child(8) > span")));
-			  try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
+
 			  // Click on the element
 			  elementToClick12.click();
 			  WebElement elementToClick13 = wait12.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 
 			  // Click on the element
 			  elementToClick13.click();
-			  try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
 			  wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[2]/div/div/div/mat-datepicker-toggle/button/span[3]")));
 			  WebElement calendarButton11 = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[2]/div/div/div/mat-datepicker-toggle/button/span[3]"));
-			  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", calendarButton11);
-			  calendarButton11.click();
+				calendarButton11.click();
 				
 				// Read the value "10" from the Excel sheet (ensure this is the exact value)
 				String dateFromExcel1110 = row.getCell(63).toString().trim();
@@ -1390,10 +1072,6 @@ public class LoginStepsDefinition4 {
 				Thread.sleep(2000);
 				// Ensure the calendar is visible and wait until the "10" element is clickable
 				WebDriverWait wait1112 = new WebDriverWait(driver, Duration.ofSeconds(60));
-				 try {
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-				    } catch (Exception ignored) {}
 				WebElement dateElement1210 = wait1112.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='mat-calendar-body-cell-content mat-focus-indicator' and contains(text(),'" + dateFromExcel1110 + "')]")));
 				
 				dateElement1210.click();
@@ -1401,11 +1079,7 @@ public class LoginStepsDefinition4 {
 				
 				
 				String docnamee = row.getCell(64).toString();
-				 try {
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-				    } catch (Exception ignored) {}
-				wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[4]/div/input")));
+				 wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[4]/div/input")));
 			    WebElement docnamees = driver.findElement(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[4]/div/input"));
 			    docnamees.clear();
 				docnamees.sendKeys(docnamee);
@@ -1413,10 +1087,6 @@ public class LoginStepsDefinition4 {
 			    
 				
 				String headerr = row.getCell(65).toString();
-				 try {
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-				    } catch (Exception ignored) {}
 				wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[5]/div/textarea")));
 			    WebElement headerrs = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[5]/div/textarea"));
 			    
@@ -1424,50 +1094,24 @@ public class LoginStepsDefinition4 {
 				headerrs.sendKeys(headerr);
 			    headerrs.sendKeys(Keys.ENTER);
 			    
-			    try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
+				
 				String footerr = row.getCell(66).toString();
 				wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[6]/div/textarea")));
 			    WebElement footerrs = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[6]/div/textarea"));
 			    footerrs.clear();
 				footerrs.sendKeys(footerr);
 			    footerrs.sendKeys(Keys.ENTER);
-			    try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
 			    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
 				    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
-				    try {
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-				    } catch (Exception ignored) {}
 				    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
-				    try {
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-				    } catch (Exception ignored) {}
+				    
 				    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
-				    try {
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-				    } catch (Exception ignored) {}
 				    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
 				    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
 				    
 				    WebDriverWait waitloadeditestimateactionn = new WebDriverWait(driver, Duration.ofSeconds(60));			   
-				    try {
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-				    } catch (Exception ignored) {}
 				    waitloadeditestimateactionn.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
 				    driver.findElement(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")).click();
-				    try {
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-				    } catch (Exception ignored) {}
 				    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/recordPO.svg']")));
 			  
 				    
@@ -1477,10 +1121,6 @@ public class LoginStepsDefinition4 {
 				    recordPO.click();
 				    Thread.sleep(2000);
 					String contractno = row.getCell(67).toString();
-					 try {
-					        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-					        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-					    } catch (Exception ignored) {}
 					wait1.until(ExpectedConditions.elementToBeClickable(By.name("ContractNo")));
 				    WebElement contractnumber = driver.findElement(By.name("ContractNo"));
 				    
@@ -1489,10 +1129,7 @@ public class LoginStepsDefinition4 {
 				    contractnumber.sendKeys(contractno);
 				    contractnumber.sendKeys(Keys.ENTER);
 				    
-				    try {
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-				    } catch (Exception ignored) {}
+					
 					String PONumber = row.getCell(68).toString();
 					wait1.until(ExpectedConditions.elementToBeClickable(By.name("PONumber")));
 				    WebElement PONumbers = driver.findElement(By.name("PONumber"));
@@ -1517,18 +1154,11 @@ public class LoginStepsDefinition4 {
 						Thread.sleep(2000);
 						// Ensure the calendar is visible and wait until the "10" element is clickable
 						WebDriverWait wait11122 = new WebDriverWait(driver, Duration.ofSeconds(60));
-						 try {
-						        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-						        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-						    } catch (Exception ignored) {}
 						WebElement dateElement121001 = wait11122.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='mat-calendar-body-cell-content mat-focus-indicator' and contains(text(),'" + dateFromExcel111001 + "')]")));
 						
 						dateElement121001.click();
 						Thread.sleep(2000);		
-						 try {
-						        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-						        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-						    } catch (Exception ignored) {}
+					
 						String POAmount = row.getCell(70).toString();
 						wait1.until(ExpectedConditions.elementToBeClickable(By.name("POAmount")));
 					    WebElement POAmounts = driver.findElement(By.name("POAmount"));
@@ -1548,28 +1178,14 @@ public class LoginStepsDefinition4 {
 						 System.out.println("Estimate Created and Reocorded PO amount");		  
 					
 		    WebDriverWait waitloadeditestimateactionnn = new WebDriverWait(driver, Duration.ofSeconds(60));			   
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    waitloadeditestimateactionnn.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
 		    driver.findElement(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")).click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/action-approve.svg']")));
 		    driver.findElement(By.xpath("//img[@src='./assets/img/svg/action-approve.svg']")).click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		   
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div[4]/div/div/span[1]")));
 		    driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div[4]/div/div/span[1]")).click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#action-dialog-delete > div:nth-child(5) > div > div > span.approveSubmit")));
 		    driver.findElement(By.cssSelector("#action-dialog-delete > div:nth-child(5) > div > div > span.approveSubmit")).click();
 		   
@@ -1594,34 +1210,18 @@ public class LoginStepsDefinition4 {
 //			    closeImageElement.click();
 		    
 		    WebDriverWait waitloadeditestimateactionnnn = new WebDriverWait(driver, Duration.ofSeconds(60));			   
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    waitloadeditestimateactionnnn.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
 		    driver.findElement(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")).click();
 		    Thread.sleep(2000);
 		 // Locate the image element by its src attribute
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/action-appdetails.svg']")));
 		    WebElement approvaldetails = driver.findElement(By.xpath("//img[@src='./assets/img/svg/action-appdetails.svg']"));
 
 		    // Click the image element
 		    approvaldetails.click();
-		    Thread.sleep(2000);		    
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/close-cross.svg']")));
+		    Thread.sleep(2000)
+;		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/close-cross.svg']")));
 		    WebElement closeImageElement1 = driver.findElement(By.xpath("//img[@src='./assets/img/svg/close-cross.svg']"));
 
 		 // Click the image element
@@ -1758,24 +1358,15 @@ public class LoginStepsDefinition4 {
 		    
 		    
 		    
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+	
 
 		 // Step 1: Click action icon
 		 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+
 		 // Step 2: Click print icon
 		 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
 		 Thread.sleep(2000);  // Let modal appear
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+
 		 // Step 3: Click 'Print' button in modal
 		 wait1.until(ExpectedConditions.elementToBeClickable(
 		         By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
@@ -1783,21 +1374,11 @@ public class LoginStepsDefinition4 {
 		 Thread.sleep(5000); // ⏳ Wait for the file to download
 
 		 System.out.println("PDF download should be complete now.");
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+
 		 wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
 		 // Step 1: Click action icon
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+
 		 // Step 2: Click print icon
 		 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
 		 Thread.sleep(2000);  // Let modal appear
@@ -1805,69 +1386,37 @@ public class LoginStepsDefinition4 {
 		 
 		 WebElement radioBtn = driver.findElement(By.cssSelector("input[type='radio'][value='Excel'][name='DocumentType']"));
 		 radioBtn.click();
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		 
 		 
 		 // Step 3: Click 'Print' button in modal
 		 wait1.until(ExpectedConditions.elementToBeClickable(
 		         By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		 
 		 wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
 
 		 Thread.sleep(2000);
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/butt-generate-bill.svg']")));
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait.until(ExpectedConditions.invisibilityOfElementLocated(
 				    By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")
 				));
 		    driver.findElement(By.cssSelector("img[src='./assets/img/svg/butt-generate-bill.svg']")).click();
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait.until(ExpectedConditions.invisibilityOfElementLocated(
 				    By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")
 				));
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-client-bill/div/div[5]/div/div[2]/div/ng-select/div/div/div[2]/input")));
 		    
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-client-bill/div/div[5]/div/div[2]/div/ng-select/div/div/div[2]/input")).click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		   
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-client-bill/div/div[5]/div/div[2]/div/ng-select/ng-dropdown-panel/div/div[2]/div[1]/span")));
 	     
 	        driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-client-bill/div/div[5]/div/div[2]/div/ng-select/ng-dropdown-panel/div/div[2]/div[1]/span")).click();
 	        Thread.sleep(3000);
-	        try {
-	            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-	            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-	        } catch (Exception ignored) {}
 	        wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#client-bill > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")));
 	        
 	     
 		    driver.findElement(By.cssSelector("#client-bill > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")).click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-client-bill/div/div[3]/div[2]/span[2]")));
 		    Thread.sleep(2000);
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-client-bill/div/div[3]/div[2]/span[2]")).click();
@@ -1896,19 +1445,13 @@ public class LoginStepsDefinition4 {
 		     By.xpath("//*[@id='bill-to-client']/table/tbody/tr[1]/td[8]/span[1]/img")
 		 ));
 		 firstRowAction.click();
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+
 		 // Step 2: Click print icon
 		 wait1.until(ExpectedConditions.elementToBeClickable(
 		     By.cssSelector("img[src='./assets/img/svg/action-print.svg']")
 		 )).click();
 		 Thread.sleep(2000);  // Wait for modal
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+
 		 // Step 3: Click 'Print' button in modal
 		 wait1.until(ExpectedConditions.elementToBeClickable(
 		     By.xpath("//span[@class='submit-button' and text()='Print']")
@@ -1917,26 +1460,17 @@ public class LoginStepsDefinition4 {
 		 Thread.sleep(5000); // Let the PDF download finish
 
 		 System.out.println("PDF download for first row should be complete.");
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+
 		 // Wait until modal is gone
 		 wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
 
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+
 		 // --- Second row: Excel download ---
 
 		 // Step 1: Click action icon in second row
 		 WebElement secondRowAction = wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='bill-to-client']/table/tbody/tr[1]/td[8]/span[1]/img")));
 		 secondRowAction.click();
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+
 		 // Step 2: Click print icon
 		 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
 		 Thread.sleep(2000);  // Wait for modal
@@ -1944,39 +1478,22 @@ public class LoginStepsDefinition4 {
 		 // Step 3: Select Excel radio button
 		 WebElement radiooBtn = driver.findElement(By.cssSelector("input[type='radio'][value='Excel'][name='DocumentType']"));
 		 radiooBtn.click();
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+
 		 // Step 4: Click 'Print' in modal
 		 wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
 		 System.out.println("Created Client Bill");
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		 // Wait for modal to disappear
 		 wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
 		    
 		 Thread.sleep(5000);
 		    
 		 System.out.println("Finalize bill started");
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		 wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='bill-to-client']/table/tbody/tr[1]/td[8]/span[1]/img")));
 		 secondRowAction.click();
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		 
 		 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg//FinalizeBill.svg']"))).click();
 				Thread.sleep(2000); // Wait for modalScript("arguments[0].click();", finalizeButton);
-				 try {
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-				    } catch (Exception ignored) {} 
+		 
 		wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Yes' and contains(@class, 'submit-button')]"))).click();
 		Thread.sleep(5000);
 		By locator = By.xpath("//*[@id='bill-to-client']/table/tbody/tr[1]/td[8]/span[1]/img");
@@ -1993,50 +1510,23 @@ public class LoginStepsDefinition4 {
 		}
 
 		 System.out.println("Credit note creation");
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
-		 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/icon-credit-Note.svg']"))).click();
+		wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/icon-credit-Note.svg']"))).click();
 		Thread.sleep(2000);
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}	
+			
 		wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/create-new.svg']"))).click();
 		Thread.sleep(1000);
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#client-bill > div:nth-child(3) > div.ng-star-inserted > span.submit-button.ng-star-inserted")));
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#client-bill > div:nth-child(3) > div.ng-star-inserted > span.submit-button.ng-star-inserted"))).click();
 		Thread.sleep(2000);
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type='checkbox'].checkBox.selectcheckall"))).click();
 		
 
 		String CreditnoteAmount = row.getCell(71).toString();
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[name='billamount'].lable-input-bill")));
 		WebElement creditamount = driver.findElement(By.cssSelector("input[name='billamount'].lable-input-bill"));
 		
 		creditamount.clear();
 		creditamount.sendKeys(CreditnoteAmount);
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#client-bill > div:nth-child(3) > div.ng-star-inserted > span.submit-button.ng-star-inserted"))).click();
 		Thread.sleep(500);
 		// Wait and click the placeholder "Select Reason"
@@ -2054,117 +1544,46 @@ public class LoginStepsDefinition4 {
 		inputFieldcoombo.sendKeys(Creditnotereason);
 		inputFieldcoombo.sendKeys(Keys.ENTER);
 
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		
 		wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#client-bill > div:nth-child(3) > div.ng-star-inserted > span.submit-button.ng-star-inserted"))).click();
 		Thread.sleep(500);
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		
 		wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#client-bill > div:nth-child(3) > div.ng-star-inserted > span.submit-button.ng-star-inserted"))).click();
 		Thread.sleep(500);
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		
 		wait1.until(ExpectedConditions.elementToBeClickable(
 			    By.xpath("//span[contains(@class, 'submit-button') and contains(text(),'Generate')]")))
 			    .click();
 		Thread.sleep(10000);
 
 		Thread.sleep(2000);
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(
 			    By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")
 			));
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		wait1.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
 		 Thread.sleep(2000);
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		 
 		 wait1.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img[src='./assets/img/svg/action-print.svg']")));
-		 try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}	
-		 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
+			wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
 			 Thread.sleep(2000);
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
 			 wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-print\"]/div[2]/div[1]/div[1]/div/input[1]"))).click();
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
 			 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Print' and contains(@class, 'submit-button')]"))).click();
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
 			 wait.until(ExpectedConditions.invisibilityOfElementLocated(
 					    By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")
 					));
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
 			 wait1.until(ExpectedConditions.invisibilityOfElementLocated(
 					    By.cssSelector("div.cdk-overlay-backdrop.cdk-overlay-dark-backdrop")));
 			 
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}	
-			 wait1.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}	
-			 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
+				wait1.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
+				wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
 				 Thread.sleep(2000);
-				 try {
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-				    } catch (Exception ignored) {}
+				 
 				 wait1.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img[src='./assets/img/svg/action-print.svg']")));
-				 try {
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-				    } catch (Exception ignored) {}	
-				 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
+					wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
 					 Thread.sleep(2000);
-					 try {
-					        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-					        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-					    } catch (Exception ignored) {}
 					 wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-print\"]/div[2]/div[1]/div[1]/div/input[2]"))).click();
-					 try {
-					        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-					        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-					    } catch (Exception ignored) {}
 					 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Print' and contains(@class, 'submit-button')]"))).click();
-					 try {
-					        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-					        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-					    } catch (Exception ignored) {}
 					 wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.cdk-overlay-backdrop.cdk-overlay-dark-backdrop")));
 					 Thread.sleep(2000);
 						wait.until(ExpectedConditions.invisibilityOfElementLocated(
@@ -2172,31 +1591,19 @@ public class LoginStepsDefinition4 {
 							));
 		    WebDriverWait waitloadchild = new WebDriverWait(driver, Duration.ofSeconds(60));	
 		    
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 		    
 		    waitloadchild.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#bill-to-client > div:nth-child(2) > div > div > div:nth-child(4)")));
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		   
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#bill-to-client > div:nth-child(2) > div > div > div:nth-child(4)")));
 		    driver.findElement(By.cssSelector("#bill-to-client > div:nth-child(2) > div > div > div:nth-child(4)")).click();
 		    
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/butt-issue-po.svg']")));
 		    driver.findElement(By.cssSelector("img[src='./assets/img/svg/butt-issue-po.svg']")).click();
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 		    //driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[5]/div/div[1]/div/ng-select/div/div/div[2]/input")).click();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[5]/div/div[1]/div/ng-select/div/div/div[2]/input")));
 		    WebElement vendorfields = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[5]/div/div[1]/div/ng-select/div/div/div[2]/input")); // Replace with actual ID
@@ -2204,187 +1611,98 @@ public class LoginStepsDefinition4 {
 		    vendorfields.sendKeys(Keys.ENTER);
 		    Thread.sleep(2000);
 		    driver.findElement(By.cssSelector("#client-bill > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")).click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[3]/div[2]/span[2]")));
 		    Thread.sleep(2000);
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[3]/div[2]/span[2]")).click();
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[3]/div[2]/span[2]")));
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		   
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[3]/div[2]/span[2]")).click();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[3]/div[2]/span[2]")));
 		    Thread.sleep(2000);driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[3]/div[2]/span[2]")).click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[3]/div[2]/span[2]")));
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[3]/div[2]/span[2]")).click();
 		    
 		    System.out.println("Created Vendor PO");
 		   // WebDriverWait waitload8 = new WebDriverWait(driver, Duration.ofSeconds(60));			   
 		    Thread.sleep(5000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/action_icon.svg']")));
 		    //waitload8.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/action_icon.svg']")));
 		    driver.findElement(By.xpath("//img[@src='./assets/img/svg/action_icon.svg']")).click();
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog\"]/div[1]/div/span/img")));
 		    driver.findElement(By.xpath("//*[@id=\"action-dialog\"]/div[1]/div/span/img")).click();
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div[3]/div/div/table/tr/td[1]/span")));
 		    driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div[3]/div/div/table/tr/td[1]/span")).click();
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div[5]/div/div/span[2]")));
 		    driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div[5]/div/div/span[2]")).click();
 		    Thread.sleep(2000);	
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+
 			 // Step 2: Click print icon
 			 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
 			 Thread.sleep(2000);  // Let modal appear
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
+
 			 // Step 3: Click 'Print' button in modal
 			 wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
+
 			 Thread.sleep(5000); // ⏳ Wait for the file to download
 
 			 System.out.println("PDF download should be complete now.");
 
 			 wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}// Step 1: Click action icon
+			 // Step 1: Click action icon
 			 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
+
 			 // Step 2: Click print icon
 			 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
 			 Thread.sleep(2000);  // Let modal appear
 
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
+			 
 			 WebElement radioBtnn = driver.findElement(By.cssSelector("input[type='radio'][value='Excel'][name='DocumentType']"));
 			 radioBtnn.click();
 			 
 			 
 			 // Step 3: Click 'Print' button in modal
 			 wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {} 
+			 
 			 wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
 
 			 Thread.sleep(2000);
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
-			 wait.until(ExpectedConditions.invisibilityOfElementLocated(
-					    By.cssSelector("div.cdk-overlay-backdrop.cdk-overlay-dark-backdrop")
-					));
-			 try {
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-			    } catch (Exception ignored) {}
+			
+		    
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/butt-vendor-bill.svg']")));
 		    WebElement element12 = driver.findElement(By.cssSelector("img[src='./assets/img/svg/butt-vendor-bill.svg']"));
 			 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element12);
 		    driver.findElement(By.cssSelector("img[src='./assets/img/svg/butt-vendor-bill.svg']")).click();
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[5]/div/div[2]/div[1]/ng-select/div/div/div[2]/input")));
 		    WebElement vendorfieldss = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[5]/div/div[2]/div[1]/ng-select/div/div/div[2]/input")); // Replace with actual ID
 			vendorfieldss.sendKeys(vendormod);
 		    vendorfieldss.sendKeys(Keys.ENTER);
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-generate-vendor-bill > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 		    driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-generate-vendor-bill > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
 		    Thread.sleep(2000);
 		    //driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[5]/div/div[2]/div[2]/ng-select/ng-dropdown-panel/div/div[2]/div[1]/span")).click();
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[5]/div/div[2]/div[2]/ng-select/div/div/div[3]/input")));
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[5]/div/div[2]/div[2]/ng-select/div/div/div[3]/input")).click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
+		    
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[5]/div/div[2]/div[2]/ng-select/ng-dropdown-panel/div/div[2]/div")));
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[5]/div/div[2]/div[2]/ng-select/ng-dropdown-panel/div/div[2]/div")).click();
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#client-bill > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")));
 		    driver.findElement(By.cssSelector("#client-bill > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")).click();
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")));
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
 		    Thread.sleep(2000);
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")));
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
 		    Thread.sleep(2000);	
@@ -2394,17 +1712,9 @@ public class LoginStepsDefinition4 {
 		    VendorBillNoField.sendKeys(Keys.TAB);
 		    Thread.sleep(2000);	
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")));
 		    Thread.sleep(2000);	
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
-		    try {
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		    } catch (Exception ignored) {}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")));
 		    Thread.sleep(2000);	
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
