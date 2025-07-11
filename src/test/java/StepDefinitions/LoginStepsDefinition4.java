@@ -874,7 +874,7 @@ public class LoginStepsDefinition4 {
 			  
 			  System.out.println("Added additional line item");
 		  JavascriptExecutor jszoomi = (JavascriptExecutor) driver;
-		     jszoomi.executeScript("document.body.style.zoom='75%'");
+		     jszoomi.executeScript("document.body.style.zoom='50%'");
 			     Thread.sleep(1000);
 			 
 			     WebElement activityfromestimate = driver.findElement(By.xpath("//img[@src='./assets/img/svg/addactivity.svg']"));

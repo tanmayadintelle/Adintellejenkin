@@ -60,12 +60,12 @@ public class LoginStepsDefinition5 {
 //		options.addArguments("--disable-gpu");
 //		options.addArguments("--no-sandbox");
 //		options.addArguments("--disable-dev-shm-usage");
-		options.addArguments("--remote-allow-origins=*");
-		options.addArguments("--disable-blink-features=AutomationControlled");
-		// DON’T use headless in scheduler
-		options.addArguments("--start-maximized"); 
-		options.addArguments("--disable-gpu");
-		options.addArguments("--no-sandbox");
+//		options.addArguments("--remote-allow-origins=*");
+//		options.addArguments("--disable-blink-features=AutomationControlled");
+//		// DON’T use headless in scheduler
+//		options.addArguments("--start-maximized"); 
+//		options.addArguments("--disable-gpu");
+//		options.addArguments("--no-sandbox");
 
 	    HashMap<String, Object> prefs = new HashMap<>();    
 	    // Block notifications by setting the preference value to 2 (block)
@@ -157,6 +157,7 @@ public class LoginStepsDefinition5 {
 	        elementarrow.click();
 	        
 	        System.out.println("Logged in");
+	        ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 	        //WebDriverWait waitid = new WebDriverWait(driver, Duration.ofSeconds(60));
 	        List<WebElement> icons = driver.findElements(
 	        	    By.xpath("//*[name()='svg']/*[name()='path' and contains(@d, 'M17.8059')]")
