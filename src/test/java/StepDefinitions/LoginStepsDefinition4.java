@@ -1741,11 +1741,17 @@ public class LoginStepsDefinition4 {
 		    WebElement finalizeButton = wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")));
 //		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
 		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", finalizeButton);
+		    Thread.sleep(500); // small pause to allow scroll to settle
+		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", finalizeButton);
+
 		    Thread.sleep(1000);
 		    Thread.sleep(10000);
 //		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")));
 //		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
 		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", finalizeButton);
+		    Thread.sleep(500); // small pause to allow scroll to settle
+		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", finalizeButton);
+
 		    Thread.sleep(1000);
 		    Thread.sleep(10000);	
 		    String VendorBillNo = row.getCell(14).toString();
@@ -1756,14 +1762,23 @@ public class LoginStepsDefinition4 {
 //		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
 //		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")));
 		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", finalizeButton);
+		    Thread.sleep(500); // small pause to allow scroll to settle
+		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", finalizeButton);
+
 		    Thread.sleep(1000);
 		    Thread.sleep(10000);
 //		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
 //		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")));
 		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", finalizeButton);
+		    Thread.sleep(500); // small pause to allow scroll to settle
+		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", finalizeButton);
+
 		    Thread.sleep(1000);
 		    Thread.sleep(10000);
 		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", finalizeButton);
+		    Thread.sleep(500); // small pause to allow scroll to settle
+		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", finalizeButton);
+
 		    Thread.sleep(1000);
 //		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
 		    Thread.sleep(10000);	
