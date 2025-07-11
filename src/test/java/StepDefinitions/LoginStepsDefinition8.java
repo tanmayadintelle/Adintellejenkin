@@ -352,7 +352,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	        	
 	        	WebElement nextbutton09 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 				nextbutton09.click();
-	        	
+				 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-label")));
 				WebElement nextbutton090 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 				nextbutton090.click();
 				

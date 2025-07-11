@@ -349,10 +349,11 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				nextbutton090.click();
 				
 	        	Thread.sleep(2000);
+	        	
 	        	// Read the category value from Excel (and trim to avoid trailing spaces)
 				String category = row.getCell(18).getStringCellValue().trim();
 				System.out.println("Category from Excel: " + category);
-
+				 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-label")));
 				// Open the dropdown
 				WebElement categoryFieldContainer = wait.until(ExpectedConditions.elementToBeClickable(
 				    By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[1]/ng-select/div")
