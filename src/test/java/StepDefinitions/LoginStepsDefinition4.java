@@ -966,49 +966,49 @@ public class LoginStepsDefinition4 {
 	        System.out.println("Exception while taking screenshot: " + e.getMessage());
 	    }
 	
-			WebElement calendarButton1 = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[2]/div/div/div/mat-datepicker-toggle/button/span[3]"));
-			calendarButton1.click();
-			
-			// Read the value "10" from the Excel sheet (ensure this is the exact value)
-			String dateFromExcel110 = row.getCell(41).toString().trim();
-
-			// Remove decimal point if any (e.g., convert "10.0" to "10")
-			dateFromExcel110 = dateFromExcel110.split("\\.")[0];
-			// Output for debugging: Make sure that the correct date value is being read
-			System.out.println("Date to click: " + dateFromExcel110);
-			Thread.sleep(2000);
-			// Ensure the calendar is visible and wait until the "10" element is clickable
-			WebDriverWait wait112 = new WebDriverWait(driver, Duration.ofSeconds(60));
-			WebElement dateElement110 = wait112.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='mat-calendar-body-cell-content mat-focus-indicator' and contains(text(),'" + dateFromExcel110 + "')]")));
-			
-			dateElement110.click();
-			
-			
-			
-			
-			String docname = row.getCell(42).toString();
-			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[4]/div/input")));
-		    WebElement docnames = driver.findElement(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[4]/div/input"));
-		    
-		    docnames.clear();
-			docnames.sendKeys(docname);
-		    docnames.sendKeys(Keys.ENTER);
-		    
-			
-			String header = row.getCell(43).toString();
-			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[5]/div/textarea")));
-		    WebElement headers = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[5]/div/textarea"));
-		    
-		    headers.clear();
-			headers.sendKeys(header);
-		    headers.sendKeys(Keys.ENTER);
-		    
-			String footer = row.getCell(44).toString();
-			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[6]/div/textarea")));
-		    WebElement footers = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[6]/div/textarea"));
-		    footers.clear();
-			footers.sendKeys(footer);
-		    footers.sendKeys(Keys.ENTER);
+//			WebElement calendarButton1 = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[2]/div/div/div/mat-datepicker-toggle/button/span[3]"));
+//			calendarButton1.click();
+//			
+//			// Read the value "10" from the Excel sheet (ensure this is the exact value)
+//			String dateFromExcel110 = row.getCell(41).toString().trim();
+//
+//			// Remove decimal point if any (e.g., convert "10.0" to "10")
+//			dateFromExcel110 = dateFromExcel110.split("\\.")[0];
+//			// Output for debugging: Make sure that the correct date value is being read
+//			System.out.println("Date to click: " + dateFromExcel110);
+//			Thread.sleep(2000);
+//			// Ensure the calendar is visible and wait until the "10" element is clickable
+//			WebDriverWait wait112 = new WebDriverWait(driver, Duration.ofSeconds(60));
+//			WebElement dateElement110 = wait112.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='mat-calendar-body-cell-content mat-focus-indicator' and contains(text(),'" + dateFromExcel110 + "')]")));
+//			
+//			dateElement110.click();
+//			
+//			
+//			
+//			
+//			String docname = row.getCell(42).toString();
+//			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[4]/div/input")));
+//		    WebElement docnames = driver.findElement(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[4]/div/input"));
+//		    
+//		    docnames.clear();
+//			docnames.sendKeys(docname);
+//		    docnames.sendKeys(Keys.ENTER);
+//		    
+//			
+//			String header = row.getCell(43).toString();
+//			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[5]/div/textarea")));
+//		    WebElement headers = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[5]/div/textarea"));
+//		    
+//		    headers.clear();
+//			headers.sendKeys(header);
+//		    headers.sendKeys(Keys.ENTER);
+//		    
+//			String footer = row.getCell(44).toString();
+//			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[6]/div/textarea")));
+//		    WebElement footers = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[6]/div/textarea"));
+//		    footers.clear();
+//			footers.sendKeys(footer);
+//		    footers.sendKeys(Keys.ENTER);
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
 		    
@@ -1017,129 +1017,129 @@ public class LoginStepsDefinition4 {
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
 		    
-		    WebDriverWait waitloadeditestimateaction = new WebDriverWait(driver, Duration.ofSeconds(60));			   
-		    waitloadeditestimateaction.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
-		    driver.findElement(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")).click();
-		    Thread.sleep(2000);
-		    WebDriverWait waitloadeditestimate = new WebDriverWait(driver, Duration.ofSeconds(60));			   
-		    waitloadeditestimate.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg//modify-icon.svg']")));
-		    driver.findElement(By.cssSelector("img[src='./assets/img/svg//modify-icon.svg']")).click();
-		    Thread.sleep(2000);
-		    
-		    
-		    String remarkmodestimate = row.getCell(56).toString();
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("Description")));
-		    WebElement remarkFieldmodestimate = driver.findElement(By.name("Description"));
-		    remarkFieldmodestimate.clear();
-			remarkFieldmodestimate.sendKeys(remarkmodestimate);
-			remarkFieldmodestimate.sendKeys(Keys.TAB);
-
-		    String HSNmodestimate = row.getCell(57).toString();
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"planning\"]/div/table/tbody/tr[1]/td[6]/ng-select/div/div/div[3]/input")));
-		    WebElement HSNFieldmodestimate = driver.findElement(By.xpath("//*[@id=\"planning\"]/div/table/tbody/tr[1]/td[6]/ng-select/div/div/div[3]/input"));
-		    HSNFieldmodestimate.clear();
-			HSNFieldmodestimate.sendKeys(HSNmodestimate);
-		    HSNFieldmodestimate.sendKeys(Keys.ENTER);
-		   
-		    
-		    String Quantity1modestimate = row.getCell(58).toString();
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("qty")));
-		    WebElement QuantityFieldmodestimate = driver.findElement(By.name("qty"));
-		    QuantityFieldmodestimate.clear();
-			QuantityFieldmodestimate.sendKeys(Quantity1modestimate);
-		    QuantityFieldmodestimate.sendKeys(Keys.ENTER);
-		    //driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div")).click();
-			Thread.sleep(2000);
-			String Ratemodestimate = row.getCell(59).toString();
-			wait1.until(ExpectedConditions.elementToBeClickable(By.name("rate")));
-		    WebElement RateFieldmodestimate = driver.findElement(By.name("rate"));
-		    Thread.sleep(2000);
-		    RateFieldmodestimate.clear();
-			RateFieldmodestimate.sendKeys(Ratemodestimate);
-		    RateFieldmodestimate.sendKeys(Keys.ENTER);
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='client-estimate']/table/tbody/tr/td[4]/span[1]")));
-		    WebElement elementToClick = driver.findElement(By.xpath("//*[@id='client-estimate']/table/tbody/tr/td[4]/span[1]"));
-		    elementToClick.click();
-		    
-		   
-			  
-
-			  String descriptionsmodest = row.getCell(61).toString();
-			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("adddescription")));
-			  WebElement descriptionsmodestimate = driver.findElement(By.name("adddescription"));
-			  descriptionsmodestimate.clear();
-			  descriptionsmodestimate.sendKeys(descriptionsmodest);
-			  descriptionsmodestimate.sendKeys(Keys.ENTER);
-		    
-			  String amountmodestimate = row.getCell(62).toString();
-			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("lineitemAmount")));
-			  WebElement amountsmodestimate = driver.findElement(By.name("lineitemAmount"));
-			  amountsmodestimate.clear();
-			  amountsmodestimate.sendKeys(amountmodestimate);
-			  amountsmodestimate.sendKeys(Keys.ENTER); 
-			  
-			  
-			 
-			  WebDriverWait wait12 = new WebDriverWait(driver, Duration.ofSeconds(60));
-			  
-			  WebElement elementToClick12 = wait12.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#selection1 > div:nth-child(3) > div > table > tr > td:nth-child(8) > span")));
-
-			  // Click on the element
-			  elementToClick12.click();
-			  WebElement elementToClick13 = wait12.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-
-			  // Click on the element
-			  elementToClick13.click();
-			  wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[2]/div/div/div/mat-datepicker-toggle/button/span[3]")));
-			  WebElement calendarButton11 = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[2]/div/div/div/mat-datepicker-toggle/button/span[3]"));
-				calendarButton11.click();
-				
-				// Read the value "10" from the Excel sheet (ensure this is the exact value)
-				String dateFromExcel1110 = row.getCell(63).toString().trim();
-
-				// Remove decimal point if any (e.g., convert "10.0" to "10")
-				dateFromExcel1110 = dateFromExcel1110.split("\\.")[0];
-				// Output for debugging: Make sure that the correct date value is being read
-				System.out.println("Date to click: " + dateFromExcel1110);
-				Thread.sleep(2000);
-				// Ensure the calendar is visible and wait until the "10" element is clickable
-				WebDriverWait wait1112 = new WebDriverWait(driver, Duration.ofSeconds(60));
-				WebElement dateElement1210 = wait1112.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='mat-calendar-body-cell-content mat-focus-indicator' and contains(text(),'" + dateFromExcel1110 + "')]")));
-				
-				dateElement1210.click();
-				
-				
-				
-				String docnamee = row.getCell(64).toString();
-				 wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[4]/div/input")));
-			    WebElement docnamees = driver.findElement(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[4]/div/input"));
-			    docnamees.clear();
-				docnamees.sendKeys(docnamee);
-			    docnamees.sendKeys(Keys.ENTER);
-			    
-				
-				String headerr = row.getCell(65).toString();
-				wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[5]/div/textarea")));
-			    WebElement headerrs = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[5]/div/textarea"));
-			    
-			    headerrs.clear();
-				headerrs.sendKeys(headerr);
-			    headerrs.sendKeys(Keys.ENTER);
-			    
-				
-				String footerr = row.getCell(66).toString();
-				wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[6]/div/textarea")));
-			    WebElement footerrs = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[6]/div/textarea"));
-			    footerrs.clear();
-				footerrs.sendKeys(footerr);
-			    footerrs.sendKeys(Keys.ENTER);
-			    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
-				    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
-				    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
-				    
-				    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
-				    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
-				    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
+//		    WebDriverWait waitloadeditestimateaction = new WebDriverWait(driver, Duration.ofSeconds(60));			   
+//		    waitloadeditestimateaction.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
+//		    driver.findElement(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")).click();
+//		    Thread.sleep(2000);
+//		    WebDriverWait waitloadeditestimate = new WebDriverWait(driver, Duration.ofSeconds(60));			   
+//		    waitloadeditestimate.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg//modify-icon.svg']")));
+//		    driver.findElement(By.cssSelector("img[src='./assets/img/svg//modify-icon.svg']")).click();
+//		    Thread.sleep(2000);
+//		    
+//		    
+//		    String remarkmodestimate = row.getCell(56).toString();
+//		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("Description")));
+//		    WebElement remarkFieldmodestimate = driver.findElement(By.name("Description"));
+//		    remarkFieldmodestimate.clear();
+//			remarkFieldmodestimate.sendKeys(remarkmodestimate);
+//			remarkFieldmodestimate.sendKeys(Keys.TAB);
+//
+//		    String HSNmodestimate = row.getCell(57).toString();
+//		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"planning\"]/div/table/tbody/tr[1]/td[6]/ng-select/div/div/div[3]/input")));
+//		    WebElement HSNFieldmodestimate = driver.findElement(By.xpath("//*[@id=\"planning\"]/div/table/tbody/tr[1]/td[6]/ng-select/div/div/div[3]/input"));
+//		    HSNFieldmodestimate.clear();
+//			HSNFieldmodestimate.sendKeys(HSNmodestimate);
+//		    HSNFieldmodestimate.sendKeys(Keys.ENTER);
+//		   
+//		    
+//		    String Quantity1modestimate = row.getCell(58).toString();
+//		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("qty")));
+//		    WebElement QuantityFieldmodestimate = driver.findElement(By.name("qty"));
+//		    QuantityFieldmodestimate.clear();
+//			QuantityFieldmodestimate.sendKeys(Quantity1modestimate);
+//		    QuantityFieldmodestimate.sendKeys(Keys.ENTER);
+//		    //driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div")).click();
+//			Thread.sleep(2000);
+//			String Ratemodestimate = row.getCell(59).toString();
+//			wait1.until(ExpectedConditions.elementToBeClickable(By.name("rate")));
+//		    WebElement RateFieldmodestimate = driver.findElement(By.name("rate"));
+//		    Thread.sleep(2000);
+//		    RateFieldmodestimate.clear();
+//			RateFieldmodestimate.sendKeys(Ratemodestimate);
+//		    RateFieldmodestimate.sendKeys(Keys.ENTER);
+//		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='client-estimate']/table/tbody/tr/td[4]/span[1]")));
+//		    WebElement elementToClick = driver.findElement(By.xpath("//*[@id='client-estimate']/table/tbody/tr/td[4]/span[1]"));
+//		    elementToClick.click();
+//		    
+//		   
+//			  
+//
+//			  String descriptionsmodest = row.getCell(61).toString();
+//			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("adddescription")));
+//			  WebElement descriptionsmodestimate = driver.findElement(By.name("adddescription"));
+//			  descriptionsmodestimate.clear();
+//			  descriptionsmodestimate.sendKeys(descriptionsmodest);
+//			  descriptionsmodestimate.sendKeys(Keys.ENTER);
+//		    
+//			  String amountmodestimate = row.getCell(62).toString();
+//			  wait1.until(ExpectedConditions.elementToBeClickable(By.name("lineitemAmount")));
+//			  WebElement amountsmodestimate = driver.findElement(By.name("lineitemAmount"));
+//			  amountsmodestimate.clear();
+//			  amountsmodestimate.sendKeys(amountmodestimate);
+//			  amountsmodestimate.sendKeys(Keys.ENTER); 
+//			  
+//			  
+//			 
+//			  WebDriverWait wait12 = new WebDriverWait(driver, Duration.ofSeconds(60));
+//			  
+//			  WebElement elementToClick12 = wait12.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#selection1 > div:nth-child(3) > div > table > tr > td:nth-child(8) > span")));
+//
+//			  // Click on the element
+//			  elementToClick12.click();
+//			  WebElement elementToClick13 = wait12.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
+//
+//			  // Click on the element
+//			  elementToClick13.click();
+//			  wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[2]/div/div/div/mat-datepicker-toggle/button/span[3]")));
+//			  WebElement calendarButton11 = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[2]/div/div/div/mat-datepicker-toggle/button/span[3]"));
+//				calendarButton11.click();
+//				
+//				// Read the value "10" from the Excel sheet (ensure this is the exact value)
+//				String dateFromExcel1110 = row.getCell(63).toString().trim();
+//
+//				// Remove decimal point if any (e.g., convert "10.0" to "10")
+//				dateFromExcel1110 = dateFromExcel1110.split("\\.")[0];
+//				// Output for debugging: Make sure that the correct date value is being read
+//				System.out.println("Date to click: " + dateFromExcel1110);
+//				Thread.sleep(2000);
+//				// Ensure the calendar is visible and wait until the "10" element is clickable
+//				WebDriverWait wait1112 = new WebDriverWait(driver, Duration.ofSeconds(60));
+//				WebElement dateElement1210 = wait1112.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='mat-calendar-body-cell-content mat-focus-indicator' and contains(text(),'" + dateFromExcel1110 + "')]")));
+//				
+//				dateElement1210.click();
+//				
+//				
+//				
+//				String docnamee = row.getCell(64).toString();
+//				 wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[4]/div/input")));
+//			    WebElement docnamees = driver.findElement(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[4]/div/input"));
+//			    docnamees.clear();
+//				docnamees.sendKeys(docnamee);
+//			    docnamees.sendKeys(Keys.ENTER);
+//			    
+//				
+//				String headerr = row.getCell(65).toString();
+//				wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[5]/div/textarea")));
+//			    WebElement headerrs = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[5]/div/textarea"));
+//			    
+//			    headerrs.clear();
+//				headerrs.sendKeys(headerr);
+//			    headerrs.sendKeys(Keys.ENTER);
+//			    
+//				
+//				String footerr = row.getCell(66).toString();
+//				wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[6]/div/textarea")));
+//			    WebElement footerrs = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[6]/div/textarea"));
+//			    footerrs.clear();
+//				footerrs.sendKeys(footerr);
+//			    footerrs.sendKeys(Keys.ENTER);
+//			    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
+//				    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
+//				    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
+//				    
+//				    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
+//				    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
+//				    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
 				    
 				    WebDriverWait waitloadeditestimateactionn = new WebDriverWait(driver, Duration.ofSeconds(60));			   
 				    waitloadeditestimateactionn.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
