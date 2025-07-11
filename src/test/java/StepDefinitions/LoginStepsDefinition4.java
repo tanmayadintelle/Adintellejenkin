@@ -942,8 +942,15 @@ public class LoginStepsDefinition4 {
 			 		    
 		    System.out.println("Added activity inside estimate");
 		    
-		    
+		    String screenshotName;
 		    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
+		    try {
+		        TakesScreenshot ts = (TakesScreenshot) driver;
+		        File source = ts.getScreenshotAs(OutputType.FILE);
+		        File destination = new File("target/screenshots/" + screenshotName + ".png");
+		        FileUtils.copyFile(source, destination);
+		        System.out.println("Screenshot saved: " + destination.getAbsolutePath());
+		   
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#planning > div > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")));
 			driver.findElement(By.cssSelector("#planning > div > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")).click();
 			 ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
@@ -952,7 +959,11 @@ public class LoginStepsDefinition4 {
 			driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")).click();
 			 ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[2]/div/div/div/mat-datepicker-toggle/button/span[3]")));
-			
+		    
+        } catch (Exception e) {
+	        System.out.println("Exception while taking screenshot: " + e.getMessage());
+	    }
+	}
 			WebElement calendarButton1 = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[2]/div/div/div/mat-datepicker-toggle/button/span[3]"));
 			calendarButton1.click();
 			
