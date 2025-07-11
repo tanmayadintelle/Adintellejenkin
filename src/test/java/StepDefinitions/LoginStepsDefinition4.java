@@ -53,11 +53,11 @@ public class LoginStepsDefinition4 {
 
 	    // Write code here that turns the phrase above into concrete actions
 		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--headless=new"); // Or "--headless" for older Chrome
-		options.addArguments("--window-size=1920,1080");
-		options.addArguments("--disable-gpu");
-		options.addArguments("--no-sandbox");
-		options.addArguments("--disable-dev-shm-usage");
+//		options.addArguments("--headless=new"); // Or "--headless" for older Chrome
+//		options.addArguments("--window-size=1920,1080");
+//		options.addArguments("--disable-gpu");
+//		options.addArguments("--no-sandbox");
+//		options.addArguments("--disable-dev-shm-usage");
 //		options.addArguments("--headless=new"); // Use modern headless mode
 //		options.addArguments("--window-size=2560,1440"); // Ensures visibility
 //		options.addArguments("--disable-gpu"); // Still needed for some setups
@@ -386,7 +386,7 @@ public class LoginStepsDefinition4 {
 			WebElement searchField = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-home/div/div[6]/app-jobs-component/div/div[1]/div/div[1]/input")); // Replace with actual ID
 			
 			searchField.sendKeys(jobname);
-			Thread.sleep(2000); 
+			Thread.sleep(5000); 
 			WebElement actiondashboard = wait1.until(
 				    ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/action_icon.svg']"))
 				);
