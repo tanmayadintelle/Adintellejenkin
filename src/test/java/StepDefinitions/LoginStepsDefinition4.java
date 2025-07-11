@@ -1724,27 +1724,25 @@ public class LoginStepsDefinition4 {
 		    WebElement vendorfieldss = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[5]/div/div[2]/div[1]/ng-select/div/div/div[2]/input")); // Replace with actual ID
 			vendorfieldss.sendKeys(vendormod);
 		    vendorfieldss.sendKeys(Keys.ENTER);
-		    Thread.sleep(2000);
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-generate-vendor-bill > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-		    driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-generate-vendor-bill > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
-		    Thread.sleep(2000);
+		      
+		    Thread.sleep(10000);
 		    //driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[5]/div/div[2]/div[2]/ng-select/ng-dropdown-panel/div/div[2]/div[1]/span")).click();
-		    Thread.sleep(2000);
+		    Thread.sleep(10000);
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[5]/div/div[2]/div[2]/ng-select/div/div/div[3]/input")));
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[5]/div/div[2]/div[2]/ng-select/div/div/div[3]/input")).click();
-		    
+		    Thread.sleep(10000);
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[5]/div/div[2]/div[2]/ng-select/ng-dropdown-panel/div/div[2]/div")));
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[5]/div/div[2]/div[2]/ng-select/ng-dropdown-panel/div/div[2]/div")).click();
-		    Thread.sleep(2000);
+		    Thread.sleep(10000);
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#client-bill > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")));
 		    driver.findElement(By.cssSelector("#client-bill > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")).click();
-		    Thread.sleep(2000);
+		    Thread.sleep(10000);
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")));
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
-		    Thread.sleep(2000);
+		    Thread.sleep(10000);
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")));
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
-		    Thread.sleep(2000);	
+		    Thread.sleep(10000);	
 		    String VendorBillNo = row.getCell(14).toString();
 		    WebElement VendorBillNoField = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[5]/div/div[2]/div[1]/div[2]/div[1]/input"));
 		    VendorBillNoField.sendKeys(VendorBillNo);
@@ -1752,12 +1750,12 @@ public class LoginStepsDefinition4 {
 		    Thread.sleep(2000);	
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")));
-		    Thread.sleep(2000);	
+		    Thread.sleep(10000);
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")));
-		    Thread.sleep(2000);	
+		    Thread.sleep(10000);
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
-		    Thread.sleep(2000);	
+		    Thread.sleep(10000);	
 		    System.out.println("Created Vendor Bill");
 		    driver.switchTo().defaultContent();
 		    
