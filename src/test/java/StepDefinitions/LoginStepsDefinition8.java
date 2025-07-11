@@ -63,8 +63,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
     // Write code here that turns the phrase above into concrete actions
 		   // Write code here that turns the phrase above into concrete actions
 				ChromeOptions options = new ChromeOptions();
-				options.addArguments("--headless=new"); // or just "--headless" if old version
-				options.addArguments("--window-size=1920,1080");
+		
 			    // Create a HashMap for preferences
 //				ChromeOptions options = new ChromeOptions();
 //				options.addArguments("--headless=new");

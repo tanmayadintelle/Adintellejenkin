@@ -519,7 +519,7 @@ public class LoginStepsDefinition4 {
 		   
 		    JavascriptExecutor jslo = (JavascriptExecutor) driver;
 	        jslo.executeScript("window.scrollBy(0, document.body.scrollHeight)");
-	        ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='30%'");
+	       
 	        wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/addactivity.svg']")));
 	        
 		    driver.findElement(By.xpath("//img[@src='./assets/img/svg/addactivity.svg']")).click();
@@ -1548,7 +1548,7 @@ public class LoginStepsDefinition4 {
 			
 		wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/create-new.svg']"))).click();
 		Thread.sleep(1000);
-		 ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
+		 //((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#client-bill > div:nth-child(3) > div.ng-star-inserted > span.submit-button.ng-star-inserted")));
 		wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#client-bill > div:nth-child(3) > div.ng-star-inserted > span.submit-button.ng-star-inserted"))).click();
 		Thread.sleep(2000);
@@ -1589,7 +1589,7 @@ public class LoginStepsDefinition4 {
 			    By.xpath("//span[contains(@class, 'submit-button') and contains(text(),'Generate')]")))
 			    .click();
 		Thread.sleep(10000);
-		 ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
+		// ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 		Thread.sleep(2000);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(
 			    By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")
