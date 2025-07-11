@@ -836,7 +836,7 @@ public class LoginStepsDefinition4 {
 		    
 		    //driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[1]/div/mat-sidenav-content/div/div/table/thead/tr/th[1]/input")).click();
 		    
-		
+		    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 
 		   
 		    
@@ -943,7 +943,7 @@ public class LoginStepsDefinition4 {
 		    System.out.println("Added activity inside estimate");
 		    
 		    
-		
+		    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#planning > div > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")));
 			driver.findElement(By.cssSelector("#planning > div > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")).click();
 			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[3]/div[2]/span[2]")));
@@ -1192,7 +1192,7 @@ public class LoginStepsDefinition4 {
 
 						 Thread.sleep(2000);
 						 System.out.println("Estimate Created and Reocorded PO amount");		  
-					
+						 ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 		    WebDriverWait waitloadeditestimateactionnn = new WebDriverWait(driver, Duration.ofSeconds(60));			   
 		    waitloadeditestimateactionnn.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
 		    driver.findElement(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")).click();
@@ -1418,6 +1418,7 @@ public class LoginStepsDefinition4 {
 				));
 		    driver.findElement(By.cssSelector("img[src='./assets/img/svg/butt-generate-bill.svg']")).click();
 		    Thread.sleep(2000);
+		    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 		    wait.until(ExpectedConditions.invisibilityOfElementLocated(
 				    By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")
 				));
@@ -1433,6 +1434,7 @@ public class LoginStepsDefinition4 {
 	        
 	     
 		    driver.findElement(By.cssSelector("#client-bill > table > thead > tr > th.mat-mdc-header-cell.mdc-data-table__header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted > input")).click();
+		    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-client-bill/div/div[3]/div[2]/span[2]")));
 		    Thread.sleep(2000);
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-client-bill/div/div[3]/div[2]/span[2]")).click();
@@ -1531,6 +1533,7 @@ public class LoginStepsDefinition4 {
 			
 		wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/create-new.svg']"))).click();
 		Thread.sleep(1000);
+		 ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#client-bill > div:nth-child(3) > div.ng-star-inserted > span.submit-button.ng-star-inserted")));
 		wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#client-bill > div:nth-child(3) > div.ng-star-inserted > span.submit-button.ng-star-inserted"))).click();
 		Thread.sleep(2000);
@@ -1571,7 +1574,7 @@ public class LoginStepsDefinition4 {
 			    By.xpath("//span[contains(@class, 'submit-button') and contains(text(),'Generate')]")))
 			    .click();
 		Thread.sleep(10000);
-
+		 ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 		Thread.sleep(2000);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(
 			    By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")
@@ -1619,7 +1622,7 @@ public class LoginStepsDefinition4 {
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/butt-issue-po.svg']")));
 		    driver.findElement(By.cssSelector("img[src='./assets/img/svg/butt-issue-po.svg']")).click();
 		    Thread.sleep(2000);
-		    
+		    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 		    //driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[5]/div/div[1]/div/ng-select/div/div/div[2]/input")).click();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[5]/div/div[1]/div/ng-select/div/div/div[2]/input")));
 		    WebElement vendorfields = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[5]/div/div[1]/div/ng-select/div/div/div[2]/input")); // Replace with actual ID
@@ -1697,6 +1700,7 @@ public class LoginStepsDefinition4 {
 				}
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/butt-vendor-bill.svg']")));
 		    WebElement element12 = driver.findElement(By.cssSelector("img[src='./assets/img/svg/butt-vendor-bill.svg']"));
+		    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 			 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element12);
 		    driver.findElement(By.cssSelector("img[src='./assets/img/svg/butt-vendor-bill.svg']")).click();
 		    Thread.sleep(2000);
