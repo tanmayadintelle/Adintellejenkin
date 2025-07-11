@@ -53,6 +53,11 @@ public class LoginStepsDefinition4 {
 
 	    // Write code here that turns the phrase above into concrete actions
 		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--headless=new"); // Or "--headless" for older Chrome
+		options.addArguments("--window-size=1920,1080");
+		options.addArguments("--disable-gpu");
+		options.addArguments("--no-sandbox");
+		options.addArguments("--disable-dev-shm-usage");
 //		options.addArguments("--headless=new"); // Use modern headless mode
 //		options.addArguments("--window-size=2560,1440"); // Ensures visibility
 //		options.addArguments("--disable-gpu"); // Still needed for some setups
@@ -505,10 +510,12 @@ public class LoginStepsDefinition4 {
 			
 			driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
 			
-			WebDriverWait waitload3 = new WebDriverWait(driver, Duration.ofSeconds(60));
-		    waitload3.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-dashboard > div > div:nth-child(2) > div > div > div:nth-child(2)")));
-		    driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-dashboard > div > div:nth-child(2) > div > div > div:nth-child(2)")).click();
-		    Thread.sleep(2000);
+			
+			WebElement clickableElement = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(
+			    "body > app-root > div > div > div > main > div > app-dashboard > div > div:nth-child(2) > div > div > div:nth-child(2)"
+			)));
+			clickableElement.click();
+			Thread.sleep(2000);
 		   
 		    JavascriptExecutor jslo = (JavascriptExecutor) driver;
 	        jslo.executeScript("window.scrollBy(0, document.body.scrollHeight)");
