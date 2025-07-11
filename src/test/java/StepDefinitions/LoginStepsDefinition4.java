@@ -14,7 +14,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,6 +27,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -50,10 +53,12 @@ public class LoginStepsDefinition4 {
 
 	    // Write code here that turns the phrase above into concrete actions
 		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--remote-allow-origins=*");
-		options.addArguments("--start-maximized");
-		options.addArguments("--disable-gpu");
-		options.addArguments("--no-sandbox");
+//		options.addArguments("--headless=new"); // Use modern headless mode
+//		options.addArguments("--window-size=2560,1440"); // Ensures visibility
+//		options.addArguments("--disable-gpu"); // Still needed for some setups
+//		options.addArguments("--no-sandbox"); // Required in some CI environments
+//		options.addArguments("--disable-dev-shm-usage"); // Helps with memory in Docker/CI
+//		options.addArguments("--remote-allow-origins=*"); // Only needed if CORS issues occur
 	    // Create a HashMap for preferences
 	    HashMap<String, Object> prefs = new HashMap<>();    
 	    // Block notifications by setting the preference value to 2 (block)
@@ -61,7 +66,7 @@ public class LoginStepsDefinition4 {
 	    // Add preferences to Chrome options
 	    options.setExperimentalOption("prefs", prefs);
 	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String downloadDir = "D:\\fd\\btladintelleautomation\\BTLoutputs" + timestamp;
+	    String downloadDir = "D:\\fd\\btladintelleautomation\\BTLoutputs\\" + timestamp;
 
 	    File downloadFolder = new File(downloadDir);
 	    if (!downloadFolder.exists()) {
@@ -248,7 +253,6 @@ public class LoginStepsDefinition4 {
 			waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[3]/div[1]/input")));								
 			String targetearning = row.getCell(46).toString();
 		    WebElement targetearningField = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[3]/div[1]/input"));
-		    
 		    targetearningField.clear();
 		    targetearningField.sendKeys(targetearning);
 		    targetearningField.sendKeys(Keys.TAB);
@@ -313,44 +317,47 @@ public class LoginStepsDefinition4 {
 			wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 			
 			driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
-			
-			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/add-attachment.svg']")));
-			
-			
-			 WebElement createjobattach = driver.findElement(By.xpath("//img[@src='./assets/img/svg/add-attachment.svg']"));
-			 createjobattach.click();
-			 WebElement fileInput = driver.findElement(By.id("file"));
-
-		       
-		     String filePath = "C:\\Users\\Dipti\\Desktop\\sig.png";  
-
-		     fileInput.sendKeys(filePath);
-		     
-		     By elementXpath = By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/div/div/app-add-attachment/form/div/div[5]/div/div/span[2]");
-
-		     try {
-		         // Wait until it's clickable
-		         WebElement element = wait1.until(ExpectedConditions.elementToBeClickable(elementXpath));
-		         
-		         try {
-		        	 try {
-		        		    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
-		        		    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-		        		    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-global-overlay-wrapper")));
-		        		} catch (Exception ignored) {
-		        		    // If not present, ignore
-		        		}
-		        	 wait.until(ExpectedConditions.elementToBeClickable(element));
-		             element.click(); // Try normal click
-		         } catch (ElementClickInterceptedException e) {
-		             System.out.println("Normal click failed, trying JS click due to intercept...");
-		             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element); // JS fallback
-		         }
-		     } catch (TimeoutException e) {
-		         System.out.println("Element was not clickable even after waiting: " + elementXpath);
-		         // Optional: take screenshot or throw error
-		     }
-
+			Thread.sleep(2000);		
+//			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/add-attachment.svg']")));
+//			
+//			
+//			Thread.sleep(2000);		
+//			 WebElement createjobattach = driver.findElement(By.xpath("//img[@src='./assets/img/svg/add-attachment.svg']"));
+//			 createjobattach.click();
+//			 Thread.sleep(2000);		
+//			 WebElement fileInput = driver.findElement(By.id("file"));
+//
+//		       
+//		     String filePath = "C:\\Users\\Dipti\\Desktop\\sig.png";  
+//
+//		     fileInput.sendKeys(filePath);
+//		    
+//		     Thread.sleep(3000);		
+//		     By elementXpath = By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/div/div/app-add-attachment/form/div/div[5]/div/div/span[2]");
+//
+//		     try {
+//		         // Wait until it's clickable
+//		         WebElement element = wait1.until(ExpectedConditions.elementToBeClickable(elementXpath));
+//		         
+//		         try {
+//		        	 try {
+//		        		    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-container")));
+//		        		    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
+//		        		    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-global-overlay-wrapper")));
+//		        		} catch (Exception ignored) {
+//		        		    // If not present, ignore
+//		        		}
+//		        	 wait.until(ExpectedConditions.elementToBeClickable(element));
+//		             element.click(); // Try normal click
+//		         } catch (ElementClickInterceptedException e) {
+//		             System.out.println("Normal click failed, trying JS click due to intercept...");
+//		             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element); // JS fallback
+//		         }
+//		     } catch (TimeoutException e) {
+//		         System.out.println("Element was not clickable even after waiting: " + elementXpath);
+//		         // Optional: take screenshot or throw error
+//		     }
+//
 		    Thread.sleep(5000);
 			wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 		     
@@ -476,21 +483,21 @@ public class LoginStepsDefinition4 {
         // Using JavaScript to click the second date element
         jsk.executeScript("arguments[0].click();", dateElement2);
 			driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
-			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/add-attachment.svg']")));
-			
-			
-			
-			 WebElement createjobattachh = driver.findElement(By.xpath("//img[@src='./assets/img/svg/add-attachment.svg']"));
-			 createjobattachh.click();
-			 WebElement fileInputt = driver.findElement(By.id("file"));
-
-		       
-		     String filePathh = "C:\\Users\\Dipti\\Desktop\\sig.png";  
-
-		     fileInputt.sendKeys(filePathh);
-			
-		     wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/div/div/app-add-attachment/form/div/div[5]/div/div/span[2]")));
-			driver.findElement(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/div/div/app-add-attachment/form/div/div[5]/div/div/span[2]")).click();
+//			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/add-attachment.svg']")));
+//			
+//			
+//			
+//			 WebElement createjobattachh = driver.findElement(By.xpath("//img[@src='./assets/img/svg/add-attachment.svg']"));
+//			 createjobattachh.click();
+//			 WebElement fileInputt = driver.findElement(By.id("file"));
+//
+//		       
+//		     String filePathh = "C:\\Users\\Dipti\\Desktop\\sig.png";  
+//
+//		     fileInputt.sendKeys(filePathh);
+//			
+//		     wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/div/div/app-add-attachment/form/div/div[5]/div/div/span[2]")));
+//			driver.findElement(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/div/div/app-add-attachment/form/div/div[5]/div/div/span[2]")).click();
 		    Thread.sleep(5000);
 			System.out.println("Job modified, navigating to add new activites"); 
 			Thread.sleep(4000);		
@@ -505,7 +512,7 @@ public class LoginStepsDefinition4 {
 		   
 		    JavascriptExecutor jslo = (JavascriptExecutor) driver;
 	        jslo.executeScript("window.scrollBy(0, document.body.scrollHeight)");
-	        
+	        ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 	        wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/addactivity.svg']")));
 	        
 		    driver.findElement(By.xpath("//img[@src='./assets/img/svg/addactivity.svg']")).click();
@@ -537,25 +544,27 @@ public class LoginStepsDefinition4 {
 		    WebElement HSNField = driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[6]/ng-select/div/div/div[2]/input"));
 			HSNField.sendKeys(HSN);
 		    HSNField.sendKeys(Keys.ENTER);
-		    
+		    Thread.sleep(1000);
+		   
+		    Thread.sleep(1000);
 		    String Quantity1 = row.getCell(6).toString();
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("quantity")));
+		   wait1.until(ExpectedConditions.visibilityOfElementLocated(By.name("quantity")));
 		    WebElement QuantityField = driver.findElement(By.name("quantity"));
 			QuantityField.sendKeys(Quantity1);
 		    QuantityField.sendKeys(Keys.ENTER);
-		    driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div")).click();
+		 
 			Thread.sleep(2000);
 			Thread.sleep(6000);
-	         
+			
 			String Rate = row.getCell(7).toString();//*[@id="action-dialog-delete"]/div/table/tr/td[8]/input
 			System.out.println("Rate is"+Rate);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("Rate")));
-			wait1.until(ExpectedConditions.elementToBeClickable(By.name("Rate")));
+			//wait1.until(ExpectedConditions.elementToBeClickable(By.name("Rate")));
 		    WebElement RateField = driver.findElement(By.name("Rate"));
 		    RateField.clear();
 			RateField.sendKeys(Rate);
 //		    RateField.sendKeys(Keys.ENTER);
-		    driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div")).click();
+			  
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[9]/span[2]")));
 		    driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[9]/span[2]")).click();
 		    
@@ -620,7 +629,7 @@ public class LoginStepsDefinition4 {
 		    HSNFieldmod.clear();		    
 			HSNFieldmod.sendKeys(HSNmod);
 		    HSNFieldmod.sendKeys(Keys.ENTER);
-
+		    
 		    String Quantity1mod = row.getCell(25).toString();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.name("quantity")));
 		    WebElement QuantityFieldmod = driver.findElement(By.name("quantity"));
@@ -1730,6 +1739,17 @@ public class LoginStepsDefinition4 {
 	    
 	}
 
+	public static void takeScreenshot(WebDriver driver, String fileName) {
+	    try {
+	        TakesScreenshot ts = (TakesScreenshot) driver;
+	        File source = ts.getScreenshotAs(OutputType.FILE);
+	        File destination = new File("screenshots/" + fileName + ".png");
+	        FileUtils.copyFile(source, destination);
+	        System.out.println("Screenshot taken: " + destination.getAbsolutePath());
+	    } catch (Exception e) {
+	        System.out.println("Failed to capture screenshot: " + e.getMessage());
+	    }
+	}
 
 
     public static void selectDate(WebDriver driver, String date) {

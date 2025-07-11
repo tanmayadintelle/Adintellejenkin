@@ -1,3 +1,4 @@
+@Sanity
 Feature: Automation for new digital on pro link for Client Billing flow
 Scenario Outline: Check if digital flow on pro(CBF) is working fine
 Given User logs in and navigate to digital page for cbf
