@@ -1,4 +1,4 @@
-@Sanity
+
 Feature: Automation for press pro link
 Scenario Outline: Check if  pro flow is working fine
 Given User completes Press pro sanity flow
