@@ -942,12 +942,13 @@ public class LoginStepsDefinition4 {
 			 		    
 		    System.out.println("Added activity inside estimate");
 		    
-		    String screenshotName;
+		    
 		    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 		    try {
+		    	String screenshot="hi";
 		        TakesScreenshot ts = (TakesScreenshot) driver;
 		        File source = ts.getScreenshotAs(OutputType.FILE);
-		        File destination = new File("target/screenshots/" + screenshotName + ".png");
+		        File destination = new File("target/screenshots/" + screenshot +".png");
 		        FileUtils.copyFile(source, destination);
 		        System.out.println("Screenshot saved: " + destination.getAbsolutePath());
 		   
@@ -963,7 +964,7 @@ public class LoginStepsDefinition4 {
         } catch (Exception e) {
 	        System.out.println("Exception while taking screenshot: " + e.getMessage());
 	    }
-	}
+	
 			WebElement calendarButton1 = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-estimate/div/div[5]/div/div[2]/div[1]/div[2]/div/div/div/mat-datepicker-toggle/button/span[3]"));
 			calendarButton1.click();
 			
