@@ -256,12 +256,25 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	         By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 	 nextButton.click();
 
-		
-		String JobName = row.getCell(4).getStringCellValue(); 	
-		waitload.until(ExpectedConditions.elementToBeClickable(By.name("JobName")));
-	    WebElement JobNameField = driver.findElement(By.name("JobName"));
-	    JobNameField.clear();
-	    JobNameField.sendKeys(JobName);
+		Thread.sleep(2000);
+		String JobName = row.getCell(4).getStringCellValue();
+
+		// Wait for visibility and presence
+		WebElement JobNameField = waitload.until(ExpectedConditions.visibilityOfElementLocated(By.name("JobName")));
+
+		// Scroll it into view explicitly (important for headless mode)
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", JobNameField);
+
+		// Extra small wait to let the scroll settle
+		Thread.sleep(300); // use WebDriverWait if you want it cleaner
+
+		// Ensure it's clickable
+		waitload.until(ExpectedConditions.elementToBeClickable(JobNameField));
+
+		// Interact with the field
+		JobNameField.clear();
+		JobNameField.sendKeys(JobName);
+
 	    
 	    WebElement jobdatecalendar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"deliveryDate\"]/div/div/mat-datepicker-toggle/button/span[3]")));
 		jobdatecalendar.click();
