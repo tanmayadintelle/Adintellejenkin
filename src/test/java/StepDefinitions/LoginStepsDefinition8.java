@@ -217,7 +217,8 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
     JavascriptExecutor js = (JavascriptExecutor) driver;
  // Wait for the Client dropdown input to be ready
-   // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='80%'");
+    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
+    // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='80%'");
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"select-client\"]/div/div[1]/ng-select/div")));
 
     // Format Excel values to preserve spaces and formatting
@@ -416,7 +417,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	        	Thread.sleep(2000);
 	        	WebElement nextbutton05 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span")));
 				nextbutton05.click();
-				js.executeScript("document.body.style.zoom='90%'");
+				//js.executeScript("document.body.style.zoom='90%'");
 				Thread.sleep(2000);
 				WebElement nextbutton06 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 				nextbutton06.click();
@@ -712,7 +713,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 		        	Thread.sleep(2000);
 		        	WebElement nextbutton0511 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span")));
 					nextbutton0511.click();
-					js.executeScript("document.body.style.zoom='90%'");
+					//js.executeScript("document.body.style.zoom='90%'");
 					Thread.sleep(2000);
 					WebElement nextbutton061 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 					nextbutton061.click();
