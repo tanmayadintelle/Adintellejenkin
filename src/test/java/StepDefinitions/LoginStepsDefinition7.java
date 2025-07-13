@@ -66,7 +66,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    // Create a HashMap for preferences
 //				ChromeOptions options = new ChromeOptions();
 //				options.addArguments("--headless=new");
-//				options.addArguments("--window-size=1920,1080");
+				options.addArguments("--window-size=1366,768");
 //				options.addArguments("--disable-gpu");
 //				options.addArguments("--no-sandbox");
 //				options.addArguments("--disable-dev-shm-usage");
@@ -216,7 +216,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
     JavascriptExecutor js = (JavascriptExecutor) driver;
-    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
+    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='90%'");
  // Wait for the Client dropdown input to be ready
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"select-client\"]/div/div[1]/ng-select/div")));
 
