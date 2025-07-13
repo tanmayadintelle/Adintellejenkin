@@ -96,7 +96,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    System.out.print("WebDriver initalized");
 			    driver.get("https://pro.adintelle.com/v7/login"); 
 			    System.out.print("Website opened");
-			    driver.manage().window().maximize();
+			    //driver.manage().window().maximize();
 			    
 			    String excelFilePath = "D:\\fd\\btladintelleautomation\\DigitalproVBF.xlsx";  // Path to your Excel file
 		        FileInputStream file = new FileInputStream(new File(excelFilePath));
