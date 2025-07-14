@@ -318,7 +318,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 			
 			WebElement nextbutton04 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 			nextbutton04.click();
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 	        System.out.print("Add Campaign for Manual FLow");
 	     // Wait for Add Campaign icon and click it using JavaScript
 	        WebElement addCampaignIcon = wait.until(ExpectedConditions.presenceOfElementLocated(
@@ -604,9 +604,9 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 		         js.executeScript("arguments[0].click();", accountfield1);
 		         accountfield1.clear();		    	   
 		         accountfield1.sendKeys(account);
-		         Thread.sleep(2000);
+		        
 		         accountfield1.sendKeys(Keys.ENTER);
-		         
+		         Thread.sleep(2000);
 		         String adaccount = row.getCell(28).getStringCellValue();
 		         WebElement adaccountfield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/ng-select/div/div/div[2]/input")));
 		         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/ng-select/div/div/div[2]/input")));
@@ -950,6 +950,9 @@ public void user_createsestimate_withoutputs() throws InterruptedException, File
 		  WebElement documentnameelement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[6]/div[2]/input")));
 		  documentnameelement.sendKeys(documentname);
 		  documentnameelement.sendKeys(Keys.ENTER);
+		  
+		  wait.until(ExpectedConditions.invisibilityOfElementLocated(
+				    By.cssSelector(".cdk-overlay-backdrop")));
 		  
 		  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 		  driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
