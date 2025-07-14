@@ -1093,7 +1093,7 @@ public void user_createspo_withoutputs() throws InterruptedException, FileNotFou
 		String vendorName1 = vendorNameRaw1.replace('\u00A0', ' ').trim();
 		System.out.println("🔍 Excel input: [" + vendorNameRaw1 + "]");
 		System.out.println("✅ Cleaned vendorName: [" + vendorName1 + "]");
-
+		Thread.sleep(2000);
 		// 2️⃣ Locate and open the dropdown input
 		WebElement vendorInput = wait.until(ExpectedConditions.elementToBeClickable(
 		    By.cssSelector("div.ng-select-container div.ng-input input")
