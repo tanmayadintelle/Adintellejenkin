@@ -256,7 +256,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	         By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 	 nextButton.click();
 
-	 Thread.sleep(2000);
+	 Thread.sleep(3000);
 	 String JobName = row.getCell(4).getStringCellValue();
 
 		// Wait for visibility and presence
@@ -1635,7 +1635,7 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 					  
 					  WebElement nextButton0015 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill-intergrated > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 					  nextButton0015.click();
-					  
+					  Thread.sleep(3000);
 					  WebElement vendorratechange12 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"vailidateRate\"]/div[3]/div/div/span[2]")));
 					  vendorratechange12.click();
 					  
