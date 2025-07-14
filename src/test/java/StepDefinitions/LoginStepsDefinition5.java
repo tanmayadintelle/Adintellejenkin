@@ -1478,14 +1478,20 @@ public class LoginStepsDefinition5 {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
 
 		// Step 4: Click on the day in the calendar
-		WebElement dayElement1 = wait.until(ExpectedConditions.elementToBeClickable(
-		    By.xpath("//div[contains(@class,'datepicker-days')]//td[not(contains(@class,'old')) and not(contains(@class,'new')) and text()='" + day + "']")
-		));
-		dayElement1.click();
+		String xpathDay = "//div[contains(@class,'datepicker-days')]//td[not(contains(@class,'old')) and not(contains(@class,'new')) and normalize-space()='" + day1 + "']";
+		WebElement dayElement1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathDay)));
+
+		try {
+		    dayElement1.click();
+		} catch (org.openqa.selenium.ElementClickInterceptedException e) {
+		    System.out.println("Click intercepted, using JS click as fallback");
+		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElement1);
+		}
 
 		// Step 5: Click the submit button
 		WebElement submitButton004 = wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnSetInsertion")));
 		submitButton004.click();
+
 
 		WebElement submitButton005 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnsubmit")));
 		submitButton005.click();
