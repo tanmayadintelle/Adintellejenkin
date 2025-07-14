@@ -1225,10 +1225,11 @@ public class LoginStepsDefinition5 {
 		//wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("modal-footer")));
 		Thread.sleep(4000);
 		// Wait for modal to disappear (if any)
+		// Wait for modal-footer to disappear
 		new WebDriverWait(driver, Duration.ofSeconds(10))
 		    .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-footer")));
 
-		// ✅ Try waiting for datepicker to disappear, but don’t crash if it doesn't
+		// Try waiting for datepicker to disappear, but don't crash if it doesn't
 		try {
 		    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("datepicker-days")));
 		} catch (TimeoutException e) {
@@ -1238,36 +1239,37 @@ public class LoginStepsDefinition5 {
 		// Blur the date field (useful to close calendars)
 		((JavascriptExecutor) driver).executeScript("arguments[0].blur();", dateFieldreschedule);
 
-		Thread.sleep(5000);  // Use explicit wait if possible instead
+		// Replace Thread.sleep(5000) with explicit wait if possible, otherwise keep short wait
+		Thread.sleep(3000); // Reduced wait to 3 sec for better responsiveness
 
-		// Wait and click Set Insertion button
+		// Wait and click "Set Insertion" button
 		WebElement submitButton0404 = wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnSetInsertion")));
 		submitButton0404.click();
 
-		Thread.sleep(5000); // Again, consider WebDriverWait instead
+		Thread.sleep(3000); // Reduced wait, replace if possible with explicit wait for next element
 
-		// Scroll to and click submit button
+		// Scroll to and wait for submit button
 		WebElement submitButton17 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnsubmit")));
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton17);
 		Thread.sleep(500);
 
-
+		// Try clicking submit button, retry with JS if click intercepted
 		try {
 		    submitButton17.click();
 		} catch (ElementClickInterceptedException e) {
 		    System.out.println("⚠️ Click intercepted, retrying with JS");
-		   
+		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", submitButton17);
 		}
 
-	WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("GenRoResch")));
-	saveButton.click();
+		// Wait and click the "GenRoResch" button
+		WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("GenRoResch")));
+		saveButton.click();
 
- 		
-	 wait.until(ExpectedConditions.elementToBeClickable(
-			    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
-			)).click();
-	 
- 	
+		// Wait for and click the "Ok" button in popup
+		wait.until(ExpectedConditions.elementToBeClickable(
+		    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
+		)).click();
+
 	 
 	String xpathaddsidebar1rescprint = "//*[@id=\"mySidebar\"]/div/div/span[3]";
 	//
