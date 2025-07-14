@@ -99,7 +99,7 @@ public class LoginStepsDefinition5 {
 			Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 			Row row = sheet.getRow(1); // Get the second row (0-indexed));
 			WebDriverWait waitload2 = new WebDriverWait(driver, Duration.ofSeconds(60));
-			  
+			 ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
 		    waitload2.until(ExpectedConditions.elementToBeClickable(By.name("username")));
 			// Step 3: Find the form fields on the webpage and fill them with data from Excel
 			
@@ -1223,6 +1223,7 @@ public class LoginStepsDefinition5 {
 			}
 		
 		//wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("modal-footer")));
+		Thread.sleep(4000);
 		new WebDriverWait(driver, Duration.ofSeconds(10))
 	    .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-footer")));
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("datepicker-days")));

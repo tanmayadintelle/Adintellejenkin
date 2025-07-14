@@ -1323,15 +1323,16 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 
 			for (int i = 0; i < options.size(); i++) {
 			    try {
-			        // Re-fetch the options list to avoid stale references
-			        WebElement option = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
-			            By.cssSelector(".ng-dropdown-panel .ng-option")
-			        )).get(i);
+			        // Always re-fetch the list inside the loop to get fresh references
+			        List<WebElement> freshOptions = driver.findElements(By.cssSelector(".ng-dropdown-panel .ng-option"));
+			        if (i >= freshOptions.size()) break;  // Avoid IndexOutOfBounds
+			        WebElement option = freshOptions.get(i);
 
 			        String text = option.getText().trim();
 			        if (!text.isEmpty()) {
 			            System.out.println("✅ Selecting option: " + text);
 			            try {
+			                // Re-validate the specific option is clickable
 			                wait.until(ExpectedConditions.elementToBeClickable(option)).click();
 			            } catch (ElementClickInterceptedException | StaleElementReferenceException e) {
 			                System.out.println("⚠️ Click failed — using JavaScript click as fallback.");
@@ -1342,7 +1343,6 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 			        }
 			    } catch (StaleElementReferenceException e) {
 			        System.out.println("⚠️ Skipped stale element at index " + i);
-			        continue;
 			    }
 			}
 
