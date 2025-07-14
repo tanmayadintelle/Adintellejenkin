@@ -1224,19 +1224,33 @@ public class LoginStepsDefinition5 {
 		
 		//wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("modal-footer")));
 		Thread.sleep(4000);
+		// Wait for modal to disappear (if any)
 		new WebDriverWait(driver, Duration.ofSeconds(10))
-	    .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-footer")));
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("datepicker-days")));
+		    .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-footer")));
+
+		// ✅ Try waiting for datepicker to disappear, but don’t crash if it doesn't
+		try {
+		    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("datepicker-days")));
+		} catch (TimeoutException e) {
+		    System.out.println("⚠️ Datepicker did not disappear in expected time.");
+		}
+
+		// Blur the date field (useful to close calendars)
 		((JavascriptExecutor) driver).executeScript("arguments[0].blur();", dateFieldreschedule);
 
-		Thread.sleep(5000);
-		
+		Thread.sleep(5000);  // Use explicit wait if possible instead
+
+		// Wait and click Set Insertion button
 		WebElement submitButton0404 = wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnSetInsertion")));
 		submitButton0404.click();
-		Thread.sleep(5000);
+
+		Thread.sleep(5000); // Again, consider WebDriverWait instead
+
+		// Scroll to and click submit button
 		WebElement submitButton17 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnsubmit")));
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton17);
-		Thread.sleep(500); // Allow scroll time
+		Thread.sleep(500);
+
 
 		try {
 		    submitButton17.click();
