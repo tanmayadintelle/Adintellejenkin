@@ -1406,13 +1406,29 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 				  nextButton0001.click();
 				  try {
 					  //  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-					    By reversalIconSelector = By.cssSelector("img[src*='add-reversal.svg']");
+					    //By reversalIconSelector = By.cssSelector("img[src*='add-reversal.svg']");
 					    By closeIconSelector = By.xpath("/html/body/ngb-offcanvas-panel/div[1]/span/img");
 
-					    // Step 1: Click the first reversal icon
-					    WebElement reversalIcon = wait.until(ExpectedConditions.elementToBeClickable(reversalIconSelector));
-					    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", reversalIcon);
-					    reversalIcon.click();
+					    By reversalIconSelector = By.cssSelector("img[src*='add-reversal.svg']");
+					    int attempts = 0;
+
+					    while (attempts < 3) {
+					        try {
+					            WebElement reversalIcon = wait.until(ExpectedConditions.elementToBeClickable(reversalIconSelector));
+					            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", reversalIcon);
+					            reversalIcon.click();
+					            break; // If click succeeds, exit the loop
+					        } catch (StaleElementReferenceException e) {
+					            System.out.println("StaleElementReferenceException caught, retrying... Attempt " + (attempts + 1));
+					            attempts++;
+					            Thread.sleep(500); // Optional delay before retrying
+					        }
+					    }
+
+//					    // Step 1: Click the first reversal icon
+//					    WebElement reversalIcon = wait.until(ExpectedConditions.elementToBeClickable(reversalIconSelector));
+//					    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", reversalIcon);
+//					    reversalIcon.click();
 
 					    // Step 2: Click the close icon
 					    WebElement closeIcon = wait.until(ExpectedConditions.elementToBeClickable(closeIconSelector));
