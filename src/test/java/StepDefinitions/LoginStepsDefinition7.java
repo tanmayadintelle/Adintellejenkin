@@ -63,7 +63,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
     // Write code here that turns the phrase above into concrete actions
 		   // Write code here that turns the phrase above into concrete actions
 				ChromeOptions options = new ChromeOptions();
-				options.addArguments("--window-size=1920,1080");
+			//	options.addArguments("--window-size=1920,1080");
 			    // Create a HashMap for preferences
 //				ChromeOptions options = new ChromeOptions();
 //				options.addArguments("--headless=new");
@@ -217,7 +217,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
     JavascriptExecutor js = (JavascriptExecutor) driver;
-    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='70%'");
+    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='45%'");
  // Wait for the Client dropdown input to be ready
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"select-client\"]/div/div[1]/ng-select/div")));
 
