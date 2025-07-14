@@ -295,7 +295,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 		        String jobperiodFromExcelmonth2 = row.getCell(12).toString().trim();
 		        String jobperiodFromExcelyear2 = row.getCell(13).toString().trim(); 
 		        selectDateFromCalendar(driver, wait, jobperiodFromExcelday2, jobperiodFromExcelmonth2, jobperiodFromExcelyear2);
-	        Thread.sleep(5000);
+	        Thread.sleep(7000);
 	        
 	        WebElement nextbutton02 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 			nextbutton02.click();
