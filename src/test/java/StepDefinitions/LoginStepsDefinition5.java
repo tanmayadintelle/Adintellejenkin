@@ -1475,18 +1475,26 @@ public class LoginStepsDefinition5 {
 		dateFieldmakegood.click();
 
 		// Step 3: Wait for the datepicker popup to be visible
+		// Wait for the datepicker to be visible
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
 
-		// Step 4: Click on the day in the calendar
+		// Step 4: Build XPath for the target day
 		String xpathDay = "//div[contains(@class,'datepicker-days')]//td[not(contains(@class,'old')) and not(contains(@class,'new')) and normalize-space()='" + day1 + "']";
+
+		// Wait for the day element to be clickable
 		WebElement dayElement1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathDay)));
 
 		try {
+		    // Try normal click
 		    dayElement1.click();
+		    System.out.println("Clicked date: " + day1);
 		} catch (org.openqa.selenium.ElementClickInterceptedException e) {
+		    // If intercepted, try JavaScript click
 		    System.out.println("Click intercepted, using JS click as fallback");
 		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElement1);
+		    System.out.println("Clicked via JS: " + day1);
 		}
+
 
 		// Step 5: Click the submit button
 		WebElement submitButton004 = wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnSetInsertion")));
@@ -2621,34 +2629,6 @@ public class LoginStepsDefinition5 {
 	        String endYear2 = row.getCell(53).toString().trim();
 	        selectDate(driver, wait, By.id("EndDate"), endDay2, endMonth2, endYear2);
 
-//	        wait.until(ExpectedConditions.elementToBeClickable(By.id("StartDate"))).click();
-//	        String startDateFromExcel1 = row.getCell(4).toString().trim().split("\\.")[0];
-//	        System.out.println("Start Date to click: " + startDateFromExcel1);
-//
-//	        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
-//	        List<WebElement> startDates1 = driver.findElements(By.xpath("//div[contains(@class,'datepicker-days')]//td[@class='day' or contains(@class, 'active')]"));
-//	        for (WebElement date : startDates1) {
-//	            if (date.getText().equals(startDateFromExcel1)) {
-//	                date.click();
-//	                break;
-//	            }
-//	        }
-//	        Thread.sleep(1000);
-//
-//	        // End date selection
-//	        wait.until(ExpectedConditions.elementToBeClickable(By.id("EndDate"))).click();
-//	        String endDateFromExcel1 = row.getCell(5).toString().trim().split("\\.")[0];
-//	        System.out.println("End Date to click: " + endDateFromExcel1);
-//
-//	        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
-//	        List<WebElement> endDates1 = driver.findElements(By.xpath("//div[contains(@class,'datepicker-days')]//td[@class='day' or contains(@class, 'active')]"));
-//	        for (WebElement date : endDates1) {
-//	            if (date.getText().equals(endDateFromExcel1)) {
-//	                date.click();
-//	                break;
-//	            }
-//	        }
-
 	        wait.until(ExpectedConditions.elementToBeClickable(By.id("btnGenerateBillRegister"))).click();
 	       
 	        Thread.sleep(5000); 
@@ -2738,16 +2718,6 @@ public class LoginStepsDefinition5 {
 	            }
 	        }
 
-	        
-	        
-	        
-	        
-	        
-	        
-	        
-	        
-	        
-	        
 	        // End date selection
 //	        wait.until(ExpectedConditions.elementToBeClickable(By.id("EndDate"))).click();
 //	        String endDateFromExcel2 = row.getCell(5).toString().trim().split("\\.")[0];
