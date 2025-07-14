@@ -1315,31 +1315,43 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 		// Small pause to allow dropdown to render
 		Thread.sleep(500);  // Or use WebDriverWait with expected conditions for better practice
 
-		// Wait for dropdown options to become visible
 		List<WebElement> options = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
-		    By.cssSelector(".ng-dropdown-panel .ng-option")
-		));
+			    By.cssSelector(".ng-dropdown-panel .ng-option")
+			));
 
-		boolean clicked = false;
-		for (WebElement option : options) {
-		    String text = option.getText().trim();
-		    if (!text.isEmpty()) {
-		        System.out.println("✅ Selecting option: " + text);
-		        try {
-		            option.click();
-		        } catch (ElementClickInterceptedException | StaleElementReferenceException e) {
-		            // Fallback: JS click if regular click fails
-		            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
-		        }
-		        clicked = true;
-		        break;
-		    }
-		}
+			boolean clicked = false;
 
-		if (!clicked) {
-		    System.out.println("⚠️ No option was clicked - options may not be interactable.");
-		}
-		ngSelectInput.sendKeys(Keys.ENTER);
+			for (int i = 0; i < options.size(); i++) {
+			    try {
+			        // Re-fetch the options list to avoid stale references
+			        WebElement option = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+			            By.cssSelector(".ng-dropdown-panel .ng-option")
+			        )).get(i);
+
+			        String text = option.getText().trim();
+			        if (!text.isEmpty()) {
+			            System.out.println("✅ Selecting option: " + text);
+			            try {
+			                wait.until(ExpectedConditions.elementToBeClickable(option)).click();
+			            } catch (ElementClickInterceptedException | StaleElementReferenceException e) {
+			                System.out.println("⚠️ Click failed — using JavaScript click as fallback.");
+			                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
+			            }
+			            clicked = true;
+			            break;
+			        }
+			    } catch (StaleElementReferenceException e) {
+			        System.out.println("⚠️ Skipped stale element at index " + i);
+			        continue;
+			    }
+			}
+
+			if (!clicked) {
+			    System.out.println("⚠️ No option was clicked — options may not be interactable.");
+			}
+
+			// Press ENTER to confirm the selection
+			ngSelectInput.sendKeys(Keys.ENTER);
 		  String vendorbillmonth = row.getCell(47).toString();
 		  WebElement vendorbillmonthelement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[2]/div[1]/div[2]/div[1]/ng-select/div/div/div[3]/input")));
 		  vendorbillmonthelement.sendKeys(vendorbillmonth);
@@ -1625,17 +1637,17 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 					 Thread.sleep(2000);
 					 WebElement nextButton0009 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill-intergrated > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 					 nextButton0009.click();
-					 Thread.sleep(2000);
+					 Thread.sleep(5000);
 					 
 					 WebElement tax1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div/div[1]/div[4]/div[2]/ng-select/div/div/div[2]/input")));
 					 String billtax1 = row.getCell(46).getStringCellValue();
 					 tax1.clear();
 					 tax1.sendKeys(billtax1);
 					 tax1.sendKeys(Keys.ENTER);
-					
+					 Thread.sleep(3000);
 					 WebElement nextButton0013 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill-intergrated > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 					  nextButton0013.click();
-					  
+					  Thread.sleep(3000);
 					  WebElement nextButton0015 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill-intergrated > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 					  nextButton0015.click();
 					  Thread.sleep(3000);
