@@ -31,6 +31,9 @@ import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -49,7 +52,7 @@ public class LoginStepsDefinition4 {
 	
 	@SuppressWarnings("deprecation")
 	@Given("User completes BTL pro sanity flow")
-	public void user_is_on_login_page() throws IOException, InterruptedException {
+	public void user_is_on_login_page() throws IOException, InterruptedException, AWTException {
 
 	    // Write code here that turns the phrase above into concrete actions
 		ChromeOptions options = new ChromeOptions();
@@ -88,6 +91,7 @@ public class LoginStepsDefinition4 {
 	    driver =new ChromeDriver(options);
 	    System.out.print("WebDriver initalized");
 	    driver.get("https://pro.adintelle.com/v7/login"); 
+	    reduceResolution();
 	    System.out.print("Website opened");
 	    driver.manage().window().maximize();
 	    
@@ -172,7 +176,7 @@ public class LoginStepsDefinition4 {
 		    waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/newjob.svg']")));
 //		    JavascriptExecutor jsif = (JavascriptExecutor) driver;
 //	        jsif.executeScript("arguments[0].scrollTop = arguments[0].scrollHeight", iframe);
-		    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
+		   // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
 		    driver.findElement(By.xpath("//img[@src='./assets/img/svg/newjob.svg']")).click();
 		    waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/div/div/app-new-job/div/div[3]/div/div[2]/div/div/div/div/div[1]/div[1]/span/img")));
 		    System.out.println("Inside New Job activity");
@@ -199,6 +203,7 @@ public class LoginStepsDefinition4 {
 		    WebElement TeamField = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div[2]/div/div/div[1]/ng-select/div/div/div[2]/input"));
 			TeamField.clear();
 			TeamField.sendKeys(Team);
+			Thread.sleep(1000);
 			driver.findElement(By.xpath("/html/body/ng-dropdown-panel/div/div[2]/div/div/table/tr/td")).click();
 				//ClientField.sendKeys(Keys.TAB);
 			waitload.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
@@ -206,7 +211,7 @@ public class LoginStepsDefinition4 {
 			waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div[2]/div/div/div[2]/ng-select/div/div/div[2]/input")));
 			String Userlocation = row.getCell(16).toString();
 			WebElement UserlocationField = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div[2]/div/div/div[2]/ng-select/div/div/div[2]/input"));
-			
+			Thread.sleep(1000);
 			UserlocationField.clear();
 			UserlocationField.sendKeys(Userlocation);
 			driver.findElement(By.xpath("/html/body/ng-dropdown-panel/div/div[2]/div/div/table/tr/td")).click();
@@ -214,7 +219,7 @@ public class LoginStepsDefinition4 {
 			waitload.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 			driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
 			waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div[1]/div/div/div[2]/ng-select/div/div/div[2]/input")));
-				
+			Thread.sleep(1000);
 			String Brand = row.getCell(18).toString();
 		    WebElement BrandField = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div[1]/div/div/div[2]/ng-select/div/div/div[2]/input"));
 		    
@@ -223,6 +228,7 @@ public class LoginStepsDefinition4 {
 			driver.findElement(By.xpath("/html/body/ng-dropdown-panel/div/div[2]/div/div/table/tr/td")).click();
 			BrandField.sendKeys(Keys.TAB);
 			BrandField.sendKeys(Keys.ENTER);
+			Thread.sleep(1000);
 			waitload.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 			driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
 			waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[1]/input")));		
@@ -233,6 +239,7 @@ public class LoginStepsDefinition4 {
 			jobnameField.sendKeys(Jobname);
 			
 			jobnameField.sendKeys(Keys.TAB);
+			Thread.sleep(1000);
 			jobnameField.sendKeys(Keys.ENTER);
 			waitload.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 			
@@ -242,7 +249,7 @@ public class LoginStepsDefinition4 {
 			waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[3]/div/div/mat-datepicker-toggle/button/span[3]")));		
 			WebElement calendarButton111 = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[3]/div/div/mat-datepicker-toggle/button/span[3]"));
 			calendarButton111.click();
-			
+			Thread.sleep(1000);
 			// Read the value "10" from the Excel sheet (ensure this is the exact value)
 			String dateFromExcel11 = row.getCell(45).toString().trim();
 
@@ -522,7 +529,6 @@ public class LoginStepsDefinition4 {
 	        jslo.executeScript("window.scrollBy(0, document.body.scrollHeight)");
 	       
 	        wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/addactivity.svg']")));
-	        
 		    driver.findElement(By.xpath("//img[@src='./assets/img/svg/addactivity.svg']")).click();
 		    Thread.sleep(2000);
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@aria-autocomplete='list']")));
@@ -1551,8 +1557,9 @@ public class LoginStepsDefinition4 {
 		Thread.sleep(1000);
 		 //((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#client-bill > div:nth-child(3) > div.ng-star-inserted > span.submit-button.ng-star-inserted")));
+		Thread.sleep(1000);
 		wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#client-bill > div:nth-child(3) > div.ng-star-inserted > span.submit-button.ng-star-inserted"))).click();
-		Thread.sleep(2000);
+		Thread.sleep(5000);
 		wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type='checkbox'].checkBox.selectcheckall"))).click();
 		
 
@@ -1841,7 +1848,28 @@ public class LoginStepsDefinition4 {
         }
     }
 
-
+    private void reduceResolution() throws AWTException {
+        System.setProperty("java.awt.headless", "false");
+        Robot robot = new Robot();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        for (int i = 0; i < 1; i++) {
+            robot.keyPress(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_MINUS);
+            robot.keyRelease(KeyEvent.VK_MINUS);
+            robot.keyRelease(KeyEvent.VK_CONTROL);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+               System.out.println("issue with resolution");     
+               Thread.currentThread().interrupt();//logger.logs( "Interrupted!", e);
+                
+            }
+        }
+    }
 	@And("Close the chrome Browser")
 	public void close_the_browser() {
 	    // Write code here that turns the phrase above into concrete actions
