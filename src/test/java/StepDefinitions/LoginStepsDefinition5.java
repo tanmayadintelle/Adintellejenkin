@@ -157,7 +157,7 @@ public class LoginStepsDefinition5 {
 	        elementarrow.click();
 	        
 	        System.out.println("Logged in");
-	       // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
+	        ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
 	        //WebDriverWait waitid = new WebDriverWait(driver, Duration.ofSeconds(60));
 	        List<WebElement> icons = driver.findElements(
 	        	    By.xpath("//*[name()='svg']/*[name()='path' and contains(@d, 'M17.8059')]")
