@@ -1551,13 +1551,13 @@ Thread.sleep(2000);
 		WebElement submitButton004 = wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnSetInsertion")));
 		submitButton004.click();
 
-
+		Thread.sleep(3000);
 		WebElement submitButton005 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnsubmit")));
 		submitButton005.click();
-
+		Thread.sleep(3000);
 		WebElement saveButton100 = wait.until(ExpectedConditions.elementToBeClickable(By.id("GenRoResch")));
 		saveButton100.click();
-
+		Thread.sleep(3000);
 	 		
 		 wait.until(ExpectedConditions.elementToBeClickable(
 				    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
