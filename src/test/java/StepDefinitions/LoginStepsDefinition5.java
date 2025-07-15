@@ -448,7 +448,19 @@ public class LoginStepsDefinition5 {
          Thread.sleep(3000);
          String spacewidth = row.getCell(14).toString();
          WebElement spacewidthfield = wait.until(ExpectedConditions.elementToBeClickable(By.id("Dimension1")));
-         spacewidthfield.sendKeys(spacewidth);
+
+      // Scroll into view to prevent overlap issues
+      ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", spacewidthfield);
+      Thread.sleep(300); // Let the scroll settle
+
+      // Try standard sendKeys, fallback to JS set if intercepted
+      try {
+          spacewidthfield.clear(); // Optional: Clear old value
+          spacewidthfield.sendKeys(spacewidth);
+      } catch (ElementClickInterceptedException e) {
+          System.out.println("⚠️ Click intercepted on Dimension1 — using JavaScript fallback.");
+          ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + spacewidth + "';", spacewidthfield);
+      }
          Thread.sleep(3000);
          String spaceheight = row.getCell(15).toString();
          spacewidthfield.click();
