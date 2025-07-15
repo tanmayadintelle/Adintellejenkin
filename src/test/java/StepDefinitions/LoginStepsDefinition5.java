@@ -1455,8 +1455,17 @@ Thread.sleep(2000);
 	 	   WebElement ROMakeGood = wait.until(ExpectedConditions.elementToBeClickable(
 	 	 		    By.xpath("//span[@class='navbarsubtext' and text()='Make Good']")
 	 	 		));
-	 	  ROMakeGood.click();
+	 	
 	 	  
+	 	 try {
+	 		 	ROMakeGood.click();
+			    System.out.println("Reschedule button clicked normally.");
+			} catch (ElementClickInterceptedException | TimeoutException e) {
+			    System.out.println("Click failed, trying JavaScript click: " + e.getMessage());
+			    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", ROMakeGood);
+			    System.out.println("Clicked via JavaScript.");
+			}
+	  
 	 	// wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"ReschTable_filter\"]/label/input"))).click();
 	 	  Thread.sleep(4000);
 	 	  
