@@ -1480,6 +1480,7 @@ Thread.sleep(2000);
 		// Step 1: Get the day from correct Excel column
 		String day1 = row.getCell(37).toString().trim();  // Make sure this contains something like "26"
 		System.out.println("Date to click: " + day1);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ScheduledDate")));
 
 		// Step 2: Click the ScheduledDate input to open the datepicker
 		// Wait and click the ScheduledDate input field to open calendar
@@ -1497,43 +1498,42 @@ Thread.sleep(2000);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
 
 		// Optional: Check displayed calendar month
-		try {
-		    String calendarMonth = driver.findElement(By.className("datepicker-switch")).getText();
-		    System.out.println("📅 Calendar is showing: " + calendarMonth);
-		} catch (Exception e) {
-		    System.out.println("⚠️ Could not read calendar month.");
-		}
+		List<WebElement> dayElements1 = driver.findElements(By.xpath(
+			    "//div[contains(@class,'datepicker-days')]//td[not(contains(@class,'old')) and not(contains(@class,'new')) and normalize-space(text())='" + day1 + "']"
+			));
 
-		// Try to select the date (value in day1)
-		boolean clicked1 = false;
-		int retries = 0;
+			if (!dayElements1.isEmpty()) {
+			    WebElement dayElement1 = dayElements1.get(0);
 
-		while (!clicked1 && retries < 3) {
-		    try {
-		        List<WebElement> dateElements = driver.findElements(By.xpath(
-		            "//div[contains(@class,'datepicker-days')]//td[not(contains(@class,'old')) and not(contains(@class,'new')) and normalize-space(text())='" + day1 + "']"
-		        ));
+			    // Step 5: Wait until visible with a fallback retry mechanism
+			    int attemptsr = 0;
+			    boolean clicked1 = false;
 
-		        if (!dateElements.isEmpty()) {
-		            WebElement dateElement1 = dateElements.get(0);
-		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dateElement1);
-		            Thread.sleep(500); // small pause after scroll
-		            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dateElement1);
-		            System.out.println("✅ Clicked on date: " + day1);
-		            clicked1 = true;
-		        } else {
-		            System.out.println("❌ Date " + day1 + " not found in current calendar view.");
-		        }
-		    } catch (Exception e) {
-		        System.out.println("⚠️ Retry " + (retries + 1) + " failed to click on date " + day1 + ": " + e.getMessage());
-		    }
-		    retries++;
-		    if (!clicked) Thread.sleep(1000); // wait before retry
-		}
+			    while (attemptsr < 3 && !clicked1) {
+			        try {
+			        	 Thread.sleep(2000);
+			            wait.until(ExpectedConditions.visibilityOf(dayElement1));
+			            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dayElement1);
+			            Thread.sleep(500); // Let scroll finish
+			            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElement1);
+			            System.out.println("✅ Clicked on date: " + day1);
+			            clicked1 = true;
+			        } catch (Exception e) {
+			            System.out.println("⚠️ Attempt " + (attemptsr + 1) + ": Failed to click on date " + day1 + " - " + e.getMessage());
+			            Thread.sleep(1000);
+			            attemptsr++;
+			        }
+			    }
 
-		if (!clicked) {
-		    System.out.println("❌ Could not select date: " + day1 + " after 3 retries.");
-		}
+			    if (!clicked1) {
+			        System.out.println("❌ Could not click on date: " + day1 + " after retries.");
+			    }
+				} else {
+				System.out.println("❌ Date " + day1 + " not found in current calendar view.");
+				}
+			Thread.sleep(4000);
+			new WebDriverWait(driver, Duration.ofSeconds(10))
+		    .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-footer")));
 
 		// Optional: wait for datepicker and modal footer to close
 		try {
@@ -1563,7 +1563,48 @@ Thread.sleep(2000);
 	 	} catch (Exception e) {
 	 	    System.out.println("❌ Exception while clicking OK button: " + e.getMessage());
 	 	}
-	 	Thread.sleep(3000);	
+	 	Thread.sleep(3000); // Reduced wait to 3 sec for better responsiveness
+
+		// Wait and click "Set Insertion" button
+		WebElement submitButton0405 = wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnSetInsertion")));
+		submitButton0405.click();
+
+		Thread.sleep(5000); // Reduced wait, replace if possible with explicit wait for next element
+
+		// Scroll to and wait for submit button
+		WebElement submitButton18 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnsubmit")));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton18);
+		Thread.sleep(500);
+
+		// Try clicking submit button, retry with JS if click intercepted
+		try {
+		    submitButton18.click();
+		} catch (ElementClickInterceptedException e) {
+		    System.out.println("⚠️ Click intercepted, retrying with JS");
+		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", submitButton18);
+		}
+		Thread.sleep(3000);
+		// Wait and click the "GenRoResch" button
+		WebElement saveButton3 = wait.until(ExpectedConditions.elementToBeClickable(By.id("GenRoResch")));
+		saveButton3.click();
+		Thread.sleep(3000);	
+		try {
+	 	    WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(5));
+	 	    List<WebElement> okButtons = driver.findElements(
+	 	        By.xpath("//button[contains(text(),'Ok')]")
+	 	    );
+
+	 	    if (!okButtons.isEmpty()) {
+	 	        WebElement okBtn = shortWait.until(ExpectedConditions.elementToBeClickable(okButtons.get(0)));
+	 	        okBtn.click();
+	 	        System.out.println("✅ OK button clicked.");
+	 	    } else {
+	 	        System.out.println("⚠️ OK button not present. Skipping click.");
+	 	    }
+	 	} catch (Exception e) {
+	 	    System.out.println("❌ Exception while clicking OK button: " + e.getMessage());
+	 	}
+		Thread.sleep(3000);
 		 String xpathaddsidebar1makegoodrint = "//*[@id=\"mySidebar\"]/div/div/span[3]";
 			//
 //			 	    // Loop to click the element//*[@id="MainDiv"]/div[1]/form/div[2]/div[2]/div[3]/a[2]
