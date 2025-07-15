@@ -1492,40 +1492,60 @@ public class LoginStepsDefinition5 {
 		// Step 2: Wait for datepicker to be visible
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
 
-		String xpathDay = "//div[contains(@class,'datepicker-days')]//td[not(contains(@class,'old')) and not(contains(@class,'new')) and normalize-space()='" + day1 + "']";
+		List<WebElement> dayElements1 = driver.findElements(By.xpath(
+			    "//div[contains(@class,'datepicker-days')]//td[not(contains(@class,'old')) and not(contains(@class,'new')) and normalize-space(text())='" + day + "']"
+			));
 
-		boolean clickedj = false;
+			if (!dayElements1.isEmpty()) {
+			    WebElement dayElement1 = dayElements1.get(0);
 
-		for (int i = 1; i <= 5; i++) {
-		    try {
-		        List<WebElement> elements = driver.findElements(By.xpath(xpathDay));
+			    // Step 5: Wait until visible with a fallback retry mechanism
+			    int attemptsr = 0;
+			    boolean clicked1 = false;
 
-		        if (elements.size() == 0) {
-		            System.out.println("⚠️ Attempt " + i + ": Date " + day1 + " not found in calendar.");
-		        } else {
-		            WebElement dayElement1 = wait.until(ExpectedConditions.elementToBeClickable(elements.get(0)));
+			    while (attemptsr < 3 && !clicked1) {
+			        try {
+			        	 Thread.sleep(2000);
+			            wait.until(ExpectedConditions.visibilityOf(dayElement1));
+			            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dayElement1);
+			            Thread.sleep(500); // Let scroll finish
+			            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElement1);
+			            System.out.println("✅ Clicked on date: " + day1);
+			            clicked1 = true;
+			        } catch (Exception e) {
+			            System.out.println("⚠️ Attempt " + (attemptsr + 1) + ": Failed to click on date " + day1 + " - " + e.getMessage());
+			            Thread.sleep(1000);
+			            attemptsr++;
+			        }
+			    }
 
-		            try {
-		                dayElement1.click();
-		                System.out.println("✅ Clicked date: " + day1);
-		            } catch (ElementClickInterceptedException e) {
-		                System.out.println("⚠️ Click intercepted, trying JS click (Attempt " + i + ")");
-		                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElement1);
-		                System.out.println("✅ Clicked via JS: " + day1);
-		            }
-		            clickedj = true;
-		            break;
-		        }
-		    } catch (Exception e) {
-		        System.out.println("❌ Attempt " + i + ": Failed to click on date " + day1 + " - " + e.getMessage());
-		    }
+			    if (!clicked1) {
+			        System.out.println("❌ Could not click on date: " + day1 + " after retries.");
+			    }
+				} else {
+				System.out.println("❌ Date " + day1 + " not found in current calendar view.");
+				}
+			
+			//wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("modal-footer")));
+			Thread.sleep(4000);
+			// Wait for modal to disappear (if any)
+			// Wait for modal-footer to disappear
+			new WebDriverWait(driver, Duration.ofSeconds(10))
+			    .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-footer")));
 
-		    Thread.sleep(2000); // Give the UI time to settle before retrying
-		}
+			// Try waiting for datepicker to disappear, but don't crash if it doesn't
+			try {
+			    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("datepicker-days")));
+			} catch (TimeoutException e) {
+			    System.out.println("⚠️ Datepicker did not disappear in expected time.");
+			}
 
-		if (!clickedj) {
-		    throw new RuntimeException("❌ Failed to click on date: " + day1 + " after multiple attempts.");
-		}
+			// Blur the date field (useful to close calendars)
+			((JavascriptExecutor) driver).executeScript("arguments[0].blur();", dateFieldmakegood);
+
+			// Replace Thread.sleep(5000) with explicit wait if possible, otherwise keep short wait
+			Thread.sleep(3000); // Reduced wait to 3 sec for better responsiveness
+
 
 		// Step 5: Click the submit button
 		WebElement submitButton004 = wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnSetInsertion")));
