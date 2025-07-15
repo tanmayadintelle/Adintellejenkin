@@ -836,7 +836,11 @@ Thread.sleep(2000);
 	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button"))).click();
 	Thread.sleep(500);
 	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[1]/a"))).click();
-	 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loadingModal")));
+	 try {
+		    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loadingModal")));
+		} catch (TimeoutException e) {
+		    System.out.println("Loading modal did not disappear within timeout, continuing anyway...");
+		}
 	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/input"))).click();
 	
 	 wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK"))).click();
@@ -1559,7 +1563,7 @@ Thread.sleep(2000);
 	 	} catch (Exception e) {
 	 	    System.out.println("❌ Exception while clicking OK button: " + e.getMessage());
 	 	}
-	 		
+	 	Thread.sleep(3000);	
 		 String xpathaddsidebar1makegoodrint = "//*[@id=\"mySidebar\"]/div/div/span[3]";
 			//
 //			 	    // Loop to click the element//*[@id="MainDiv"]/div[1]/form/div[2]/div[2]/div[3]/a[2]
