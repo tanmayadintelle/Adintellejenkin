@@ -1492,28 +1492,35 @@ public class LoginStepsDefinition5 {
 		// Step 2: Wait for datepicker to be visible
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
 
-		// Step 3: Build XPath for the target day
 		String xpathDay = "//div[contains(@class,'datepicker-days')]//td[not(contains(@class,'old')) and not(contains(@class,'new')) and normalize-space()='" + day1 + "']";
 
-		// Step 4: Retry clicking on the date (up to 3 attempts)
 		boolean clickedj = false;
-		for (int i = 1; i <= 3; i++) {
+
+		for (int i = 1; i <= 5; i++) {
 		    try {
-		        WebElement dayElement1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathDay)));
-		        try {
-		            dayElement1.click();
-		            System.out.println("✅ Clicked date: " + day1);
-		        } catch (org.openqa.selenium.ElementClickInterceptedException e) {
-		            System.out.println("⚠️ Click intercepted, trying JS click (Attempt " + i + ")");
-		            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElement1);
-		            System.out.println("✅ Clicked via JS: " + day1);
+		        List<WebElement> elements = driver.findElements(By.xpath(xpathDay));
+
+		        if (elements.size() == 0) {
+		            System.out.println("⚠️ Attempt " + i + ": Date " + day1 + " not found in calendar.");
+		        } else {
+		            WebElement dayElement1 = wait.until(ExpectedConditions.elementToBeClickable(elements.get(0)));
+
+		            try {
+		                dayElement1.click();
+		                System.out.println("✅ Clicked date: " + day1);
+		            } catch (ElementClickInterceptedException e) {
+		                System.out.println("⚠️ Click intercepted, trying JS click (Attempt " + i + ")");
+		                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElement1);
+		                System.out.println("✅ Clicked via JS: " + day1);
+		            }
+		            clickedj = true;
+		            break;
 		        }
-		        clickedj = true;
-		        break;
 		    } catch (Exception e) {
 		        System.out.println("❌ Attempt " + i + ": Failed to click on date " + day1 + " - " + e.getMessage());
-		        Thread.sleep(2000); // Wait before retrying
 		    }
+
+		    Thread.sleep(2000); // Give the UI time to settle before retrying
 		}
 
 		if (!clickedj) {
