@@ -1614,8 +1614,7 @@ public class LoginStepsDefinition5 {
 
  	 	// Click the print icon link
  	 	printLink.click();
-
- 	 	
+ 	 	Thread.sleep(3000);	 	
  	 	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/span[2]/input"))).click();	
  		//*[@id="loadingModal"]/div/div/div/div/section/fieldset[1]/legend[1]/input
  		
