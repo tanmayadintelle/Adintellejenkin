@@ -1047,10 +1047,10 @@ Thread.sleep(2000);
 
  
    
-   WebElement ROTab = wait.until(ExpectedConditions.elementToBeClickable(
+   WebElement ROTab2 = wait.until(ExpectedConditions.elementToBeClickable(
  		    By.xpath("//span[@class='navbarsubtext' and text()='RO']")
  		));
- 		ROTab.click();
+ 		ROTab2.click();
   	
       Thread.sleep(2000);
       
@@ -1124,6 +1124,7 @@ Thread.sleep(2000);
  		}
  		
  		System.out.print("RO Created");
+ 		
  		
  		
  		String xpathaddsidebarreschedule = "//*[@id=\"mySidebar\"]/div/div/span[3]";
@@ -1600,119 +1601,162 @@ Thread.sleep(2000);
 
  	 
  		Thread.sleep(2000);
- 		WebElement roTab = wait.until(ExpectedConditions.elementToBeClickable(
- 			    By.xpath("//*[@id=\"submenu_274\"]/ul/li[1]/a")
- 			));
- 			roTab.click();
- 			Thread.sleep(2000);
+ 		 wait.until(ExpectedConditions.elementToBeClickable(
+	 	 		    By.xpath("//*[@id=\"submenu_274\"]/ul/li[4]/a/span"))
+	 	 		).click();
+
+ 			
  			 wait.until(ExpectedConditions.elementToBeClickable(
- 	 			    By.xpath("//a[contains(@onclick,'PrintPopUp') and contains(@href,'PrintReleaseOrderPrinting')]")));
- 			// Wait for the checkbox row to be present
- 			WebElement checkbox = wait.until(ExpectedConditions.presenceOfElementLocated(
- 			    By.xpath("//input[contains(@id, 'ChkROSelect_')]")
- 			));
+ 				 	  By.id("MakeGoodExlOwtput"))
+ 				 	 		).click();
+ 			 		
+ 				 	 System.out.print("RO Makgeood with output");
+
  			Thread.sleep(2000);
- 			// Navigate to the parent row
- 			WebElement parentRow = checkbox.findElement(By.xpath("./ancestor::tr"));
+ 			
+ 			
 
- 			// Find the 2nd <td> (which holds the RO number)
- 			WebElement roNumberCell = parentRow.findElement(By.xpath("./td[2]"));
+ 	 		String xpathaddsidebar1 = "//*[@id=\"mySidebar\"]/div/div/span[3]";
 
- 			// Extract the RO number text
- 			String roNumber = roNumberCell.getText().trim();
+ 	 	    // Loop to click the element//*[@id="MainDiv"]/div[1]/form/div[2]/div[2]/div[3]/a[2]
+ 	 	    for (int attemptss = 0; attemptss < 10; attemptss++) {
+ 	 	        try {
+ 	 	            // Find the element by XPath
+ 	 	            WebElement element = driver.findElement(By.xpath(xpathaddsidebar1));
+ 	 	            Thread.sleep(1000);
+ 	 	            // Click the element
+ 	 	            element.click();
+ 	 	            System.out.println("Element clicked successfully!");
+ 	 	            break; // Exit the loop if the click is successful
+ 	 	        } catch (Exception e) {
+ 	 	            // If an exception occurs, retry
+ 	 	            System.out.println("Attempt " + (attemptss + 1) + " failed. Retrying...");
+ 	 	        }
+ 	 	    }
+ 	 		
+ 	 		
+ 	 		
+ 	 	//	
+// 	 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(""))).click(); 
+ 	 	//	
+ 	 		 wait.until(ExpectedConditions.elementToBeClickable(
+ 	 	 		    By.xpath("//span[text()='Print Documents']/following-sibling::span[@class='pull-right']//img[@class='down-arrow']"))
+ 	 	 		).click();
 
- 			System.out.println("Fetched RO Number: " + roNumber);
+ 	 	 
+ 	 	   
+ 	 		WebElement roTab = wait.until(ExpectedConditions.elementToBeClickable(
+ 	 			    By.xpath("//*[@id=\"submenu_274\"]/ul/li[1]/a")
+ 	 			));
+ 	 			roTab.click();
+ 	 			 wait.until(ExpectedConditions.elementToBeClickable(
+ 	 	 			    By.xpath("//a[contains(@onclick,'PrintPopUp') and contains(@href,'PrintReleaseOrderPrinting')]")));
+ 	 			// Wait for the checkbox row to be present
+ 	 			WebElement checkbox = wait.until(ExpectedConditions.presenceOfElementLocated(
+ 	 			    By.xpath("//input[contains(@id, 'ChkROSelect_')]")
+ 	 			));
 
- 	 		WebElement printLink = driver.findElement(By.xpath("//a[contains(@onclick,'PrintPopUp') and contains(@href,'PrintReleaseOrderPrinting')]"));
+ 	 			// Navigate to the parent row
+ 	 			WebElement parentRow = checkbox.findElement(By.xpath("./ancestor::tr"));
 
- 	 	// Scroll into view (optional but safer if it's out of view)
- 	 	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", printLink);
+ 	 			// Find the 2nd <td> (which holds the RO number)
+ 	 			WebElement roNumberCell = parentRow.findElement(By.xpath("./td[2]"));
 
- 	 	// Click the print icon link
- 	 	printLink.click();
- 	 	Thread.sleep(3000);	 	
- 	 	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/span[2]/input"))).click();	
- 		//*[@id="loadingModal"]/div/div/div/div/section/fieldset[1]/legend[1]/input
- 		
- 	 	wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK"))).click();
- 	 	Thread.sleep(2000);
- 	 	 wait.until(ExpectedConditions.elementToBeClickable(
-	 			    By.xpath("//a[contains(@onclick,'PrintPopUp') and contains(@href,'PrintReleaseOrderPrinting')]")));
-	 		WebElement printLink1 = driver.findElement(By.xpath("//a[contains(@onclick,'PrintPopUp') and contains(@href,'PrintReleaseOrderPrinting')]"));
+ 	 			// Extract the RO number text
+ 	 			String roNumber = roNumberCell.getText().trim();
 
-	 	// Scroll into view (optional but safer if it's out of view)
-	 	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", printLink1);
+ 	 			System.out.println("Fetched RO Number: " + roNumber);
 
-	 	// Click the print icon link
-	 	printLink1.click();
-	 	Thread.sleep(2000);
-	 	
-	 	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/input"))).click();	
-		//*[@id="loadingModal"]/div/div/div/div/section/fieldset[1]/legend[1]/input
-	 	Thread.sleep(2000);
-	 	wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK"))).click();
-	 	Thread.sleep(2000);
-	 	
-		String xpathaddsidebar2 = "//*[@id=\"mySidebar\"]/div/div/span[3]";
+ 	 	 		WebElement printLink = driver.findElement(By.xpath("//a[contains(@onclick,'PrintPopUp') and contains(@href,'PrintReleaseOrderPrinting')]"));
 
- 	    // Loop to click the element//*[@id="MainDiv"]/div[1]/form/div[2]/div[2]/div[3]/a[2]
- 	    for (int attemptss = 0; attemptss < 10; attemptss++) {
- 	        try {
- 	            // Find the element by XPath
- 	            WebElement element = driver.findElement(By.xpath(xpathaddsidebar2));
- 	            Thread.sleep(1000);
- 	            // Click the element
- 	            element.click();
- 	            System.out.println("Element clicked successfully!");
- 	            break; // Exit the loop if the click is successful
- 	        } catch (Exception e) {
- 	            // If an exception occurs, retry
- 	            System.out.println("Attempt " + (attemptss + 1) + " failed. Retrying...");
- 	        }
- 	    }
- 		
- 	   wait.until(ExpectedConditions.elementToBeClickable(
-	 		    By.xpath("//span[text()='Billing']/following-sibling::span[@class='pull-right']//img[@class='down-arrow']"))
-	 		).click();
+ 	 	 	// Scroll into view (optional but safer if it's out of view)
+ 	 	 	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", printLink);
 
-	 
- 	  WebElement logvendorbillTab = wait.until(ExpectedConditions.elementToBeClickable(
-  		    By.xpath("//span[@class='navbarsubtext' and text()='Log Vendor Bill']")
-  		));
- 	 logvendorbillTab.click();
-	 	
- 	// Wait until the label is visible
- 
- 	
- 	wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("CreateNewVB"))).click();
- 	
- 	
+ 	 	 	// Click the print icon link
+ 	 	 	printLink.click();
 
- 	WebElement roNumberButton = wait.until(ExpectedConditions.elementToBeClickable(
- 	    By.xpath("//button[contains(text(),'RO Number') and @onclick='LoadROList();']")
- 	));
+ 	 	 	
+ 	 	 	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/span[2]/input"))).click();	
+ 	 		//*[@id="loadingModal"]/div/div/div/div/section/fieldset[1]/legend[1]/input
+ 	 		
+ 	 	 	wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK"))).click();
+ 	 	 	 wait.until(ExpectedConditions.elementToBeClickable(
+ 		 			    By.xpath("//a[contains(@onclick,'PrintPopUp') and contains(@href,'PrintReleaseOrderPrinting')]")));
+ 		 		WebElement printLink1 = driver.findElement(By.xpath("//a[contains(@onclick,'PrintPopUp') and contains(@href,'PrintReleaseOrderPrinting')]"));
 
- 	roNumberButton.click();
- 	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"ROListTable_filter\"]/label/input")));
- 	WebElement searchInput = driver.findElement(By.xpath("//*[@id=\"ROListTable_filter\"]/label/input"));
- 	searchInput.clear();  // Optional: clear any pre-filled text
- 	searchInput.sendKeys(roNumber);
- 	
- 	
- 	WebElement firstRadioButton = wait.until(ExpectedConditions.elementToBeClickable(
- 		    By.cssSelector("input[type='radio'][data-rono^='RO/']")
- 		));
+ 		 	// Scroll into view (optional but safer if it's out of view)
+ 		 	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", printLink1);
 
- 		// Click the radio button
- 		firstRadioButton.click();
- 		  
- 		String Vendorbillno = row.getCell(31).toString();
- 		WebElement Vendorbillnofield = wait.until(ExpectedConditions.elementToBeClickable(By.id("VendorBillNo_VBLog")));
- 		Vendorbillnofield.sendKeys(Vendorbillno);
- 		wait.until(ExpectedConditions.elementToBeClickable(By.id("VendorBillDate_VBLog"))).click();
- 		
- 	
- 	    String vendorbilldate = row.getCell(32).toString().trim();
+ 		 	// Click the print icon link
+ 		 	printLink1.click();
+
+ 		 	
+ 		 	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/input"))).click();	
+ 			//*[@id="loadingModal"]/div/div/div/div/section/fieldset[1]/legend[1]/input
+ 			
+ 		 	wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK"))).click();
+ 		 	
+ 		 	
+ 			String xpathaddsidebar2 = "//*[@id=\"mySidebar\"]/div/div/span[3]";
+
+ 	 	    // Loop to click the element//*[@id="MainDiv"]/div[1]/form/div[2]/div[2]/div[3]/a[2]
+ 	 	    for (int attemptss = 0; attemptss < 10; attemptss++) {
+ 	 	        try {
+ 	 	            // Find the element by XPath
+ 	 	            WebElement element = driver.findElement(By.xpath(xpathaddsidebar2));
+ 	 	            Thread.sleep(1000);
+ 	 	            // Click the element
+ 	 	            element.click();
+ 	 	            System.out.println("Element clicked successfully!");
+ 	 	            break; // Exit the loop if the click is successful
+ 	 	        } catch (Exception e) {
+ 	 	            // If an exception occurs, retry
+ 	 	            System.out.println("Attempt " + (attemptss + 1) + " failed. Retrying...");
+ 	 	        }
+ 	 	    }
+ 	 		
+ 	 	   wait.until(ExpectedConditions.elementToBeClickable(
+ 		 		    By.xpath("//span[text()='Billing']/following-sibling::span[@class='pull-right']//img[@class='down-arrow']"))
+ 		 		).click();
+
+ 		 
+ 	 	  WebElement logvendorbillTab = wait.until(ExpectedConditions.elementToBeClickable(
+ 	  		    By.xpath("//span[@class='navbarsubtext' and text()='Log Vendor Bill']")
+ 	  		));
+ 	 	 logvendorbillTab.click();
+ 		 	
+ 	 	// Wait until the label is visible
+ 	 
+ 	 	
+ 	 	wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("CreateNewVB"))).click();
+ 	 	
+ 	 	
+
+ 	 	WebElement roNumberButton = wait.until(ExpectedConditions.elementToBeClickable(
+ 	 	    By.xpath("//button[contains(text(),'RO Number') and @onclick='LoadROList();']")
+ 	 	));
+
+ 	 	roNumberButton.click();
+ 	 	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"ROListTable_filter\"]/label/input")));
+ 	 	WebElement searchInput = driver.findElement(By.xpath("//*[@id=\"ROListTable_filter\"]/label/input"));
+ 	 	searchInput.clear();  // Optional: clear any pre-filled text
+ 	 	searchInput.sendKeys(roNumber);
+ 	 	
+ 	 	
+ 	 	WebElement firstRadioButton = wait.until(ExpectedConditions.elementToBeClickable(
+ 	 		    By.cssSelector("input[type='radio'][data-rono^='RO/']")
+ 	 		));
+
+ 	 		// Click the radio button
+ 	 		firstRadioButton.click();
+ 	 		  
+ 	 		String Vendorbillno = row.getCell(31).toString();
+ 	 		WebElement Vendorbillnofield = wait.until(ExpectedConditions.elementToBeClickable(By.id("VendorBillNo_VBLog")));
+ 	 		Vendorbillnofield.sendKeys(Vendorbillno);
+ 	 		wait.until(ExpectedConditions.elementToBeClickable(By.id("VendorBillDate_VBLog"))).click();
+ 	 		
+ 	 	
+ 	 	    String vendorbilldate = row.getCell(32).toString().trim();
 
  			// Remove decimal point if any (e.g., convert "10.0" to "10")
  	   vendorbilldate = vendorbilldate.split("\\.")[0];
