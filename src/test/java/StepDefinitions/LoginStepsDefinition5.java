@@ -1270,10 +1270,10 @@ Thread.sleep(2000);
 		Thread.sleep(5000); // Reduced wait, replace if possible with explicit wait for next element
 
 		// Scroll to and wait for submit button
-		WebElement submitButton17 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnsubmit")));
+		WebElement submitButton17 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("btnsubmit")));
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton17);
 		Thread.sleep(500);
-
+		wait.until(ExpectedConditions.elementToBeClickable(submitButton17));
 		// Try clicking submit button, retry with JS if click intercepted
 		try {
 		    submitButton17.click();
@@ -1657,6 +1657,7 @@ Thread.sleep(2000);
  	 			    By.xpath("//*[@id=\"submenu_274\"]/ul/li[1]/a")
  	 			));
  	 			roTab.click();
+ 	 			Thread.sleep(3000);
  	 			 wait.until(ExpectedConditions.elementToBeClickable(
  	 	 			    By.xpath("//a[contains(@onclick,'PrintPopUp') and contains(@href,'PrintReleaseOrderPrinting')]")));
  	 			// Wait for the checkbox row to be present
