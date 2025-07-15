@@ -419,13 +419,28 @@ public class LoginStepsDefinition5 {
              throw new RuntimeException("Failed to click the publication after retries: " + publicationText);
          }
          Thread.sleep(5000);
+
          try {
-        	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"allEdi\"]")));
-        	    driver.findElement(By.id("allEdi")).click();
-        	} catch (ElementClickInterceptedException e) {
-        	    Thread.sleep(1000); // or better: use WebDriverWait
-        	    driver.findElement(By.id("allEdi")).click();
-        	}
+   // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+    // Wait until element is clickable
+    WebElement allEdiButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("allEdi")));
+    wait.until(ExpectedConditions.elementToBeClickable(By.id("allEdi")));
+    // Scroll into view to reduce chance of interception
+    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", allEdiButton);
+    Thread.sleep(300); // Small delay after scroll
+
+    allEdiButton.click();
+
+         } catch (ElementClickInterceptedException e) {
+    System.out.println("⚠️ Click intercepted — retrying with JavaScript click.");
+
+    Thread.sleep(1000); // Let interfering elements settle
+
+    WebElement fallbackButton = driver.findElement(By.id("allEdi"));
+    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", fallbackButton);
+    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", fallbackButton);
+         }
 
          
 
