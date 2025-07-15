@@ -1465,7 +1465,7 @@ Thread.sleep(2000);
 
 	 	 // Wait for the search input to be clickable and enter the value
 	 	 WebElement makegoodSearchField = wait.until(ExpectedConditions.elementToBeClickable(
-	 	     By.xpath("//*[@id=\"ReschTable_filter\"]/label/input")
+	 			By.xpath("//div[@id='ReschTable_filter']//input[@type='search']")
 	 	 ));
 	 	 makegoodSearchField.clear();
 	 	 makegoodSearchField.sendKeys(makegoodSearch);
@@ -1499,7 +1499,8 @@ Thread.sleep(2000);
 
 		// Optional: Check displayed calendar month
 		List<WebElement> dayElements1 = driver.findElements(By.xpath(
-			    "//div[contains(@class,'datepicker-days')]//td[not(contains(@class,'old')) and not(contains(@class,'new')) and normalize-space(text())='" + day1 + "']"
+				"//div[contains(@class,'datepicker-days')]//td[contains(@class,'day') and not(contains(@class,'old')) and not(contains(@class,'new')) and not(contains(@class,'disabled')) and normalize-space(text())='" + day1 + "']"
+
 			));
 
 			if (!dayElements1.isEmpty()) {
