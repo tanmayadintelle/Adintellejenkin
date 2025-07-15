@@ -1471,7 +1471,7 @@ public class LoginStepsDefinition5 {
 		WebElement firstCheckbox1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@type='checkbox' and contains(@name,'ChkCshIDs')]")));
 		firstCheckbox1.click();
 	 	      
-
+		Thread.sleep(2000);
 		// Step 1: Get day from Excel (e.g., "26")
 		// Step 1: Get the day from correct Excel column
 		String day1 = row.getCell(37).toString().trim();  // Make sure this contains something like "26"
