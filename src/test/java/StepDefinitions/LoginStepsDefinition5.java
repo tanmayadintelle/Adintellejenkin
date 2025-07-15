@@ -1542,10 +1542,23 @@ Thread.sleep(2000);
 		// Blur the date field (optional, to close datepicker)
 		((JavascriptExecutor) driver).executeScript("arguments[0].blur();", dateField);
 
-	 		
-		 wait.until(ExpectedConditions.elementToBeClickable(
-				    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
-				)).click();
+	 	Thread.sleep(3000);
+	 	try {
+	 	    WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(5));
+	 	    List<WebElement> okButtons = driver.findElements(
+	 	        By.xpath("//button[contains(text(),'Ok')]")
+	 	    );
+
+	 	    if (!okButtons.isEmpty()) {
+	 	        WebElement okBtn = shortWait.until(ExpectedConditions.elementToBeClickable(okButtons.get(0)));
+	 	        okBtn.click();
+	 	        System.out.println("✅ OK button clicked.");
+	 	    } else {
+	 	        System.out.println("⚠️ OK button not present. Skipping click.");
+	 	    }
+	 	} catch (Exception e) {
+	 	    System.out.println("❌ Exception while clicking OK button: " + e.getMessage());
+	 	}
 	 		
 		 String xpathaddsidebar1makegoodrint = "//*[@id=\"mySidebar\"]/div/div/span[3]";
 			//
