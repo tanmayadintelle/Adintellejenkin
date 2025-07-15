@@ -418,7 +418,7 @@ public class LoginStepsDefinition5 {
          if (!clicked) {
              throw new RuntimeException("Failed to click the publication after retries: " + publicationText);
          }
-         Thread.sleep(3000);
+         Thread.sleep(5000);
          try {
         	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"allEdi\"]")));
         	    driver.findElement(By.id("allEdi")).click();
