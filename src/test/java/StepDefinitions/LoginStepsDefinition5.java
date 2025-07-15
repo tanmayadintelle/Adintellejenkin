@@ -1462,93 +1462,70 @@ Thread.sleep(2000);
 	 	  
 	 	// Correct XPath syntax: no backslashes needed
 	 	// Read value from Excel
-	 	 String makegoodSearch = row.getCell(36).toString();  // Assuming cell 32 contains "Chennai"
+	 	// Step: Read day from Excel (e.g., "28")
+	 	 String day1 = row.getCell(37).toString().trim();
+	 	 System.out.println("📌 Excel returned day: '" + day1 + "'");
 
-	 	 // Wait for the search input to be clickable and enter the value
-	 	 WebElement makegoodSearchField = wait.until(ExpectedConditions.elementToBeClickable(
-	 			By.xpath("//div[@id='ReschTable_filter']//input[@type='search']")
-	 	 ));
-	 	 makegoodSearchField.clear();
-	 	 makegoodSearchField.sendKeys(makegoodSearch);
+	 	 // Step: Click date field to open calendar
+	 	 WebElement dateField = wait.until(ExpectedConditions.elementToBeClickable(By.id("ScheduledDate")));
+	 	 dateField.click();
 
+	 	 // Optional: Wait for loading modal to disappear
+	 	 try {
+	 	     wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loadingModal")));
+	 	 } catch (Exception e) {
+	 	     System.out.println("ℹ️ No loading modal found or already hidden.");
+	 	 }
 
-				
-		WebElement firstCheckbox1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@type='checkbox' and contains(@name,'ChkCshIDs')]")));
-		firstCheckbox1.click();
-	 	      
-		Thread.sleep(2000);
-		// Step 1: Get day from Excel (e.g., "26")
-		// Step 1: Get the day from correct Excel column
-		String day1 = row.getCell(37).toString().trim();  // Make sure this contains something like "26"
-		System.out.println("Date to click: " + day1);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ScheduledDate")));
+	 	 // Wait for datepicker to appear
+	 	 wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
 
-		// Step 2: Click the ScheduledDate input to open the datepicker
-		// Wait and click the ScheduledDate input field to open calendar
-		WebElement dateField = wait.until(ExpectedConditions.elementToBeClickable(By.id("ScheduledDate")));
-		dateField.click();
+	 	 // Try clicking the desired date using retry mechanism
+	 	 int attemptsr = 0;
+	 	 boolean clicked1 = false;
 
-		// Wait for any loading modal (optional)
-		try {
-		    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loadingModal")));
-		} catch (Exception e) {
-		    System.out.println("ℹ️ No loading modal found or already hidden.");
-		}
+	 	 while (attemptsr < 3 && !clicked1) {
+	 	     try {
+	 	         Thread.sleep(1000); // Optional small pause for UI stabilization
 
-		// Wait for the datepicker to appear
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
+	 	         // ✅ Re-fetch the correct date element on each attempt
+	 	         List<WebElement> retryDayElements = driver.findElements(By.xpath(
+	 	             "//div[contains(@class,'datepicker-days')]//td[contains(@class,'day') and " +
+	 	             "not(contains(@class,'old')) and not(contains(@class,'new')) and " +
+	 	             "not(contains(@class,'disabled')) and normalize-space(text())='" + day1 + "']"
+	 	         ));
 
-		// Optional: Check displayed calendar month
-		List<WebElement> dayElements1 = driver.findElements(By.xpath(
-				"//div[contains(@class,'datepicker-days')]//td[contains(@class,'day') and not(contains(@class,'old')) and not(contains(@class,'new')) and not(contains(@class,'disabled')) and normalize-space(text())='" + day1 + "']"
+	 	         if (!retryDayElements.isEmpty()) {
+	 	             WebElement dayElementRetry = retryDayElements.get(0);
+	 	             wait.until(ExpectedConditions.visibilityOf(dayElementRetry));
+	 	             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dayElementRetry);
+	 	             Thread.sleep(300); // Let scroll finish
+	 	             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElementRetry);
+	 	             System.out.println("✅ Clicked on date: " + day1);
+	 	             clicked1 = true;
+	 	         } else {
+	 	             System.out.println("❌ Date '" + day1 + "' not found in calendar (retry #" + (attemptsr + 1) + ")");
+	 	         }
+	 	     } catch (Exception e) {
+	 	         System.out.println("⚠️ Attempt " + (attemptsr + 1) + ": Failed to click on date '" + day1 + "' - " + e.getMessage());
+	 	     }
+	 	     attemptsr++;
+	 	 }
 
-			));
+	 	 // Final check
+	 	 if (!clicked1) {
+	 	     System.out.println("❌ Could not click on date '" + day1 + "' after retries.");
+	 	 }
 
-			if (!dayElements1.isEmpty()) {
-			    WebElement dayElement1 = dayElements1.get(0);
+	 	 // Optional: Close datepicker cleanly
+	 	 try {
+	 	     wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("datepicker-days")));
+	 	 } catch (Exception e) {
+	 	     System.out.println("⚠️ Calendar did not close as expected.");
+	 	 }
+	 	 ((JavascriptExecutor) driver).executeScript("arguments[0].blur();", dateField);
+	 	 Thread.sleep(2000);
 
-			    // Step 5: Wait until visible with a fallback retry mechanism
-			    int attemptsr = 0;
-			    boolean clicked1 = false;
-
-			    while (attemptsr < 3 && !clicked1) {
-			        try {
-			        	 Thread.sleep(2000);
-			            wait.until(ExpectedConditions.visibilityOf(dayElement1));
-			            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dayElement1);
-			            Thread.sleep(500); // Let scroll finish
-			            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElement1);
-			            System.out.println("✅ Clicked on date: " + day1);
-			            clicked1 = true;
-			        } catch (Exception e) {
-			            System.out.println("⚠️ Attempt " + (attemptsr + 1) + ": Failed to click on date " + day1 + " - " + e.getMessage());
-			            Thread.sleep(1000);
-			            attemptsr++;
-			        }
-			    }
-
-			    if (!clicked1) {
-			        System.out.println("❌ Could not click on date: " + day1 + " after retries.");
-			    }
-				} else {
-				System.out.println("❌ Date " + day1 + " not found in current calendar view.");
-				}
-			Thread.sleep(4000);
-			new WebDriverWait(driver, Duration.ofSeconds(10))
-		    .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-footer")));
-
-		// Optional: wait for datepicker and modal footer to close
-		try {
-		    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("datepicker-days")));
-		    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-footer")));
-		} catch (TimeoutException e) {
-		    System.out.println("⚠️ Datepicker or modal-footer did not disappear as expected.");
-		}
-
-		// Blur the date field (optional, to close datepicker)
-		((JavascriptExecutor) driver).executeScript("arguments[0].blur();", dateField);
-
-	 	Thread.sleep(3000);
 	 	try {
 	 	    WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(5));
 	 	    List<WebElement> okButtons = driver.findElements(
