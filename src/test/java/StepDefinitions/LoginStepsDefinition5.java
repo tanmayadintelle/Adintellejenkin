@@ -1253,7 +1253,7 @@ Thread.sleep(2000);
 		WebElement submitButton0404 = wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnSetInsertion")));
 		submitButton0404.click();
 
-		Thread.sleep(3000); // Reduced wait, replace if possible with explicit wait for next element
+		Thread.sleep(5000); // Reduced wait, replace if possible with explicit wait for next element
 
 		// Scroll to and wait for submit button
 		WebElement submitButton17 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnsubmit")));
