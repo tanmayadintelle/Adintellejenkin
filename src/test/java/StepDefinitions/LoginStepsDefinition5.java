@@ -1424,7 +1424,6 @@ Thread.sleep(2000);
 		 	 System.out.print("RO Cancellation with output");
 	 	
 		 	String xpathaddsidebarmakegood = "//*[@id=\"mySidebar\"]/div/div/span[3]";
-
 	 	    // Loop to click the element//*[@id="MainDiv"]/div[1]/form/div[2]/div[2]/div[3]/a[2]
 	 	    for (int attemptss = 0; attemptss < 10; attemptss++) {
 	 	        try {
@@ -1444,155 +1443,60 @@ Thread.sleep(2000);
 	 		
 	 		
 	 	//	
-//	 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(""))).click(); 
+//	 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(""))).click();
 	 	//	
 	 		 wait.until(ExpectedConditions.elementToBeClickable(
 	 	 		    By.xpath("//span[text()='Release']/following-sibling::span[@class='pull-right']//img[@class='down-arrow']"))
 	 	 		).click();
-
 	 		Thread.sleep(2000);
-	 	   
+	 	  
 	 	   WebElement ROMakeGood = wait.until(ExpectedConditions.elementToBeClickable(
 	 	 		    By.xpath("//span[@class='navbarsubtext' and text()='Make Good']")
 	 	 		));
-	 	
-	 	  
-	 	 try {
-	 		 	ROMakeGood.click();
-			    System.out.println("Reschedule button clicked normally.");
-			} catch (ElementClickInterceptedException | TimeoutException e) {
-			    System.out.println("Click failed, trying JavaScript click: " + e.getMessage());
-			    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", ROMakeGood);
-			    System.out.println("Clicked via JavaScript.");
-			}
-	  
+	 	  ROMakeGood.click();
+	 	 
 	 	// wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"ReschTable_filter\"]/label/input"))).click();
 	 	  Thread.sleep(4000);
-	 	  
+	 	 
 	 	// Correct XPath syntax: no backslashes needed
 	 	// Read value from Excel
-	 	// Step: Read day from Excel (e.g., "28")
-	 	 String day1 = row.getCell(37).toString().trim();
-	 	 System.out.println("📌 Excel returned day: '" + day1 + "'");
-
-	 	 // Step: Click date field to open calendar
-	 	 WebElement dateField = wait.until(ExpectedConditions.elementToBeClickable(By.id("ScheduledDate")));
-	 	 dateField.click();
-
-	 	 // Optional: Wait for loading modal to disappear
-	 	 try {
-	 	     wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loadingModal")));
-	 	 } catch (Exception e) {
-	 	     System.out.println("ℹ️ No loading modal found or already hidden.");
-	 	 }
-
-	 	 // Wait for datepicker to appear
-	 	 wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
-
-	 	 // Try clicking the desired date using retry mechanism
-	 	 int attemptsr = 0;
-	 	 boolean clicked1 = false;
-
-	 	 while (attemptsr < 3 && !clicked1) {
-	 	     try {
-	 	         Thread.sleep(1000); // Optional small pause for UI stabilization
-
-	 	         // ✅ Re-fetch the correct date element on each attempt
-	 	         List<WebElement> retryDayElements = driver.findElements(By.xpath(
-	 	             "//div[contains(@class,'datepicker-days')]//td[contains(@class,'day') and " +
-	 	             "not(contains(@class,'old')) and not(contains(@class,'new')) and " +
-	 	             "not(contains(@class,'disabled')) and normalize-space(text())='" + day1 + "']"
-	 	         ));
-
-	 	         if (!retryDayElements.isEmpty()) {
-	 	             WebElement dayElementRetry = retryDayElements.get(0);
-	 	             wait.until(ExpectedConditions.visibilityOf(dayElementRetry));
-	 	             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dayElementRetry);
-	 	             Thread.sleep(300); // Let scroll finish
-	 	             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElementRetry);
-	 	             System.out.println("✅ Clicked on date: " + day1);
-	 	             clicked1 = true;
-	 	         } else {
-	 	             System.out.println("❌ Date '" + day1 + "' not found in calendar (retry #" + (attemptsr + 1) + ")");
-	 	         }
-	 	     } catch (Exception e) {
-	 	         System.out.println("⚠️ Attempt " + (attemptsr + 1) + ": Failed to click on date '" + day1 + "' - " + e.getMessage());
-	 	     }
-	 	     attemptsr++;
-	 	 }
-
-	 	 // Final check
-	 	 if (!clicked1) {
-	 	     System.out.println("❌ Could not click on date '" + day1 + "' after retries.");
-	 	 }
-
-	 	 // Optional: Close datepicker cleanly
-	 	 try {
-	 	     wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("datepicker-days")));
-	 	 } catch (Exception e) {
-	 	     System.out.println("⚠️ Calendar did not close as expected.");
-	 	 }
-	 	 ((JavascriptExecutor) driver).executeScript("arguments[0].blur();", dateField);
-	 	 Thread.sleep(2000);
-
-	 	try {
-	 	    WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(5));
-	 	    List<WebElement> okButtons = driver.findElements(
-	 	        By.xpath("//button[contains(text(),'Ok')]")
-	 	    );
-
-	 	    if (!okButtons.isEmpty()) {
-	 	        WebElement okBtn = shortWait.until(ExpectedConditions.elementToBeClickable(okButtons.get(0)));
-	 	        okBtn.click();
-	 	        System.out.println("✅ OK button clicked.");
-	 	    } else {
-	 	        System.out.println("⚠️ OK button not present. Skipping click.");
-	 	    }
-	 	} catch (Exception e) {
-	 	    System.out.println("❌ Exception while clicking OK button: " + e.getMessage());
-	 	}
-	 	Thread.sleep(3000); // Reduced wait to 3 sec for better responsiveness
-
-		// Wait and click "Set Insertion" button
-		WebElement submitButton0405 = wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnSetInsertion")));
-		submitButton0405.click();
-
-		Thread.sleep(5000); // Reduced wait, replace if possible with explicit wait for next element
-
-		// Scroll to and wait for submit button
-		WebElement submitButton18 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnsubmit")));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton18);
-		Thread.sleep(500);
-
-		// Try clicking submit button, retry with JS if click intercepted
-		try {
-		    submitButton18.click();
-		} catch (ElementClickInterceptedException e) {
-		    System.out.println("⚠️ Click intercepted, retrying with JS");
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", submitButton18);
-		}
-		Thread.sleep(3000);
-		// Wait and click the "GenRoResch" button
-		WebElement saveButton3 = wait.until(ExpectedConditions.elementToBeClickable(By.id("GenRoResch")));
-		saveButton3.click();
-		Thread.sleep(3000);	
-		try {
-	 	    WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(5));
-	 	    List<WebElement> okButtons = driver.findElements(
-	 	        By.xpath("//button[contains(text(),'Ok')]")
-	 	    );
-
-	 	    if (!okButtons.isEmpty()) {
-	 	        WebElement okBtn = shortWait.until(ExpectedConditions.elementToBeClickable(okButtons.get(0)));
-	 	        okBtn.click();
-	 	        System.out.println("✅ OK button clicked.");
-	 	    } else {
-	 	        System.out.println("⚠️ OK button not present. Skipping click.");
-	 	    }
-	 	} catch (Exception e) {
-	 	    System.out.println("❌ Exception while clicking OK button: " + e.getMessage());
-	 	}
-		Thread.sleep(3000);
+	 	 String makegoodSearch = row.getCell(36).toString();  // Assuming cell 32 contains "Chennai"
+	 	 // Wait for the search input to be clickable and enter the value
+	 	 WebElement makegoodSearchField = wait.until(ExpectedConditions.elementToBeClickable(
+	 	     By.xpath("//*[@id=\"ReschTable_filter\"]/label/input")
+	 	 ));
+	 	 makegoodSearchField.clear();
+	 	 makegoodSearchField.sendKeys(makegoodSearch);
+				
+		WebElement firstCheckbox1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@type='checkbox' and contains(@name,'ChkCshIDs')]")));
+		firstCheckbox1.click();
+	 	     
+		// Step 1: Get day from Excel (e.g., "26")
+		// Step 1: Get the day from correct Excel column
+		String day1 = row.getCell(37).toString().trim();  // Make sure this contains something like "26"
+		System.out.println("Date to click: " + day1);
+		// Step 2: Click the ScheduledDate input to open the datepicker
+		WebElement dateFieldmakegood = wait.until(ExpectedConditions.elementToBeClickable(By.id("ScheduledDate")));
+		dateFieldmakegood.click();
+		// Step 3: Wait for the datepicker popup to be visible
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
+		// Step 4: Click on the day in the calendar
+		WebElement dayElement1 = wait.until(ExpectedConditions.elementToBeClickable(
+		    By.xpath("//div[contains(@class,'datepicker-days')]//td[not(contains(@class,'old')) and not(contains(@class,'new')) and text()='" + day1 + "']")
+		));
+		dayElement1.click();
+		// Step 5: Click the submit button
+		WebElement submitButton004 = wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnSetInsertion")));
+		submitButton004.click();
+		WebElement submitButton005 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnsubmit")));
+		submitButton005.click();
+		WebElement saveButton100 = wait.until(ExpectedConditions.elementToBeClickable(By.id("GenRoResch")));
+		saveButton100.click();
+	 		
+		 wait.until(ExpectedConditions.elementToBeClickable(
+				    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
+				)).click();
+	 		
 		 String xpathaddsidebar1makegoodrint = "//*[@id=\"mySidebar\"]/div/div/span[3]";
 			//
 //			 	    // Loop to click the element//*[@id="MainDiv"]/div[1]/form/div[2]/div[2]/div[3]/a[2]
@@ -1610,56 +1514,7 @@ Thread.sleep(2000);
 			 	            System.out.println("Attempt " + (attemptss + 1) + " failed. Retrying...");
 			 	        }
 			 	    }
-		 		
-			 	   wait.until(ExpectedConditions.elementToBeClickable(
-			 	 		    By.xpath("//span[text()='Print Documents']/following-sibling::span[@class='pull-right']//img[@class='down-arrow']"))
-			 	 		).click();
-		 		
-		 		
-			 	   
-			 	  wait.until(ExpectedConditions.elementToBeClickable(
-			 	 		    By.xpath("//*[@id=\"submenu_274\"]/ul/li[4]/a/span"))
-			 	 		).click();
-			 	  Thread.sleep(4000);	 	
-			 	  
-			 	  wait.until(ExpectedConditions.elementToBeClickable(
-			 	  By.id("MakeGoodExlOwtput"))
-			 	 		).click();
-		 		
-			 	 System.out.print("RO Makegood with output");
-		 	
-	 	
-	 	
-	 	Thread.sleep(1000);
-	 	
-	 	
-	 	
-	 	
-	 	
-	 	
- 		String xpathaddsidebar1 = "//*[@id=\"mySidebar\"]/div/div/span[3]";
 
- 	    // Loop to click the element//*[@id="MainDiv"]/div[1]/form/div[2]/div[2]/div[3]/a[2]
- 	    for (int attemptss = 0; attemptss < 10; attemptss++) {
- 	        try {
- 	            // Find the element by XPath
- 	            WebElement element = driver.findElement(By.xpath(xpathaddsidebar1));
- 	            Thread.sleep(1000);
- 	            // Click the element
- 	            element.click();
- 	            System.out.println("Element clicked successfully!");
- 	            break; // Exit the loop if the click is successful
- 	        } catch (Exception e) {
- 	            // If an exception occurs, retry
- 	            System.out.println("Attempt " + (attemptss + 1) + " failed. Retrying...");
- 	        }
- 	    }
- 		
- 		
- 		
- 	//	
-// 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(""))).click(); 
- 	//	
  		 wait.until(ExpectedConditions.elementToBeClickable(
  	 		    By.xpath("//span[text()='Print Documents']/following-sibling::span[@class='pull-right']//img[@class='down-arrow']"))
  	 		).click();
