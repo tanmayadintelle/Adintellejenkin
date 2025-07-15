@@ -862,6 +862,7 @@ Thread.sleep(2000);
 	 
 	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div[2]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[2]/a"))).click();
 	 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("modal-body")));
+	 Thread.sleep(2000);
 	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/span[2]/input"))).click();
 		
 	
