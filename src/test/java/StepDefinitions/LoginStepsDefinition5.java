@@ -420,8 +420,9 @@ public class LoginStepsDefinition5 {
          }
          Thread.sleep(3000);
 
-         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"allEdi\"]"))).click();
-
+         WebElement alledi= wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"allEdi\"]")));
+         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", alledi);
+         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", alledi);
 
   
          
