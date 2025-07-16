@@ -2447,9 +2447,10 @@ Thread.sleep(2000);
  		         break;
  		     }
  		 }
+ 		 	Thread.sleep(5000);
+ 		 	WebElement saveBtn = driver.findElement(By.xpath("//button[text()='Save']"));
+ 		 	((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveBtn);
 
- 		 	WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Save']")));
- 		 	saveBtn.click();
  		 	Thread.sleep(6000);
  		 	WebElement okButtonib = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Ok' and contains(@onclick, 'ClosePopUpEditNo')]")));
  		 	okButtonib.click();
