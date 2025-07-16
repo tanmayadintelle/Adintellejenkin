@@ -2450,17 +2450,17 @@ Thread.sleep(2000);
  		     }
  		 }
  		 	Thread.sleep(5000);
- 		 	WebElement saveBtn = driver.findElement(By.xpath("//button[text()='Save']"));
+ 		 	WebElement saveBtn = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[text()='Save']")));
  		 	((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveBtn);
 
  		 	Thread.sleep(6000);
- 		 	WebElement okButtonib = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Ok' and contains(@onclick, 'ClosePopUpEditNo')]")));
- 		 	okButtonib.click();
+ 		 	WebElement okButtonib = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[text()='Ok' and contains(@onclick, 'ClosePopUpEditNo')]")));
+ 		 	((JavascriptExecutor) driver).executeScript("arguments[0].click();", okButtonib);
  		 	Thread.sleep(10000);
  		 	
  		 	Thread.sleep(5000);
- 		 	wait.until(ExpectedConditions.elementToBeClickable(By.id("IBExcel")));
- 		 	WebElement btn = driver.findElement(By.id("IBExcel"));
+ 		 	WebElement btn =wait.until(ExpectedConditions.presenceOfElementLocated(By.id("IBExcel")));
+ 		 	
  		 	((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn);
  		 	
  		 	Thread.sleep(500);
