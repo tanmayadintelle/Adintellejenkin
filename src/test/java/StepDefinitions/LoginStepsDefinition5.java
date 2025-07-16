@@ -1583,7 +1583,7 @@ Thread.sleep(2000);
 		WebElement submitButton004 = wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnSetInsertion")));
 		submitButton004.click();
 		Thread.sleep(2000);
-		WebElement submitButton005 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnsubmit")));
+		WebElement submitButton005 = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("btnsubmit")));
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton005);
 		Thread.sleep(500);
 
