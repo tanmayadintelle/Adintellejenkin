@@ -1340,7 +1340,7 @@ Thread.sleep(2000);
 	 	 		).click();
 	 	  Thread.sleep(4000);	 	
 	 	  
-	 	  WebElement resexcel=wait.until(ExpectedConditions.elementToBeClickable(
+	 	  WebElement resexcel=wait.until(ExpectedConditions.presenceOfElementLocated(
 	 	  By.id("RescheduleExcel")));
 	 	 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", resexcel);
 	 	 resexcel.click();
