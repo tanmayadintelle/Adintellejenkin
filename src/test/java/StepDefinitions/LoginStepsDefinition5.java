@@ -1293,8 +1293,9 @@ Thread.sleep(2000);
 		}
 		Thread.sleep(4000);
 		// Wait and click the "GenRoResch" button
-		WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("GenRoResch")));
-		saveButton.click();
+		WebElement saveButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("GenRoResch")));
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveButton);
+
 
 
 		// Wait for and click the "Ok" button in popup
@@ -1591,8 +1592,9 @@ Thread.sleep(2000);
 		}
 
 		Thread.sleep(2000);
-		WebElement saveButton100 = wait.until(ExpectedConditions.elementToBeClickable(By.id("GenRoResch")));
-		saveButton100.click();
+		WebElement saveButton100 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("GenRoResch")));
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveButton100);
+
 		Thread.sleep(2000);
 	 		
 		 wait.until(ExpectedConditions.elementToBeClickable(
