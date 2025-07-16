@@ -634,7 +634,7 @@ public class LoginStepsDefinition4 {
 			remarkField1mod.sendKeys(Keys.TAB);
 			
 			//driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[9]/span[2]")).click();
-
+			Thread.sleep(2000);
 			
 			//wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[1]/ng-select/div/div/div[3]/input"))).click();
 		    String HSNmod = row.getCell(24).toString();

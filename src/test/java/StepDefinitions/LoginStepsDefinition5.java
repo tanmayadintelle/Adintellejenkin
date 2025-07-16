@@ -2428,6 +2428,7 @@ Thread.sleep(2000);
  		    	Thread.sleep(10000);
  		    	Thread.sleep(6000);
  		    	 Thread.sleep(3000);
+ 		    	 js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
  		    	new WebDriverWait(driver, Duration.ofSeconds(30))
  	            .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
  		    	WebElement proceedElement = new WebDriverWait(driver, Duration.ofSeconds(60))
@@ -2436,6 +2437,7 @@ Thread.sleep(2000);
  		         
  		        Thread.sleep(6000);
  		       Thread.sleep(4000);
+ 		      js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
  		         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", proceedElement);
  		         Thread.sleep(500); // Give scroll some time
  		        Thread.sleep(4000);
