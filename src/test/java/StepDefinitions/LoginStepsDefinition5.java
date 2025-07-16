@@ -1300,14 +1300,12 @@ Thread.sleep(2000);
 
 
 		// Wait for and click the "Ok" button in popup
-		Thread.sleep(5000);
-		 wait.until(ExpectedConditions.presenceOfElementLocated(
-				    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
-				));
-		 wait.until(ExpectedConditions.elementToBeClickable(
-				    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
-				)).click();
+		Thread.sleep(7000);
+		
 		 
+			WebElement okButtonb = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")));
+ 		 	((JavascriptExecutor) driver).executeScript("arguments[0].click();", okButtonb);
+ 		 	Thread.sleep(10000);
 		 Thread.sleep(3000);
 
 	 
