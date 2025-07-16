@@ -1294,7 +1294,7 @@ Thread.sleep(2000);
 
 		// Wait and click the "GenRoResch" button
 		WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("GenRoResch")));
-		saveButton.click();
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", saveButton);
 
 
 		// Wait for and click the "Ok" button in popup
