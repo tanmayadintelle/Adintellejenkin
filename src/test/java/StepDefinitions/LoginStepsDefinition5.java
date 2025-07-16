@@ -1275,13 +1275,13 @@ Thread.sleep(2000);
 		Thread.sleep(3000); // Reduced wait to 3 sec for better responsiveness
 
 		// Wait and click "Set Insertion" button
-		WebElement submitButton0404 = wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnSetInsertion")));
-		submitButton0404.click();
+		WebElement submitButton0404 = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("BtnSetInsertion")));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", submitButton0404);
 
 		Thread.sleep(5000); // Reduced wait, replace if possible with explicit wait for next element
 
 		// Scroll to and wait for submit button
-		WebElement submitButton17 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("btnsubmit")));
+		WebElement submitButton17 = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("btnsubmit")));
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", submitButton17);
 		Thread.sleep(500);
 		wait.until(ExpectedConditions.elementToBeClickable(submitButton17));

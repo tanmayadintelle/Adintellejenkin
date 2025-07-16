@@ -171,7 +171,7 @@ public class LoginStepsDefinition4 {
 		    
 		  
 		    JavascriptExecutor jszoom = (JavascriptExecutor) driver;
-		    jszoom.executeScript("document.body.style.zoom='40%'");
+//		    jszoom.executeScript("document.body.style.zoom='40%'");
 		    waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"planning\"]/div/table/thead/tr/th[1]")));
 		    waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/newjob.svg']")));
 //		    JavascriptExecutor jsif = (JavascriptExecutor) driver;
