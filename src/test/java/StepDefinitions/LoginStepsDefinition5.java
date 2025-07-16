@@ -1291,10 +1291,10 @@ Thread.sleep(2000);
 		    System.out.println("⚠️ Click intercepted, retrying with JS");
 		   
 		}
-
+		Thread.sleep(4000);
 		// Wait and click the "GenRoResch" button
 		WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("GenRoResch")));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", saveButton);
+		saveButton.click();
 
 
 		// Wait for and click the "Ok" button in popup
