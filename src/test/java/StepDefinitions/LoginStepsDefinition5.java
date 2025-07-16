@@ -98,7 +98,7 @@ public class LoginStepsDefinition5 {
         try (Workbook workbook = new XSSFWorkbook(file)) {
 			Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 			Row row = sheet.getRow(1); // Get the second row (0-indexed));
-			WebDriverWait waitload2 = new WebDriverWait(driver, Duration.ofSeconds(60));
+			WebDriverWait waitload2 = new WebDriverWait(driver, Duration.ofSeconds(80));
 			 ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
 		    waitload2.until(ExpectedConditions.elementToBeClickable(By.name("username")));
 			// Step 3: Find the form fields on the webpage and fill them with data from Excel
@@ -111,8 +111,8 @@ public class LoginStepsDefinition5 {
 		    waitload2.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"identify_user_button_text_active\"]")));
 		    driver.findElement(By.xpath("//*[@id=\"identify_user_button_text_active\"]")).click();
 		    
-		    WebDriverWait waitload1 = new WebDriverWait(driver, Duration.ofSeconds(60));
-		    WebDriverWait waitloadz = new WebDriverWait(driver, Duration.ofSeconds(10));
+		    WebDriverWait waitload1 = new WebDriverWait(driver, Duration.ofSeconds(80));
+		    WebDriverWait waitloadz = new WebDriverWait(driver, Duration.ofSeconds(80));
 			   
 		    waitload1.until(ExpectedConditions.elementToBeClickable(By.name("password")));
 		    
@@ -131,7 +131,7 @@ public class LoginStepsDefinition5 {
 
 	        // Check if the element is present
 	        if (!warningButtonList.isEmpty()) {
-	        	WebDriverWait waitload22 = new WebDriverWait(driver, Duration.ofSeconds(60));
+	        	WebDriverWait waitload22 = new WebDriverWait(driver, Duration.ofSeconds(80));
 				  
 			    waitload22.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/m-login-warning-dialog/div/div[2]/div[2]/div/button/div/span")));
 	            // If the element is found, click on it
@@ -150,7 +150,7 @@ public class LoginStepsDefinition5 {
 	            // Element not found or not clickable within the timeout - continue silently
 	            System.out.println("Close icon not clickable or not present. Continuing...");
 	        }
-		    WebDriverWait waitload23 = new WebDriverWait(driver, Duration.ofSeconds(60));
+		    WebDriverWait waitload23 = new WebDriverWait(driver, Duration.ofSeconds(80));
 			  
 		    waitload23.until(ExpectedConditions.elementToBeClickable(By.className("show_collapse_icon")));
 		    WebElement elementarrow = driver.findElement(By.className("show_collapse_icon"));
@@ -173,7 +173,7 @@ public class LoginStepsDefinition5 {
 	        	}
 	        waitload2.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"apps\"]")));
 	        driver.findElement(By.xpath("//*[@id=\"apps\"]")).click();
-	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(80));
 	        
 //		    WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
 		    
@@ -499,7 +499,7 @@ public class LoginStepsDefinition5 {
          wait.until(ExpectedConditions.elementToBeClickable(By.id("submit_btn"))).click();
          Thread.sleep(2000);
          try {
-        	    WebElement okButton = new WebDriverWait(driver, Duration.ofSeconds(10))
+        	    WebElement okButton = new WebDriverWait(driver, Duration.ofSeconds(80))
         	        .until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='OK' or text()='Ok']")));
         	    okButton.click();
         	    Thread.sleep(4000); // If needed, else replace with explicit wait
@@ -651,7 +651,7 @@ public class LoginStepsDefinition5 {
       wait.until(ExpectedConditions.elementToBeClickable(By.id("submit_btn"))).click();
    
       try {
-  	    WebElement okButton = new WebDriverWait(driver, Duration.ofSeconds(30))
+  	    WebElement okButton = new WebDriverWait(driver, Duration.ofSeconds(80))
   	        .until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='OK' or text()='Ok']")));
   	    okButton.click();
   	    Thread.sleep(4000); // If needed, else replace with explicit wait
@@ -850,7 +850,7 @@ Thread.sleep(2000);
 	Thread.sleep(2000);
 	wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("modal-backdrop")));
 	Thread.sleep(2000);
-	new WebDriverWait(driver, Duration.ofSeconds(5)).until(driver1 -> true);
+	new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver1 -> true);
     
 	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button"))).click();
 	Thread.sleep(500);
@@ -1258,7 +1258,7 @@ Thread.sleep(2000);
 		Thread.sleep(4000);
 		// Wait for modal to disappear (if any)
 		// Wait for modal-footer to disappear
-		new WebDriverWait(driver, Duration.ofSeconds(10))
+		new WebDriverWait(driver, Duration.ofSeconds(60))
 		    .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-footer")));
 
 		// Try waiting for datepicker to disappear, but don't crash if it doesn't
@@ -1559,7 +1559,7 @@ Thread.sleep(2000);
 			Thread.sleep(4000);
 			// Wait for modal to disappear (if any)
 			// Wait for modal-footer to disappear
-			new WebDriverWait(driver, Duration.ofSeconds(10))
+			new WebDriverWait(driver, Duration.ofSeconds(30))
 			    .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-footer")));
 
 			// Try waiting for datepicker to disappear, but don't crash if it doesn't
@@ -1922,7 +1922,7 @@ Thread.sleep(2000);
 
  			while (!clicked14 && attempts14 < 3) {
  			    try {
- 			        WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(10));
+ 			        WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(60));
 
  			        WebElement element = shortWait.until(
  			            ExpectedConditions.refreshed(
@@ -1973,7 +1973,7 @@ Thread.sleep(2000);
 
  	 			while (!clicked15 && attempts15 < 3) {
  	 			    try {
- 	 			        WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(10));
+ 	 			        WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(60));
 
  	 			        WebElement element = shortWait.until(
  	 			            ExpectedConditions.refreshed(
@@ -2063,7 +2063,7 @@ Thread.sleep(2000);
 			 	wait.until(ExpectedConditions.elementToBeClickable( By.xpath("//button[text()='Ok' and contains(@onclick, 'ClosePopUp')]")));
 			 	WebElement okButton101 = driver.findElement(By.xpath("//button[text()='Ok' and contains(@onclick, 'ClosePopUp')]"));
 			 	okButton101.click();
-			 	new WebDriverWait(driver, Duration.ofSeconds(5)).until(driver1 -> true);
+			 	new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver1 -> true);
 			 	wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loadingModalClientBill")));
 			 	wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("ModalOBPrinting")));
 			 	Thread.sleep(300); 
@@ -2400,7 +2400,7 @@ Thread.sleep(2000);
  		 	    System.out.println("Net bill amount field is not ready for interaction.");
  		 	}
  		 	try {
- 		 	    WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(60));
+ 		 	    WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(80));
  		 	  Thread.sleep(4000);
  		 	    WebElement okButton10001 = shortWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Ok']")));
  		 	  Thread.sleep(6000);
@@ -2419,7 +2419,7 @@ Thread.sleep(2000);
  			}
  		   js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
  		   wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loadingModalClientBill")));
- 		   new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
+ 		   new WebDriverWait(driver, Duration.ofSeconds(60)).until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
  		  Thread.sleep(6000);
  		  By proceedBtn = By.xpath("//button[text()='Proceed']");
 
@@ -2428,9 +2428,9 @@ Thread.sleep(2000);
  		    	Thread.sleep(10000);
  		    	Thread.sleep(6000);
  		    	 Thread.sleep(3000);
- 		    	new WebDriverWait(driver, Duration.ofSeconds(10))
+ 		    	new WebDriverWait(driver, Duration.ofSeconds(30))
  	            .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
- 		    	WebElement proceedElement = new WebDriverWait(driver, Duration.ofSeconds(20))
+ 		    	WebElement proceedElement = new WebDriverWait(driver, Duration.ofSeconds(60))
  		               .until(ExpectedConditions.elementToBeClickable(proceedBtn));
  		        // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
  		         
@@ -2489,7 +2489,7 @@ Thread.sleep(2000);
 	        Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 	        Row row = sheet.getRow(1); // 2nd row (index 1) for date input
 
-	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(80));
 	        Thread.sleep(3000);
 	        // Click sidebar toggle up to 10 times if needed
 	        String sidebarXpath = "//*[@id=\"mySidebar\"]/div/div/span[3]";
@@ -2513,7 +2513,7 @@ Thread.sleep(2000);
 	                By.xpath("//span[@class='navbarsubtext' and text()='Status Report']")));
 	        statusReportTab.click();
 	        Thread.sleep(3000);
-	        new WebDriverWait(driver, Duration.ofSeconds(4)).until(driver1 -> true);
+	        new WebDriverWait(driver, Duration.ofSeconds(20)).until(driver1 -> true);
 	        wait.until(ExpectedConditions.elementToBeClickable(By.id("chkallclient"))).click();
 	        Thread.sleep(500);
 	        wait.until(ExpectedConditions.elementToBeClickable(By.id("selectAllStatus"))).click();
@@ -2528,7 +2528,7 @@ Thread.sleep(2000);
 	        String startYear = row.getCell(44).toString().trim();  // e.g., "2024"
 	        selectDate(driver, wait, By.id("StartDate"), startDay, startMonth, startYear);
 	        Thread.sleep(1000);
-	        new WebDriverWait(driver, Duration.ofSeconds(2)).until(driver1 -> true);
+	        new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver1 -> true);
 	        // --- END DATE SELECTION ---
 	        String endDay = row.getCell(45).toString().trim().split("\\.")[0];
 	        String endMonth = row.getCell(46).toString().trim();  // e.g., "December"
@@ -2564,7 +2564,7 @@ Thread.sleep(2000);
 	        new WebDriverWait(driver, Duration.ofSeconds(2)).until(driver1 -> true);
 	        wait.until(ExpectedConditions.elementToBeClickable(By.id("btnPrintStatusReport"))).click();
 	        Thread.sleep(2000); 
-	        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 	        
 	        Thread.sleep(500);
 	        //for default report
@@ -2585,13 +2585,13 @@ Thread.sleep(2000);
 	        wait.until(ExpectedConditions.elementToBeClickable(
 	                By.xpath("//span[text()='Reports']/following-sibling::span[@class='pull-right']//img[@class='down-arrow']"))).click();
 	        Thread.sleep(500);
-	        new WebDriverWait(driver, Duration.ofSeconds(2)).until(driver1 -> true);
+	        new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver1 -> true);
 	        WebElement statusReportTab13 = wait.until(ExpectedConditions.elementToBeClickable(
 	                By.xpath("//span[@class='navbarsubtext' and text()='Status Report']")));
 	        statusReportTab13.click();
-	        new WebDriverWait(driver, Duration.ofSeconds(4)).until(driver1 -> true);
+	        new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver1 -> true);
 	        Thread.sleep(500);
-	        new WebDriverWait(driver, Duration.ofSeconds(3)).until(driver1 -> true);
+	        new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver1 -> true);
 	        for (int i = 0; i < 10; i++) {
 	            try {
 	            	Thread.sleep(10000);
@@ -2609,11 +2609,11 @@ Thread.sleep(2000);
 	            }
 	        }
 	        Thread.sleep(1000);
-	        new WebDriverWait(driver, Duration.ofSeconds(2)).until(driver1 -> true);
+	        new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver1 -> true);
 	        wait.until(ExpectedConditions.elementToBeClickable(By.id("selectAllStatus"))).click();
 
 	     
-	        new WebDriverWait(driver, Duration.ofSeconds(2)).until(driver1 -> true);
+	        new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver1 -> true);
 	        // Extract the estimate number from label
 	        Thread.sleep(1000);
 	     // --- START DATE SELECTION ---
@@ -2622,7 +2622,7 @@ Thread.sleep(2000);
 	        String startYear1 = row.getCell(44).toString().trim();  // e.g., "2024"
 	        selectDate(driver, wait, By.id("StartDate"), startDay1, startMonth1, startYear1);
 	        Thread.sleep(1000);
-	        new WebDriverWait(driver, Duration.ofSeconds(2)).until(driver1 -> true);
+	        new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver1 -> true);
 	        // --- END DATE SELECTION ---
 	        String endDay1 = row.getCell(45).toString().trim().split("\\.")[0];
 	        String endMonth1 = row.getCell(46).toString().trim();  // e.g., "December"
