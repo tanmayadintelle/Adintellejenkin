@@ -1298,7 +1298,8 @@ Thread.sleep(2000);
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", saveButton);
 		saveButton.click();
 		// Wait for and click the "Ok" button in popup
-		wait.until(ExpectedConditions.elementToBeClickable(
+		Thread.sleep(2000);
+		wait.until(ExpectedConditions.presenceOfElementLocated(
 		    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
 		)).click();
 
