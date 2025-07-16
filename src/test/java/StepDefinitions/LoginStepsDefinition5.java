@@ -509,7 +509,7 @@ public class LoginStepsDefinition5 {
         	}
          Thread.sleep(4000);
          //Add new for package code
-         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[3]/a[2]")));
+         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[3]/a[2]")));
          
          
          
@@ -526,6 +526,7 @@ public class LoginStepsDefinition5 {
                  System.out.println("Element clicked successfully!");
                  break; // Exit the loop if the click is successful
              } catch (Exception e) {
+            	 
                  // If an exception occurs, retry
                  System.out.println("Attempt " + (attemptss + 1) + " failed. Retrying...");
              }
@@ -1044,12 +1045,15 @@ Thread.sleep(2000);
         try {
             // Find the element by XPath
             WebElement element = driver.findElement(By.xpath(xpathaddsidebar));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+
             Thread.sleep(1000);
             // Click the element
-            element.click();
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
             System.out.println("Element clicked successfully!");
             break; // Exit the loop if the click is successful
         } catch (Exception e) {
+        	
             // If an exception occurs, retry
             System.out.println("Attempt " + (attemptss + 1) + " failed. Retrying...");
         }
