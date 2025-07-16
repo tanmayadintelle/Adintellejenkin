@@ -1298,7 +1298,7 @@ Thread.sleep(2000);
 		Thread.sleep(6000);
 		// Wait and click the "GenRoResch" button
 		WebElement saveButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("GenRoResch")));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton17);
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", saveButton);
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveButton);
 
 
