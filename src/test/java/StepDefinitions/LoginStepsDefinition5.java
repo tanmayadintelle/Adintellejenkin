@@ -1275,42 +1275,35 @@ Thread.sleep(2000);
 		Thread.sleep(3000); // Reduced wait to 3 sec for better responsiveness
 
 		// Wait and click "Set Insertion" button
-		WebElement submitButton0404 = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("BtnSetInsertion")));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", submitButton0404);
-
-		Thread.sleep(5000); // Reduced wait, replace if possible with explicit wait for next element
+		WebElement submitButton0404 = wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnSetInsertion")));
+		submitButton0404.click();
+		Thread.sleep(5000);
+ // Reduced wait, replace if possible with explicit wait for next element
 
 		// Scroll to and wait for submit button
-		WebElement submitButton17 = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("btnsubmit")));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", submitButton17);
-		Thread.sleep(500);
-		wait.until(ExpectedConditions.elementToBeClickable(submitButton17));
-		// Try clicking submit button, retry with JS if click intercepted
+		WebElement submitButton17 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnsubmit")));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton17);
+		Thread.sleep(500); // Allow scroll time
+
 		try {
 		    submitButton17.click();
 		} catch (ElementClickInterceptedException e) {
 		    System.out.println("⚠️ Click intercepted, retrying with JS");
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", submitButton17);
+		   
 		}
 
 		// Wait and click the "GenRoResch" button
 		WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("GenRoResch")));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", saveButton);
 		saveButton.click();
+
+
 		// Wait for and click the "Ok" button in popup
 		Thread.sleep(5000);
-		List<WebElement> okButtonsk = driver.findElements(
-			    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
-			);
-
-			if (!okButtonsk.isEmpty()) {
-			    // Element is present — wait until it's clickable and click it
-			    wait.until(ExpectedConditions.elementToBeClickable(okButtonsk.get(0))).click();
-			    System.out.println("Popup 'Ok' button clicked.");
-			} else {
-			    // Element not present — continue
-			    System.out.println("Popup 'Ok' button not present. Continuing...");
-			}
+		 wait.until(ExpectedConditions.elementToBeClickable(
+				    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
+				)).click();
+		 
+		 Thread.sleep(3000);
 
 	 
 	String xpathaddsidebar1rescprint = "//*[@id=\"mySidebar\"]/div/div/span[3]";
