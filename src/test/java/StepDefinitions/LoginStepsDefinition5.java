@@ -1289,9 +1289,9 @@ Thread.sleep(2000);
 		    submitButton17.click();
 		} catch (ElementClickInterceptedException e) {
 		    System.out.println("⚠️ Click intercepted, retrying with JS");
-		   
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();", submitButton17);
 		}
-		Thread.sleep(4000);
+		Thread.sleep(6000);
 		// Wait and click the "GenRoResch" button
 		WebElement saveButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("GenRoResch")));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveButton);
