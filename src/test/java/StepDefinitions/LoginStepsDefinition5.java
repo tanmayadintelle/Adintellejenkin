@@ -2425,53 +2425,57 @@ Thread.sleep(2000);
  		   wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loadingModalClientBill")));
  		   new WebDriverWait(driver, Duration.ofSeconds(60)).until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
  		  Thread.sleep(6000);
- 		  By proceedBtn = By.xpath("//button[text()='Proceed']");
+ 		 By proceedBtn = By.xpath("//button[text()='Proceed']");
 
- 		 for (int attempt2 = 1; attempt2 <= 10; attempt2++) {
- 		     try {
- 		    	Thread.sleep(10000);
- 		    	Thread.sleep(6000);
- 		    	 Thread.sleep(3000);
- 		    	 js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
- 		    	new WebDriverWait(driver, Duration.ofSeconds(30))
- 	            .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
- 		    	WebElement proceedElement = new WebDriverWait(driver, Duration.ofSeconds(60))
- 		               .until(ExpectedConditions.elementToBeClickable(proceedBtn));
- 		        // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
- 		         
- 		        Thread.sleep(6000);
- 		       Thread.sleep(4000);
- 		      js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
- 		         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", proceedElement);
- 		         Thread.sleep(500); // Give scroll some time
- 		        Thread.sleep(4000);
- 		         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", proceedElement);
+ 		for (int attempt2 = 1; attempt2 <= 10; attempt2++) {
+ 		    try {
+ 		        System.out.println("Attempting to click Proceed, attempt " + attempt2);
+ 		        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
 
- 		         System.out.println("Proceed button clicked on attempt " + attempt2);
- 		         break;
+ 		        // Wait for any modal to disappear
+ 		        new WebDriverWait(driver, Duration.ofSeconds(30))
+ 		            .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
 
- 		     } catch (StaleElementReferenceException e) {
- 		         System.out.println("StaleElementReferenceException on attempt " + attempt2 + ", retrying...");
- 		     } catch (ElementClickInterceptedException e) {
- 		         System.out.println("Click intercepted on attempt " + attempt2 + ": " + e.getMessage());
- 		         Thread.sleep(1000); // Wait for modal or overlay to disappear
- 		     } catch (Exception e) {
- 		         System.out.println("Failed on attempt " + attempt2 + ": " + e.getMessage());
- 		         break;
- 		     }
- 		 }
+ 		        WebElement proceedElement = new WebDriverWait(driver, Duration.ofSeconds(30))
+ 		            .until(ExpectedConditions.elementToBeClickable(proceedBtn));
+
+ 		        js.executeScript("arguments[0].scrollIntoView(true);", proceedElement);
+ 		        Thread.sleep(500); // small buffer
+ 		        js.executeScript("arguments[0].click();", proceedElement);
+
+ 		        System.out.println("✅ Proceed button clicked on attempt " + attempt2);
+ 		        break; // success, exit loop
+
+ 		    } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
+ 		        System.out.println("⚠️ Retryable exception on attempt " + attempt2 + ": " + e.getMessage());
+ 		        Thread.sleep(2000); // Give DOM time to stabilize
+
+ 		    } catch (TimeoutException te) {
+ 		        System.out.println("⏳ Proceed button not clickable on attempt " + attempt2 + ": " + te.getMessage());
+ 		        Thread.sleep(3000);
+
+ 		    } catch (Exception e) {
+ 		        System.out.println("❌ Unhandled error on attempt " + attempt2 + ": " + e.getMessage());
+ 		        if (attempt2 == 10) {
+ 		            throw e; // only throw if last retry fails
+ 		        }
+ 		    }
+ 		}
+
  		 	Thread.sleep(5000);
  		 	WebElement saveBtn = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[text()='Save']")));
+ 		 	 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", saveBtn);
  		 	((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveBtn);
 
  		 	Thread.sleep(6000);
  		 	WebElement okButtonib = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[text()='Ok' and contains(@onclick, 'ClosePopUpEditNo')]")));
+ 		 	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okButtonib);
  		 	((JavascriptExecutor) driver).executeScript("arguments[0].click();", okButtonib);
  		 	Thread.sleep(10000);
  		 	
  		 	Thread.sleep(5000);
  		 	WebElement btn =wait.until(ExpectedConditions.presenceOfElementLocated(By.id("IBExcel")));
- 		 	
+ 		 	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", btn);
  		 	((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn);
  		 	
  		 	Thread.sleep(500);
