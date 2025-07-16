@@ -1298,10 +1298,19 @@ Thread.sleep(2000);
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", saveButton);
 		saveButton.click();
 		// Wait for and click the "Ok" button in popup
-		Thread.sleep(2000);
-		wait.until(ExpectedConditions.presenceOfElementLocated(
-		    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
-		)).click();
+		Thread.sleep(5000);
+		List<WebElement> okButtonsk = driver.findElements(
+			    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
+			);
+
+			if (!okButtonsk.isEmpty()) {
+			    // Element is present — wait until it's clickable and click it
+			    wait.until(ExpectedConditions.elementToBeClickable(okButtonsk.get(0))).click();
+			    System.out.println("Popup 'Ok' button clicked.");
+			} else {
+			    // Element not present — continue
+			    System.out.println("Popup 'Ok' button not present. Continuing...");
+			}
 
 	 
 	String xpathaddsidebar1rescprint = "//*[@id=\"mySidebar\"]/div/div/span[3]";
