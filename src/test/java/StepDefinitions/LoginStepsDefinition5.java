@@ -433,14 +433,8 @@ public class LoginStepsDefinition5 {
          WebElement spacewidthfield = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("Dimension1")));
          ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", spacewidthfield);
          ((JavascriptExecutor) driver).executeScript("arguments[0].click();", spacewidthfield);
-
          Thread.sleep(3000);
-
-      // Scroll into view to prevent overlap issues
-   
       Thread.sleep(300); // Let the scroll settle
-
-      // Try standard sendKeys, fallback to JS set if intercepted
       try {
           spacewidthfield.clear(); // Optional: Clear old value
           spacewidthfield.sendKeys(spacewidth);
@@ -450,8 +444,11 @@ public class LoginStepsDefinition5 {
       }
          Thread.sleep(3000);
          String spaceheight = row.getCell(15).toString();
-         spacewidthfield.click();
+        
          WebElement spaceheightfield = wait.until(ExpectedConditions.elementToBeClickable(By.id("Dimension2")));
+         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", spaceheightfield);
+         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", spaceheightfield);
+         Thread.sleep(3000);
          spaceheightfield.sendKeys(spaceheight);
          Thread.sleep(3000);
          
