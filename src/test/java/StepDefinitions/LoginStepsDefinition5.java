@@ -1293,7 +1293,8 @@ Thread.sleep(2000);
 		}
 		Thread.sleep(6000);
 		// Wait and click the "GenRoResch" button
-		WebElement saveButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("GenRoResch")));
+		WebElement saveButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("GenRoResch")));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton17);
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveButton);
 
 
@@ -1715,13 +1716,13 @@ Thread.sleep(2000);
  		 	// Click the print icon link
  		 	printLink1.click();
 
- 		 	
+ 		 	Thread.sleep(3000);
  		 	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/input"))).click();	
  			//*[@id="loadingModal"]/div/div/div/div/section/fieldset[1]/legend[1]/input
- 			
+ 		 	Thread.sleep(3000);
  		 	wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK"))).click();
  		 	
- 		 	
+ 		 	Thread.sleep(3000);
  			String xpathaddsidebar2 = "//*[@id=\"mySidebar\"]/div/div/span[3]";
 
  	 	    // Loop to click the element//*[@id="MainDiv"]/div[1]/form/div[2]/div[2]/div[3]/a[2]
