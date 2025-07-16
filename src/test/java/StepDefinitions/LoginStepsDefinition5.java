@@ -1306,11 +1306,11 @@ Thread.sleep(2000);
 		// Wait for and click the "Ok" button in popup
 		Thread.sleep(7000);
 		
-		List<WebElement> buttons = driver.findElements(By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']"));
-		if (!buttons.isEmpty()) {
-		    buttons.get(0).click();
-		}
-			
+		WebElement okaybutton=wait.until(ExpectedConditions.presenceOfElementLocated(
+			    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
+			));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okaybutton);
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", okaybutton);
  		 	Thread.sleep(10000);
 		 Thread.sleep(3000);
 
