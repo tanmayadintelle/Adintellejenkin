@@ -430,12 +430,14 @@ public class LoginStepsDefinition5 {
          ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 250);");
          Thread.sleep(3000);
          String spacewidth = row.getCell(14).toString();
-         WebElement spacewidthfield = wait.until(ExpectedConditions.elementToBeClickable(By.id("Dimension1")));
-         spacewidthfield.sendKeys(spacewidth);
+         WebElement spacewidthfield = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("Dimension1")));
+         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", spacewidthfield);
+         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", spacewidthfield);
+
          Thread.sleep(3000);
 
       // Scroll into view to prevent overlap issues
-      ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", spacewidthfield);
+   
       Thread.sleep(300); // Let the scroll settle
 
       // Try standard sendKeys, fallback to JS set if intercepted
