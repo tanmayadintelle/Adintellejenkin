@@ -418,37 +418,21 @@ public class LoginStepsDefinition5 {
          if (!clicked) {
              throw new RuntimeException("Failed to click the publication after retries: " + publicationText);
          }
-         Thread.sleep(5000);
+         Thread.sleep(3000);
 
-         try {
-   // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"allEdi\"]"))).click();
 
-    // Wait until element is clickable
-    WebElement allEdiButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("allEdi")));
-    wait.until(ExpectedConditions.elementToBeClickable(By.id("allEdi")));
-    // Scroll into view to reduce chance of interception
-    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", allEdiButton);
-    Thread.sleep(300); // Small delay after scroll
 
-    allEdiButton.click();
-
-         } catch (ElementClickInterceptedException e) {
-    System.out.println("⚠️ Click intercepted — retrying with JavaScript click.");
-
-    Thread.sleep(1000); // Let interfering elements settle
-
-    WebElement fallbackButton = driver.findElement(By.id("allEdi"));
-    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", fallbackButton);
-    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", fallbackButton);
-         }
-
+  
          
 
          ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 250);");
          Thread.sleep(3000);
          String spacewidth = row.getCell(14).toString();
-         WebElement spacewidthfield = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("Dimension1")));
+         WebElement spacewidthfield = wait.until(ExpectedConditions.elementToBeClickable(By.id("Dimension1")));
+         spacewidthfield.sendKeys(spacewidth);
          Thread.sleep(3000);
+
       // Scroll into view to prevent overlap issues
       ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", spacewidthfield);
       Thread.sleep(300); // Let the scroll settle
@@ -1298,7 +1282,7 @@ Thread.sleep(2000);
 
 		// Scroll to and wait for submit button
 		WebElement submitButton17 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("btnsubmit")));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton17);
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", submitButton17);
 		Thread.sleep(500);
 		wait.until(ExpectedConditions.elementToBeClickable(submitButton17));
 		// Try clicking submit button, retry with JS if click intercepted
@@ -1311,8 +1295,8 @@ Thread.sleep(2000);
 
 		// Wait and click the "GenRoResch" button
 		WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("GenRoResch")));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", saveButton);
 		saveButton.click();
-
 		// Wait for and click the "Ok" button in popup
 		wait.until(ExpectedConditions.elementToBeClickable(
 		    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
