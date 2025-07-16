@@ -1669,7 +1669,7 @@ Thread.sleep(2000);
  	 			));
  	 			roTab.click();
  	 			Thread.sleep(3000);
- 	 			 wait.until(ExpectedConditions.elementToBeClickable(
+ 	 			 wait.until(ExpectedConditions.presenceOfElementLocated(
  	 	 			    By.xpath("//a[contains(@onclick,'PrintPopUp') and contains(@href,'PrintReleaseOrderPrinting')]")));
  	 			// Wait for the checkbox row to be present
  	 			WebElement checkbox = wait.until(ExpectedConditions.presenceOfElementLocated(
