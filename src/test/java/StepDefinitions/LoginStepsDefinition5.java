@@ -1307,7 +1307,7 @@ Thread.sleep(2000);
 		Thread.sleep(7000);
 		
 		WebElement okaybutton=wait.until(ExpectedConditions.presenceOfElementLocated(
-			    By.xpath("//*[@id=\"ReschNumberMsg\"]/div/div/div/div[3]/button")
+			    By.xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[5]/div/div/div/div[3]/button")
 			));
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okaybutton);
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", okaybutton);
@@ -1418,7 +1418,7 @@ Thread.sleep(2000);
 	 	wait.until(ExpectedConditions.presenceOfElementLocated(
 		 	     By.xpath("//*[@id=\"CanNumberMsg\"]/div/div/div/div[3]/button")
 		 	 ));
-	 	WebElement okButton = driver.findElement(By.xpath("//*[@id=\"CanNumberMsg\"]/div/div/div/div[3]/button"));
+	 	WebElement okButton = driver.findElement(By.xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[5]/div/div/div/div[3]/button"));
 	 	okButton.click();
 
 	 	String xpathaddsidebar1canprint = "//*[@id=\"mySidebar\"]/div/div/span[3]";
@@ -1608,7 +1608,7 @@ Thread.sleep(2000);
 		Thread.sleep(2000);
 	 		
 		 WebElement okclosebtn=wait.until(ExpectedConditions.presenceOfElementLocated(
-				    By.xpath("//*[@id=\"ReschNumberMsg\"]/div/div/div/div[3]/button")
+				    By.xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[5]/div/div/div/div[3]/button")
 				));
 		 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okclosebtn);
 			((JavascriptExecutor) driver).executeScript("arguments[0].click();", okclosebtn);
