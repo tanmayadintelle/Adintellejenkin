@@ -1307,7 +1307,7 @@ Thread.sleep(2000);
 		Thread.sleep(7000);
 		
 		WebElement okaybutton=wait.until(ExpectedConditions.presenceOfElementLocated(
-			    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
+			    By.xpath("//*[@id=\"ReschNumberMsg\"]/div/div/div/div[3]/button")
 			));
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okaybutton);
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", okaybutton);
@@ -1415,10 +1415,10 @@ Thread.sleep(2000);
 	 	WebElement saveButton1 = driver.findElement(By.id("GenRoCan"));
 	 	saveButton1.click();
 
-	 	wait.until(ExpectedConditions.elementToBeClickable(
-		 	     By.xpath("//button[contains(text(),'Ok') and contains(@onclick,'ClosePopUp')]")
+	 	wait.until(ExpectedConditions.presenceOfElementLocated(
+		 	     By.xpath("//*[@id=\"CanNumberMsg\"]/div/div/div/div[3]/button")
 		 	 ));
-	 	WebElement okButton = driver.findElement(By.xpath("//button[contains(text(),'Ok') and contains(@onclick,'ClosePopUp')]"));
+	 	WebElement okButton = driver.findElement(By.xpath("//*[@id=\"CanNumberMsg\"]/div/div/div/div[3]/button"));
 	 	okButton.click();
 
 	 	String xpathaddsidebar1canprint = "//*[@id=\"mySidebar\"]/div/div/span[3]";
@@ -1607,8 +1607,8 @@ Thread.sleep(2000);
 
 		Thread.sleep(2000);
 	 		
-		 WebElement okclosebtn=wait.until(ExpectedConditions.elementToBeClickable(
-				    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
+		 WebElement okclosebtn=wait.until(ExpectedConditions.presenceOfElementLocated(
+				    By.xpath("//*[@id=\"ReschNumberMsg\"]/div/div/div/div[3]/button")
 				));
 		 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okclosebtn);
 			((JavascriptExecutor) driver).executeScript("arguments[0].click();", okclosebtn);
