@@ -1306,17 +1306,40 @@ Thread.sleep(2000);
 		// Wait for and click the "Ok" button in popup
 		Thread.sleep(7000);
 		
-		try {
-		    WebElement okBtn2 = wait.until(ExpectedConditions.visibilityOfElementLocated(
-		        By.xpath("//button[text()='Ok' and contains(@onclick, 'ClosePopUp')]")
-		    ));
-		    
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okBtn2);
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn2);
-		    
-		    System.out.println("✅ OK button clicked via JS.");
-		} catch (Exception e) {
-		    System.out.println("❌ Failed to click OK button: " + e.getMessage());
+		boolean clicked3 = false;
+
+		for (int attempt = 1; attempt <= 10; attempt++) {
+		    try {
+		        List<WebElement> okButtons = driver.findElements(
+		            By.xpath("//button[normalize-space(text())='Ok' and contains(@onclick, 'ClosePopUp')]")
+		        );
+
+		        if (!okButtons.isEmpty()) {
+		            WebElement okBtn1 = okButtons.get(0);
+		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okBtn1);
+		            Thread.sleep(300); // slight delay after scroll
+		            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn1);
+
+		            System.out.println("✅ OK button clicked successfully on attempt " + attempt);
+		            clicked3 = true;
+		            break; // success, exit loop
+		        } else {
+		            System.out.println("❌ Attempt " + attempt + ": OK button not found.");
+		        }
+
+		    } catch (Exception e) {
+		        System.out.println("⚠️ Attempt " + attempt + ": Exception occurred - " + e.getMessage());
+		    }
+
+		    try {
+		        Thread.sleep(1000); // wait before next attempt
+		    } catch (InterruptedException ie) {
+		        Thread.currentThread().interrupt();
+		    }
+		}
+
+		if (!clicked3) {
+		    System.out.println("❌ Failed to click OK button after 10 attempts.");
 		}
  		 	Thread.sleep(10000);
 		 Thread.sleep(3000);
@@ -1422,18 +1445,42 @@ Thread.sleep(2000);
 	 	WebElement saveButton1 = driver.findElement(By.id("GenRoCan"));
 	 	saveButton1.click();
 
-	 	try {
-	 	    WebElement okBtn1 = wait.until(ExpectedConditions.visibilityOfElementLocated(
-	 	        By.xpath("//button[text()='Ok' and contains(@onclick, 'ClosePopUp')]")
-	 	    ));
-	 	    
-	 	    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okBtn1);
-	 	    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn1);
-	 	    
-	 	    System.out.println("✅ OK button clicked via JS.");
-	 	} catch (Exception e) {
-	 	    System.out.println("❌ Failed to click OK button: " + e.getMessage());
+	 	boolean clicked2 = false;
+
+	 	for (int attempt1 = 1; attempt1 <= 10; attempt1++) {
+	 	    try {
+	 	        List<WebElement> okButtons1 = driver.findElements(
+	 	            By.xpath("//button[normalize-space(text())='Ok' and contains(@onclick, 'ClosePopUp')]")
+	 	        );
+
+	 	        if (!okButtons1.isEmpty()) {
+	 	            WebElement okBtn = okButtons1.get(0);
+	 	            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okBtn);
+	 	            Thread.sleep(300); // slight delay after scroll
+	 	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn);
+
+	 	            System.out.println("✅ OK button clicked successfully on attempt " + attempt1);
+	 	            clicked2 = true;
+	 	            break; // success, exit loop
+	 	        } else {
+	 	            System.out.println("❌ Attempt " + attempt1 + ": OK button not found.");
+	 	        }
+
+	 	    } catch (Exception e) {
+	 	        System.out.println("⚠️ Attempt " + attempt1 + ": Exception occurred - " + e.getMessage());
+	 	    }
+
+	 	    try {
+	 	        Thread.sleep(1000); // wait before next attempt
+	 	    } catch (InterruptedException ie) {
+	 	        Thread.currentThread().interrupt();
+	 	    }
 	 	}
+
+	 	if (!clicked2) {
+	 	    System.out.println("❌ Failed to click OK button after 10 attempts.");
+	 	}
+
 
 	 	String xpathaddsidebar1canprint = "//*[@id=\"mySidebar\"]/div/div/span[3]";
 		//
@@ -1620,19 +1667,42 @@ Thread.sleep(2000);
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveButton100);
 
 		Thread.sleep(2000);
-	 		
-		try {
-		    WebElement closeokBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(
-		        By.xpath("//button[text()='Ok' and contains(@onclick, 'ClosePopUp')]")
-		    ));
-		    
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", closeokBtn);
-		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", closeokBtn);
-		    
-		    System.out.println("✅ OK button clicked via JS.");
-		} catch (Exception e) {
-		    System.out.println("❌ Failed to click OK button: " + e.getMessage());
+		boolean clicked4 = false;
+
+		for (int attempt5 = 1; attempt5 <= 10; attempt5++) {
+		    try {
+		        List<WebElement> okButtons6 = driver.findElements(
+		            By.xpath("//button[normalize-space(text())='Ok' and contains(@onclick, 'ClosePopUp')]")
+		        );
+
+		        if (!okButtons6.isEmpty()) {
+		            WebElement okBtn7 = okButtons6.get(0);
+		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okBtn7);
+		            Thread.sleep(300); // slight delay after scroll
+		            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn7);
+
+		            System.out.println("✅ OK button clicked successfully on attempt " + attempt5);
+		            clicked4 = true;
+		            break; // success, exit loop
+		        } else {
+		            System.out.println("❌ Attempt " + attempt5 + ": OK button not found.");
+		        }
+
+		    } catch (Exception e) {
+		        System.out.println("⚠️ Attempt " + attempt5 + ": Exception occurred - " + e.getMessage());
+		    }
+
+		    try {
+		        Thread.sleep(1000); // wait before next attempt
+		    } catch (InterruptedException ie) {
+		        Thread.currentThread().interrupt();
+		    }
 		}
+
+		if (!clicked4) {
+		    System.out.println("❌ Failed to click OK button after 10 attempts.");
+		}
+
 		 Thread.sleep(2000);
 		 String xpathaddsidebar1makegoodrint = "//*[@id=\"mySidebar\"]/div/div/span[3]";
 			//
