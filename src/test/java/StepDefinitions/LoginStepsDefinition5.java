@@ -2335,10 +2335,40 @@ Thread.sleep(2000);
 	 			  		    By.xpath("//*[@id=\"btnsubmit\"]")
 	 			  		)).click();
 	 			 	 Thread.sleep(2000);
-	 			 	wait.until(ExpectedConditions.elementToBeClickable(
-	 			  		    By.xpath("//*[@id=\"chkallPublicationInser\"]")
-	 			  		)).click();
-		
+	 			 	boolean isCheckboxClicked = false;
+
+	 			 	for (int pubChkAttempt = 1; pubChkAttempt <= 10; pubChkAttempt++) {
+	 			 	    try {
+	 			 	        WebElement pubCheckbox = wait.until(ExpectedConditions.elementToBeClickable(
+	 			 	            By.xpath("//*[@id='chkallPublicationInser']"))
+	 			 	        );
+
+	 			 	        ((JavascriptExecutor) driver).executeScript(
+	 			 	            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", pubCheckbox);
+	 			 	        Thread.sleep(300); // allow scroll to complete
+
+	 			 	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", pubCheckbox);
+
+	 			 	        System.out.println("✅ Checkbox clicked on attempt " + pubChkAttempt);
+	 			 	        isCheckboxClicked = true;
+	 			 	        break;
+
+	 			 	    } catch (Exception e) {
+	 			 	        System.out.println("⚠️ Attempt " + pubChkAttempt + " to click checkbox failed: " + e.getMessage());
+	 			 	    }
+
+	 			 	    try {
+	 			 	        Thread.sleep(1000); // small wait before retrying
+	 			 	    } catch (InterruptedException ie) {
+	 			 	        Thread.currentThread().interrupt();
+	 			 	    }
+	 			 	}
+
+	 			 	if (!isCheckboxClicked) {
+	 			 	    throw new RuntimeException("❌ Failed to click checkbox after 10 attempts.");
+	 			 	}
+	 			 	
+	 			 	Thread.sleep(2000);
 	 			 	String xpathaddgenerateclientbill1 = "//button[contains(text(),'Generate Bill')]";
 
 	 			 	// Retry loop
