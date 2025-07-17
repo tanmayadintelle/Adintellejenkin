@@ -2272,7 +2272,8 @@ Thread.sleep(2000);
 			 	}
 
 				
-			 	Thread.sleep(3000);			 		wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnCall"))).click();	
+			 	Thread.sleep(3000);			 		
+			 	wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnCall"))).click();	
 			 	
 			 		
 			 		boolean clicker1 = false;
@@ -2634,12 +2635,7 @@ Thread.sleep(2000);
  		 	if (!clickedBtn) {
  		 	    throw new RuntimeException("Failed to click btn after 10 attempts");
  		 	}
-
- 		 	
  		 	Thread.sleep(500);
-		    
-		    
-
 		}
 	    
 	}
