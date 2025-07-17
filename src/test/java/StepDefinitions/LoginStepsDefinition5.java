@@ -1315,7 +1315,7 @@ Thread.sleep(2000);
 		      //  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		        WebElement okBtn = wait.until(ExpectedConditions.presenceOfElementLocated(okBtnLocator));
 
-		        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okBtn);
+		        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", okBtn);
 		        Thread.sleep(300); // small buffer
 		        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn);
 
@@ -1328,6 +1328,7 @@ Thread.sleep(2000);
 
 		    } catch (TimeoutException te) {
 		        System.out.println("⏳ Ok button not found/clickable on attempt " + attempt + ": " + te.getMessage());
+		        
 		        Thread.sleep(1000);
 
 		    } catch (Exception e) {
@@ -1452,7 +1453,7 @@ Thread.sleep(2000);
 
 	 	        if (!okButtons1.isEmpty()) {
 	 	            WebElement okBtn = okButtons1.get(0);
-	 	            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okBtn);
+	 	            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", okBtn);
 	 	            Thread.sleep(300); // slight delay after scroll
 	 	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn);
 
@@ -1597,7 +1598,7 @@ Thread.sleep(2000);
 			        try {
 			        	 Thread.sleep(2000);
 			            wait.until(ExpectedConditions.visibilityOf(dayElement1));
-			            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dayElement1);
+			            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", dayElement1);
 			            Thread.sleep(500); // Let scroll finish
 			            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElement1);
 			            System.out.println("✅ Clicked on date: " + day1);
@@ -1675,7 +1676,7 @@ Thread.sleep(2000);
 		        if (!okButtons6.isEmpty()) {
 		            WebElement okBtn7 = okButtons6.get(0);
 		            
-		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okBtn7);
+		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", okBtn7);
 		            Thread.sleep(300); // slight delay after scroll
 		            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn7);
 
