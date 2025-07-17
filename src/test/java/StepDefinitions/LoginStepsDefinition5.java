@@ -1306,43 +1306,42 @@ Thread.sleep(2000);
 		// Wait for and click the "Ok" button in popup
 		Thread.sleep(7000);
 		
-		boolean clicked3 = false;
+		By okBtnLocator = By.xpath("//button[normalize-space(text())='Ok' and contains(@onclick, 'ClosePopUp')]");
 
 		for (int attempt = 1; attempt <= 10; attempt++) {
 		    try {
-		        List<WebElement> okButtons = driver.findElements(
-		            By.xpath("//button[normalize-space(text())='Ok' and contains(@onclick, 'ClosePopUp')]")
-		        );
+		        System.out.println("🔁 Attempting to click Ok button, attempt " + attempt);
 
-		        if (!okButtons.isEmpty()) {
-		            WebElement okBtn1 = okButtons.get(0);
-		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okBtn1);
-		            Thread.sleep(300); // slight delay after scroll
-		            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn1);
+		      //  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		        WebElement okBtn = wait.until(ExpectedConditions.presenceOfElementLocated(okBtnLocator));
 
-		            System.out.println("✅ OK button clicked successfully on attempt " + attempt);
-		            clicked3 = true;
-		            break; // success, exit loop
-		        } else {
-		            System.out.println("❌ Attempt " + attempt + ": OK button not found.");
-		        }
+		        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okBtn);
+		        Thread.sleep(300); // small buffer
+		        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn);
+
+		        System.out.println("✅ Ok button clicked successfully on attempt " + attempt);
+		        break;
+
+		    } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
+		        System.out.println("⚠️ Retryable issue on attempt " + attempt + ": " + e.getMessage());
+		        Thread.sleep(1000);
+
+		    } catch (TimeoutException te) {
+		        System.out.println("⏳ Ok button not found/clickable on attempt " + attempt + ": " + te.getMessage());
+		        Thread.sleep(1000);
 
 		    } catch (Exception e) {
-		        System.out.println("⚠️ Attempt " + attempt + ": Exception occurred - " + e.getMessage());
-		    }
-
-		    try {
-		        Thread.sleep(1000); // wait before next attempt
-		    } catch (InterruptedException ie) {
-		        Thread.currentThread().interrupt();
+		        System.out.println("❌ Unhandled error on attempt " + attempt + ": " + e.getMessage());
+		        if (attempt == 10) {
+		            throw e; // throw only on final attempt
+		        }
+		        Thread.sleep(1000);
 		    }
 		}
 
-		if (!clicked3) {
-		    System.out.println("❌ Failed to click OK button after 10 attempts.");
-		}
- 		 	Thread.sleep(10000);
-		 Thread.sleep(3000);
+		Thread.sleep(10000);
+		Thread.sleep(3000);
+
 
 	 
 	String xpathaddsidebar1rescprint = "//*[@id=\"mySidebar\"]/div/div/span[3]";
@@ -1434,17 +1433,15 @@ Thread.sleep(2000);
 		 	 ));
 	 	WebElement firstCheckbox0 = driver.findElement(By.xpath("//input[@type='checkbox' and contains(@name,'ScheduleID')]"));
 	 	firstCheckbox0.click();
-		wait.until(ExpectedConditions.elementToBeClickable(
-		 	     By.id("btnsubmit")
-		 	 ));
-	 	WebElement submitButton11 = driver.findElement(By.id("btnsubmit"));
-	 	submitButton11.click();
-	 	wait.until(ExpectedConditions.elementToBeClickable(
-		 	     By.id("GenRoCan")
-		 	 ));
-	 	WebElement saveButton1 = driver.findElement(By.id("GenRoCan"));
-	 	saveButton1.click();
-
+		
+	 	WebElement submitButton11 = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("btnsubmit")));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton11);
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", submitButton11);
+	 	
+		WebElement saveButton1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("GenRoCan")));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", saveButton1);
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveButton1);
+		
 	 	boolean clicked2 = false;
 
 	 	for (int attempt1 = 1; attempt1 <= 10; attempt1++) {
@@ -1677,6 +1674,7 @@ Thread.sleep(2000);
 
 		        if (!okButtons6.isEmpty()) {
 		            WebElement okBtn7 = okButtons6.get(0);
+		            
 		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okBtn7);
 		            Thread.sleep(300); // slight delay after scroll
 		            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn7);
@@ -1937,6 +1935,7 @@ Thread.sleep(2000);
  			  		    By.xpath("//span[@class='navbarsubtext' and text()='Client Bill']")
  			  		));
  			 	 clientbillTab.click();
+ 			 	 
  			 	 
  			 	wait.until(ExpectedConditions.elementToBeClickable(
  			  		    By.xpath("//*[@id=\"btnsubmit\"]")
@@ -2581,7 +2580,7 @@ Thread.sleep(2000);
  		 	for (int i = 1; i <= 10; i++) {
  		 	    try {
  		 	        Thread.sleep(5000);
- 		 	        WebElement saveBtn_i = driver.findElement(By.xpath("//*[@id=\"PrcdTOIBProvision\"]/div/div/div[3]/button[1]"));
+ 		 	        WebElement saveBtn_i = driver.findElement(By.xpath("//button[text()='Save' and contains(@onclick, 'FormSubmit')]"));
  		 	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", saveBtn_i);
  		 	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveBtn_i);
  		 	        System.out.println("✅ saveBtn clicked on attempt " + i);
@@ -2600,7 +2599,7 @@ Thread.sleep(2000);
  		 	for (int j = 1; j <= 10; j++) {
  		 	    try {
  		 	        Thread.sleep(6000);
- 		 	        WebElement okButtonib_j = driver.findElement(By.xpath("//*[@id=\"IBNumberMsgProvision\"]/div/div/div/div[3]/button"));
+ 		 	        WebElement okButtonib_j = driver.findElement(By.xpath("//button[text()='Ok' and contains(@onclick, 'ClosePopUpEditNo')]"));
  		 	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okButtonib_j);
  		 	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okButtonib_j);
  		 	        Thread.sleep(10000);
