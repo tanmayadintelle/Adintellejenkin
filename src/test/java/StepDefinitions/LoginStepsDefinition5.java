@@ -2466,12 +2466,12 @@ Thread.sleep(2000);
  		}
 
  		 	Thread.sleep(5000);
- 		 	WebElement saveBtn = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[text()='Save']")));
+ 		 	WebElement saveBtn = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"PrcdTOIBProvision\"]/div/div/div[3]/button[1]")));
  		 	 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", saveBtn);
  		 	((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveBtn);
 
  		 	Thread.sleep(6000);
- 		 	WebElement okButtonib = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[text()='Ok' and contains(@onclick, 'ClosePopUpEditNo')]")));
+ 		 	WebElement okButtonib = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"IBNumberMsgProvision\"]/div/div/div/div[3]/button")));
  		 	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okButtonib);
  		 	((JavascriptExecutor) driver).executeScript("arguments[0].click();", okButtonib);
  		 	Thread.sleep(10000);
