@@ -2398,14 +2398,31 @@ Thread.sleep(2000);
 	 			 	    }
 	 			 	}
 	 			 	Thread.sleep(4000);
-	 			 	WebElement okButton111 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"OBNumberMsg\"]/div/div/div/div[3]/button")));
+	 			 	boolean clickedOkButton111 = false;
+	 			 	for (int attemptx = 1; attemptx <= 10; attemptx++) {
+	 			 	    try {
+	 			 	        Thread.sleep(3000); // Add some wait between attempts
 
-	 			// Scroll the button into view
-	 			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", okButton111);
+	 			 	        WebElement okButton111_attempt = driver.findElement(By.xpath("//*[@id=\"OBNumberMsg\"]/div/div/div/div[3]/button"));
+	 			 	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", okButton111_attempt);
+	 			 	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okButton111_attempt);
+
+	 			 	        System.out.println("✅ okButton111 clicked on attempt " + attemptx);
+	 			 	        clickedOkButton111 = true;
+	 			 	        break;
+	 			 	    } catch (Exception e) {
+	 			 	        System.out.println("⚠️ Attempt " + attemptx + " to click okButton111 failed: " + e.getMessage());
+	 			 	    }
+	 			 	}
+
+	 			 	if (!clickedOkButton111) {
+	 			 	    throw new RuntimeException("❌ Failed to click okButton111 after 10 attempts.");
+	 			 	}
+
 	 			Thread.sleep(500);  // Let the scroll settle
 
 	 			// Click the button
-	 			okButton111.click();
+	 			
 	 			System.out.print("Client bill created for Vendor provisioning");
 	 			Thread.sleep(3000);	 			
 	 			
