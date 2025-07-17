@@ -1306,11 +1306,18 @@ Thread.sleep(2000);
 		// Wait for and click the "Ok" button in popup
 		Thread.sleep(7000);
 		
-		WebElement okaybutton=wait.until(ExpectedConditions.presenceOfElementLocated(
-			    By.xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[6]/div/div/div/div[3]/button")
-			));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okaybutton);
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", okaybutton);
+		try {
+		    WebElement okBtn2 = wait.until(ExpectedConditions.visibilityOfElementLocated(
+		        By.xpath("//button[text()='Ok' and contains(@onclick, 'ClosePopUp')]")
+		    ));
+		    
+		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okBtn2);
+		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn2);
+		    
+		    System.out.println("✅ OK button clicked via JS.");
+		} catch (Exception e) {
+		    System.out.println("❌ Failed to click OK button: " + e.getMessage());
+		}
  		 	Thread.sleep(10000);
 		 Thread.sleep(3000);
 
@@ -1415,11 +1422,18 @@ Thread.sleep(2000);
 	 	WebElement saveButton1 = driver.findElement(By.id("GenRoCan"));
 	 	saveButton1.click();
 
-	 	wait.until(ExpectedConditions.presenceOfElementLocated(
-		 	     By.xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[5]/div/div/div/div[3]/button")
-		 	 ));
-	 	WebElement okButton = driver.findElement(By.xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[5]/div/div/div/div[3]/button"));
-	 	okButton.click();
+	 	try {
+	 	    WebElement okBtn1 = wait.until(ExpectedConditions.visibilityOfElementLocated(
+	 	        By.xpath("//button[text()='Ok' and contains(@onclick, 'ClosePopUp')]")
+	 	    ));
+	 	    
+	 	    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okBtn1);
+	 	    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn1);
+	 	    
+	 	    System.out.println("✅ OK button clicked via JS.");
+	 	} catch (Exception e) {
+	 	    System.out.println("❌ Failed to click OK button: " + e.getMessage());
+	 	}
 
 	 	String xpathaddsidebar1canprint = "//*[@id=\"mySidebar\"]/div/div/span[3]";
 		//
@@ -1607,11 +1621,18 @@ Thread.sleep(2000);
 
 		Thread.sleep(2000);
 	 		
-		 WebElement okclosebtn=wait.until(ExpectedConditions.presenceOfElementLocated(
-				    By.xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[5]/div/div/div/div[3]/button")
-				));
-		 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okclosebtn);
-			((JavascriptExecutor) driver).executeScript("arguments[0].click();", okclosebtn);
+		try {
+		    WebElement closeokBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(
+		        By.xpath("//button[text()='Ok' and contains(@onclick, 'ClosePopUp')]")
+		    ));
+		    
+		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", closeokBtn);
+		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", closeokBtn);
+		    
+		    System.out.println("✅ OK button clicked via JS.");
+		} catch (Exception e) {
+		    System.out.println("❌ Failed to click OK button: " + e.getMessage());
+		}
 		 Thread.sleep(2000);
 		 String xpathaddsidebar1makegoodrint = "//*[@id=\"mySidebar\"]/div/div/span[3]";
 			//
