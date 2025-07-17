@@ -2578,63 +2578,125 @@ Thread.sleep(2000);
  		 	Thread.sleep(5000);
  		 	
  		// Retry clicking saveBtn up to 10 times, else throw exception
- 		 	boolean clickedSaveBtn = false;
- 		 	for (int i = 1; i <= 10; i++) {
+ 		 	boolean isSaveClicked = false;
+
+ 		 	for (int saveAttempt = 1; saveAttempt <= 10; saveAttempt++) {
  		 	    try {
- 		 	        Thread.sleep(5000);
- 		 	        WebElement saveBtn_i = driver.findElement(By.xpath("//button[text()='Save' and contains(@onclick, 'FormSubmit')]"));
- 		 	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", saveBtn_i);
- 		 	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveBtn_i);
- 		 	        System.out.println("✅ saveBtn clicked on attempt " + i);
- 		 	        clickedSaveBtn = true;
- 		 	        break;
- 		 	    } catch (Exception e) {
- 		 	        System.out.println("⚠️ saveBtn attempt " + i + " failed: " + e.getMessage());
+ 		 	        List<WebElement> saveBtnCandidates = driver.findElements(
+ 		 	            By.xpath("//button[normalize-space(text())='Save' and contains(@onclick, 'FormSubmit')]")
+ 		 	        );
+
+ 		 	        if (!saveBtnCandidates.isEmpty()) {
+ 		 	            WebElement saveBtnElement = saveBtnCandidates.get(0);
+
+ 		 	            ((JavascriptExecutor) driver).executeScript(
+ 		 	                "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", saveBtnElement);
+ 		 	            Thread.sleep(300); // slight buffer after scroll
+
+ 		 	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveBtnElement);
+
+ 		 	            System.out.println("✅ Save button clicked successfully on attempt " + saveAttempt);
+ 		 	            isSaveClicked = true;
+ 		 	            break; // success, break loop
+ 		 	        } else {
+ 		 	            System.out.println("❌ Attempt " + saveAttempt + ": Save button not found.");
+ 		 	        }
+
+ 		 	    } catch (Exception clickError) {
+ 		 	        System.out.println("⚠️ Attempt " + saveAttempt + ": Exception while clicking Save - " + clickError.getMessage());
  		 	    }
- 		 	}
- 		 	if (!clickedSaveBtn) {
- 		 	    throw new RuntimeException("Failed to click saveBtn after 10 attempts");
+
+ 		 	    try {
+ 		 	        Thread.sleep(1000); // wait before retry
+ 		 	    } catch (InterruptedException interrupted) {
+ 		 	        Thread.currentThread().interrupt(); // restore interruption status
+ 		 	    }
  		 	}
 
+ 		 	if (!isSaveClicked) {
+ 		 	    throw new RuntimeException("❌ Failed to click Save button after 10 attempts.");
+ 		 	}
+ 		 	
+ 		 	
  		 	// Retry clicking okButtonib up to 10 times, else throw exception
- 		 	boolean clickedOkButtonib = false;
- 		 	for (int j = 1; j <= 10; j++) {
+ 		 	boolean isPopupOkClicked = false;
+
+ 		 	for (int okAttempt = 1; okAttempt <= 10; okAttempt++) {
  		 	    try {
- 		 	        Thread.sleep(6000);
- 		 	        WebElement okButtonib_j = driver.findElement(By.xpath("//button[text()='Ok' and contains(@onclick, 'ClosePopUpEditNo')]"));
- 		 	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okButtonib_j);
- 		 	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okButtonib_j);
- 		 	        Thread.sleep(10000);
- 		 	        System.out.println("✅ okButtonib clicked on attempt " + j);
- 		 	        clickedOkButtonib = true;
- 		 	        break;
- 		 	    } catch (Exception e) {
- 		 	        System.out.println("⚠️ okButtonib attempt " + j + " failed: " + e.getMessage());
+ 		 	        Thread.sleep(6000); // optional wait before locating the element
+
+ 		 	        List<WebElement> okPopupButtons = driver.findElements(
+ 		 	            By.xpath("//button[normalize-space(text())='Ok' and contains(@onclick, 'ClosePopUpEditNo')]")
+ 		 	        );
+
+ 		 	        if (!okPopupButtons.isEmpty()) {
+ 		 	            WebElement okPopupBtn = okPopupButtons.get(0);
+
+ 		 	            ((JavascriptExecutor) driver).executeScript(
+ 		 	                "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", okPopupBtn);
+ 		 	            Thread.sleep(300); // short delay to allow smooth scroll
+
+ 		 	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okPopupBtn);
+ 		 	            Thread.sleep(10000); // post-click delay if needed
+
+ 		 	            System.out.println("✅ Ok button (ClosePopUpEditNo) clicked on attempt " + okAttempt);
+ 		 	            isPopupOkClicked = true;
+ 		 	            break;
+ 		 	        } else {
+ 		 	            System.out.println("❌ Attempt " + okAttempt + ": Ok button not found.");
+ 		 	        }
+
+ 		 	    } catch (Exception ex) {
+ 		 	        System.out.println("⚠️ Attempt " + okAttempt + ": Exception occurred - " + ex.getMessage());
+ 		 	    }
+
+ 		 	    try {
+ 		 	        Thread.sleep(1000); // wait before retrying
+ 		 	    } catch (InterruptedException ie) {
+ 		 	        Thread.currentThread().interrupt();
  		 	    }
  		 	}
- 		 	if (!clickedOkButtonib) {
- 		 	    throw new RuntimeException("Failed to click okButtonib after 10 attempts");
+
+ 		 	if (!isPopupOkClicked) {
+ 		 	    throw new RuntimeException("❌ Failed to click Ok button (ClosePopUpEditNo) after 10 attempts.");
  		 	}
+
 
  		 	// Retry clicking btn up to 10 times, else throw exception
- 		 	boolean clickedBtn = false;
- 		 	for (int k = 1; k <= 10; k++) {
+ 		 	boolean isIbExcelClicked = false;
+
+ 		 	for (int ibExcelAttempt = 1; ibExcelAttempt <= 10; ibExcelAttempt++) {
  		 	    try {
- 		 	        Thread.sleep(5000);
- 		 	        WebElement btn_k = driver.findElement(By.id("IBExcel"));
- 		 	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", btn_k);
- 		 	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_k);
- 		 	        Thread.sleep(500);
- 		 	        System.out.println("✅ btn clicked on attempt " + k);
- 		 	        clickedBtn = true;
+ 		 	        Thread.sleep(5000); // Optional wait before retrying
+
+ 		 	        WebElement ibExcelButton = driver.findElement(By.id("IBExcel"));
+
+ 		 	        ((JavascriptExecutor) driver).executeScript(
+ 		 	            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", ibExcelButton);
+ 		 	        Thread.sleep(300); // short delay to ensure scroll completion
+
+ 		 	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", ibExcelButton);
+ 		 	        Thread.sleep(500); // post-click buffer
+
+ 		 	        System.out.println("✅ IB Excel button clicked on attempt " + ibExcelAttempt);
+ 		 	        isIbExcelClicked = true;
  		 	        break;
+
  		 	    } catch (Exception e) {
- 		 	        System.out.println("⚠️ btn attempt " + k + " failed: " + e.getMessage());
+ 		 	        System.out.println("⚠️ Attempt " + ibExcelAttempt + " to click IB Excel failed: " + e.getMessage());
+ 		 	    }
+
+ 		 	    try {
+ 		 	        Thread.sleep(1000); // short pause before next retry
+ 		 	    } catch (InterruptedException ie) {
+ 		 	        Thread.currentThread().interrupt();
  		 	    }
  		 	}
- 		 	if (!clickedBtn) {
- 		 	    throw new RuntimeException("Failed to click btn after 10 attempts");
+
+ 		 	if (!isIbExcelClicked) {
+ 		 	    throw new RuntimeException("❌ Failed to click IB Excel button after 10 attempts.");
  		 	}
+
  		 	Thread.sleep(500);
 		}
 	    
