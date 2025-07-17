@@ -74,7 +74,7 @@ public class LoginStepsDefinition4 {
 	    // Add preferences to Chrome options
 	    options.setExperimentalOption("prefs", prefs);
 	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String downloadDir = "D:\\fd\\btladintelleautomation\\BTLoutputs\\" + timestamp;
+	    String downloadDir = "BTLoutputs\\" + timestamp;
 
 	    File downloadFolder = new File(downloadDir);
 	    if (!downloadFolder.exists()) {
@@ -95,7 +95,7 @@ public class LoginStepsDefinition4 {
 	    System.out.print("Website opened");
 	    driver.manage().window().maximize();
 	    
-	    String excelFilePath = "D:\\fd\\btladintelleautomation\\Book2.xlsx";  // Path to your Excel file
+	    String excelFilePath = "Book2.xlsx";  // Path to your Excel file
         FileInputStream file = new FileInputStream(new File(excelFilePath));
         try (Workbook workbook = new XSSFWorkbook(file)) {
 			Sheet sheet = workbook.getSheetAt(0); // Get the first sheet

@@ -2536,7 +2536,8 @@ Thread.sleep(2000);
  		   wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loadingModalClientBill")));
  		   new WebDriverWait(driver, Duration.ofSeconds(60)).until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
  		  Thread.sleep(6000);
- 		 By proceedBtn = By.xpath("//button[text()='Proceed']");
+ 		//button[text()='Proceed']
+ 		 By proceedBtn = By.xpath("//button[text()='Proceed' and contains(@onclick, 'ProceedToIBProvision')]");
 
  		for (int attempt2 = 1; attempt2 <= 10; attempt2++) {
  		    try {
