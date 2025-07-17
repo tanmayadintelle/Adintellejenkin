@@ -1601,14 +1601,17 @@ Thread.sleep(2000);
 		}
 
 		Thread.sleep(2000);
-		WebElement saveButton100 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("GenRoResch")));
+		WebElement saveButton100 = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("GenRoResch")));
+		 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", saveButton100);
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveButton100);
 
 		Thread.sleep(2000);
 	 		
-		 wait.until(ExpectedConditions.elementToBeClickable(
+		 WebElement okclosebtn=wait.until(ExpectedConditions.elementToBeClickable(
 				    By.xpath("//button[@onclick='return ClosePopUp();' and text()='Ok']")
-				)).click();
+				));
+		 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okclosebtn);
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();", okclosebtn);
 		 Thread.sleep(2000);
 		 String xpathaddsidebar1makegoodrint = "//*[@id=\"mySidebar\"]/div/div/span[3]";
 			//
