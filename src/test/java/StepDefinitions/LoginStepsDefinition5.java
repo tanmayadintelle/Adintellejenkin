@@ -2629,8 +2629,8 @@ Thread.sleep(2000);
  		 	        if (!saveBtnCandidates.isEmpty()) {
  		 	            WebElement saveBtnElement = saveBtnCandidates.get(0);
 
- 		 	            ((JavascriptExecutor) driver).executeScript(
- 		 	                "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", saveBtnElement);
+ 		 	            
+ 		 	          ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", saveBtnElement);
  		 	            Thread.sleep(300); // slight buffer after scroll
 
  		 	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveBtnElement);
@@ -2672,8 +2672,8 @@ Thread.sleep(2000);
  		 	        if (!okPopupButtons.isEmpty()) {
  		 	            WebElement okPopupBtn = okPopupButtons.get(0);
 
- 		 	            ((JavascriptExecutor) driver).executeScript(
- 		 	                "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", okPopupBtn);
+ 		 	          ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", okPopupBtn);
+ 		 	            
  		 	            Thread.sleep(300); // short delay to allow smooth scroll
 
  		 	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okPopupBtn);
