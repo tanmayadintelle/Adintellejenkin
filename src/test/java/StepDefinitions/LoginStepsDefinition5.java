@@ -1103,8 +1103,10 @@ Thread.sleep(2000);
  	        // Find the target element
  	        WebElement element = driver.findElement(By.xpath(xpathaddgeneratero));
 
- 	        // Scroll to the element
- 	        js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});", element);
+ 	       
+ 	       ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+
+
 
  	        // Click the element
  	        element.click();
@@ -1317,8 +1319,11 @@ Thread.sleep(2000);
 		        if (!okBtnsFinal.isEmpty()) {
 		            WebElement okFinal = okBtnsFinal.get(0);
 
-		            ((JavascriptExecutor) driver).executeScript(
-		                "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", okFinal);
+		          
+		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", okFinal);
+
+
+		            
 		            Thread.sleep(300); // slight delay after scroll
 		            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okFinal);
 
@@ -1603,7 +1608,7 @@ Thread.sleep(2000);
 			        try {
 			        	 Thread.sleep(2000);
 			            wait.until(ExpectedConditions.visibilityOf(dayElement1));
-			            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", dayElement1);
+			            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", dayElement1);
 			            Thread.sleep(500); // Let scroll finish
 			            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElement1);
 			            System.out.println("✅ Clicked on date: " + day1);
@@ -1681,7 +1686,9 @@ Thread.sleep(2000);
 		        if (!okButtons6.isEmpty()) {
 		            WebElement okBtn7 = okButtons6.get(0);
 		            
-		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", okBtn7);
+		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", okBtn7);
+
+
 		            Thread.sleep(300); // slight delay after scroll
 		            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn7);
 
@@ -1971,7 +1978,9 @@ Thread.sleep(2000);
  			 	        WebElement element = driver.findElement(By.xpath(xpathaddgenerateclientbill));
 
  			 	        // Scroll to the element
- 			 	        js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});", element);
+ 			 	       
+ 			 	      ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+
 
  			 	        // Click the element
  			 	        element.click();
@@ -2263,9 +2272,11 @@ Thread.sleep(2000);
 
 			 	        // Find the target element
 			 	        WebElement element = driver.findElement(By.xpath(xpathaddgeneratero1));
+			 	       ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+
 
 			 	        // Scroll to the element
-			 	        js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});", element);
+			 	       // js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});", element);
 
 			 	        // Click the element
 			 	        element.click();
@@ -2349,8 +2360,10 @@ Thread.sleep(2000);
 	 			 	            By.xpath("//*[@id='chkallPublicationInser']"))
 	 			 	        );
 
-	 			 	        ((JavascriptExecutor) driver).executeScript(
-	 			 	            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", pubCheckbox);
+	 			 	       
+	 			 	      ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", pubCheckbox);
+
+
 	 			 	        Thread.sleep(300); // allow scroll to complete
 
 	 			 	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", pubCheckbox);
@@ -2394,7 +2407,9 @@ Thread.sleep(2000);
 	 			 	        WebElement element = driver.findElement(By.xpath(xpathaddgenerateclientbill1));
 
 	 			 	        // Scroll to the element
-	 			 	        js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});", element);
+	 			 	        //js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});", element);
+	 			 	      ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+
 
 	 			 	        // Click the element
 	 			 	        element.click();
@@ -2711,8 +2726,11 @@ Thread.sleep(2000);
 
  		 	        WebElement ibExcelButton = driver.findElement(By.id("IBExcel"));
 
- 		 	        ((JavascriptExecutor) driver).executeScript(
- 		 	            "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", ibExcelButton);
+ 		 	      
+ 		 	        
+ 		 	      ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", ibExcelButton);
+
+
  		 	        Thread.sleep(300); // short delay to ensure scroll completion
 
  		 	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", ibExcelButton);
