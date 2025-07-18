@@ -1737,10 +1737,11 @@ Thread.sleep(2000);
 	 	 		).click();
 
  			
- 			 wait.until(ExpectedConditions.elementToBeClickable(
- 				 	  By.id("MakeGoodExlOwtput"))
- 				 	 		).click();
- 			 		
+ 			
+ 			  WebElement mgoodex=wait.until(ExpectedConditions.presenceOfElementLocated(
+ 				 	  By.id("MakeGoodExlOwtput")));
+ 				 	 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", mgoodex);
+ 				 	mgoodex.click();
  				 	 System.out.print("RO Makgeood with output");
 
  			Thread.sleep(2000);
@@ -2591,7 +2592,7 @@ Thread.sleep(2000);
  		            .until(ExpectedConditions.elementToBeClickable(proceedBtn));
  		       ((JavascriptExecutor) driver)
  		      .executeScript("arguments[0].scrollIntoView({block:'center'});", proceedElement);
- 		        js.executeScript("arguments[0].scrollIntoView(true);", proceedElement);
+// 		        js.executeScript("arguments[0].scrollIntoView(true);", proceedElement);
  		        Thread.sleep(500); // small buffer
  		        js.executeScript("arguments[0].click();", proceedElement);
 
