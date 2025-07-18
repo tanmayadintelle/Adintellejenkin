@@ -2595,7 +2595,7 @@ Thread.sleep(2000);
  		   new WebDriverWait(driver, Duration.ofSeconds(60)).until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
  		  Thread.sleep(6000);
  		//button[text()='Proceed']
- 		 By proceedBtn = By.xpath("//button[text()='Proceed' and contains(@onclick, 'ProceedToIBProvision')]");
+ 		 By proceedBtn = By.xpath("//button[text()='Proceed']");
 
  		for (int attempt2 = 1; attempt2 <= 10; attempt2++) {
  		    try {
