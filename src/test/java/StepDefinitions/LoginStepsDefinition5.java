@@ -2577,6 +2577,9 @@ Thread.sleep(2000);
 
  		for (int attempt2 = 1; attempt2 <= 10; attempt2++) {
  		    try {
+ 		    	Thread.sleep(10000);
+ 		    	Thread.sleep(6000);
+ 		    	 Thread.sleep(3000);
  		        System.out.println("Attempting to click Proceed, attempt " + attempt2);
  		        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
 
@@ -2585,8 +2588,9 @@ Thread.sleep(2000);
  		            .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
 
  		        WebElement proceedElement = new WebDriverWait(driver, Duration.ofSeconds(30))
- 		            .until(ExpectedConditions.presenceOfElementLocated(proceedBtn));
-
+ 		            .until(ExpectedConditions.elementToBeClickable(proceedBtn));
+ 		       ((JavascriptExecutor) driver)
+ 		      .executeScript("arguments[0].scrollIntoView({block:'center'});", proceedElement);
  		        js.executeScript("arguments[0].scrollIntoView(true);", proceedElement);
  		        Thread.sleep(500); // small buffer
  		        js.executeScript("arguments[0].click();", proceedElement);
