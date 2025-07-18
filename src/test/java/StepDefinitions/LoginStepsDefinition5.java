@@ -1310,44 +1310,41 @@ Thread.sleep(2000);
 		
 		boolean okClickedFinal = false;
 
+		By okBtnLocator = By.xpath("//button[normalize-space(text())='Ok' and contains(@onclick, 'ClosePopUp')]");
+
 		for (int finalOkAttempt = 1; finalOkAttempt <= 10; finalOkAttempt++) {
 		    try {
-		        List<WebElement> okBtnsFinal = driver.findElements(
-		            By.xpath("//button[normalize-space(text())='Ok' and contains(@onclick, 'ClosePopUp')]")
-		        );
+		        System.out.println("🔁 Attempt " + finalOkAttempt + ": Looking for OK button...");
 
-		        if (!okBtnsFinal.isEmpty()) {
-		            WebElement okFinal = okBtnsFinal.get(0);
+		      //  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		        WebElement okButton = wait.until(ExpectedConditions.elementToBeClickable(okBtnLocator));
 
-		          
-		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", okFinal);
+		        // Scroll into view in center
+		        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", okButton);
+		        Thread.sleep(300); // allow scroll to settle
 
+		        // Try clicking
+		        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okButton);
 
-		            
-		            Thread.sleep(300); // slight delay after scroll
-		            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okFinal);
+		        System.out.println("✅ OK button clicked successfully on attempt " + finalOkAttempt);
+		        okClickedFinal = true;
+		        break;
 
-		            System.out.println("✅ OK button clicked successfully on attempt " + finalOkAttempt);
-		            okClickedFinal = true;
-		            break; // success, exit loop
-		        } else {
-		            System.out.println("❌ Attempt " + finalOkAttempt + ": OK button not found.");
-		        }
-
+		    } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
+		        System.out.println("⚠️ Retryable exception on attempt " + finalOkAttempt + ": " + e.getMessage());
+		    } catch (TimeoutException te) {
+		        System.out.println("⏳ OK button not clickable in time on attempt " + finalOkAttempt);
 		    } catch (Exception e) {
-		        System.out.println("⚠️ Attempt " + finalOkAttempt + ": Exception occurred - " + e.getMessage());
+		        System.out.println("❌ Unexpected error on attempt " + finalOkAttempt + ": " + e.getMessage());
 		    }
 
-		    try {
-		        Thread.sleep(1000); // wait before next attempt
-		    } catch (InterruptedException ie) {
-		        Thread.currentThread().interrupt();
-		    }
+		    Thread.sleep(1000); // Small pause before retry
 		}
 
 		if (!okClickedFinal) {
 		    throw new RuntimeException("❌ Failed to click OK button after 10 attempts.");
 		}
+
 
 		Thread.sleep(10000);
 		Thread.sleep(3000);
