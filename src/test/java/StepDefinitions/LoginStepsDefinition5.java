@@ -1318,7 +1318,6 @@ Thread.sleep(2000);
 
 		      //  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		        WebElement okButton = wait.until(ExpectedConditions.elementToBeClickable(okBtnLocator));
-
 		        // Scroll into view in center
 		        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", okButton);
 		        Thread.sleep(300); // allow scroll to settle
@@ -1683,9 +1682,19 @@ Thread.sleep(2000);
 		        if (!okButtons6.isEmpty()) {
 		            WebElement okBtn7 = okButtons6.get(0);
 		            
-		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", okBtn7);
+		            if (okBtn7.isDisplayed() && okBtn7.isEnabled()) {
+		                ((JavascriptExecutor) driver).executeScript(
+		                    "arguments[0].scrollIntoView({block: 'center'});", okBtn7
+		                );
+		                Thread.sleep(300); // Delay after scroll (can tweak this)
+		                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn7);
 
-
+		                System.out.println("✅ OK button clicked successfully on attempt " + attempt5);
+		                clicked4 = true;
+		                break;
+		            } else {
+		                System.out.println("⚠️ Attempt " + attempt5 + ": OK button found but not interactable yet.");
+		            }
 		            Thread.sleep(300); // slight delay after scroll
 		            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn7);
 
