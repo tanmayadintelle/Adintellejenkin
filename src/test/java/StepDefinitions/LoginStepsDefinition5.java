@@ -1458,7 +1458,7 @@ Thread.sleep(2000);
 
 	 	        if (!okButtons1.isEmpty()) {
 	 	            WebElement okBtn = okButtons1.get(0);
-	 	            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", okBtn);
+	 	           js.executeScript("arguments[0].scrollIntoView({block:'center'});", okBtn);
 	 	            Thread.sleep(300); // slight delay after scroll
 	 	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okBtn);
 
