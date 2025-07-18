@@ -2585,7 +2585,7 @@ Thread.sleep(2000);
  		            .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
 
  		        WebElement proceedElement = new WebDriverWait(driver, Duration.ofSeconds(30))
- 		            .until(ExpectedConditions.elementToBeClickable(proceedBtn));
+ 		            .until(ExpectedConditions.presenceOfElementLocated(proceedBtn));
 
  		        js.executeScript("arguments[0].scrollIntoView(true);", proceedElement);
  		        Thread.sleep(500); // small buffer

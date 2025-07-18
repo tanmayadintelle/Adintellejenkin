@@ -41,7 +41,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Comparator;
+//import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -217,7 +217,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
     JavascriptExecutor js = (JavascriptExecutor) driver;
  // Wait for the Client dropdown input to be ready
-    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
+   // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
     // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='80%'");
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"select-client\"]/div/div[1]/ng-select/div")));
 
