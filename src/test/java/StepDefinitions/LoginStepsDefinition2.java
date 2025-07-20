@@ -54,7 +54,7 @@ public class LoginStepsDefinition2 {
 	@Given("User clicks on master and clicks on all the fields")
 	public void user_is_on_login_page() throws IOException, InterruptedException {
 		String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        screenshotFolderPath = "D:\\fd\\btladintelleautomation\\Masterscreenshots\\" + timestamp;
+        screenshotFolderPath = "Masterscreenshots\\" + timestamp;
         File folder = new File(screenshotFolderPath);
         if (!folder.exists()) {
             folder.mkdirs();  // Create the folder if it doesn't exist
