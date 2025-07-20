@@ -1634,7 +1634,7 @@ public class LoginStepsDefinition4 {
 		    WebDriverWait waitloadchild = new WebDriverWait(driver, Duration.ofSeconds(60));	
 		    
 		    
-		    
+		    Thread.sleep(5000);
 		    waitloadchild.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#bill-to-client > div:nth-child(2) > div > div > div:nth-child(4)")));
 		   
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#bill-to-client > div:nth-child(2) > div > div > div:nth-child(4)")));
@@ -1661,7 +1661,9 @@ public class LoginStepsDefinition4 {
 		   
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[3]/div[2]/span[2]")).click();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[3]/div[2]/span[2]")));
-		    Thread.sleep(2000);driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[3]/div[2]/span[2]")).click();
+		    Thread.sleep(2000);
+		    
+		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[3]/div[2]/span[2]")).click();
 		    
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[3]/div[2]/span[2]")));
 		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-po/div/div[3]/div[2]/span[2]")).click();

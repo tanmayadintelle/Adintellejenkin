@@ -1405,7 +1405,7 @@ public class LoginStepsDefinition3 {
 		    
 		    System.out.println("Created Vendor PO");
 		   // WebDriverWait waitload8 = new WebDriverWait(driver, Duration.ofSeconds(60));			   
-		    Thread.sleep(2000);
+		    Thread.sleep(10000);
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/action_icon.svg']")));
 		    //waitload8.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/action_icon.svg']")));
 		    driver.findElement(By.xpath("//img[@src='./assets/img/svg/action_icon.svg']")).click();
