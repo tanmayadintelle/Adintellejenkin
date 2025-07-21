@@ -1,6 +1,6 @@
 
-Feature: Automation for new digital on pro link for Vendor Billing flow
-Scenario Outline: Check if digital flow on pro(VBF) is working fine
+Feature: Digital
+Scenario Outline: Sanity testing for Digital Vendor Billing First
 Given User logs in and navigate to digital page
 When User creates a new job and adds a campaign
 And User creates estimate with outputs

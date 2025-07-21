@@ -1,6 +1,6 @@
 @Sanity
-Feature: Automation for new digital on pro link for Client Billing flow
-Scenario Outline: Check if digital flow on pro(CBF) is working fine
+Feature: Digital
+Scenario Outline: Sanity testing for Digital Client Billing First
 Given User logs in and navigate to digital page for cbf
 When User creates a new job and adds a campaign for cbf
 And User creates estimate with outputs for cbf

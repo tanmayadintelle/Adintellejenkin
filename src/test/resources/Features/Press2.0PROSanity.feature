@@ -1,6 +1,6 @@
-
-Feature: Automation for press pro link
-Scenario Outline: Check if  pro flow is working fine
+@Sanity
+Feature: Press
+Scenario Outline: Sanity testing for Press 
 Given User completes Press pro sanity flow
 When Download all the reports
 #And Click on Login Button
