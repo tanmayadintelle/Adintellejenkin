@@ -1,8 +1,7 @@
-@
-Feature: Check if BTL pro flow is working fine
-Feature: Automation of existing BTL page
+@Sanity
+Feature: BTL
 
-Scenario Outline: Check if BTL pro flow is working fine
+Scenario Outline: Sanity testing for BTL
 Given User completes BTL pro sanity flow
 #When User enter valid "<username>" an "<password>"
 #And Click on Login Button
