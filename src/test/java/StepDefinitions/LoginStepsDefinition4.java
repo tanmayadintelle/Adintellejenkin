@@ -158,9 +158,6 @@ public class LoginStepsDefinition4 {
 	        	if (!icons.isEmpty()) {
 	        	    WebElement icon = icons.get(0);
 	        	    icon.click();
-	        	    System.out.println("SVG icon clicked.");
-	        	} else {
-	        	    System.out.println("SVG icon not found. Continuing without clicking.");
 	        	}
 	        WebElement iframe = waitid.until(ExpectedConditions.presenceOfElementLocated(By.id("appIframeAgency"))); 
 	        Thread.sleep(2000);// Replace with your iframe ID
