@@ -37,7 +37,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Comparator;
+//import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -72,7 +72,7 @@ public void user_logs_in_and_navigate_to_reports_page() throws InterruptedExcept
 			    // Add preferences to Chrome options
 			    options.setExperimentalOption("prefs", prefs);
 			    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-			    String downloadDir = "D:\\fd\\btladintelleautomation\\reports\\" + timestamp;
+			    String downloadDir = "reports\\" + timestamp;
 
 			    File downloadFolder = new File(downloadDir);
 			    if (!downloadFolder.exists()) {
@@ -92,7 +92,7 @@ public void user_logs_in_and_navigate_to_reports_page() throws InterruptedExcept
 			    System.out.print("Website opened");
 			    driver.manage().window().maximize();
 			    
-			    String excelFilePath = "D:\\fd\\btladintelleautomation\\Reportsmyjobspage.xlsx";  // Path to your Excel file
+			    String excelFilePath = "Reportsmyjobspage.xlsx";  // Path to your Excel file
 		        FileInputStream file = new FileInputStream(new File(excelFilePath));
 		        try (Workbook workbook = new XSSFWorkbook(file)) {
 					Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
@@ -195,7 +195,7 @@ public void user_logs_in_and_navigate_to_reports_page() throws InterruptedExcept
 
 @When("User downloads status reports")
 public void user_downloads_status_reports() throws InterruptedException, FileNotFoundException, IOException {
-	 String excelFilePath = "D:\\fd\\btladintelleautomation\\Reportsmyjobspage.xlsx";  // Path to your Excel file
+	 String excelFilePath = "Reportsmyjobspage.xlsx";  // Path to your Excel file
 
 	    // Open workbook and file input stream with try-with-resources for auto-close
 	    try (FileInputStream file = new FileInputStream(new File(excelFilePath));
@@ -305,7 +305,7 @@ public void user_downloads_status_reports() throws InterruptedException, FileNot
     		    	String finalName = "StatusReport_" + "Digital" + "_" + fromDate + "_to_" + toDate;
 
     		    	// Locate latest folder
-    		    	String reportFolderRoot = "D:\\fd\\btladintelleautomation\\reports";
+    		    	String reportFolderRoot = "reports";
     		    	File latestFolder = getLatestReportFolder(reportFolderRoot);
 
     		    	if (latestFolder != null) {
@@ -468,7 +468,7 @@ public void user_downloads_status_reports() throws InterruptedException, FileNot
 		    	String finalName1 = "StatusReport_" + "BTL" + "_" + fromDate1 + "_to_" + toDate1;
 
 		    	// Locate latest folder
-		    	String reportFolderRoot1 = "D:\\fd\\btladintelleautomation\\reports";
+		    	String reportFolderRoot1 = "reports";
 		    	File latestFolder1 = getLatestReportFolder(reportFolderRoot1);
 
 		    	if (latestFolder1 != null) {
@@ -491,7 +491,7 @@ public void user_downloads_status_reports() throws InterruptedException, FileNot
 
 @When("User downloads sales register")
 public void user_downloads_sales_register() throws IOException, InterruptedException {
-	 String excelFilePath = "D:\\fd\\btladintelleautomation\\Reportsmyjobspage.xlsx";  // Path to your Excel file
+	 String excelFilePath = "Reportsmyjobspage.xlsx";  // Path to your Excel file
 
 	    // Open workbook and file input stream with try-with-resources for auto-close
 	    try (FileInputStream file = new FileInputStream(new File(excelFilePath));
@@ -655,7 +655,7 @@ public void user_downloads_sales_register() throws IOException, InterruptedExcep
     	String finalName = "SalesRegister_" + activityNameForFile + "_" + fromDate + "_to_" + toDate;
 
     	// Locate latest folder
-    	String reportFolderRoot = "D:\\fd\\btladintelleautomation\\reports";
+    	String reportFolderRoot = "reports";
     	File latestFolder = getLatestReportFolder(reportFolderRoot);
 
     	if (latestFolder != null) {
@@ -720,7 +720,7 @@ public void user_downloads_sales_register() throws IOException, InterruptedExcep
 	String finalName1 = "SalesReport_" + "Allmediums" + "_" + fromDate1 + "_to_" + toDate1;
 
 	// Locate latest folder
-	String reportFolderRoot1 = "D:\\fd\\btladintelleautomation\\reports";
+	String reportFolderRoot1 = "reports";
 	File latestFolder1 = getLatestReportFolder(reportFolderRoot1);
 
 	if (latestFolder1 != null) {
@@ -741,7 +741,7 @@ public void user_downloads_sales_register() throws IOException, InterruptedExcep
 }
 @Then("User downloads purchase register")
 public void user_downloads_purchase_register() throws FileNotFoundException, IOException, InterruptedException {
-	 String excelFilePath = "D:\\fd\\btladintelleautomation\\Reportsmyjobspage.xlsx";  // Path to your Excel file
+	 String excelFilePath = "Reportsmyjobspage.xlsx";  // Path to your Excel file
 
 	    // Open workbook and file input stream with try-with-resources for auto-close
 	    try (FileInputStream file = new FileInputStream(new File(excelFilePath));
@@ -946,7 +946,7 @@ public void user_downloads_purchase_register() throws FileNotFoundException, IOE
     	String finalName = "PurchaseRegister_" + activityNameForFile + "_" + fromDate + "_to_" + toDate;
 
     	// Locate latest folder
-    	String reportFolderRoot = "D:\\fd\\btladintelleautomation\\reports";
+    	String reportFolderRoot = "reports";
     	File latestFolder = getLatestReportFolder(reportFolderRoot);
 
     	if (latestFolder != null) {
@@ -1063,7 +1063,7 @@ public void user_downloads_purchase_register() throws FileNotFoundException, IOE
     	String finalName1 = "PurchaseRegister_" + "Allmediums" + "_" + fromDate1 + "_to_" + toDate1;
 
     	// Locate latest folder
-    	String reportFolderRoot1 = "D:\\fd\\btladintelleautomation\\reports";
+    	String reportFolderRoot1 = "reports";
     	File latestFolder1 = getLatestReportFolder(reportFolderRoot1);
 
     	if (latestFolder1 != null) {

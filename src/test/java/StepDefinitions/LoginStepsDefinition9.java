@@ -43,7 +43,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Comparator;
+//import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -79,7 +79,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    // Add preferences to Chrome options
 			    options.setExperimentalOption("prefs", prefs);
 			    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-			    String downloadDir = "D:\\fd\\btladintelleautomation\\digitaloutputscbf\\" + timestamp;
+			    String downloadDir = "digitaloutputscbf\\" + timestamp;
 
 			    File downloadFolder = new File(downloadDir);
 			    if (!downloadFolder.exists()) {
@@ -99,7 +99,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    System.out.print("Website opened");
 			    driver.manage().window().maximize();
 			    
-			    String excelFilePath = "D:\\fd\\btladintelleautomation\\DigitalproImportData.xlsx";  // Path to your Excel file
+			    String excelFilePath = "DigitalproImportData.xlsx";  // Path to your Excel file
 		        FileInputStream file = new FileInputStream(new File(excelFilePath));
 		        try (Workbook workbook = new XSSFWorkbook(file)) {
 					Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
@@ -196,7 +196,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 	 String extractedValue = "";
 @When("User imports new data for digital")
 public void user_createsnewjob_and_addsacampaign() throws InterruptedException, FileNotFoundException, IOException {
-	String excelFilePath = "D:\\fd\\btladintelleautomation\\DigitalproImportData.xlsx";  // Path to your Excel file
+	String excelFilePath = "DigitalproImportData.xlsx";  // Path to your Excel file
     FileInputStream file = new FileInputStream(new File(excelFilePath));
     try (Workbook workbook = new XSSFWorkbook(file)) {
 		Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
@@ -305,7 +305,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
  
  System.out.println("Change the jobname of default template and rename it to current date and time and upload the doc");
  
- String filePath = "D:\\fd\\btladintelleautomation\\New_Digital_Import_Sample_Pro.xlsx"; // Update this
+ String filePath = "New_Digital_Import_Sample_Pro.xlsx"; // Update this
 
  FileInputStream fis = new FileInputStream(filePath);
  Workbook workbook1 = new XSSFWorkbook(fis);
@@ -389,7 +389,7 @@ Thread.sleep(10000);
 
 @And("User merges data into existing data")
 public void user_createsestimate_withoutputs() throws InterruptedException, FileNotFoundException, IOException {
-	String excelFilePath = "D:\\fd\\btladintelleautomation\\DigitalproImportData.xlsx";  // Path to your Excel file
+	String excelFilePath = "DigitalproImportData.xlsx";  // Path to your Excel file
     FileInputStream file = new FileInputStream(new File(excelFilePath));
     try (Workbook workbook = new XSSFWorkbook(file)) {
 		Sheet sheet = workbook.getSheetAt(0); // Get the first sheet

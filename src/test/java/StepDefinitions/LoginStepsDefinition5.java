@@ -73,7 +73,7 @@ public class LoginStepsDefinition5 {
 	    // Add preferences to Chrome options
 	    options.setExperimentalOption("prefs", prefs);
 	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String downloadDir = "D:\\fd\\btladintelleautomation\\pressoutput\\" + timestamp;
+	    String downloadDir = "pressoutput\\" + timestamp;
 
 	    File downloadFolder = new File(downloadDir);
 	    if (!downloadFolder.exists()) {
@@ -93,7 +93,7 @@ public class LoginStepsDefinition5 {
 	    System.out.print("Website opened");
 	    driver.manage().window().maximize();
 	    
-	    String excelFilePath = "D:\\fd\\btladintelleautomation\\Presspro.xlsx";  // Path to your Excel file
+	    String excelFilePath = "Presspro.xlsx";  // Path to your Excel file
         FileInputStream file = new FileInputStream(new File(excelFilePath));
         try (Workbook workbook = new XSSFWorkbook(file)) {
 			Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
@@ -2771,7 +2771,7 @@ Thread.sleep(2000);
 	public void download_all_the_report() throws IOException, InterruptedException {
 		
 		
-	    String excelFilePath = "D:\\fd\\btladintelleautomation\\Presspro.xlsx";  // Path to your Excel file
+	    String excelFilePath = "Presspro.xlsx";  // Path to your Excel file
 
 	    // Open workbook and file input stream with try-with-resources for auto-close
 	    try (FileInputStream file = new FileInputStream(new File(excelFilePath));

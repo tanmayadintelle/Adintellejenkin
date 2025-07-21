@@ -173,7 +173,7 @@ public class LoginStepsDefinition4 {
 		    waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/newjob.svg']")));
 //		    JavascriptExecutor jsif = (JavascriptExecutor) driver;
 //	        jsif.executeScript("arguments[0].scrollTop = arguments[0].scrollHeight", iframe);
-		   // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
+		    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
 		    driver.findElement(By.xpath("//img[@src='./assets/img/svg/newjob.svg']")).click();
 		    waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/div/div/app-new-job/div/div[3]/div/div[2]/div/div/div/div/div[1]/div[1]/span/img")));
 		    System.out.println("Inside New Job activity");
