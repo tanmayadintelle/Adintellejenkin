@@ -2637,6 +2637,8 @@ Thread.sleep(2000);
  		            .until(ExpectedConditions.elementToBeClickable(proceedBtn));
  		       ((JavascriptExecutor) driver)
  		      .executeScript("arguments[0].scrollIntoView({block:'center'});", proceedElement);
+ 		      wait.until(ExpectedConditions.invisibilityOfElementLocated(
+ 		    	        By.cssSelector("div.modal.fade.in[style*='display: block']")));
 // 		        js.executeScript("arguments[0].scrollIntoView(true);", proceedElement);
  		        Thread.sleep(500); // small buffer
  		       try {
