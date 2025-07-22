@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +79,7 @@ public class LoginStepsDefinition5 {
 		
 	    options.setExperimentalOption("prefs", prefs);
 	    options.setAcceptInsecureCerts(true);
-	    //options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
+	    options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
 	    options.addArguments("--disable-blink-features=AutomationControlled");
 	    options.addArguments("--window-size=1920,1080");
 	    options.addArguments("--force-device-scale-factor=0.8");
@@ -672,7 +673,7 @@ public class LoginStepsDefinition5 {
   	    // Element not found or not clickable within timeout, continue with next steps
   	    System.out.println("OK button not present, proceeding to next step.");
   	}
-   Thread.sleep(4000);
+   Thread.sleep(5000);
       
       wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"mySidebar\"]/div/div/span[3]"))).click();  
       Thread.sleep(500);
@@ -2627,12 +2628,20 @@ Thread.sleep(2000);
  		      .executeScript("arguments[0].scrollIntoView({block:'center'});", proceedElement);
 // 		        js.executeScript("arguments[0].scrollIntoView(true);", proceedElement);
  		        Thread.sleep(500); // small buffer
- 		        js.executeScript("arguments[0].click();", proceedElement);
+ 		       try {
+ 		            proceedElement.click(); // Native click first
+ 		        } catch (Exception e) {
+ 		            js.executeScript("arguments[0].click();", proceedElement); // JS fallback
+ 		        }
 
  		        System.out.println("✅ Proceed button clicked on attempt " + attempt2);
- 		        break; // success, exit loop
+ 		        break;
+
+ 		       // System.out.println("✅ Proceed button clicked on attempt " + attempt2);
+ 		       // break; // success, exit loop
 
  		    } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
+ 		    	
  		        System.out.println("⚠️ Retryable exception on attempt " + attempt2 + ": " + e.getMessage());
  		        Thread.sleep(2000); // Give DOM time to stabilize
 
