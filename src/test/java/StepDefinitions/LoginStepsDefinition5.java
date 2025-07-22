@@ -54,8 +54,8 @@ public class LoginStepsDefinition5 {
 	    // Write code here that turns the phrase above into concrete actions
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--headless=new"); // or "--headless" depending on your Chrome version
-		options.addArguments("window-size=1920,1080");
-		options.addArguments("--force-device-scale-factor=0.6");
+		options.addArguments("window-size=1366,768");
+		//options.addArguments("--force-device-scale-factor=0.6");
 	    // Create a HashMap for preferences
 //		ChromeOptions options = new ChromeOptions();
 //		options.addArguments("--headless=new");
