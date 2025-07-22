@@ -2619,7 +2619,7 @@ Thread.sleep(2000);
  		   new WebDriverWait(driver, Duration.ofSeconds(60)).until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
  		  Thread.sleep(6000);
  		//button[text()='Proceed']
- 		 By proceedBtn = By.xpath("//button[@onclick='ProceedToIBProvision();']");
+ 		 By proceedBtn = By.id("BtnPrcdTOIBProvision");
 
  		for (int attempt2 = 1; attempt2 <= 10; attempt2++) {
  		    try {
@@ -2637,8 +2637,8 @@ Thread.sleep(2000);
  		            .until(ExpectedConditions.elementToBeClickable(proceedBtn));
  		       ((JavascriptExecutor) driver)
  		      .executeScript("arguments[0].scrollIntoView({block:'center'});", proceedElement);
- 		      wait.until(ExpectedConditions.invisibilityOfElementLocated(
- 		    	        By.cssSelector("div.modal.fade.in[style*='display: block']")));
+// 		      wait.until(ExpectedConditions.invisibilityOfElementLocated(
+// 		    	        By.cssSelector("div.modal.fade.in[style*='display: block']")));
 // 		        js.executeScript("arguments[0].scrollIntoView(true);", proceedElement);
  		        Thread.sleep(500); // small buffer
  		       try {
