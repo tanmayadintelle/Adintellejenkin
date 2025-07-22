@@ -52,9 +52,8 @@ public class LoginStepsDefinition5 {
 	public void user_is_on_login_page() throws IOException, InterruptedException {
 
 	    // Write code here that turns the phrase above into concrete actions
-		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--headless=new"); // or "--headless" depending on your Chrome version
-		options.addArguments("window-size=1366,768");
+		
+		
 		//options.addArguments("--force-device-scale-factor=0.6");
 	    // Create a HashMap for preferences
 //		ChromeOptions options = new ChromeOptions();
@@ -73,8 +72,18 @@ public class LoginStepsDefinition5 {
 	    HashMap<String, Object> prefs = new HashMap<>();    
 	    // Block notifications by setting the preference value to 2 (block)
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
+	    prefs.put("profile.default_content_settings.popups", 0);
+        prefs.put("safebrowsing.enabled", true);
+	    ChromeOptions options = new ChromeOptions();
+		
 	    // Add preferences to Chrome options
 	    options.setExperimentalOption("prefs", prefs);
+	    
+	    //options.setExperimentalOption("prefs", prefs);
+        options.setAcceptInsecureCerts(true);
+        options.addArguments("--window-size=1366,768");
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--headless=new");
 	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 	    String downloadDir = "pressoutput\\" + timestamp;
 
