@@ -17,7 +17,9 @@ import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,6 +30,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -2647,6 +2650,7 @@ Thread.sleep(2000);
  		            System.out.println("✅ Proceed button clicked by JS fallback on attempt " + attempt2);
  		        }
  		        System.out.println("✅ Proceed button clicked on attempt " + attempt2);
+ 		       takeScreenshot(driver, "clicked_proceed_attempt_" + attempt2 + ".png");
  		        break;
 
  		       // System.out.println("✅ Proceed button clicked on attempt " + attempt2);
@@ -2655,14 +2659,17 @@ Thread.sleep(2000);
  		    } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
  		    	
  		        System.out.println("⚠️ Retryable exception on attempt " + attempt2 + ": " + e.getMessage());
+ 		       takeScreenshot(driver, "clicked_proceed_attempt_" + attempt2 + ".png");
  		        Thread.sleep(2000); // Give DOM time to stabilize
 
  		    } catch (TimeoutException te) {
  		        System.out.println("⏳ Proceed button not clickable on attempt " + attempt2 + ": " + te.getMessage());
+ 		       takeScreenshot(driver, "clicked_proceed_attempt_" + attempt2 + ".png");
  		        Thread.sleep(3000);
 
  		    } catch (Exception e) {
  		        System.out.println("❌ Unhandled error on attempt " + attempt2 + ": " + e.getMessage());
+ 		       takeScreenshot(driver, "clicked_proceed_attempt_" + attempt2 + ".png");
  		        if (attempt2 == 10) {
  		            throw e; // only throw if last retry fails
  		        }
@@ -2799,7 +2806,15 @@ Thread.sleep(2000);
 	    
 	}
 	
-	
+	  public static void takeScreenshot(WebDriver driver, String fileName) {
+	        try {
+	            File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+	            FileUtils.copyFile(src, new File("screenshots/" + fileName));
+	            System.out.println("📷 Screenshot saved: " + fileName);
+	        } catch (IOException e) {
+	            System.out.println("⚠️ Failed to save screenshot: " + e.getMessage());
+	        }
+	    }
 	@When("Download all the reports")
 	public void download_all_the_report() throws IOException, InterruptedException {
 		
