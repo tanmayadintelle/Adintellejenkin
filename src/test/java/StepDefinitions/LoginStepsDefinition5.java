@@ -2637,11 +2637,15 @@ Thread.sleep(2000);
 // 		        js.executeScript("arguments[0].scrollIntoView(true);", proceedElement);
  		        Thread.sleep(500); // small buffer
  		       try {
- 		            proceedElement.click(); // Native click first
+ 		            Actions actions11 = new Actions(driver);
+ 		            actions11.moveToElement(proceedElement).pause(Duration.ofMillis(200)).click().build().perform();
+ 		            System.out.println("✅ Proceed button clicked by Actions on attempt " + attempt2);
  		        } catch (Exception e) {
- 		            js.executeScript("arguments[0].click();", proceedElement); // JS fallback
+ 		            System.out.println("⚠️ Actions click failed, trying JS click fallback: " + e.getMessage());
+ 		            // Fallback to JS click
+ 		            js.executeScript("arguments[0].click();", proceedElement);
+ 		            System.out.println("✅ Proceed button clicked by JS fallback on attempt " + attempt2);
  		        }
-
  		        System.out.println("✅ Proceed button clicked on attempt " + attempt2);
  		        break;
 
