@@ -1934,6 +1934,17 @@ Thread.sleep(2000);
 
  			WebElement okButton170 = wait.until(ExpectedConditions.elementToBeClickable(
  				    By.xpath("//button[text()='OK' and contains(@class,'swal-button--confirm')]")));
+ 		   ((JavascriptExecutor) driver)
+		      .executeScript("arguments[0].scrollIntoView({block:'center'});", okButton170);
+//		        js.executeScript("arguments[0].scrollIntoView(true);", proceedElement);
+		        Thread.sleep(500); // small buffer
+		       try {
+		    	   okButton170.click(); // Native click first
+		        } catch (Exception e) {
+		            js.executeScript("arguments[0].click();", okButton170); // JS fallback
+		        }
+
+ 			
  				okButton170.click();
  				Thread.sleep(3000);
  				
