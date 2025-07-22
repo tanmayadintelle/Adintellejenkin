@@ -2619,7 +2619,7 @@ Thread.sleep(2000);
  		   new WebDriverWait(driver, Duration.ofSeconds(60)).until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
  		  Thread.sleep(6000);
  		//button[text()='Proceed']
- 		 By proceedBtn = By.xpath("//button[text()='Proceed']");
+ 		 By proceedBtn = By.xpath("//button[@onclick='ProceedToIBProvision();']");
 
  		for (int attempt2 = 1; attempt2 <= 10; attempt2++) {
  		    try {
@@ -2650,7 +2650,7 @@ Thread.sleep(2000);
  		            System.out.println("✅ Proceed button clicked by JS fallback on attempt " + attempt2);
  		        }
  		        System.out.println("✅ Proceed button clicked on attempt " + attempt2);
- 		       takeScreenshot(driver, "clicked_proceed_attempt_" + attempt2 + ".png");
+ 		      // takeScreenshot(driver, "clicked_proceed_attempt_" + attempt2 + ".png");
  		        break;
 
  		       // System.out.println("✅ Proceed button clicked on attempt " + attempt2);
@@ -2659,17 +2659,17 @@ Thread.sleep(2000);
  		    } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
  		    	
  		        System.out.println("⚠️ Retryable exception on attempt " + attempt2 + ": " + e.getMessage());
- 		       takeScreenshot(driver, "clicked_proceed_attempt_" + attempt2 + ".png");
+ 		      
  		        Thread.sleep(2000); // Give DOM time to stabilize
 
  		    } catch (TimeoutException te) {
  		        System.out.println("⏳ Proceed button not clickable on attempt " + attempt2 + ": " + te.getMessage());
- 		       takeScreenshot(driver, "clicked_proceed_attempt_" + attempt2 + ".png");
+ 		    
  		        Thread.sleep(3000);
 
  		    } catch (Exception e) {
  		        System.out.println("❌ Unhandled error on attempt " + attempt2 + ": " + e.getMessage());
- 		       takeScreenshot(driver, "clicked_proceed_attempt_" + attempt2 + ".png");
+ 		      
  		        if (attempt2 == 10) {
  		            throw e; // only throw if last retry fails
  		        }
