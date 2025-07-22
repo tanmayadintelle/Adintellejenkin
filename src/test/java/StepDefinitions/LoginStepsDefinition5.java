@@ -1933,7 +1933,7 @@ Thread.sleep(2000);
  			Thread.sleep(4000);
 
  			WebElement okButton170 = wait.until(ExpectedConditions.elementToBeClickable(
- 				    By.xpath("//button[text()='OK' and contains(@class,'swal-button--confirm')]")));
+ 				    By.xpath("//button[text()='OK']")));
  		   ((JavascriptExecutor) driver)
 		      .executeScript("arguments[0].scrollIntoView({block:'center'});", okButton170);
 //		        js.executeScript("arguments[0].scrollIntoView(true);", proceedElement);
