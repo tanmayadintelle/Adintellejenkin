@@ -53,6 +53,9 @@ public class LoginStepsDefinition5 {
 
 	    // Write code here that turns the phrase above into concrete actions
 		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--headless=new"); // or "--headless" depending on your Chrome version
+		options.addArguments("window-size=1920,1080");
+		options.addArguments("--force-device-scale-factor=0.6");
 	    // Create a HashMap for preferences
 //		ChromeOptions options = new ChromeOptions();
 //		options.addArguments("--headless=new");
@@ -99,7 +102,7 @@ public class LoginStepsDefinition5 {
 			Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 			Row row = sheet.getRow(1); // Get the second row (0-indexed));
 			WebDriverWait waitload2 = new WebDriverWait(driver, Duration.ofSeconds(80));
-			 ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
+			
 		    waitload2.until(ExpectedConditions.elementToBeClickable(By.name("username")));
 			// Step 3: Find the form fields on the webpage and fill them with data from Excel
 			
