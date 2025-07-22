@@ -1930,22 +1930,19 @@ Thread.sleep(2000);
  			dateElementvbilldate.click();
  			Thread.sleep(2000);
  			wait.until(ExpectedConditions.elementToBeClickable(By.id("submitWithourRo"))).click();
- 			Thread.sleep(4000);
+ 			Thread.sleep(6000);
 
- 			WebElement okButton170 = wait.until(ExpectedConditions.elementToBeClickable(
- 				    By.xpath("//button[text()='OK']")));
- 		   ((JavascriptExecutor) driver)
-		      .executeScript("arguments[0].scrollIntoView({block:'center'});", okButton170);
-//		        js.executeScript("arguments[0].scrollIntoView(true);", proceedElement);
-		        Thread.sleep(500); // small buffer
-		       try {
-		    	   okButton170.click(); // Native click first
-		        } catch (Exception e) {
-		            js.executeScript("arguments[0].click();", okButton170); // JS fallback
-		        }
-
- 			
- 				okButton170.click();
+ 			for (int attempt = 1; attempt <= 10; attempt++) {
+ 			    try {
+ 			        WebElement okButton170 = driver.findElement(By.xpath("//button[text()='OK']"));
+ 			        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okButton170);
+ 			        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okButton170);
+ 			        break;
+ 			    } catch (ElementClickInterceptedException e) {
+ 			        System.out.println("❗ Intercepted, retrying: " + e.getMessage());
+ 			        Thread.sleep(1000);
+ 			    }
+ 			}
  				Thread.sleep(3000);
  				
  				wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"chkallPublicationInser\"]"))).click();
