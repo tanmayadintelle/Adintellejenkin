@@ -76,14 +76,14 @@ public class LoginStepsDefinition5 {
         prefs.put("safebrowsing.enabled", true);
 	    ChromeOptions options = new ChromeOptions();
 		
-	    // Add preferences to Chrome options
 	    options.setExperimentalOption("prefs", prefs);
-	    
-	    //options.setExperimentalOption("prefs", prefs);
-        options.setAcceptInsecureCerts(true);
-        options.addArguments("--window-size=1366,768");
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--headless=new");
+	    options.setAcceptInsecureCerts(true);
+	    //options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
+	    options.addArguments("--disable-blink-features=AutomationControlled");
+	    options.addArguments("--window-size=1920,1080");
+	    options.addArguments("--force-device-scale-factor=0.8");
+	    options.addArguments("--remote-allow-origins=*");
+	    options.addArguments("--headless=chrome");
 	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 	    String downloadDir = "pressoutput\\" + timestamp;
 
@@ -169,7 +169,7 @@ public class LoginStepsDefinition5 {
 	        elementarrow.click();
 	        
 	        System.out.println("Logged in");
-	        ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='90%'");
+	        ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
 	        //WebDriverWait waitid = new WebDriverWait(driver, Duration.ofSeconds(60));
 	        List<WebElement> icons = driver.findElements(
 	        	    By.xpath("//*[name()='svg']/*[name()='path' and contains(@d, 'M17.8059')]")
