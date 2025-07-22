@@ -468,7 +468,7 @@ public void user_downloads_status_reports() throws InterruptedException, FileNot
 		    	String finalName1 = "StatusReport_" + "BTL" + "_" + fromDate1 + "_to_" + toDate1;
 
 		    	// Locate latest folder
-		    	String reportFolderRoot1 = "reports";
+		    	String reportFolderRoot1 = "D:\\fd\\btladintelleautomation\\reports";
 		    	File latestFolder1 = getLatestReportFolder(reportFolderRoot1);
 
 		    	if (latestFolder1 != null) {
