@@ -65,8 +65,8 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 				ChromeOptions options = new ChromeOptions();
 		
 			    // Create a HashMap for preferences
-//				ChromeOptions options = new ChromeOptions();
-//				options.addArguments("--headless=new");
+//		ChromeOptions options = new ChromeOptions();
+		//	options.addArguments("--headless=new");
 //				options.addArguments("--window-size=1920,1080");
 //				options.addArguments("--disable-gpu");
 //				options.addArguments("--no-sandbox");
@@ -85,6 +85,14 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			        downloadFolder.mkdirs(); // ✅ Create the folder if not there
 			    }
 			    Map<String, Object> prefs1 = new HashMap<>();
+			    //options.setExperimentalOption("prefs", prefs);
+//			    options.setAcceptInsecureCerts(true);
+//			    options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
+//			    options.addArguments("--disable-blink-features=AutomationControlled");
+//			    options.addArguments("--window-size=1920,1080");
+//			    options.addArguments("--force-device-scale-factor=0.8");
+//			    options.addArguments("--remote-allow-origins=*");
+	//		    options.addArguments("--headless=new");
 			    prefs1.put("profile.default_content_setting_values.notifications", 2);
 			    prefs1.put("download.default_directory", downloadDir); // ✅ Your download path
 			    prefs1.put("plugins.always_open_pdf_externally", true);
@@ -217,8 +225,8 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
     JavascriptExecutor js = (JavascriptExecutor) driver;
  // Wait for the Client dropdown input to be ready
-   ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
-    // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='80%'");
+   //((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
+  //   ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='80%'");
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"select-client\"]/div/div[1]/ng-select/div")));
 
     // Format Excel values to preserve spaces and formatting
@@ -283,7 +291,22 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
         String jobDateFromExcelyear = row.getCell(7).toString().trim(); 
         selectDateFromCalendar(driver, wait, jobDateFromExcelday, jobDateFromExcelmonth, jobDateFromExcelyear);
         Thread.sleep(5000);
-        
+        try {
+            // Check if overlay is present
+            List<WebElement> overlays = driver.findElements(By.cssSelector(".cdk-overlay-backdrop"));
+
+            if (!overlays.isEmpty()) {
+                System.out.println("⏳ Overlay detected. Waiting for it to disappear...");
+                //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
+                System.out.println("✅ Overlay is gone. Proceeding...");
+            } else {
+                System.out.println("✅ No overlay present. Proceeding...");
+            }
+        } catch (Exception e) {
+            System.out.println("⚠️ Exception while waiting for overlay: " + e.getMessage());
+            // Optional: handle timeout or continue anyway
+        }
         WebElement jobdatecalendar1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"create-job\"]/div[3]/div[3]/mat-form-field/div[1]/div[2]/div[2]/mat-datepicker-toggle/button/span[3]")));
 		jobdatecalendar1.click();
 		  String jobperiodFromExcelday1 = row.getCell(8).toString().trim().split("\\.")[0]; // e.g., "12/06/2025"
@@ -325,16 +348,31 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 			WebElement nextbutton04 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 			nextbutton04.click();
 	        System.out.print("Add Campaign for Manual FLow");
+	        Thread.sleep(4000);
 	     // Wait for Add Campaign icon and click it using JavaScript
 	        WebElement addCampaignIcon = wait.until(ExpectedConditions.presenceOfElementLocated(
 	            By.xpath("//img[contains(@src, 'add-compaign.svg')]")));
+	     // Click using JavaScript (assuming this opens a modal/dialog)
+	        try {
+	        	addCampaignIcon.click();
+	        }
+	        catch(Exception e) {
 	        js.executeScript("arguments[0].click();", addCampaignIcon);
+	        }
+	        Thread.sleep(3000);
+	        // ✅ Wait for the modal/dialog to be fully visible (if needed)
+	     
+
+	        // ✅ Wait for any overlays/loaders to disappear
 	        wait.until(ExpectedConditions.invisibilityOfElementLocated(
-	                By.cssSelector(".modal-backdrop, .overlay, .loader")));
-	        // Wait for Close icon and click it normally
+	            By.cssSelector(".modal-backdrop, .overlay, .loader")));  // Adjust selector to match your app
+
+	        // ✅ Now try to click the close icon
 	        WebElement closeIcon = wait.until(ExpectedConditions.elementToBeClickable(
 	            By.cssSelector("img[src='./assets/img/svg/close-cross.svg']")));
-	        closeIcon.click();
+	        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", closeIcon);
+	        js.executeScript("arguments[0].click();", closeIcon);
+
 	        wait.until(ExpectedConditions.invisibilityOfElementLocated(
 	                By.cssSelector(".modal-backdrop, .overlay, .loader")));
 	        // Wait again for Add Campaign icon and click it using JavaScript
@@ -366,7 +404,13 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	        	WebElement nextbutton09 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 				nextbutton09.click();
 				 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-label")));
-				WebElement nextbutton090 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
+			try{
+					    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("mat-mdc-snack-bar-label")));
+			}
+			catch(ElementClickInterceptedException e){
+				System.out.println("conitnue");
+			}
+				 WebElement nextbutton090 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 				nextbutton090.click();
 				
 	        	Thread.sleep(2000);
@@ -500,7 +544,9 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	        	
 	        	WebElement yestoclientratechanges = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"vailidateRate\"]/div[3]/div/div/span[2]")));
 	        	yestoclientratechanges.click();
-	        	   
+	        	 try {  
+	        	wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.cdk-overlay-pane")));
+	        	 } catch(Exception e){}
 	        	WebElement nextbutton07 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 				nextbutton07.click();
 				
@@ -517,26 +563,30 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				WebElement vendorInput = wait.until(ExpectedConditions.elementToBeClickable(
 				    By.cssSelector("div.ng-select-container div.ng-input input")
 				));
-				js.executeScript("arguments[0].scrollIntoView(true);", vendorInput);
+				js.executeScript("arguments[0].scrollIntoView({block: 'center'});", vendorInput);
 				vendorInput.click();
-				vendorInput.clear();
+				Thread.sleep(300);
 
-				// 3️⃣ Forcefully set the full string with JS to preserve spaces
+				// ✅ Inject full string (with spaces) and dispatch events
 				js.executeScript(
-				    "arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input'));",
+				    "arguments[0].value = arguments[1];" +
+				    "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));" +
+				    "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
 				    vendorInput, vendorName
 				);
 
-				// 4️⃣ Log the value after JS injection for confirmation
-				String afterJS = vendorInput.getAttribute("value");
-				System.out.println("✍️ After JS, input shows: [" + afterJS + "]");
+				System.out.println("✍️ Injected vendor name via JS: [" + vendorName + "]");
 
-				// 5️⃣ Pause briefly to allow dropdown options to populate
-				Thread.sleep(1000);
+				// 🪄 Force Angular to re-trigger search (type one space and backspace, or small prefix)
+				vendorInput.sendKeys(" "); // any keypress works
+				//vendorInput.sendKeys(Keys.BACK_SPACE); // clean back
 
-				// 6️⃣ Press ENTER to select the first matching item
+				Thread.sleep(1000); // allow dropdown to populate
+
+				// 🔁 Press ENTER to select first match
 				vendorInput.sendKeys(Keys.ENTER);
-				System.out.println("✅ Sent ENTER — hopefully selected: [" + afterJS + "]");
+				//vendorInput.sendKeys(Keys.ENTER);
+				//System.out.println("✅ Sent ENTER — hopefully selected: [" + afterJS + "]");
 				
 				// Wait for the ADD CAMPAIGN button to be clickable
 				WebElement addCampaignButton = wait.until(ExpectedConditions.elementToBeClickable(
@@ -560,7 +610,10 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				        // Wait for Close icon and click it normally
 				        WebElement closeIcon2 = wait.until(ExpectedConditions.elementToBeClickable(
 				            By.cssSelector("img[src='./assets/img/svg/close-cross.svg']")));
-				        closeIcon2.click();
+				     
+				        
+					        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", closeIcon2);
+					        js.executeScript("arguments[0].click();", closeIcon2);
 				        wait.until(ExpectedConditions.invisibilityOfElementLocated(
 				                By.cssSelector(".modal-backdrop, .overlay, .spinner, .cdk-overlay-backdrop")));
 
@@ -569,10 +622,17 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				WebElement addCampaignIcon2 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//img[contains(@src, 'add-compaign.svg')]")));
 				js.executeScript("arguments[0].click();", addCampaignIcon2);
 				Thread.sleep(2000);
+				try {	wait.until(ExpectedConditions.invisibilityOfElementLocated(
+		                By.cssSelector(".modal-backdrop, .overlay, .loader")));
+				}
+				catch(Exception e) {}
 				
 				WebElement nextbutton8 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
+				js.executeScript("arguments[0].scrollIntoView({block: 'center'});", nextbutton8);
+				js.executeScript("arguments[0].click();", nextbutton8);
 				nextbutton8.click();
 				Thread.sleep(5000);   
+				
 				String platformtype1 = row.getCell(25).getStringCellValue().trim();
 				System.out.println("Platform Type from Excel: [" + platformtype1 + "]");
 
@@ -601,7 +661,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 		         platformfield1.sendKeys(platform1);
 		         Thread.sleep(2000);
 		         platformfield1.sendKeys(Keys.ENTER);
-				 
+				 Thread.sleep(2000);
 		         String account = row.getCell(27).getStringCellValue();
 		         WebElement accountfield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[1]/ng-select/div/div/div[2]/input")));
 		         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[1]/ng-select/div/div/div[2]/input")));
@@ -610,7 +670,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 		         accountfield1.sendKeys(account);
 		         Thread.sleep(2000);
 		         accountfield1.sendKeys(Keys.ENTER);
-		         
+		         Thread.sleep(2000);
 		         String adaccount = row.getCell(28).getStringCellValue();
 		         WebElement adaccountfield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/ng-select/div/div/div[2]/input")));
 		         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/ng-select/div/div/div[2]/input")));
@@ -827,24 +887,32 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					));
 					js.executeScript("arguments[0].scrollIntoView(true);", vendorInput1);
 					vendorInput1.click();
-					vendorInput1.clear();
+					//vendorInput1.clear();
+					
+					js.executeScript("arguments[0].scrollIntoView({block: 'center'});", vendorInput1);
+					vendorInput1.click();
+					Thread.sleep(300);
 
-					// 3️⃣ Forcefully set the full string with JS to preserve spaces
+					// ✅ Inject full string (with spaces) and dispatch events
 					js.executeScript(
-					    "arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input'));",
+					    "arguments[0].value = arguments[1];" +
+					    "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));" +
+					    "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
 					    vendorInput1, vendorName1
 					);
 
-					// 4️⃣ Log the value after JS injection for confirmation
-					String afterJS1 = vendorInput1.getAttribute("value");
-					System.out.println("✍️ After JS, input shows: [" + afterJS1 + "]");
+					System.out.println("✍️ Injected vendor name via JS: [" + vendorName1 + "]");
 
-					// 5️⃣ Pause briefly to allow dropdown options to populate
-					Thread.sleep(1000);
+					// 🪄 Force Angular to re-trigger search (type one space and backspace, or small prefix)
+					vendorInput.sendKeys(Keys.ARROW_DOWN);
+					Thread.sleep(2000);
+					vendorInput.sendKeys(Keys.ENTER); // any keypress works
+					//vendorInput1.sendKeys(Keys.BACK_SPACE); // clean back
 
-					// 6️⃣ Press ENTER to select the first matching item
-					vendorInput1.sendKeys(Keys.ENTER);
-					System.out.println("✅ Sent ENTER — hopefully selected: [" + afterJS1 + "]");
+					Thread.sleep(1000); // allow dropdown to populate
+
+					// 🔁 Press ENTER to select first match
+//					vendorInput1.sendKeys(Keys.ENTER);
 
 
 
