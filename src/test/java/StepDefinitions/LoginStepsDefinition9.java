@@ -67,7 +67,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 				ChromeOptions options = new ChromeOptions();
 			    // Create a HashMap for preferences
 //				ChromeOptions options = new ChromeOptions();
-//				options.addArguments("--headless=new");
+		options.addArguments("--headless=new");
 //				options.addArguments("--window-size=1920,1080");
 //				options.addArguments("--disable-gpu");
 //				options.addArguments("--no-sandbox");
@@ -238,6 +238,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     	} catch (Exception e) {
     	    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", arrowDiv);
     	}
+    	Thread.sleep(4000);
 
     String clientname = row.getCell(2).getStringCellValue();
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"mat-input-2\"]")));
