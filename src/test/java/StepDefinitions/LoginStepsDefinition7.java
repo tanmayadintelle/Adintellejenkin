@@ -86,7 +86,10 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			        downloadFolder.mkdirs(); // ✅ Create the folder if not there
 			    }
 			    Map<String, Object> prefs1 = new HashMap<>();
-
+			    options.addArguments("--headless=new");  // new headless mode (default in Chrome 112+)
+			    options.addArguments("--window-size=1920,1080"); // force screen size
+			    options.addArguments("--disable-gpu");  // legacy compatibility
+			    options.addArguments("--force-device-scale-factor=1");
 			    //options.setExperimentalOption("prefs", prefs);
 //			    options.setAcceptInsecureCerts(true);
 //			    options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
