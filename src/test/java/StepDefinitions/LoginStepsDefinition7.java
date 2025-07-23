@@ -86,18 +86,27 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			        downloadFolder.mkdirs(); // ✅ Create the folder if not there
 			    }
 			    Map<String, Object> prefs1 = new HashMap<>();
-			    prefs1.put("profile.default_content_setting_values.notifications", 2);
-			    prefs1.put("download.default_directory", downloadDir); // ✅ Your download path
-			    prefs1.put("plugins.always_open_pdf_externally", true);
-			    prefs1.put("download.prompt_for_download", false); 
-			    prefs1.put("directory_upgrade", true);             
-			    prefs1.put("safebrowsing.enabled", true);          
+
+			    //options.setExperimentalOption("prefs", prefs);
+//			    options.setAcceptInsecureCerts(true);
+//			    options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
+//			    options.addArguments("--disable-blink-features=AutomationControlled");
+		//    options.addArguments("--window-size=1366,768");
+		   // options.addArguments("--force-device-scale-factor=0.8");
+			//    options.addArguments("--remote-allow-origins=*");
+			 //   options.addArguments("--headless=chrome");
+//			    prefs1.put("profile.default_content_setting_values.notifications", 2);
+//			    prefs1.put("download.default_directory", downloadDir); // ✅ Your download path
+//			    prefs1.put("plugins.always_open_pdf_externally", true);
+//			    prefs1.put("download.prompt_for_download", false); 
+//			    prefs1.put("directory_upgrade", true);             
+//			    prefs1.put("safebrowsing.enabled", true);          
 			    options.setExperimentalOption("prefs", prefs1);
 			    driver =new ChromeDriver(options);
 			    System.out.print("WebDriver initalized");
 			    driver.get("https://pro.adintelle.com/v7/login"); 
 			    System.out.print("Website opened");
-			    //driver.manage().window().maximize();
+			    driver.manage().window().maximize();
 			    
 			    String excelFilePath = "DigitalproVBF.xlsx";  // Path to your Excel file
 		        FileInputStream file = new FileInputStream(new File(excelFilePath));
@@ -187,8 +196,8 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 		        WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
 			    
 				waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[contains(@src, 'newjob.svg')]")));
-//			    JavascriptExecutor jszoom = (JavascriptExecutor) driver;
-//		        jszoom.executeScript("document.body.style.zoom='50%'");
+			    JavascriptExecutor jszoom = (JavascriptExecutor) driver;
+		        jszoom.executeScript("document.body.style.zoom='100%'");
 		        WebElement imgElement = driver.findElement(By.xpath("//img[contains(@src, 'newjob.svg')]"));
 		        imgElement.click();
 
@@ -217,7 +226,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
     JavascriptExecutor js = (JavascriptExecutor) driver;
-    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
+   // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
  // Wait for the Client dropdown input to be ready
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"select-client\"]/div/div[1]/ng-select/div")));
 
@@ -502,7 +511,16 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				
 				WebElement nextbutton08 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 				nextbutton08.click();
-				Thread.sleep(2000);
+				Thread.sleep(4000);
+				WebElement addCampaignButton20 = wait.until(ExpectedConditions.elementToBeClickable(
+					    By.xpath("//span[contains(text(),'ADD CAMPAIGN')]")
+					));
+
+					// Scroll into view in case it's not visible
+					js.executeScript("arguments[0].scrollIntoView(true);", addCampaignButton20);
+
+					// Click the button
+					addCampaignButton20.click();
 				// 1️⃣ Read and clean the Excel value (preserves spaces)
 				String vendorNameRaw = formatter.formatCellValue(row.getCell(24));
 				String vendorName = vendorNameRaw.replace('\u00A0', ' ').trim();
@@ -514,25 +532,37 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				    By.cssSelector("div.ng-select-container div.ng-input input")
 				));
 				js.executeScript("arguments[0].scrollIntoView(true);", vendorInput);
+				Thread.sleep(2000);
 				vendorInput.click();
 				vendorInput.clear();
 
 				// 3️⃣ Forcefully set the full string with JS to preserve spaces
 				js.executeScript(
-				    "arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input'));",
-				    vendorInput, vendorName
-				);
+					    "arguments[0].value = arguments[1];" +
+					    "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));" +
+					    "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
+					    vendorInput, vendorName
+					);
+					System.out.println("✍️ Injected vendor name via JS: [" + vendorName + "]");
+
+					// ✅ Step 2: Trigger real typing to force dropdown to populate
+					// 🪄 This is the trick that gets ng-select to actually filter options
+					vendorInput.sendKeys(vendorName.substring(0, 2)); // just a couple chars
+
+					Thread.sleep(1000); // wait for dropdown options to appear
+
+					// ✅ Step 3: Press ENTER to select 
 
 				// 4️⃣ Log the value after JS injection for confirmation
-				String afterJS = vendorInput.getAttribute("value");
-				System.out.println("✍️ After JS, input shows: [" + afterJS + "]");
+				//String afterJS = vendorInput.getAttribute("value");
+				//System.out.println("✍️ After JS, input shows: [" + afterJS + "]");
 
 				// 5️⃣ Pause briefly to allow dropdown options to populate
 				Thread.sleep(1000);
 
 				// 6️⃣ Press ENTER to select the first matching item
 				vendorInput.sendKeys(Keys.ENTER);
-				System.out.println("✅ Sent ENTER — hopefully selected: [" + afterJS + "]");
+				//System.out.println("✅ Sent ENTER — hopefully selected: [" + afterJS + "]");
 				
 				// Wait for the ADD CAMPAIGN button to be clickable
 				WebElement addCampaignButton = wait.until(ExpectedConditions.elementToBeClickable(
@@ -554,9 +584,22 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				                By.cssSelector(".modal-backdrop, .overlay, .spinner, .cdk-overlay-backdrop")));
 
 				        // Wait for Close icon and click it normally
-				        WebElement closeIcon2 = wait.until(ExpectedConditions.elementToBeClickable(
-				            By.cssSelector("img[src='./assets/img/svg/close-cross.svg']")));
-				        closeIcon2.click();
+				        List<WebElement> closeIcons = driver.findElements(By.cssSelector("img[src='./assets/img/svg/close-cross.svg']"));
+
+				        WebElement visibleCloseIcon = closeIcons.stream()
+				            .filter(WebElement::isDisplayed)
+				            .findFirst()
+				            .orElseThrow(() -> new RuntimeException("No visible close icon found"));
+
+				        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", visibleCloseIcon);
+				        js.executeScript("arguments[0].focus();", visibleCloseIcon);
+				        Thread.sleep(200);
+
+				        try {
+				            visibleCloseIcon.click();
+				        } catch (ElementClickInterceptedException e) {
+				            js.executeScript("arguments[0].click();", visibleCloseIcon);
+				        }
 				        wait.until(ExpectedConditions.invisibilityOfElementLocated(
 				                By.cssSelector(".modal-backdrop, .overlay, .spinner, .cdk-overlay-backdrop")));
 
@@ -810,6 +853,16 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					nextbutton081.click();
 					
 					Thread.sleep(2000);
+					Thread.sleep(4000);
+					WebElement addCampaignButton21 = wait.until(ExpectedConditions.elementToBeClickable(
+						    By.xpath("//span[contains(text(),'ADD CAMPAIGN')]")
+						));
+
+						// Scroll into view in case it's not visible
+						js.executeScript("arguments[0].scrollIntoView(true);", addCampaignButton21);
+
+						// Click the button
+						addCampaignButton21.click();
 					
 					// 1️⃣ Read and clean the Excel value (preserves spaces)
 					String vendorNameRaw1 = formatter.formatCellValue(row.getCell(35));
@@ -827,34 +880,28 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 
 					// 3️⃣ Forcefully set the full string with JS to preserve spaces
 					js.executeScript(
-					    "arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input'));",
-					    vendorInput1, vendorName1
-					);
+						    "arguments[0].value = arguments[1];" +
+						    "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));" +
+						    "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
+						    vendorInput1, vendorName1
+						);
+						System.out.println("✍️ Injected vendor name via J: [" + vendorName1 + "]");
 
-					// 4️⃣ Log the value after JS injection for confirmation
-					String afterJS1 = vendorInput1.getAttribute("value");
-					System.out.println("✍️ After JS, input shows: [" + afterJS1 + "]");
-
-					// 5️⃣ Pause briefly to allow dropdown options to populate
-					Thread.sleep(1000);
-
-					// 6️⃣ Press ENTER to select the first matching item
-					vendorInput1.sendKeys(Keys.ENTER);
-					System.out.println("✅ Sent ENTER — hopefully selected: [" + afterJS1 + "]");
-
-
-
-
+						// ✅ Step 2: Trigger real typing to force dropdown to populate
+						// 🪄 This is the trick that gets ng-select to actually filter options
+						vendorInput1.sendKeys(vendorName1.substring(0, 2));
+						Thread.sleep(1000);
+						vendorInput1.sendKeys(Keys.ENTER);
 					// Wait for the ADD CAMPAIGN button to be clickable
-					WebElement addCampaignButton1 = wait.until(ExpectedConditions.elementToBeClickable(
+					WebElement addCampaignButton78 = wait.until(ExpectedConditions.elementToBeClickable(
 					    By.xpath("//span[contains(text(),'ADD CAMPAIGN')]")
 					));
 
 					// Scroll into view in case it's not visible
-					js.executeScript("arguments[0].scrollIntoView(true);", addCampaignButton1);
+					js.executeScript("arguments[0].scrollIntoView(true);", addCampaignButton78);
 
 					// Click the button
-					addCampaignButton1.click();
+					addCampaignButton78.click();
 					System.out.println("✅ 'ADD CAMPAIGN' button clicked.");
 					
 					
@@ -876,6 +923,18 @@ public void user_createsestimate_withoutputs() throws InterruptedException, File
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
     JavascriptExecutor js = (JavascriptExecutor) driver;
 	System.out.println("Navigating to Client docs page");
+	By backdropSelector = By.cssSelector("ngb-offcanvas-backdrop.offcanvas-backdrop.fade.show");
+
+	try {
+	    // Wait until the backdrop is invisible, but only if it is present
+	    if (driver.findElements(backdropSelector).size() > 0) {
+	        wait.until(ExpectedConditions.invisibilityOfElementLocated(backdropSelector));
+	    }
+	} catch (TimeoutException e) {
+	    // Timeout happened — the element didn't become invisible in time
+	    // You can log this or just ignore and continue
+	    System.out.println("Backdrop still visible after waiting, continuing...");
+	}
 	WebElement clientdocsButton = wait.until(ExpectedConditions.elementToBeClickable(
 	         By.cssSelector("body > app-root > div > div > div > main > div > app-d-dashboard > div > div:nth-child(2) > div > div > div:nth-child(3)")));
 	clientdocsButton.click();
