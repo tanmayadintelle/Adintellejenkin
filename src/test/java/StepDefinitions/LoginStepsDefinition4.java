@@ -119,7 +119,7 @@ public class LoginStepsDefinition4 {
 		    waitload1.until(ExpectedConditions.elementToBeClickable(By.name("password")));
 		    
 			WebElement passwordField = driver.findElement(By.name("password")); 
-			passwordField.sendKeys("Citi5bank$123456");
+			passwordField.sendKeys("Citi5bank$1234567");
 			waitload1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"login_button_text_active\"]")));
 			driver.findElement(By.xpath("//*[@id=\"login_button_text_active\"]")).click();
 		    Thread.sleep(3000);
@@ -168,12 +168,12 @@ public class LoginStepsDefinition4 {
 		    
 		  
 		    JavascriptExecutor jszoom = (JavascriptExecutor) driver;
-		   // jszoom.executeScript("document.body.style.zoom='40%'");
+		    jszoom.executeScript("document.body.style.zoom='40%'");
 		    waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"planning\"]/div/table/thead/tr/th[1]")));
 		    waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/newjob.svg']")));
 //		    JavascriptExecutor jsif = (JavascriptExecutor) driver;
 //	        jsif.executeScript("arguments[0].scrollTop = arguments[0].scrollHeight", iframe);
-		    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
+		   // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
 		    driver.findElement(By.xpath("//img[@src='./assets/img/svg/newjob.svg']")).click();
 		    waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/div/div/app-new-job/div/div[3]/div/div[2]/div/div/div/div/div[1]/div[1]/span/img")));
 		    System.out.println("Inside New Job activity");

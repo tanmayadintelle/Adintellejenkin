@@ -80,14 +80,14 @@ public class LoginStepsDefinition5 {
         prefs.put("safebrowsing.enabled", true);
 	    ChromeOptions options = new ChromeOptions();
 		
-	    options.setExperimentalOption("prefs", prefs);
-	    options.setAcceptInsecureCerts(true);
-	    options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
-	    options.addArguments("--disable-blink-features=AutomationControlled");
-	    options.addArguments("--window-size=1920,1080");
-	    options.addArguments("--force-device-scale-factor=0.8");
-	    options.addArguments("--remote-allow-origins=*");
-	    options.addArguments("--headless=chrome");
+//	    options.setExperimentalOption("prefs", prefs);
+//	    options.setAcceptInsecureCerts(true);
+//	    options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
+//	    options.addArguments("--disable-blink-features=AutomationControlled");
+//	    options.addArguments("--window-size=1920,1080");
+//	    options.addArguments("--force-device-scale-factor=0.8");
+//	    options.addArguments("--remote-allow-origins=*");
+//	    options.addArguments("--headless=chrome");
 	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 	    String downloadDir = "pressoutput\\" + timestamp;
 
@@ -133,7 +133,7 @@ public class LoginStepsDefinition5 {
 		    waitload1.until(ExpectedConditions.elementToBeClickable(By.name("password")));
 		    
 			WebElement passwordField = driver.findElement(By.name("password")); 
-			passwordField.sendKeys("Citi5bank$123456");
+			passwordField.sendKeys("Citi5bank$1234567");
 			waitload1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"login_button_text_active\"]")));
 			driver.findElement(By.xpath("//*[@id=\"login_button_text_active\"]")).click();
 		    Thread.sleep(3000);

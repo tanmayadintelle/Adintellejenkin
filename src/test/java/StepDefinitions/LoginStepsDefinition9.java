@@ -123,7 +123,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 				    waitload1.until(ExpectedConditions.elementToBeClickable(By.name("password")));
 				    
 					WebElement passwordField = driver.findElement(By.name("password")); 
-					passwordField.sendKeys("Citi5bank$123456");
+					passwordField.sendKeys("Citi5bank$1234567");
 					waitload1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"login_button_text_active\"]")));
 					driver.findElement(By.xpath("//*[@id=\"login_button_text_active\"]")).click();
 				    Thread.sleep(3000);
