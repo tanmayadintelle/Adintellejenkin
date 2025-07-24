@@ -1238,7 +1238,7 @@ public void user_createspo_withoutputs() throws InterruptedException, FileNotFou
 
 			// Option 1: Press Enter to select the first one
 			selectEstimate.sendKeys(Keys.ENTER);
-		
+		Thread.sleep(3000);
 		WebElement selectallcheckbox = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"activation\"]/div/table/thead/tr/th[1]/input")));
 		selectallcheckbox.click();
 		
