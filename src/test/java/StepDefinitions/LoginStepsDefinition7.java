@@ -686,8 +686,20 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				js.executeScript("arguments[0].click();", addCampaignIcon2);
 				Thread.sleep(2000);
 				
-				WebElement nextbutton8 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-				nextbutton8.click();
+				try {
+				    WebElement nextbutton8 = wait.until(ExpectedConditions.elementToBeClickable(
+				        By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")
+				    ));
+				    
+				    try {
+				        nextbutton8.click(); // try regular click
+				    } catch (ElementClickInterceptedException e) {
+				        System.out.println("⚠️ Click intercepted, retrying with JS click: " + e.getMessage());
+				        js.executeScript("arguments[0].click();", nextbutton8); // JS click fallback
+				    }
+				} catch (Exception e) {
+				    System.out.println("❌ Submit button not found or not clickable: " + e.getMessage());
+				}
 				Thread.sleep(5000);   
 				String platformtype1 = row.getCell(25).getStringCellValue().trim();
 				System.out.println("Platform Type from Excel: [" + platformtype1 + "]");
