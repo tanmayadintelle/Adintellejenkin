@@ -66,7 +66,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 		
 			    // Create a HashMap for preferences
 //		ChromeOptions options = new ChromeOptions();
-		//	options.addArguments("--headless=new");
+//			options.addArguments("--headless=new");
 //				options.addArguments("--window-size=1920,1080");
 //				options.addArguments("--disable-gpu");
 //				options.addArguments("--no-sandbox");
@@ -221,8 +221,8 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     try (Workbook workbook = new XSSFWorkbook(file)) {
 		Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 		Row row = sheet.getRow(1);
-	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(120));
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
     JavascriptExecutor js = (JavascriptExecutor) driver;
  // Wait for the Client dropdown input to be ready
    //((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
@@ -313,7 +313,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	        String jobperiodFromExcelmonth1 = row.getCell(9).toString().trim();
 	        String jobperiodFromExcelyear1 = row.getCell(10).toString().trim(); 
 	        selectDateFromCalendar(driver, wait, jobperiodFromExcelday1, jobperiodFromExcelmonth1, jobperiodFromExcelyear1);
-	 
+	        Thread.sleep(2000);
 			  String jobperiodFromExcelday2 = row.getCell(11).toString().trim().split("\\.")[0]; // e.g., "12/06/2025"
 		        String jobperiodFromExcelmonth2 = row.getCell(12).toString().trim();
 		        String jobperiodFromExcelyear2 = row.getCell(13).toString().trim(); 
@@ -577,14 +577,57 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 
 				System.out.println("✍️ Injected vendor name via JS: [" + vendorName + "]");
 
-				// 🪄 Force Angular to re-trigger search (type one space and backspace, or small prefix)
-				vendorInput.sendKeys(" "); // any keypress works
-				//vendorInput.sendKeys(Keys.BACK_SPACE); // clean back
+				int retryCount = 0;
+				int maxRetries = 3;
+				boolean selected = false;
 
-				Thread.sleep(1000); // allow dropdown to populate
+				while (retryCount < maxRetries && !selected) {
+				    try {
+				        // Clear previous text
+				        vendorInput.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+				        vendorInput.sendKeys(Keys.DELETE);
+				        Thread.sleep(300);
 
-				// 🔁 Press ENTER to select first match
-				vendorInput.sendKeys(Keys.ENTER);
+				        // Step 1: Type small prefix to trigger dropdown
+				        vendorInput.sendKeys(vendorName.substring(0, 2));
+				        Thread.sleep(800);
+
+				        // Step 2: Wait for dropdown options to appear
+				        wait.until(ExpectedConditions.visibilityOfElementLocated(
+				            By.cssSelector(".ng-dropdown-panel .ng-option")
+				        ));
+
+				        // Step 3: Select first option
+				        vendorInput.sendKeys(Keys.ARROW_DOWN);
+				        Thread.sleep(300);
+				        vendorInput.sendKeys(Keys.ENTER);
+				        Thread.sleep(500);
+
+				        // Step 4: Check if selection stuck
+				        // More reliable way to check selected value:
+				        WebElement selectedTextElem = driver.findElement(By.cssSelector("div.ng-select .ng-value span"));
+				        String selectedValue = selectedTextElem.getText().trim();
+
+				        if (selectedValue.equalsIgnoreCase(vendorName)) {
+				            selected = true;
+				            System.out.println("✅ Successfully selected: " + selectedValue);
+				        } else {
+				            retryCount++;
+				            System.out.println("🔁 Retry #" + retryCount + " — Selection mismatch, retrying...");
+				        }
+
+				    } catch (Exception e) {
+				        retryCount++;
+				        System.out.println("⚠️ Exception in retry #" + retryCount + ": " + e.getMessage());
+				        Thread.sleep(500);
+				    }
+				}
+
+				if (!selected) {
+				    System.out.println("❌ Vendor selection failed after " + maxRetries + " attempts.");
+				}
+
+
 				//vendorInput.sendKeys(Keys.ENTER);
 				//System.out.println("✅ Sent ENTER — hopefully selected: [" + afterJS + "]");
 				
@@ -881,19 +924,15 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					System.out.println("🔍 Excel input: [" + vendorNameRaw1 + "]");
 					System.out.println("✅ Cleaned vendorName: [" + vendorName1 + "]");
 
-					// 2️⃣ Locate and open the dropdown input
+					// Locate and open the dropdown input
 					WebElement vendorInput1 = wait.until(ExpectedConditions.elementToBeClickable(
 					    By.cssSelector("div.ng-select-container div.ng-input input")
 					));
-					js.executeScript("arguments[0].scrollIntoView(true);", vendorInput1);
-					vendorInput1.click();
-					//vendorInput1.clear();
-					
 					js.executeScript("arguments[0].scrollIntoView({block: 'center'});", vendorInput1);
 					vendorInput1.click();
 					Thread.sleep(300);
 
-					// ✅ Inject full string (with spaces) and dispatch events
+					// Inject full string (with spaces) and dispatch events
 					js.executeScript(
 					    "arguments[0].value = arguments[1];" +
 					    "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));" +
@@ -903,17 +942,56 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 
 					System.out.println("✍️ Injected vendor name via JS: [" + vendorName1 + "]");
 
-					// 🪄 Force Angular to re-trigger search (type one space and backspace, or small prefix)
-					vendorInput.sendKeys(Keys.ARROW_DOWN);
-					Thread.sleep(2000);
-					vendorInput.sendKeys(Keys.ENTER); // any keypress works
-					//vendorInput1.sendKeys(Keys.BACK_SPACE); // clean back
+					int retryCount1 = 0;
+					int maxRetries1 = 3;
+					boolean selected1 = false;
 
-					Thread.sleep(1000); // allow dropdown to populate
+					while (retryCount1 < maxRetries1 && !selected1) {
+					    try {
+					        // Clear previous input text
+					        vendorInput1.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+					        vendorInput1.sendKeys(Keys.DELETE);
+					        Thread.sleep(300);
 
-					// 🔁 Press ENTER to select first match
-//					vendorInput1.sendKeys(Keys.ENTER);
+					        // Step 1: Type small prefix to trigger dropdown
+					        vendorInput1.sendKeys(vendorName1.substring(0, 2));
+					        Thread.sleep(800);
 
+					        // Step 2: Wait for dropdown options to appear
+					        wait.until(ExpectedConditions.visibilityOfElementLocated(
+					            By.cssSelector(".ng-dropdown-panel .ng-option")
+					        ));
+
+					        // Step 3: Select first option
+					        vendorInput1.sendKeys(Keys.ARROW_DOWN);
+					        Thread.sleep(300);
+					        vendorInput1.sendKeys(Keys.ENTER);
+					        Thread.sleep(500);
+
+					        // Step 4: Check if selection stuck
+					        WebElement selectedTextElem1 = driver.findElement(By.cssSelector("div.ng-select .ng-value span"));
+					        String selectedValue1 = selectedTextElem1.getText().trim();
+
+					        if (selectedValue1.equalsIgnoreCase(vendorName1)) {
+					            selected1 = true;
+					            System.out.println("✅ Successfully selected vendor1: " + selectedValue1);
+					        } else {
+					            retryCount1++;
+					            System.out.println("🔁 Retry #" + retryCount1 + " — Vendor1 selection mismatch, retrying...");
+					        }
+
+					    } catch (Exception e) {
+					        retryCount1++;
+					        System.out.println("⚠️ Exception in retry #" + retryCount1 + ": " + e.getMessage());
+					        Thread.sleep(500);
+					    }
+					}
+
+					if (!selected1) {
+					    System.out.println("❌ Vendor1 selection failed after " + maxRetries1 + " attempts.");
+					}
+
+					Thread.sleep(1000);
 
 
 
@@ -1288,7 +1366,7 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 
 		// 6️⃣ Press ENTER to select the first matching item
 		vendorInput.sendKeys(Keys.ENTER);
-		vendorInput.sendKeys(Keys.ENTER);
+		//vendorInput.sendKeys(Keys.ENTER);
 //		WebElement firstOption = wait.until(ExpectedConditions.visibilityOfElementLocated(
 //			    By.cssSelector(".ng-dropdown-panel .ng-option")
 //			));
