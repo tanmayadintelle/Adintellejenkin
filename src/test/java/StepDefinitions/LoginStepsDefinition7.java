@@ -102,10 +102,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    prefs1.put("plugins.always_open_pdf_externally", true);
 			    prefs1.put("download.prompt_for_download", false); 
 			    prefs1.put("directory_upgrade", true);             
-			    prefs1.put("safebrowsing.enabled", true);   
-			    options.addArguments("--headless=new"); // use new headless mode (since Chrome 109+)
-			    options.addArguments("--window-size=1920,1080");
-			    options.addArguments("--disable-gpu");
+			    prefs1.put("safebrowsing.enabled", true);          
 			   // options.setExperimentalOption("prefs", prefs1);
 //			    options.addArguments("--headless=new");  // new headless mode (default in Chrome 112+)
 //			    options.addArguments("--window-size=1920,1080"); // force screen size
@@ -982,9 +979,10 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 						        Thread.sleep(300);
 						        vendorInput1.sendKeys(Keys.ENTER);
 						       
-						        Thread.sleep(2000);
+						        Thread.sleep(500);
 						        // Step 4: Check if selection stuck
-						        WebElement selectedTextElem1 = driver.findElement(By.cssSelector("div.ng-select .ng-value span"));
+						        WebElement selectedTextElem1 =new WebDriverWait(driver, Duration.ofSeconds(60))
+						        	    .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ng-select .ng-value span")));
 						        String selectedValue1 = selectedTextElem1.getText().trim();
 
 						        if (selectedValue1.equalsIgnoreCase(vendorName1)) {
