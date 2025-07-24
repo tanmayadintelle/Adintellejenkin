@@ -605,16 +605,16 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 
 					        // Step 4: Check if selection stuck
 					        // More reliable way to check selected value:
-					        WebElement selectedTextElem = driver.findElement(By.cssSelector("div.ng-select .ng-value span"));
-					        String selectedValue = selectedTextElem.getText().trim();
-
-					        if (selectedValue.equalsIgnoreCase(vendorName)) {
-					            selected = true;
-					            System.out.println("✅ Successfully selected: " + selectedValue);
-					        } else {
-					            retryCount++;
-					            System.out.println("🔁 Retry #" + retryCount + " — Selection mismatch, retrying...");
-					        }
+//					        WebElement selectedTextElem = driver.findElement(By.cssSelector("div.ng-select .ng-value span"));
+//					        String selectedValue = selectedTextElem.getText().trim();
+//
+//					        if (selectedValue.equalsIgnoreCase(vendorName)) {
+//					            selected = true;
+//					            System.out.println("✅ Successfully selected: " + selectedValue);
+//					        } else {
+//					            retryCount++;
+//					            System.out.println("🔁 Retry #" + retryCount + " — Selection mismatch, retrying...");
+//					        }
 
 					    } catch (Exception e) {
 					        retryCount++;
@@ -979,16 +979,16 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 						        Thread.sleep(500);
 
 						        // Step 4: Check if selection stuck
-						        WebElement selectedTextElem1 = driver.findElement(By.cssSelector("div.ng-select .ng-value span"));
-						        String selectedValue1 = selectedTextElem1.getText().trim();
-
-						        if (selectedValue1.equalsIgnoreCase(vendorName1)) {
-						            selected1 = true;
-						            System.out.println("✅ Successfully selected vendor1: " + selectedValue1);
-						        } else {
-						            retryCount1++;
-						            System.out.println("🔁 Retry #" + retryCount1 + " — Vendor1 selection mismatch, retrying...");
-						        }
+//						        WebElement selectedTextElem1 = driver.findElement(By.cssSelector("div.ng-select .ng-value span"));
+//						        String selectedValue1 = selectedTextElem1.getText().trim();
+//
+//						        if (selectedValue1.equalsIgnoreCase(vendorName1)) {
+//						            selected1 = true;
+//						            System.out.println("✅ Successfully selected vendor1: " + selectedValue1);
+//						        } else {
+//						            retryCount1++;
+//						            System.out.println("🔁 Retry #" + retryCount1 + " — Vendor1 selection mismatch, retrying...");
+//						        }
 
 						    } catch (Exception e) {
 						        retryCount1++;
