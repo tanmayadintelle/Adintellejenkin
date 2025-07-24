@@ -569,11 +569,10 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				WebElement vendorInput = wait.until(ExpectedConditions.elementToBeClickable(
 				    By.cssSelector("div.ng-select-container div.ng-input input")
 				));
-				js.executeScript("arguments[0].scrollIntoView(true);", vendorInput);
-				Thread.sleep(2000);
+				js.executeScript("arguments[0].scrollIntoView({block: 'center'});", vendorInput);
 				vendorInput.click();
-				vendorInput.clear();
-
+				Thread.sleep(2000);
+				
 				// 3️⃣ Forcefully set the full string with JS to preserve spaces
 				js.executeScript(
 					    "arguments[0].value = arguments[1];" +
@@ -945,10 +944,9 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					WebElement vendorInput1 = wait.until(ExpectedConditions.elementToBeClickable(
 					    By.cssSelector("div.ng-select-container div.ng-input input")
 					));
-					js.executeScript("arguments[0].scrollIntoView(true);", vendorInput1);
+					js.executeScript("arguments[0].scrollIntoView({block: 'center'});", vendorInput1);
 					vendorInput1.click();
-					vendorInput1.clear();
-
+					Thread.sleep(300);
 					// 3️⃣ Forcefully set the full string with JS to preserve spaces
 					js.executeScript(
 						    "arguments[0].value = arguments[1];" +
