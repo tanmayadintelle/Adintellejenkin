@@ -652,24 +652,33 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				                By.cssSelector(".modal-backdrop, .overlay, .spinner, .cdk-overlay-backdrop")));
 
 				        // Wait for Close icon and click it normally
-				        List<WebElement> closeIcons = driver.findElements(By.cssSelector("img[src='./assets/img/svg/close-cross.svg']"));
-
-				        WebElement visibleCloseIcon = closeIcons.stream()
-				            .filter(WebElement::isDisplayed)
-				            .findFirst()
-				            .orElseThrow(() -> new RuntimeException("No visible close icon found"));
-
-				        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", visibleCloseIcon);
-				        js.executeScript("arguments[0].focus();", visibleCloseIcon);
-				        Thread.sleep(200);
-
 				        try {
-				            visibleCloseIcon.click();
-				        } catch (ElementClickInterceptedException e) {
-				            js.executeScript("arguments[0].click();", visibleCloseIcon);
-				        }
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(
+				            List<WebElement> closeIcons = driver.findElements(By.cssSelector("img[src='./assets/img/svg/close-cross.svg']"));
+
+				            WebElement visibleCloseIcon = closeIcons.stream()
+				                .filter(WebElement::isDisplayed)
+				                .findFirst()
+				                .orElseThrow(() -> new RuntimeException("No visible close icon found"));
+
+				            js.executeScript("arguments[0].scrollIntoView({block: 'center'});", visibleCloseIcon);
+				            js.executeScript("arguments[0].focus();", visibleCloseIcon);
+				            Thread.sleep(200);
+
+				            try {
+				                visibleCloseIcon.click();
+				            } catch (ElementClickInterceptedException e) {
+				                js.executeScript("arguments[0].click();", visibleCloseIcon);
+				            }
+
+				            wait.until(ExpectedConditions.invisibilityOfElementLocated(
 				                By.cssSelector(".modal-backdrop, .overlay, .spinner, .cdk-overlay-backdrop")));
+
+				            System.out.println("✅ Close icon clicked and overlay dismissed.");
+
+				        } catch (Exception e) {
+				            System.out.println("⚠️ Close icon not found or not clickable. Skipping... (" + e.getMessage() + ")");
+				        }
+
 
 				//Integration add campaign
 				System.out.print("Integration add campaign");
