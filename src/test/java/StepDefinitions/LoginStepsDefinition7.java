@@ -711,7 +711,11 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 
 				// Scroll into view
 				js.executeScript("arguments[0].scrollIntoView(true);", platformtypefield1);
-				platformtypefield1.click();      // Open dropdown
+				try {
+					platformtypefield1.click();
+				} catch (ElementClickInterceptedException e) {
+				    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", platformtypefield1);
+				}     // Open dropdown
 				platformtypefield1.clear();      // Clear any existing value
 				platformtypefield1.sendKeys(platformtype1); // Type the value from Excel
 
