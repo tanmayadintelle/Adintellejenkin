@@ -225,7 +225,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
     JavascriptExecutor js = (JavascriptExecutor) driver;
  // Wait for the Client dropdown input to be ready
-   //((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
+   ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
   //   ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='80%'");
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"select-client\"]/div/div[1]/ng-select/div")));
 
@@ -578,7 +578,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				System.out.println("✍️ Injected vendor name via JS: [" + vendorName + "]");
 
 				int retryCount = 0;
-				int maxRetries = 3;
+				int maxRetries = 5;
 				boolean selected = false;
 
 				while (retryCount < maxRetries && !selected) {
@@ -943,7 +943,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					System.out.println("✍️ Injected vendor name via JS: [" + vendorName1 + "]");
 
 					int retryCount1 = 0;
-					int maxRetries1 = 3;
+					int maxRetries1 = 5;
 					boolean selected1 = false;
 
 					while (retryCount1 < maxRetries1 && !selected1) {
