@@ -538,7 +538,12 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	        	
 	        	WebElement yestoclientratechanges = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"vailidateRate\"]/div[3]/div/div/span[2]")));
 	        	yestoclientratechanges.click();
-	        	   
+	        	try {
+	        	    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-pane")));
+	        	    System.out.println("✅ Overlay is gone. Safe to click Submit.");
+	        	} catch (TimeoutException e) {
+	        	    System.out.println("⚠️ Overlay still visible after wait, proceeding anyway.");
+	        	}
 	        	WebElement nextbutton07 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 				nextbutton07.click();
 				
