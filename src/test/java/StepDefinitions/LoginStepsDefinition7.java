@@ -245,7 +245,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     JavascriptExecutor js = (JavascriptExecutor) driver;
    // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
  // Wait for the Client dropdown input to be ready
-    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
+    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"select-client\"]/div/div[1]/ng-select/div")));
 
     // Format Excel values to preserve spaces and formatting
