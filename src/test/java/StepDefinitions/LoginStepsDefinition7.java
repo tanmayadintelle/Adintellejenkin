@@ -65,13 +65,13 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 				ChromeOptions options = new ChromeOptions();
 			//	options.addArguments("--window-size=1920,1080");
 			    // Create a HashMap for preferences
-//				ChromeOptions options = new ChromeOptions();
-//				options.addArguments("--headless=new");
-//				options.addArguments("--window-size=1366,768");
-//				options.addArguments("--disable-gpu");
-//				options.addArguments("--no-sandbox");
-//				options.addArguments("--disable-dev-shm-usage");
-//				options.addArguments("--headless=new"); // or just "--headless" if old version
+				//ChromeOptions options = new ChromeOptions();
+				options.addArguments("--headless=new");
+				options.addArguments("--window-size=1366,768");
+				options.addArguments("--disable-gpu");
+				options.addArguments("--no-sandbox");
+				options.addArguments("--disable-dev-shm-usage");
+				//options.addArguments("--headless=new"); // or just "--headless" if old version
 //				options.addArguments("--window-size=1920,1080");
 //			    HashMap<String, Object> prefs1 = new HashMap<>();  
 //			    prefs1.put("profile.default_content_setting_values.notifications", 2);
@@ -117,7 +117,8 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 //			    prefs1.put("plugins.always_open_pdf_externally", true);
 //			    prefs1.put("download.prompt_for_download", false); 
 //			    prefs1.put("directory_upgrade", true);             
-//			    prefs1.put("safebrowsing.enabled", true);          
+//			    prefs1.put("safebrowsing.enabled", true); 
+			    
 			    options.setExperimentalOption("prefs", prefs1);
 			    driver =new ChromeDriver(options);
 			    System.out.print("WebDriver initalized");
@@ -245,7 +246,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     JavascriptExecutor js = (JavascriptExecutor) driver;
    // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
  // Wait for the Client dropdown input to be ready
-    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
+    //((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"select-client\"]/div/div[1]/ng-select/div")));
 
     // Format Excel values to preserve spaces and formatting
