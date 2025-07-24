@@ -603,6 +603,10 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					        vendorInput.sendKeys(Keys.ENTER);
 					        Thread.sleep(500);
 
+					        Thread.sleep(3000);
+					        wait.until(ExpectedConditions.textToBePresentInElementLocated(
+					        	    By.cssSelector("div.ng-select .ng-value span"), vendorName
+					        	));
 					        // Step 4: Check if selection stuck
 					        // More reliable way to check selected value:
 					        WebElement selectedTextElem = driver.findElement(By.cssSelector("div.ng-select .ng-value span"));
@@ -977,7 +981,10 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 						        Thread.sleep(300);
 						        vendorInput1.sendKeys(Keys.ENTER);
 						        Thread.sleep(500);
-
+						        Thread.sleep(3000);
+						        wait.until(ExpectedConditions.textToBePresentInElementLocated(
+						        	    By.cssSelector("div.ng-select .ng-value span"), vendorName
+						        	));
 						        // Step 4: Check if selection stuck
 						        WebElement selectedTextElem1 = driver.findElement(By.cssSelector("div.ng-select .ng-value span"));
 						        String selectedValue1 = selectedTextElem1.getText().trim();
