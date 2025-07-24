@@ -603,7 +603,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					        vendorInput.sendKeys(Keys.ENTER);
 					        Thread.sleep(500);
 
-					        Thread.sleep(3000);
+					        
 					        wait.until(ExpectedConditions.textToBePresentInElementLocated(
 					        	    By.cssSelector("div.ng-select .ng-value span"), vendorName
 					        	));
@@ -980,8 +980,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 						        vendorInput1.sendKeys(Keys.ARROW_DOWN);
 						        Thread.sleep(300);
 						        vendorInput1.sendKeys(Keys.ENTER);
-						        Thread.sleep(500);
-						        Thread.sleep(3000);
+						       
 						        wait.until(ExpectedConditions.textToBePresentInElementLocated(
 						        	    By.cssSelector("div.ng-select .ng-value span"), vendorName
 						        	));
