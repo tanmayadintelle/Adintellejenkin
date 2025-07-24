@@ -390,11 +390,24 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	        	WebElement nextbutton09 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 				nextbutton09.click();
 	        	
+				 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-label")));
+					try{
+							    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("mat-mdc-snack-bar-label")));
+					}
+					catch(ElementClickInterceptedException e){
+						System.out.println("conitnue");
+					}
 				WebElement nextbutton090 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 				nextbutton090.click();
 				
 	        	Thread.sleep(2000);
-	        	
+	        	 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-label")));
+	 			try{
+	 					    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("mat-mdc-snack-bar-label")));
+	 			}
+	 			catch(ElementClickInterceptedException e){
+	 				System.out.println("conitnue");
+	 			}
 	        	// Read the category value from Excel (and trim to avoid trailing spaces)
 				String category = row.getCell(18).getStringCellValue().trim();
 				System.out.println("Category from Excel: " + category);
