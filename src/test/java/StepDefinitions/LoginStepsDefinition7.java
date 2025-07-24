@@ -66,11 +66,15 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			//	options.addArguments("--window-size=1920,1080");
 			    // Create a HashMap for preferences
 				//ChromeOptions options = new ChromeOptions();
-				options.addArguments("--headless=new");
-				options.addArguments("--window-size=1366,768");
-				options.addArguments("--disable-gpu");
-				options.addArguments("--no-sandbox");
-				options.addArguments("--disable-dev-shm-usage");
+				
+				
+//				options.addArguments("--headless=new");
+//				options.addArguments("--window-size=1366,768");
+//				options.addArguments("--disable-gpu");
+//				options.addArguments("--no-sandbox");
+//				options.addArguments("--disable-dev-shm-usage");
+//				
+				
 				//options.addArguments("--headless=new"); // or just "--headless" if old version
 //				options.addArguments("--window-size=1920,1080");
 //			    HashMap<String, Object> prefs1 = new HashMap<>();  
@@ -131,7 +135,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 		        try (Workbook workbook = new XSSFWorkbook(file)) {
 					Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 					Row row = sheet.getRow(1); // Get the second row (0-indexed));
-					WebDriverWait waitload2 = new WebDriverWait(driver, Duration.ofSeconds(60));
+					WebDriverWait waitload2 = new WebDriverWait(driver, Duration.ofSeconds(120));
 					  
 				    waitload2.until(ExpectedConditions.elementToBeClickable(By.name("username")));
 					// Step 3: Find the form fields on the webpage and fill them with data from Excel
@@ -215,7 +219,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    
 				waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[contains(@src, 'newjob.svg')]")));
 			    JavascriptExecutor jszoom = (JavascriptExecutor) driver;
-		        jszoom.executeScript("document.body.style.zoom='100%'");
+		       // jszoom.executeScript("document.body.style.zoom='100%'");
 		        WebElement imgElement = driver.findElement(By.xpath("//img[contains(@src, 'newjob.svg')]"));
 		        imgElement.click();
 
@@ -241,10 +245,10 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     try (Workbook workbook = new XSSFWorkbook(file)) {
 		Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 		Row row = sheet.getRow(1);
-	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
+	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(1200));
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
     JavascriptExecutor js = (JavascriptExecutor) driver;
-   // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
+    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
  // Wait for the Client dropdown input to be ready
     //((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"select-client\"]/div/div[1]/ng-select/div")));
