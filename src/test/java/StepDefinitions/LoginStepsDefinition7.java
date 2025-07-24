@@ -550,15 +550,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				WebElement nextbutton08 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 				nextbutton08.click();
 				Thread.sleep(4000);
-				WebElement addCampaignButton20 = wait.until(ExpectedConditions.elementToBeClickable(
-					    By.xpath("//span[contains(text(),'ADD CAMPAIGN')]")
-					));
-
-					// Scroll into view in case it's not visible
-					js.executeScript("arguments[0].scrollIntoView(true);", addCampaignButton20);
-
-					// Click the button
-					addCampaignButton20.click();
+				
 				// 1️⃣ Read and clean the Excel value (preserves spaces)
 				String vendorNameRaw = formatter.formatCellValue(row.getCell(24));
 				String vendorName = vendorNameRaw.replace('\u00A0', ' ').trim();
@@ -631,7 +623,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					    System.out.println("❌ Vendor selection failed after " + maxRetries + " attempts.");
 					}
 
-
+					Thread.sleep(1000);
 					//vendorInput.sendKeys(Keys.ENTER);
 					//System.out.println("✅ Sent ENTER — hopefully selected: [" + afterJS + "]");
 					
