@@ -73,11 +73,18 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 //				options.addArguments("--disable-dev-shm-usage");
 //				options.addArguments("--headless=new"); // or just "--headless" if old version
 //				options.addArguments("--window-size=1920,1080");
-			    HashMap<String, Object> prefs = new HashMap<>();    
+//			    HashMap<String, Object> prefs1 = new HashMap<>();  
+//			    prefs1.put("profile.default_content_setting_values.notifications", 2);
+//			    prefs1.put("download.default_directory", downloadDir); // ✅ Your download path
+//			    prefs1.put("plugins.always_open_pdf_externally", true);
+//			    prefs1.put("download.prompt_for_download", false); 
+//			    prefs1.put("directory_upgrade", true);             
+//			    prefs1.put("safebrowsing.enabled", true);          
+//			   // options.setExperimentalOption("prefs", prefs1);
 			    // Block notifications by setting the preference value to 2 (block)
-			    prefs.put("profile.default_content_setting_values.notifications", 2); 
+			  //  prefs1.put("profile.default_content_setting_values.notifications", 2); 
 			    // Add preferences to Chrome options
-			    options.setExperimentalOption("prefs", prefs);
+			    //options.setExperimentalOption("prefs", prefs);
 			    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 			    String downloadDir = "digitaloutputsvbf\\" + timestamp;
 
@@ -86,10 +93,17 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			        downloadFolder.mkdirs(); // ✅ Create the folder if not there
 			    }
 			    Map<String, Object> prefs1 = new HashMap<>();
-			    options.addArguments("--headless=new");  // new headless mode (default in Chrome 112+)
-			    options.addArguments("--window-size=1920,1080"); // force screen size
-			    options.addArguments("--disable-gpu");  // legacy compatibility
-			    options.addArguments("--force-device-scale-factor=1");
+			    prefs1.put("profile.default_content_setting_values.notifications", 2);
+			    prefs1.put("download.default_directory", downloadDir); // ✅ Your download path
+			    prefs1.put("plugins.always_open_pdf_externally", true);
+			    prefs1.put("download.prompt_for_download", false); 
+			    prefs1.put("directory_upgrade", true);             
+			    prefs1.put("safebrowsing.enabled", true);          
+			   // options.setExperimentalOption("prefs", prefs1);
+//			    options.addArguments("--headless=new");  // new headless mode (default in Chrome 112+)
+//			    options.addArguments("--window-size=1920,1080"); // force screen size
+//			    options.addArguments("--disable-gpu");  // legacy compatibility
+//			    options.addArguments("--force-device-scale-factor=1");
 			    //options.setExperimentalOption("prefs", prefs);
 //			    options.setAcceptInsecureCerts(true);
 //			    options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
@@ -231,6 +245,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     JavascriptExecutor js = (JavascriptExecutor) driver;
    // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
  // Wait for the Client dropdown input to be ready
+    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"select-client\"]/div/div[1]/ng-select/div")));
 
     // Format Excel values to preserve spaces and formatting
@@ -299,11 +314,12 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
         
         WebElement jobdatecalendar1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"create-job\"]/div[3]/div[3]/mat-form-field/div[1]/div[2]/div[2]/mat-datepicker-toggle/button/span[3]")));
 		jobdatecalendar1.click();
+		Thread.sleep(3000);
 		  String jobperiodFromExcelday1 = row.getCell(8).toString().trim().split("\\.")[0]; // e.g., "12/06/2025"
 	        String jobperiodFromExcelmonth1 = row.getCell(9).toString().trim();
 	        String jobperiodFromExcelyear1 = row.getCell(10).toString().trim(); 
 	        selectDateFromCalendar(driver, wait, jobperiodFromExcelday1, jobperiodFromExcelmonth1, jobperiodFromExcelyear1);
-	 
+	        Thread.sleep(3000);
 			  String jobperiodFromExcelday2 = row.getCell(11).toString().trim().split("\\.")[0]; // e.g., "12/06/2025"
 		        String jobperiodFromExcelmonth2 = row.getCell(12).toString().trim();
 		        String jobperiodFromExcelyear2 = row.getCell(13).toString().trim(); 
@@ -547,27 +563,60 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					    vendorInput, vendorName
 					);
 					System.out.println("✍️ Injected vendor name via JS: [" + vendorName + "]");
+					int retryCount = 0;
+					int maxRetries = 5;
+					boolean selected = false;
 
-					// ✅ Step 2: Trigger real typing to force dropdown to populate
-					// 🪄 This is the trick that gets ng-select to actually filter options
-					vendorInput.sendKeys(vendorName.substring(0, 2)); // just a couple chars
+					while (retryCount < maxRetries && !selected) {
+					    try {
+					        // Clear previous text
+					        vendorInput.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+					        vendorInput.sendKeys(Keys.DELETE);
+					        Thread.sleep(300);
 
-					Thread.sleep(1000); // wait for dropdown options to appear
+					        // Step 1: Type small prefix to trigger dropdown
+					        vendorInput.sendKeys(vendorName.substring(0, 2));
+					        Thread.sleep(800);
 
-					// ✅ Step 3: Press ENTER to select 
+					        // Step 2: Wait for dropdown options to appear
+					        wait.until(ExpectedConditions.visibilityOfElementLocated(
+					            By.cssSelector(".ng-dropdown-panel .ng-option")
+					        ));
 
-				// 4️⃣ Log the value after JS injection for confirmation
-				//String afterJS = vendorInput.getAttribute("value");
-				//System.out.println("✍️ After JS, input shows: [" + afterJS + "]");
+					        // Step 3: Select first option
+					        vendorInput.sendKeys(Keys.ARROW_DOWN);
+					        Thread.sleep(300);
+					        vendorInput.sendKeys(Keys.ENTER);
+					        Thread.sleep(500);
 
-				// 5️⃣ Pause briefly to allow dropdown options to populate
-				Thread.sleep(1000);
+					        // Step 4: Check if selection stuck
+					        // More reliable way to check selected value:
+					        WebElement selectedTextElem = driver.findElement(By.cssSelector("div.ng-select .ng-value span"));
+					        String selectedValue = selectedTextElem.getText().trim();
 
-				// 6️⃣ Press ENTER to select the first matching item
-				vendorInput.sendKeys(Keys.ENTER);
-				//System.out.println("✅ Sent ENTER — hopefully selected: [" + afterJS + "]");
-				
-				// Wait for the ADD CAMPAIGN button to be clickable
+					        if (selectedValue.equalsIgnoreCase(vendorName)) {
+					            selected = true;
+					            System.out.println("✅ Successfully selected: " + selectedValue);
+					        } else {
+					            retryCount++;
+					            System.out.println("🔁 Retry #" + retryCount + " — Selection mismatch, retrying...");
+					        }
+
+					    } catch (Exception e) {
+					        retryCount++;
+					        System.out.println("⚠️ Exception in retry #" + retryCount + ": " + e.getMessage());
+					        Thread.sleep(500);
+					    }
+					}
+
+					if (!selected) {
+					    System.out.println("❌ Vendor selection failed after " + maxRetries + " attempts.");
+					}
+
+
+					//vendorInput.sendKeys(Keys.ENTER);
+					//System.out.println("✅ Sent ENTER — hopefully selected: [" + afterJS + "]");
+					
 				WebElement addCampaignButton = wait.until(ExpectedConditions.elementToBeClickable(
 				    By.xpath("//span[contains(text(),'ADD CAMPAIGN')]")
 				));
@@ -890,11 +939,57 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 						);
 						System.out.println("✍️ Injected vendor name via J: [" + vendorName1 + "]");
 
-						// ✅ Step 2: Trigger real typing to force dropdown to populate
-						// 🪄 This is the trick that gets ng-select to actually filter options
-						vendorInput1.sendKeys(vendorName1.substring(0, 2));
+						int retryCount1 = 0;
+						int maxRetries1 = 5;
+						boolean selected1 = false;
+
+						while (retryCount1 < maxRetries1 && !selected1) {
+						    try {
+						        // Clear previous input text
+						        vendorInput1.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+						        vendorInput1.sendKeys(Keys.DELETE);
+						        Thread.sleep(300);
+
+						        // Step 1: Type small prefix to trigger dropdown
+						        vendorInput1.sendKeys(vendorName1.substring(0, 2));
+						        Thread.sleep(800);
+
+						        // Step 2: Wait for dropdown options to appear
+						        wait.until(ExpectedConditions.visibilityOfElementLocated(
+						            By.cssSelector(".ng-dropdown-panel .ng-option")
+						        ));
+
+						        // Step 3: Select first option
+						        vendorInput1.sendKeys(Keys.ARROW_DOWN);
+						        Thread.sleep(300);
+						        vendorInput1.sendKeys(Keys.ENTER);
+						        Thread.sleep(500);
+
+						        // Step 4: Check if selection stuck
+						        WebElement selectedTextElem1 = driver.findElement(By.cssSelector("div.ng-select .ng-value span"));
+						        String selectedValue1 = selectedTextElem1.getText().trim();
+
+						        if (selectedValue1.equalsIgnoreCase(vendorName1)) {
+						            selected1 = true;
+						            System.out.println("✅ Successfully selected vendor1: " + selectedValue1);
+						        } else {
+						            retryCount1++;
+						            System.out.println("🔁 Retry #" + retryCount1 + " — Vendor1 selection mismatch, retrying...");
+						        }
+
+						    } catch (Exception e) {
+						        retryCount1++;
+						        System.out.println("⚠️ Exception in retry #" + retryCount1 + ": " + e.getMessage());
+						        Thread.sleep(500);
+						    }
+						}
+
+						if (!selected1) {
+						    System.out.println("❌ Vendor1 selection failed after " + maxRetries1 + " attempts.");
+						}
+
 						Thread.sleep(1000);
-						vendorInput1.sendKeys(Keys.ENTER);
+
 					// Wait for the ADD CAMPAIGN button to be clickable
 					WebElement addCampaignButton78 = wait.until(ExpectedConditions.elementToBeClickable(
 					    By.xpath("//span[contains(text(),'ADD CAMPAIGN')]")
@@ -1178,7 +1273,7 @@ public void user_createspo_withoutputs() throws InterruptedException, FileNotFou
 		Thread.sleep(1000);
 
 		// 6️⃣ Press ENTER to select the first matching item
-		vendorInput.sendKeys(Keys.ENTER);
+		//vendorInput.sendKeys(Keys.ENTER);
 		vendorInput.sendKeys(Keys.ENTER);
 //		WebElement firstOption = wait.until(ExpectedConditions.visibilityOfElementLocated(
 //			    By.cssSelector(".ng-dropdown-panel .ng-option")
@@ -1795,7 +1890,7 @@ public void user_createsclientbill() throws InterruptedException, FileNotFoundEx
 
 		// Option 1: Press Enter to select the first one
 		selectEstimate.sendKeys(Keys.ENTER);
-	
+		Thread.sleep(3000);
 	WebElement selectallcheckbox = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"activation\"]/div/table/thead/tr/th[1]/input")));
 	selectallcheckbox.click();
 	
