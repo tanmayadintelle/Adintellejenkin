@@ -1227,18 +1227,19 @@ public void user_createspo_withoutputs() throws InterruptedException, FileNotFou
 		
 		WebElement generateBill = driver.findElement(By.xpath("//img[contains(@src, 'butt-generate-bill.svg')]"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", generateBill);
-		
+		Thread.sleep(3000);
 		WebElement selectEstimate = wait.until(ExpectedConditions.elementToBeClickable(
 			    By.xpath("//*[@id='selection1']/div[2]/div/ng-select/div/div/div[2]/input")));
 			selectEstimate.click();
-
+			Thread.sleep(3000);
 			// Send keys to search or open options
 			selectEstimate.sendKeys(Keys.ARROW_DOWN); // Try opening the dropdown this way
-			Thread.sleep(500); // Slight wait for options to render (or replace with wait for option element)
+			Thread.sleep(3000); // Slight wait for options to render (or replace with wait for option element)
 
 			// Option 1: Press Enter to select the first one
 			selectEstimate.sendKeys(Keys.ENTER);
 		Thread.sleep(3000);
+		
 		WebElement selectallcheckbox = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"activation\"]/div/table/thead/tr/th[1]/input")));
 		selectallcheckbox.click();
 		
