@@ -883,7 +883,11 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					//js.executeScript("document.body.style.zoom='90%'");
 					Thread.sleep(2000);
 					WebElement nextbutton061 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-					nextbutton061.click();
+					try {
+						nextbutton061.click();}
+						catch(Exception e) {
+							js.executeScript("arguments[0].click();", nextbutton061);
+						}
 					Thread.sleep(2000);
 					String buytype2 = formatter.formatCellValue(row.getCell(31)).trim();
 					System.out.println("Buy Type from Excel: " + buytype2);
