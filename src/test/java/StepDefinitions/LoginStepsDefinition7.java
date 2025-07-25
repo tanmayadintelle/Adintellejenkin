@@ -102,7 +102,13 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    prefs1.put("plugins.always_open_pdf_externally", true);
 			    prefs1.put("download.prompt_for_download", false); 
 			    prefs1.put("directory_upgrade", true);             
-			    prefs1.put("safebrowsing.enabled", true);          
+			    prefs1.put("safebrowsing.enabled", true);     
+			    options.addArguments("--headless=new"); // or just "--headless" for older Chrome
+			    options.addArguments("--window-size=1366,768"); // set your desired resolution
+			    options.addArguments("--disable-gpu"); // recommended for headless
+			    options.addArguments("--no-sandbox");  // recommended for CI environments
+
+			   // WebDriver driver = new ChromeDriver(options);
 			   // options.setExperimentalOption("prefs", prefs1);
 //			    options.addArguments("--headless=new");  // new headless mode (default in Chrome 112+)
 //			    options.addArguments("--window-size=1920,1080"); // force screen size
