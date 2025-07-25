@@ -162,7 +162,6 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 					WebElement passwordField = driver.findElement(By.name("password")); 
 					passwordField.sendKeys("Citi5bank$1234567");
 					waitload1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"login_button_text_active\"]")));
-					driver.findElement(By.xpath("//*[@id=\"login_button_text_active\"]")).click();
 				    Thread.sleep(3000);
 				    
 				 // Initialize the WebDriverWait with a timeout of 10 seconds k
@@ -254,7 +253,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(1200));
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
     JavascriptExecutor js = (JavascriptExecutor) driver;
-    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
+    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
  // Wait for the Client dropdown input to be ready
     //((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"select-client\"]/div/div[1]/ng-select/div")));
