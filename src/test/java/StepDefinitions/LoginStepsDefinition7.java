@@ -105,7 +105,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    prefs1.put("safebrowsing.enabled", true);     
 			    options.addArguments("--headless=new"); // or just "--headless" for older Chrome
 			    options.addArguments("--remote-allow-origins=*");
-		        options.addArguments("--window-size=1366,768"); // set your desired resolution
+		        options.addArguments("--window-size=1920,1080"); // set your desired resolution
 			    options.addArguments("--disable-gpu"); // recommended for headless
 			    options.addArguments("--no-sandbox");
 			    options.setAcceptInsecureCerts(true);// recommended for CI environments
@@ -226,7 +226,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    
 				waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[contains(@src, 'newjob.svg')]")));
 			    JavascriptExecutor jszoom = (JavascriptExecutor) driver;
-		        jszoom.executeScript("document.body.style.zoom='100%'");
+		       // jszoom.executeScript("document.body.style.zoom='100%'");
 		        WebElement imgElement = driver.findElement(By.xpath("//img[contains(@src, 'newjob.svg')]"));
 		        imgElement.click();
 
