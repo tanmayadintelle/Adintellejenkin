@@ -71,7 +71,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 				
 				
 //				options.addArguments("--headless=new");
-				options.addArguments("--window-size=1920,1080");
+	//			options.addArguments("--window-size=1920,1080");
 //				options.addArguments("--disable-gpu");
 //				options.addArguments("--no-sandbox");
 //				options.addArguments("--disable-dev-shm-usage");
@@ -884,6 +884,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					}
 					//js.executeScript("document.body.style.zoom='90%'");
 					Thread.sleep(2000);
+					js.executeScript("document.body.style.zoom='90%'");
 					WebElement nextbutton061 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 					try {
 						nextbutton061.click();}
