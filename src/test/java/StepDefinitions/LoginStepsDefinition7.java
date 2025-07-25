@@ -227,7 +227,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    
 				waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[contains(@src, 'newjob.svg')]")));
 			    JavascriptExecutor jszoom = (JavascriptExecutor) driver;
-		        jszoom.executeScript("document.body.style.zoom='40%'");
+		        jszoom.executeScript("document.body.style.zoom='100%'");
 		        WebElement imgElement = driver.findElement(By.xpath("//img[contains(@src, 'newjob.svg')]"));
 		        imgElement.click();
 
