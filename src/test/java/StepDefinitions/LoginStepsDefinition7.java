@@ -765,9 +765,9 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 
 		         try {
 		             // Wait for the category dropdown input based on placeholder text
-		             WebElement categoryInput1 = wait.until(ExpectedConditions.visibilityOfElementLocated(
-		                 By.xpath("//div[@class='ng-select-container' and .//div[contains(@class, 'ng-placeholder') and text()='Select Campaign Category']]//input[@aria-autocomplete='list']")
-		             ));
+		        	 WebElement categoryInput1 = wait.until(ExpectedConditions.visibilityOfElementLocated(
+		        			    By.xpath("//ng-select[@placeholder='Select Campaign Category']//input[@aria-autocomplete='list']")
+		        			));
 		             wait.until(ExpectedConditions.elementToBeClickable(categoryInput1));
 		             // Scroll into view and click
 		             js.executeScript("arguments[0].scrollIntoView(true);", categoryInput1);
@@ -870,6 +870,8 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 		        	
 		        	
 		        	Thread.sleep(2000);
+		        	wait.until(ExpectedConditions.invisibilityOfElementLocated(
+		        		    By.cssSelector("div.offcanvas-body[style*='padding: 0px']")));
 		        	WebElement nextbutton0511 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span")));
 					nextbutton0511.click();
 					//js.executeScript("document.body.style.zoom='90%'");
