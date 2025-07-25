@@ -884,7 +884,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					}
 					//js.executeScript("document.body.style.zoom='90%'");
 					Thread.sleep(2000);
-					js.executeScript("document.body.style.zoom='90%'");
+					js.executeScript("document.body.style.zoom='40%'");
 					WebElement nextbutton061 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 					try {
 						nextbutton061.click();}
