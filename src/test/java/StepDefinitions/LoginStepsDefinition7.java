@@ -765,13 +765,19 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 
 		         try {
 		             // Wait for the category dropdown input based on placeholder text
-		             WebElement categoryInput1 = wait.until(ExpectedConditions.elementToBeClickable(
+		             WebElement categoryInput1 = wait.until(ExpectedConditions.visibilityOfElementLocated(
 		                 By.xpath("//div[@class='ng-select-container' and .//div[contains(@class, 'ng-placeholder') and text()='Select Campaign Category']]//input[@aria-autocomplete='list']")
 		             ));
-
+		             wait.until(ExpectedConditions.elementToBeClickable(categoryInput1));
 		             // Scroll into view and click
 		             js.executeScript("arguments[0].scrollIntoView(true);", categoryInput1);
-		             categoryInput1.click();
+		             try {
+		                 // Try native click first
+		                 categoryInput1.click();
+		             } catch (ElementClickInterceptedException e) {
+		                 // Fallback to JavaScript click
+		                 js.executeScript("arguments[0].click();", categoryInput1);
+		             }
 		             categoryInput1.clear();
 		             categoryInput1.sendKeys(category1);
 
