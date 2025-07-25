@@ -104,9 +104,11 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    prefs1.put("directory_upgrade", true);             
 			    prefs1.put("safebrowsing.enabled", true);     
 			    options.addArguments("--headless=new"); // or just "--headless" for older Chrome
-			    options.addArguments("--window-size=1920,1080"); // set your desired resolution
+			    options.addArguments("--remote-allow-origins=*");
+		        options.addArguments("--window-size=1366,768"); // set your desired resolution
 			    options.addArguments("--disable-gpu"); // recommended for headless
-			    options.addArguments("--no-sandbox");  // recommended for CI environments
+			    options.addArguments("--no-sandbox");
+			    options.setAcceptInsecureCerts(true);// recommended for CI environments
 
 			   // WebDriver driver = new ChromeDriver(options);
 			   // options.setExperimentalOption("prefs", prefs1);
