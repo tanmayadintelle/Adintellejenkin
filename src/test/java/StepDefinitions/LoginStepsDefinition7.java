@@ -135,7 +135,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    driver.get("https://pro.adintelle.com/v7/login"); 
 			    System.out.print("Website opened");
 			    driver.manage().window().maximize();
-			    
+			    	
 			    String excelFilePath = "DigitalproVBF.xlsx";  // Path to your Excel file
 		        FileInputStream file = new FileInputStream(new File(excelFilePath));
 		        try (Workbook workbook = new XSSFWorkbook(file)) {
