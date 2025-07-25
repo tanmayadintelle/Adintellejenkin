@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.time.format.DateTimeParseException;
 import java.util.Map;
 import java.util.Optional;
@@ -69,7 +71,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 				
 				
 //				options.addArguments("--headless=new");
-//				options.addArguments("--window-size=1366,768");
+				options.addArguments("--window-size=1920,1080");
 //				options.addArguments("--disable-gpu");
 //				options.addArguments("--no-sandbox");
 //				options.addArguments("--disable-dev-shm-usage");
