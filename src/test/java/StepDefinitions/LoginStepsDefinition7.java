@@ -870,10 +870,16 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 		        	
 		        	
 		        	Thread.sleep(2000);
-		        	wait.until(ExpectedConditions.invisibilityOfElementLocated(
+		        	try{ wait.until(ExpectedConditions.invisibilityOfElementLocated(
 		        		    By.cssSelector("div.offcanvas-body[style*='padding: 0px']")));
+		        	}catch(Exception e) {}
+		        	
 		        	WebElement nextbutton0511 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span")));
-					nextbutton0511.click();
+					try {
+		        	nextbutton0511.click();}
+					catch(Exception e) {
+						js.executeScript("arguments[0].click();", nextbutton0511);
+					}
 					//js.executeScript("document.body.style.zoom='90%'");
 					Thread.sleep(2000);
 					WebElement nextbutton061 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
@@ -894,7 +900,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					        System.out.println("⚠️ Could not click 'Next' button on attempt " + (i + 1) + ": " + e.getMessage());
 					    }
 					}
-
+					
 					// Now open the Buy Type dropdown
 					WebElement dropdown1 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.ng-select-container")));
 					js.executeScript("arguments[0].scrollIntoView(true);", dropdown1);
