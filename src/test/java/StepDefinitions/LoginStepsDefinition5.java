@@ -80,8 +80,8 @@ public class LoginStepsDefinition5 {
         prefs.put("safebrowsing.enabled", true);
 	    ChromeOptions options = new ChromeOptions();
 		
-//	    options.setExperimentalOption("prefs", prefs);
-//	    options.setAcceptInsecureCerts(true);
+	    options.setExperimentalOption("prefs", prefs);
+	    options.setAcceptInsecureCerts(true);
 //	    options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
 //	    options.addArguments("--disable-blink-features=AutomationControlled");
 //	    options.addArguments("--window-size=1920,1080");
@@ -525,8 +525,7 @@ public class LoginStepsDefinition5 {
         	}
          Thread.sleep(4000);
          //Add new for package code
-         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[3]/a[2]")));
-         
+        
          
          
          String xpathaddnew = "//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[3]/a[2]";
@@ -535,6 +534,8 @@ public class LoginStepsDefinition5 {
          for (int attemptss = 0; attemptss < 10; attemptss++) {
              try {
                  // Find the element by XPath
+            	 wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[3]/a[2]")));
+                 
                  WebElement element = driver.findElement(By.xpath(xpathaddnew));
                  Thread.sleep(2000);
                  // Click the element
@@ -2619,8 +2620,7 @@ Thread.sleep(2000);
  		   new WebDriverWait(driver, Duration.ofSeconds(60)).until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
  		  Thread.sleep(6000);
  		//button[text()='Proceed']
- 		 By proceedBtn = By.id("BtnPrcdTOIBProvision");
-
+ 		 By proceedBtn = By.xpath("//button[normalize-space(text())='Proceed']");
  		for (int attempt2 = 1; attempt2 <= 10; attempt2++) {
  		    try {
  		    	Thread.sleep(10000);
