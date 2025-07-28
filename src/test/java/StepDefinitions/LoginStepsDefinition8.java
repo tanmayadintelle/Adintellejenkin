@@ -279,9 +279,12 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	         By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 	 	nextButton.click();
 	 	safeClick(driver, nextButton);
-		
+	 	wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".loading-spinner, .modal-backdrop")));
+	 	Thread.sleep(4000);
+	 	wait.until(ExpectedConditions.elementToBeClickable(By.name("JobName")));
+
 		String JobName = row.getCell(4).getStringCellValue(); 	
-		waitload.until(ExpectedConditions.elementToBeClickable(By.name("JobName")));
+		//waitload.until(ExpectedConditions.elementToBeClickable(By.name("JobName")));
 	    WebElement JobNameField = driver.findElement(By.name("JobName"));
 	    JobNameField.clear();
 	    JobNameField.sendKeys(JobName);
