@@ -22,7 +22,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -33,12 +35,16 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import com.google.common.io.Files;
+
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -269,10 +275,10 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 //	 brandFirstOption.click();
 	 Thread.sleep(2000);
 	 // ---- Click Next Button ----
-	 WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(
+	 	WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(
 	         By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-	 nextButton.click();
-
+	 	nextButton.click();
+	 	safeClick(driver, nextButton);
 		
 		String JobName = row.getCell(4).getStringCellValue(); 	
 		waitload.until(ExpectedConditions.elementToBeClickable(By.name("JobName")));
@@ -302,7 +308,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	        Thread.sleep(5000);
 	        
 	        WebElement nextbutton02 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-			nextbutton02.click();
+	        safeClick(driver, nextbutton02);
 			
 			WebElement radioButton = driver.findElement(By.xpath(
 				    "//div[contains(@class, 'flow-title') and contains(text(), 'Client Billing First')]/following::input[@type='radio'][1]"
@@ -312,7 +318,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 
 		     
 	        WebElement billingformatdropdown = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".ng-select-container")));
-	        billingformatdropdown.click();
+	        safeClick(driver, billingformatdropdown);
 	        String billingFormat = row.getCell(14).getStringCellValue();
 	        WebElement billingformatdropdownoption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'ng-option')]//span[contains(text(),'" + billingFormat + "')]")));
 	        billingformatdropdownoption.click();     
@@ -324,10 +330,11 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	        option.click();
 	        
 	        WebElement nextbutton03 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-			nextbutton03.click();
+	        safeClick(driver, nextbutton03);
 			
 			WebElement nextbutton04 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-			nextbutton04.click();
+			safeClick(driver, nextbutton04);
+			
 	        System.out.print("Add Campaign for Manual FLow");
 	     // Wait for Add Campaign icon and click it using JavaScript
 	        WebElement addCampaignIcon = wait.until(ExpectedConditions.presenceOfElementLocated(
@@ -338,7 +345,8 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	        // Wait for Close icon and click it normally
 	        WebElement closeIcon = wait.until(ExpectedConditions.elementToBeClickable(
 	            By.cssSelector("img[src='./assets/img/svg/close-cross.svg']")));
-	        closeIcon.click();
+	        safeClick(driver, closeIcon);
+	        
 	        wait.until(ExpectedConditions.invisibilityOfElementLocated(
 	                By.cssSelector(".modal-backdrop, .overlay, .loader")));
 	        // Wait again for Add Campaign icon and click it using JavaScript
@@ -368,10 +376,10 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	        	
 	        	
 	        	WebElement nextbutton09 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-				nextbutton09.click();
+	        	 safeClick(driver, nextbutton09);
 				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.mat-mdc-snack-bar-label")));
 				WebElement nextbutton090 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-				nextbutton090.click();
+				 safeClick(driver, nextbutton090);
 				
 	        	Thread.sleep(2000);
 	        	// Read the category value from Excel (and trim to avoid trailing spaces)
@@ -433,11 +441,11 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	        	campaignnamefield.sendKeys(Keys.ENTER);
 	        	Thread.sleep(2000);
 	        	WebElement nextbutton05 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span")));
-				nextbutton05.click();
-				js.executeScript("document.body.style.zoom='90%'");
+	        	safeClick(driver, nextbutton05);
+				//js.executeScript("document.body.style.zoom='90%'");
 				Thread.sleep(2000);
 				WebElement nextbutton06 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-				nextbutton06.click();
+				safeClick(driver, nextbutton06);
 				Thread.sleep(2000);
 				String buytype = formatter.formatCellValue(row.getCell(20)).trim();
 				System.out.println("Buy Type from Excel: " + buytype);
@@ -447,7 +455,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				    try {
 				        WebElement nextBtn = wait.until(ExpectedConditions.elementToBeClickable(
 				            By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-				        js.executeScript("arguments[0].click();", nextBtn);
+				        safeClick(driver, nextBtn);
 				        Thread.sleep(1000);
 				        System.out.println("✅ Clicked 'Next' button - attempt " + (i + 1));
 				    } catch (Exception e) {
@@ -458,7 +466,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				// Now open the Buy Type dropdown
 				WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.ng-select-container")));
 				js.executeScript("arguments[0].scrollIntoView(true);", dropdown);
-				dropdown.click(); // Only click — no typing
+				 safeClick(driver, dropdown); // Only click — no typing
 				System.out.println("🟡 Dropdown clicked, waiting for options...");
 
 				// Wait for options to appear
@@ -506,10 +514,10 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	        	yestoclientratechanges.click();
 	        	   
 	        	WebElement nextbutton07 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-				nextbutton07.click();
+	        	safeClick(driver, nextbutton07);
 				
 				WebElement nextbutton08 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-				nextbutton08.click();
+				safeClick(driver, nextbutton08);
 				Thread.sleep(2000);
 				// 1️⃣ Read and clean the Excel value (preserves spaces)
 				String vendorNameRaw = formatter.formatCellValue(row.getCell(24));
@@ -521,7 +529,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				WebElement vendorInput = wait.until(ExpectedConditions.elementToBeClickable(
 				    By.cssSelector("div.ng-select-container div.ng-input input")
 				));
-				js.executeScript("arguments[0].scrollIntoView(true);", vendorInput);
+				safeClick(driver, vendorInput);
 				vendorInput.click();
 				vendorInput.clear();
 
@@ -564,7 +572,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				        // Wait for Close icon and click it normally
 				        WebElement closeIcon2 = wait.until(ExpectedConditions.elementToBeClickable(
 				            By.cssSelector("img[src='./assets/img/svg/close-cross.svg']")));
-				        closeIcon2.click();
+				        safeClick(driver, closeIcon2);
 				        wait.until(ExpectedConditions.invisibilityOfElementLocated(
 				                By.cssSelector(".modal-backdrop, .overlay, .spinner, .cdk-overlay-backdrop")));
 
@@ -575,7 +583,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				Thread.sleep(2000);
 				
 				WebElement nextbutton8 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-				nextbutton8.click();
+				safeClick(driver, nextbutton8);
 				Thread.sleep(5000);   
 				String platformtype1 = row.getCell(25).getStringCellValue().trim();
 				System.out.println("Platform Type from Excel: [" + platformtype1 + "]");
@@ -730,10 +738,10 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 		        	Thread.sleep(2000);
 		        	WebElement nextbutton0511 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span")));
 					nextbutton0511.click();
-					js.executeScript("document.body.style.zoom='90%'");
+					//js.executeScript("document.body.style.zoom='90%'");
 					Thread.sleep(2000);
 					WebElement nextbutton061 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-					nextbutton061.click();
+					safeClick(driver, nextbutton061);
 					Thread.sleep(2000);
 					String buytype2 = formatter.formatCellValue(row.getCell(31)).trim();
 					System.out.println("Buy Type from Excel: " + buytype2);
@@ -743,7 +751,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					    try {
 					        WebElement nextBtn1 = wait.until(ExpectedConditions.elementToBeClickable(
 					            By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-					        js.executeScript("arguments[0].click();", nextBtn1);
+					        safeClick(driver, nextBtn1);
 					        Thread.sleep(1000);
 					        System.out.println("✅ Clicked 'Next' button - attempt " + (i + 1));
 					    } catch (Exception e) {
@@ -754,7 +762,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					// Now open the Buy Type dropdown
 					WebElement dropdown1 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.ng-select-container")));
 					js.executeScript("arguments[0].scrollIntoView(true);", dropdown1);
-					dropdown1.click(); // Only click — no typing
+					safeClick(driver, dropdown1); // Only click — no typing
 					System.out.println("🟡 Dropdown clicked, waiting for options...");
 
 					// Wait for options to appear
@@ -812,10 +820,10 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 //		        	vendorratefield.sendKeys(vendorrate);
 		        
 		        	WebElement nextbutton071 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-					nextbutton071.click();
+		        	safeClick(driver, nextbutton071);
 					
 					WebElement nextbutton081 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-					nextbutton081.click();
+					safeClick(driver, nextbutton081);
 					
 					Thread.sleep(2000);
 					
@@ -830,7 +838,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					    By.cssSelector("div.ng-select-container div.ng-input input")
 					));
 					js.executeScript("arguments[0].scrollIntoView(true);", vendorInput1);
-					vendorInput1.click();
+					safeClick(driver, vendorInput1);
 					vendorInput1.clear();
 
 					// 3️⃣ Forcefully set the full string with JS to preserve spaces
@@ -886,7 +894,7 @@ public void user_createsestimate_withoutputs() throws InterruptedException, File
 	System.out.println("Navigating to Client docs page");
 	WebElement clientdocsButton = wait.until(ExpectedConditions.elementToBeClickable(
 	         By.cssSelector("body > app-root > div > div > div > main > div > app-d-dashboard > div > div:nth-child(2) > div > div > div:nth-child(3)")));
-	clientdocsButton.click();
+	safeClick(driver, clientdocsButton);
 	
 	System.out.println("Navigated to client docs page and Estimate Creation process is started");
 	 WebElement createEstimateButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src*='butt-create-estimate.svg']")));
@@ -1799,6 +1807,17 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
     }
     
 
+public void safeClick(WebDriver driver, WebElement element) {
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-backdrop, .loading-spinner, .offcanvas-backdrop")));
+    wait.until(ExpectedConditions.elementToBeClickable(element));
+    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+    try {
+        element.click();
+    } catch (ElementClickInterceptedException e) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+    }
+}
 
 
 public void selectDateFromCalendar(WebDriver driver, WebDriverWait wait, String day, String month, String year) throws InterruptedException {
