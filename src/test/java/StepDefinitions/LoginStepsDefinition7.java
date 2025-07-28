@@ -911,7 +911,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					// Now open the Buy Type dropdown
 					WebElement dropdown1 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.ng-select-container")));
 					js.executeScript("arguments[0].scrollIntoView(true);", dropdown1);
-					dropdown1.click(); // Only click — no typing
+					js.executeScript("arguments[0].click();", dropdown1); // Only click — no typing
 					System.out.println("🟡 Dropdown clicked, waiting for options...");
 
 					// Wait for options to appear

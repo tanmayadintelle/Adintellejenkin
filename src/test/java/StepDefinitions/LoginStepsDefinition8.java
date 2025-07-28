@@ -194,8 +194,8 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 		        WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
 			    
 				waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[contains(@src, 'newjob.svg')]")));
-//			    JavascriptExecutor jszoom = (JavascriptExecutor) driver;
-//		        jszoom.executeScript("document.body.style.zoom='50%'");
+			    JavascriptExecutor jszoom = (JavascriptExecutor) driver;
+	        jszoom.executeScript("document.body.style.zoom='50%'");
 		        WebElement imgElement = driver.findElement(By.xpath("//img[contains(@src, 'newjob.svg')]"));
 		        imgElement.click();
 
@@ -264,7 +264,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	         By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 	 nextButton.click();
 
-		Thread.sleep(2000);
+		Thread.sleep(4000);
 		String JobName = row.getCell(4).getStringCellValue();
 
 		// Wait for visibility and presence
