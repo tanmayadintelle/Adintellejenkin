@@ -916,6 +916,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					WebElement nextbutton081 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 					nextbutton081.click();
 					
+					
 					Thread.sleep(2000);
 					
 					// 1️⃣ Read and clean the Excel value (preserves spaces)
