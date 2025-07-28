@@ -279,7 +279,12 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	         By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 	 	nextButton.click();
 	 	safeClick(driver, nextButton);
-	 	wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".loading-spinner, .modal-backdrop")));
+	 	try {
+	 	    wait.until(ExpectedConditions.invisibilityOfElementLocated(
+	 	        By.cssSelector(".modal-backdrop, .loading-spinner, .offcanvas-backdrop")));
+	 	} catch (TimeoutException e) {
+	 	    System.out.println("Overlay did not disappear in time, proceeding anyway.");
+	 	}
 	 	Thread.sleep(4000);
 	 	wait.until(ExpectedConditions.elementToBeClickable(By.name("JobName")));
 
