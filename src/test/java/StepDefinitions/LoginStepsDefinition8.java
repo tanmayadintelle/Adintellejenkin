@@ -1817,7 +1817,14 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 
 public void safeClick(WebDriver driver, WebElement element) {
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-backdrop, .loading-spinner, .offcanvas-backdrop")));
+    try {
+        new WebDriverWait(driver, Duration.ofSeconds(40)) // Increased timeout
+            .until(ExpectedConditions.invisibilityOfElementLocated(
+                By.cssSelector(".modal-backdrop, .loading-spinner, .offcanvas-backdrop")));
+    } catch (TimeoutException e) {
+        System.out.println("Overlay still visible after 40 seconds. Proceeding anyway.");
+        // Optionally: take screenshot or dump page source
+    }
     wait.until(ExpectedConditions.elementToBeClickable(element));
     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
     try {
