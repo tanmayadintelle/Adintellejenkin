@@ -86,6 +86,10 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 
 				// Optional: Allow CORS if needed
 				options.addArguments("--remote-allow-origins=*");
+				options.addArguments("--force-device-scale-factor=1");
+				options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138 Safari/537.36");
+				options.addArguments("--start-maximized");
+
 
 			    HashMap<String, Object> prefs = new HashMap<>();    
 			    // Block notifications by setting the preference value to 2 (block)
