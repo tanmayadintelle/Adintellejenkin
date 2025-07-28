@@ -70,7 +70,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 //				options.addArguments("--disable-gpu");
 //				options.addArguments("--no-sandbox");
 //				options.addArguments("--disable-dev-shm-usage");
-				options.addArguments("--headless=chrome");
+				options.addArguments("--headless=new");
 
 				// Reliable window size — must come *before* UI rendering
 				options.addArguments("--window-size=1920,1080");
