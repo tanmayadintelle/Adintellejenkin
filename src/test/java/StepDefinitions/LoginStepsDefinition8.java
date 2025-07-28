@@ -286,7 +286,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	 	    System.out.println("Overlay did not disappear in time, proceeding anyway.");
 	 	}
 	 	Thread.sleep(4000);
-	 	wait.until(ExpectedConditions.elementToBeClickable(By.name("JobName")));
+	 	//wait.until(ExpectedConditions.elementToBeClickable(By.name("JobName")));
 
 		String JobName = row.getCell(4).getStringCellValue(); 	
 		//waitload.until(ExpectedConditions.elementToBeClickable(By.name("JobName")));
