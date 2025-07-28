@@ -71,10 +71,22 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 //				options.addArguments("--no-sandbox");
 //				options.addArguments("--disable-dev-shm-usage");
 				options.addArguments("--headless=chrome");
+
+				// Reliable window size — must come *before* UI rendering
 				options.addArguments("--window-size=1920,1080");
+
+				// Required for headless mode stability in CI
 				options.addArguments("--disable-gpu");
 				options.addArguments("--no-sandbox");
 				options.addArguments("--disable-dev-shm-usage");
+
+				// Optional but helps reduce flakiness
+				options.addArguments("--disable-infobars");
+				options.addArguments("--disable-extensions");
+
+				// Optional: Allow CORS if needed
+				options.addArguments("--remote-allow-origins=*");
+
 			    HashMap<String, Object> prefs = new HashMap<>();    
 			    // Block notifications by setting the preference value to 2 (block)
 			    prefs.put("profile.default_content_setting_values.notifications", 2); 
