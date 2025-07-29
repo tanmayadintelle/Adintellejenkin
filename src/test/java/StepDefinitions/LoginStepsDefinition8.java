@@ -1927,7 +1927,7 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 	Thread.sleep(2000);
 	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"bill-to-client\"]/table/tbody/tr/td[7]/span[1]/img"))).click();
 	 Thread.sleep(2000);
-	 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+//	 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
 	 try {
 	     // Step 1: Cancel current action
