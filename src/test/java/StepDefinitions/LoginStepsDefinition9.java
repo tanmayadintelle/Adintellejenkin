@@ -67,7 +67,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 				ChromeOptions options = new ChromeOptions();
 			    // Create a HashMap for preferences
 //				ChromeOptions options = new ChromeOptions();
-		options.addArguments("--headless=new");
+		//options.addArguments("--headless=new");
 //				options.addArguments("--window-size=1920,1080");
 //				options.addArguments("--disable-gpu");
 //				options.addArguments("--no-sandbox");
@@ -238,10 +238,11 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     	} catch (Exception e) {
     	    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", arrowDiv);
     	}
-    	Thread.sleep(4000);
+    	Thread.sleep(5000);
 
     String clientname = row.getCell(2).getStringCellValue();
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"mat-input-2\"]")));
+    
     WebElement clientnamesearchoption = driver.findElement(By.xpath("//*[@id=\"mat-input-2\"]"));
     clientnamesearchoption.sendKeys(clientname);
     
@@ -412,7 +413,7 @@ public void user_createsestimate_withoutputs() throws InterruptedException, File
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-select\"]/div[3]/div/div/div[2]")));
     WebElement importfromexcel1 = driver.findElement(By.xpath("//*[@id=\"action-dialog-select\"]/div[3]/div/div/div[2]"));
     importfromexcel1.click();
-    Thread.sleep(2000);
+    Thread.sleep(5000);
     System.out.println("Select Client");
 
     WebElement arrowDivClient = wait.until(ExpectedConditions.elementToBeClickable(

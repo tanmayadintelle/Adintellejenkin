@@ -229,7 +229,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    
 				waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[contains(@src, 'newjob.svg')]")));
 			    JavascriptExecutor jszoom = (JavascriptExecutor) driver;
-		        jszoom.executeScript("document.body.style.zoom='100%'");
+		       // jszoom.executeScript("document.body.style.zoom='100%'");
 		        WebElement imgElement = driver.findElement(By.xpath("//img[contains(@src, 'newjob.svg')]"));
 		        imgElement.click();
 
@@ -884,7 +884,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					}
 					//js.executeScript("document.body.style.zoom='90%'");
 					Thread.sleep(2000);
-					js.executeScript("document.body.style.zoom='40%'");
+					//js.executeScript("document.body.style.zoom='40%'");
 					WebElement nextbutton061 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 					try {
 						nextbutton061.click();}
