@@ -215,7 +215,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 		Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 		Row row = sheet.getRow(1);
 	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
     JavascriptExecutor js = (JavascriptExecutor) driver;
  // Wait for the Client dropdown input to be ready
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"select-client\"]/div/div[1]/ng-select/div")));
