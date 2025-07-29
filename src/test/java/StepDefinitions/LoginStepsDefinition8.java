@@ -1965,7 +1965,7 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 	            // If normal click fails, fallback to JS click
 	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", lastActionIcon);
 	        }
-
+	        
 	        // Wait for delete button to be clickable
 	        WebElement deleteBtn = wait.until(ExpectedConditions.elementToBeClickable(
 	            By.cssSelector("img[src='./assets/img/svg/action-delete.svg']")
@@ -2001,12 +2001,16 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 	        e.printStackTrace();
 	    }
 	}
-
-
+		try {
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-backdrop, .overlay, .spinner, .cdk-overlay-backdrop")));
+		} catch(Exception e) {
+			System.out.println("no overlay,please conitnue");
+		}
 	    // Optional short wait between deletions
 	    Thread.sleep(2000);
 	    WebElement campaignspage1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-d-dashboard/div/div[2]/div/div/div[2]")));
 		  campaignspage1.click();
+		  
 		  Thread.sleep(2000);
 		  WebElement activationtab1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2-link\"]/span")));
 		  activationtab1.click(); 
