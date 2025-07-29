@@ -1758,19 +1758,19 @@ public void user_createsclientbill() throws InterruptedException, FileNotFoundEx
 				  
 				  Thread.sleep(2000);
 				  System.out.println("Creating vendor bill for Integrated flow");
-				  
+				  Thread.sleep(2000);
 				  WebElement campaignspage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-d-dashboard/div/div[2]/div/div/div[2]")));
 				  campaignspage.click();
-				
+				  Thread.sleep(2000);
 				  WebElement activationtab = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2-link\"]/span")));
 				  activationtab.click(); 
-				  
+				  Thread.sleep(2000);
 				  WebElement integrationtab = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[2]/div[2]")));
 				  integrationtab.click();
-				  
+				  Thread.sleep(2000);
 				  WebElement linktabb1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[3]/div[2]")));
 				  linktabb1.click();
-				  
+				  Thread.sleep(2000);
 				  Thread.sleep(2000);
 				  WebElement unlinktab = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[3]/div[1]")));
 				  unlinktab.click();
@@ -1778,7 +1778,7 @@ public void user_createsclientbill() throws InterruptedException, FileNotFoundEx
 //				  WebElement linktabb = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[3]/div[2]")));
 //				  linktabb.click();
 //				  Thread.sleep(2000);
-				
+				  Thread.sleep(2000);
 				  WebElement linktab = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"activation\"]/div[1]/table/tbody/tr/td[1]/span")));
 				  linktab.click(); 
 				  
@@ -1789,7 +1789,7 @@ public void user_createsclientbill() throws InterruptedException, FileNotFoundEx
 				  String account2 = row.getCell(27).getStringCellValue();
 				  intaccount1.sendKeys(account2);
 				  intaccount1.sendKeys(Keys.ENTER);
-				  
+				  Thread.sleep(2000);
 				  String adaccount3 = row.getCell(28).getStringCellValue();  // e.g., "IN_Carlelo_INR_GUR"
 
 				// Step 1: Get all dropdowns on the page
@@ -1809,29 +1809,31 @@ public void user_createsclientbill() throws InterruptedException, FileNotFoundEx
 				        option.click();
 				        break;
 				    }
-				}				  
+				}		
+				Thread.sleep(2000);
 				  WebElement nextButton0011 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#section1 > div > div:nth-child(2) > div > div > span.submit-button")));
 				  nextButton0011.click();
-				  
+				  Thread.sleep(2000);
 				  WebElement radioaccid = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/div/div/app-link-campaign/div/div[2]/div/div[3]/div/mat-sidenav-content/div/div[1]/table/tbody/tr/td[1]/input")));
 				  radioaccid.click();
-				  
+				  Thread.sleep(2000);
 				  
 				  WebElement nextButton0012 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#client-estimate > div:nth-child(4) > div > div > span.submit-button")));
 				  nextButton0012.click();
-				  
+				  Thread.sleep(2000);
 				  WebElement linkButton0012 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"client-estimate-review\"]/div[3]/div/div/span[2]")));
 				  linkButton0012.click();
 				  wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
 			         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
-			  
+			         Thread.sleep(2000);
 				  WebElement vendordocsButton1 = wait.until(ExpectedConditions.elementToBeClickable(
 					         By.cssSelector("body > app-root > div > div > div > main > div > app-d-dashboard > div > div:nth-child(2) > div > div > div:nth-child(4)")));
 					vendordocsButton1.click();
-					
+					Thread.sleep(2000);
 				  By logbillsvgSelector1 = By.cssSelector("img[src='./assets/img/svg/Log-bill-digi.svg']");
 					WebElement logbillsvgImage1 = wait.until(ExpectedConditions.elementToBeClickable(logbillsvgSelector1));
 					logbillsvgImage1.click();
+					Thread.sleep(2000);
 					By integratedSvgSelector = By.cssSelector("img[src='./assets/img/svg/Intergeted.svg']");
 					WebElement integratedSvg = wait.until(ExpectedConditions.elementToBeClickable(integratedSvgSelector));
 					integratedSvg.click();
@@ -1882,18 +1884,19 @@ public void user_createsclientbill() throws InterruptedException, FileNotFoundEx
 					 tax1.clear();
 					 tax1.sendKeys(billtax1);
 					 tax1.sendKeys(Keys.ENTER);
-					
+					 Thread.sleep(2000);
 					 WebElement nextButton0013 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill-intergrated > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 					  nextButton0013.click();
-					  
+					  Thread.sleep(2000);
 					  WebElement nextButton0015 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill-intergrated > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 					  nextButton0015.click();
-					  
+					  Thread.sleep(2000);
 					  WebElement nextButton0016 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill-intergrated > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 					  nextButton0016.click();
-  
+					  Thread.sleep(2000);
 					  WebElement nextButton0014 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill-intergrated > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 					  nextButton0014.click();
+					  Thread.sleep(2000);
 			  
    }
     }
@@ -1916,17 +1919,19 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 	js.executeScript("window.scrollTo(0, 0)");
 	wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
     wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
-    
+    Thread.sleep(2000);
     WebElement clientDocspage1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-d-dashboard/div/div[2]/div/div/div[3]")));
-	clientDocspage1.click();
-	
+    js.executeScript("arguments[0].scrollIntoView(true);", clientDocspage1); // Scrolls to the element
+	js.executeScript("arguments[0].focus();", clientDocspage1);
+	js.executeScript("arguments[0].click();", clientDocspage1);
+	Thread.sleep(2000);
 	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"bill-to-client\"]/table/tbody/tr/td[7]/span[1]/img"))).click();
-	 
+	 Thread.sleep(2000);
 	 WebElement cancelIcon = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-cancel.svg']")));
 			cancelIcon.click();
- 
+			Thread.sleep(2000);
 	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"dialog-delete\"]/div[3]/div/div/span[2]"))).click();
-	 
+	 Thread.sleep(2000);
 	 WebElement vendordocsButton1 = wait.until(ExpectedConditions.elementToBeClickable(
 	         By.cssSelector("body > app-root > div > div > div > main > div > app-d-dashboard > div > div:nth-child(2) > div > div > div:nth-child(4)")));
 	vendordocsButton1.click();	
@@ -1945,7 +1950,7 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 	        }
 
 	        WebElement lastActionIcon = actionIcons.get(actionIcons.size() - 1);
-
+	        Thread.sleep(2000);
 	        // Wait explicitly for clickable
 	        wait.until(ExpectedConditions.elementToBeClickable(lastActionIcon));
 
@@ -1954,6 +1959,7 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 
 	        // Try normal click first
 	        try {
+	        	Thread.sleep(2000);
 	            lastActionIcon.click();
 	        } catch (Exception e) {
 	            // If normal click fails, fallback to JS click
@@ -1966,6 +1972,7 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 	        ));
 
 	        try {
+	        	Thread.sleep(2000);
 	            deleteBtn.click();
 	        } catch (Exception e) {
 	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", deleteBtn);
@@ -1977,6 +1984,7 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 	        ));
 
 	        try {
+	        	Thread.sleep(2000);
 	            yesBtn.click();
 	        } catch (Exception e) {
 	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", yesBtn);
@@ -1999,13 +2007,13 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 	    Thread.sleep(2000);
 	    WebElement campaignspage1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-d-dashboard/div/div[2]/div/div/div[2]")));
 		  campaignspage1.click();
-		
+		  Thread.sleep(2000);
 		  WebElement activationtab1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2-link\"]/span")));
 		  activationtab1.click(); 
-		  
+		  Thread.sleep(2000);
 		  WebElement integrationtab1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[2]/div[2]")));
 		  integrationtab1.click();
-		  
+		  Thread.sleep(2000);
 		  WebElement linktabb2 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[3]/div[2]")));
 		  linktabb2.click();
 		  
@@ -2016,13 +2024,13 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 		  
 		  WebElement linktabb3 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[3]/div[2]")));
 		  linktabb3.click();
-		
+		  Thread.sleep(2000);
 		  WebElement unlinkaction = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"activation\"]/div[1]/table/tbody/tr/td[1]/span")));
 		  unlinkaction.click();
-		  
+		  Thread.sleep(2000);
 		  WebElement unlinkyes = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-unlink\"]/div[3]/div/div/span[2]")));
 		  unlinkyes.click();
-	    
+		  Thread.sleep(2000);
 	}
     }
     
