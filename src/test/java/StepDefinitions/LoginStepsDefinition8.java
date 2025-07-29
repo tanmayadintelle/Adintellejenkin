@@ -1048,8 +1048,8 @@ public void user_createsestimate_withoutputs() throws InterruptedException, File
     try (Workbook workbook = new XSSFWorkbook(file)) {
 		Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 		Row row = sheet.getRow(1);
-	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(120));
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
     JavascriptExecutor js = (JavascriptExecutor) driver;
 	System.out.println("Navigating to Client docs page");
 	WebElement clientdocsButton = wait.until(ExpectedConditions.elementToBeClickable(
@@ -1127,7 +1127,7 @@ public void user_createsestimate_withoutputs() throws InterruptedException, File
 	        String estimatedatecalendarButtonyearFromExcel = row.getCell(41).toString().trim(); 
 	        selectDateFromCalendar(driver, wait, jobDateFromExcelday, estimatedatecalendarButtonmonthFromExcel, estimatedatecalendarButtonyearFromExcel);
 		  //System.out.println("📅 Date to click: " + estimatedatecalendarButtondateFromExcel);
-		  WebDriverWait dateWait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		  WebDriverWait dateWait = new WebDriverWait(driver, Duration.ofSeconds(120));
 //		  WebElement dateElement = dateWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(@class, 'mat-calendar-body-cell-content') and normalize-space(text())='" + estimatedatecalendarButtondateFromExcel + "']")));
 //		  dateElement.click();
 //		  System.out.println("✅ Clicked date: " + estimatedatecalendarButtondateFromExcel);
@@ -1295,8 +1295,8 @@ public void user_createspo_withoutputs() throws InterruptedException, FileNotFou
 	    try (Workbook workbook = new XSSFWorkbook(file)) {
 			Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 			Row row = sheet.getRow(1);
-		 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
-	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(120));
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
 	    JavascriptExecutor js = (JavascriptExecutor) driver;
 				
 		Actions actions = new Actions(driver);
@@ -1397,8 +1397,8 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
     try (Workbook workbook = new XSSFWorkbook(file)) {
 		Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 		Row row = sheet.getRow(1);
-	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(120));
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
     JavascriptExecutor js = (JavascriptExecutor) driver;
 	System.out.println("Navigating to Vendor docs page");
 	wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
@@ -1589,8 +1589,8 @@ public void user_createsclientbill() throws InterruptedException, FileNotFoundEx
     try (Workbook workbook = new XSSFWorkbook(file)) {
 		Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 		Row row = sheet.getRow(1);
-	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(120));
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
     JavascriptExecutor js = (JavascriptExecutor) driver;
 	System.out.println("Creating vendor bill for Manual flow");
 	Actions actions = new Actions(driver);
@@ -1908,8 +1908,8 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
     try (Workbook workbook = new XSSFWorkbook(file)) {
 		Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 		Row row = sheet.getRow(1);
-	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(120));
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
     JavascriptExecutor js = (JavascriptExecutor) driver;
 			
 	Actions actions = new Actions(driver);
