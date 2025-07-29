@@ -1927,95 +1927,98 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 	Thread.sleep(2000);
 	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"bill-to-client\"]/table/tbody/tr/td[7]/span[1]/img"))).click();
 	 Thread.sleep(2000);
-	 WebElement cancelIcon = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-cancel.svg']")));
-			cancelIcon.click();
-			Thread.sleep(2000);
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"dialog-delete\"]/div[3]/div/div/span[2]"))).click();
-	 Thread.sleep(2000);
-	 WebElement vendordocsButton1 = wait.until(ExpectedConditions.elementToBeClickable(
+	 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+	 try {
+	     // Step 1: Cancel current action
+	     WebElement cancelIcon = wait.until(ExpectedConditions.elementToBeClickable(
+	         By.cssSelector("img[src='./assets/img/svg/action-cancel.svg']")));
+	     cancelIcon.click();
+
+	     // Confirm dialog
+	     WebElement confirmCancel = wait.until(ExpectedConditions.elementToBeClickable(
+	         By.xpath("//*[@id='dialog-delete']/div[3]/div/div/span[2]")));
+	     confirmCancel.click();
+
+	     // Step 2: Click Vendor Docs section
+	     WebElement vendordocsButton1 = wait.until(ExpectedConditions.elementToBeClickable(
 	         By.cssSelector("body > app-root > div > div > div > main > div > app-d-dashboard > div > div:nth-child(2) > div > div > div:nth-child(4)")));
-	vendordocsButton1.click();	
-	Thread.sleep(2000);
-	
-	for (int i = 0; i < 2; i++) {
-	    try {
-	        // Re-fetch action icons list freshly each iteration
-	        List<WebElement> actionIcons = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
-	            By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")
-	        ));
+	     vendordocsButton1.click();
 
-	        if (actionIcons.isEmpty()) {
-	            System.out.println("No action icons available at iteration " + i);
-	            break;
-	        }
+	     // Step 3: Loop to delete 2 vendor bills
+	     for (int i = 0; i < 2; i++) {
+	         try {
+	             // Get current list of action icons
+	             List<WebElement> actionIcons = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
+	                 By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
 
-	        WebElement lastActionIcon = actionIcons.get(actionIcons.size() - 1);
-	        Thread.sleep(2000);
-	        // Wait explicitly for clickable
-	        wait.until(ExpectedConditions.elementToBeClickable(lastActionIcon));
+	             if (actionIcons.size() < 1) {
+	                 System.out.println("No vendor bills found at iteration " + i);
+	                 break;
+	             }
 
-	        // Scroll into view
-	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lastActionIcon);
+	             int beforeCount = actionIcons.size();
+	             WebElement targetIcon = actionIcons.get(beforeCount - 1);
 
-	        // Try normal click first
-	        try {
-	        	Thread.sleep(2000);
-	            lastActionIcon.click();
-	        } catch (Exception e) {
-	            // If normal click fails, fallback to JS click
-	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", lastActionIcon);
-	        }
-	        
-	        // Wait for delete button to be clickable
-	        WebElement deleteBtn = wait.until(ExpectedConditions.elementToBeClickable(
-	            By.cssSelector("img[src='./assets/img/svg/action-delete.svg']")
-	        ));
+	             // Scroll into view and click action icon
+	             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", targetIcon);
+	             wait.until(ExpectedConditions.elementToBeClickable(targetIcon)).click();
 
-	        try {
-	        	Thread.sleep(2000);
-	            deleteBtn.click();
-	        } catch (Exception e) {
-	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", deleteBtn);
-	        }
+	             // Click delete icon
+	             WebElement deleteBtn = wait.until(ExpectedConditions.elementToBeClickable(
+	                 By.cssSelector("img[src='./assets/img/svg/action-delete.svg']")));
+	             deleteBtn.click();
 
-	        // Wait for "Yes" button to be clickable and click
-	        WebElement yesBtn = wait.until(ExpectedConditions.elementToBeClickable(
-	            By.xpath("//*[@id='dialog-delete']/div[3]/div/div/span[2]")
-	        ));
+	             // Click "Yes" in confirmation dialog
+	             WebElement yesBtn = wait.until(ExpectedConditions.elementToBeClickable(
+	                 By.xpath("//*[@id='dialog-delete']/div[3]/div/div/span[2]")));
+	             yesBtn.click();
 
-	        try {
-	        	Thread.sleep(2000);
-	            yesBtn.click();
-	        } catch (Exception e) {
-	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", yesBtn);
-	        }
+	             // Wait until number of action icons decreases
+	             wait.until(ExpectedConditions.numberOfElementsToBeLessThan(
+	                 By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"), beforeCount));
 
-	        // Wait some time for UI to update after deletion
-	        Thread.sleep(1500);
+	             System.out.println("Vendor bill deleted successfully at iteration " + (i + 1));
 
-	    } catch (StaleElementReferenceException e) {
-	        System.out.println("Stale element detected, retrying iteration " + i);
-	        i--; // retry iteration
-	    } catch (Exception e) {
-	        System.out.println("Unexpected error at iteration " + i + ": " + e.getMessage());
-	        e.printStackTrace();
-	    }
-	}
-		try {
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-backdrop, .overlay, .spinner, .cdk-overlay-backdrop")));
-		} catch(Exception e) {
-			System.out.println("no overlay,please conitnue");
-		}
+	         } catch (StaleElementReferenceException e) {
+	             System.out.println("Stale element at iteration " + i + ", retrying...");
+	             i--; // retry same iteration
+	         } catch (Exception e) {
+	             System.out.println("Unexpected error at iteration " + i + ": " + e.getMessage());
+	             e.printStackTrace();
+	             break; // optional: exit loop on critical failure
+	         }
+	     }
+
+	     // Final cleanup: Wait for overlays to disappear
+	     try {
+	         wait.until(ExpectedConditions.invisibilityOfElementLocated(
+	             By.cssSelector(".modal-backdrop, .overlay, .spinner, .cdk-overlay-backdrop")));
+	     } catch (Exception e) {
+	         System.out.println("No overlay, proceeding...");
+	     }
+
+	 } catch (Exception e) {
+	     System.out.println("Critical failure in vendor bill deletion: " + e.getMessage());
+	     e.printStackTrace();
+	 }
+
 	    // Optional short wait between deletions
 	    Thread.sleep(2000);
 	    WebElement campaignspage1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-d-dashboard/div/div[2]/div/div/div[2]")));
+//		  campaignspage1.click();
+		  js.executeScript("arguments[0].scrollIntoView(true);", campaignspage1); // Scrolls to the element
+      	//js.executeScript("arguments[0].focus();", campaignspage1);
 		  campaignspage1.click();
-		  
 		  Thread.sleep(2000);
 		  WebElement activationtab1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2-link\"]/span")));
-		  activationtab1.click(); 
+		  js.executeScript("arguments[0].scrollIntoView(true);", activationtab1); // Scrolls to the element
+	      	//js.executeScript("arguments[0].focus();", campaignspage1);
+		  activationtab1.click();
 		  Thread.sleep(2000);
 		  WebElement integrationtab1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[2]/div[2]")));
+		  js.executeScript("arguments[0].scrollIntoView(true);", integrationtab1); // Scrolls to the element
+	      	//js.executeScript("arguments[0].focus();", campaignspage1);
 		  integrationtab1.click();
 		  Thread.sleep(2000);
 		  WebElement linktabb2 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[3]/div[2]")));
