@@ -2628,16 +2628,19 @@ Thread.sleep(2000);
  		    	 Thread.sleep(3000);
  		        System.out.println("Attempting to click Proceed, attempt " + attempt2);
  		        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-
+ 		       Thread.sleep(500);
  		        // Wait for any modal to disappear
  		        new WebDriverWait(driver, Duration.ofSeconds(30))
  		            .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
 
  		        WebElement proceedElement = new WebDriverWait(driver, Duration.ofSeconds(30))
  		            .until(ExpectedConditions.elementToBeClickable(proceedBtn));
+ 		       Thread.sleep(300);
  		       ((JavascriptExecutor) driver)
  		      .executeScript("arguments[0].scrollIntoView({block:'center'});", proceedElement);
- 		      js.executeScript("arguments[0].scrollIntoView(true);", proceedElement); // Scrolls to the element
+ 		      Thread.sleep(300);
+ 		      js.executeScript("arguments[0].scrollIntoView(true);", proceedElement); 
+ 		     Thread.sleep(300);// Scrolls to the element
 	        	js.executeScript("arguments[0].focus();", proceedElement);
 	        	
 // 		      wait.until(ExpectedConditions.invisibilityOfElementLocated(
@@ -2645,16 +2648,20 @@ Thread.sleep(2000);
 // 		        js.executeScript("arguments[0].scrollIntoView(true);", proceedElement);
  		        Thread.sleep(500); // small buffer
  		       try {
- 		            Actions actions11 = new Actions(driver);
- 		            actions11.moveToElement(proceedElement).pause(Duration.ofMillis(200)).click().build().perform();
- 		            System.out.println("✅ Proceed button clicked by Actions on attempt " + attempt2);
- 		        } catch (Exception e) {
- 		            System.out.println("⚠️ Actions click failed, trying JS click fallback: " + e.getMessage());
- 		            // Fallback to JS click
- 		            js.executeScript("arguments[0].click();", proceedElement);
- 		            
- 		            System.out.println("✅ Proceed button clicked by JS fallback on attempt " + attempt2);
- 		        }
+ 		          js.executeScript("arguments[0].click();", proceedElement);
+ 		          System.out.println("✅ Proceed button clicked by JS click fallback on attempt " + attempt2);
+ 		      } catch (Exception e2) {
+ 		          System.out.println("⚠️ JS click failed, trying dispatchEvent fallback: " + e2.getMessage());
+ 		          try {
+ 		              js.executeScript(
+ 		                  "var event = new MouseEvent('click', {bubbles: true, cancelable: true}); arguments[0].dispatchEvent(event);",
+ 		                  proceedElement
+ 		              );
+ 		              System.out.println("✅ Proceed button clicked by dispatchEvent fallback on attempt " + attempt2);
+ 		          } catch (Exception e3) {
+ 		              System.out.println("❌ dispatchEvent failed on attempt " + attempt2 + ": " + e3.getMessage());
+ 		          }
+ 		      }
  		        System.out.println("✅ Proceed button clicked on attempt " + attempt2);
  		      // takeScreenshot(driver, "clicked_proceed_attempt_" + attempt2 + ".png");
  		        break;
