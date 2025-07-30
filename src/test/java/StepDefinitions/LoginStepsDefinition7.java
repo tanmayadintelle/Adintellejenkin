@@ -60,11 +60,12 @@ public class LoginStepsDefinition7 {
 	
 	@SuppressWarnings("deprecation")
 
-@Given("User logs in and navigate to digital page")
+@Given("User logs in and navigate to digital page for vbf")
 public void user_logs_in_and_navigate_to_digital_page() throws InterruptedException, IOException {
     // Write code here that turns the phrase above into concrete actions
 		   // Write code here that turns the phrase above into concrete actions
 				ChromeOptions options = new ChromeOptions();
+				options.addArguments("--window-size=1920,1080");
 			//	options.addArguments("--window-size=1920,1080");
 			    // Create a HashMap for preferences
 				//ChromeOptions options = new ChromeOptions();
@@ -142,10 +143,11 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    	
 			    String excelFilePath = "DigitalproVBF.xlsx";  // Path to your Excel file
 		        FileInputStream file = new FileInputStream(new File(excelFilePath));
+		    //    FileInputStream file = new FileInputStream(new File(excelFilePath));
 		        try (Workbook workbook = new XSSFWorkbook(file)) {
 					Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 					Row row = sheet.getRow(1); // Get the second row (0-indexed));
-					WebDriverWait waitload2 = new WebDriverWait(driver, Duration.ofSeconds(120));
+					WebDriverWait waitload2 = new WebDriverWait(driver, Duration.ofSeconds(60));
 					  
 				    waitload2.until(ExpectedConditions.elementToBeClickable(By.name("username")));
 					// Step 3: Find the form fields on the webpage and fill them with data from Excel
@@ -229,9 +231,11 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    
 				waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[contains(@src, 'newjob.svg')]")));
 			    JavascriptExecutor jszoom = (JavascriptExecutor) driver;
-		       // jszoom.executeScript("document.body.style.zoom='100%'");
+		        jszoom.executeScript("document.body.style.zoom='100%'");
 		        WebElement imgElement = driver.findElement(By.xpath("//img[contains(@src, 'newjob.svg')]"));
-		        imgElement.click();
+		        js.executeScript("arguments[0].scrollIntoView(true);", imgElement); // Scrolls to the element
+		        js.executeScript("arguments[0].focus();", imgElement);              // Focuses the element
+		        js.executeScript("arguments[0].click();", imgElement); 
 
 		     // Now you can find and click inside the iframe
 		        waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"container-d\"]/div/div[1]")));
@@ -243,6 +247,8 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    createmanuallyElement.click();
 			    //Client selection
 			    
+			    //Client selection
+			    
 			   
 		     
 		        }
@@ -251,16 +257,15 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 @When("User creates a new job and adds a campaign")
 public void user_createsnewjob_and_addsacampaign() throws InterruptedException, FileNotFoundException, IOException {
 	String excelFilePath = "DigitalproVBF.xlsx";  // Path to your Excel file
+	//String excelFilePath = "D:\\fd\\btladintelleautomation\\DigitalproCBF.xlsx";  // Path to your Excel file
     FileInputStream file = new FileInputStream(new File(excelFilePath));
     try (Workbook workbook = new XSSFWorkbook(file)) {
 		Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 		Row row = sheet.getRow(1);
-	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(1200));
+	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
     JavascriptExecutor js = (JavascriptExecutor) driver;
-  //  ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
  // Wait for the Client dropdown input to be ready
-    //((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"select-client\"]/div/div[1]/ng-select/div")));
 
     // Format Excel values to preserve spaces and formatting
@@ -272,6 +277,8 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     WebElement ClientField = waitload.until(ExpectedConditions.elementToBeClickable(
         By.xpath("//*[@id='select-client']/div/div[1]/ng-select/div/div/div[2]/input")));
     Thread.sleep(2000);
+    js.executeScript("arguments[0].scrollIntoView(true);", ClientField); // Scrolls to the element
+    js.executeScript("arguments[0].focus();", ClientField);   
     ClientField.click();
     ClientField.sendKeys(Keys.ENTER);
     ClientField.sendKeys(Client);
@@ -281,6 +288,8 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     ClientField.sendKeys(Client);
 	 WebElement BrandField = waitload.until(ExpectedConditions.elementToBeClickable(
 	         By.xpath("//*[@id='select-client']/div/div[2]/ng-select/div/div/div[2]/input")));
+	 js.executeScript("arguments[0].scrollIntoView(true);", BrandField); // Scrolls to the element
+	    js.executeScript("arguments[0].focus();", BrandField);
 	 BrandField.click();
 	 Thread.sleep(2000);
 	 BrandField.clear();
@@ -296,28 +305,21 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	 // ---- Click Next Button ----
 	 WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(
 	         By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-	 nextButton.click();
+	 js.executeScript("arguments[0].scrollIntoView(true);", nextButton); // Scrolls to the element
+ 	 js.executeScript("arguments[0].focus();", nextButton);
+ 	 js.executeScript("arguments[0].click();", nextButton);
+	// nextButton.click();
 
-	 Thread.sleep(3000);
-	 String JobName = row.getCell(4).getStringCellValue();
-
-		// Wait for visibility and presence
-		WebElement JobNameField = waitload.until(ExpectedConditions.visibilityOfElementLocated(By.name("JobName")));
-
-		// Scroll it into view explicitly (important for headless mode)
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", JobNameField);
-
-		// Extra small wait to let the scroll settle
-		Thread.sleep(300); // use WebDriverWait if you want it cleaner
-
-		// Ensure it's clickable
-		waitload.until(ExpectedConditions.elementToBeClickable(JobNameField));
-
-		// Interact with the field
-		JobNameField.clear();
-		JobNameField.sendKeys(JobName);
-
+		Thread.sleep(4000);
+		String JobName = row.getCell(4).getStringCellValue(); 	
+		//waitload.until(ExpectedConditions.elementToBeClickable(By.name("JobName")));
+	    WebElement JobNameField = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("JobName")));
 	    
+	    js.executeScript("arguments[0].scrollIntoView(true);", JobNameField);
+	    // Scrolls to the element
+	    js.executeScript("arguments[0].focus();", JobNameField);              // Focuses the element
+	    JobNameField.clear();
+	    JobNameField.sendKeys(JobName);
 	    
 	    WebElement jobdatecalendar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"deliveryDate\"]/div/div/mat-datepicker-toggle/button/span[3]")));
 		jobdatecalendar.click();
@@ -329,292 +331,320 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
         
         WebElement jobdatecalendar1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"create-job\"]/div[3]/div[3]/mat-form-field/div[1]/div[2]/div[2]/mat-datepicker-toggle/button/span[3]")));
 		jobdatecalendar1.click();
-		Thread.sleep(3000);
 		  String jobperiodFromExcelday1 = row.getCell(8).toString().trim().split("\\.")[0]; // e.g., "12/06/2025"
 	        String jobperiodFromExcelmonth1 = row.getCell(9).toString().trim();
 	        String jobperiodFromExcelyear1 = row.getCell(10).toString().trim(); 
 	        selectDateFromCalendar(driver, wait, jobperiodFromExcelday1, jobperiodFromExcelmonth1, jobperiodFromExcelyear1);
-	        Thread.sleep(3000);
+	 
 			  String jobperiodFromExcelday2 = row.getCell(11).toString().trim().split("\\.")[0]; // e.g., "12/06/2025"
 		        String jobperiodFromExcelmonth2 = row.getCell(12).toString().trim();
 		        String jobperiodFromExcelyear2 = row.getCell(13).toString().trim(); 
 		        selectDateFromCalendar(driver, wait, jobperiodFromExcelday2, jobperiodFromExcelmonth2, jobperiodFromExcelyear2);
-	        Thread.sleep(7000);
+	        Thread.sleep(5000);
 	        
 	        WebElement nextbutton02 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 			nextbutton02.click();
 		     
-	        WebElement billingformatdropdown = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".ng-select-container")));
-	        billingformatdropdown.click();
-	        String billingFormat = row.getCell(14).getStringCellValue();
-	        WebElement billingformatdropdownoption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'ng-option')]//span[contains(text(),'" + billingFormat + "')]")));
-	        billingformatdropdownoption.click();     
-	        
-	        String currencyname = row.getCell(15).getStringCellValue();
-	        WebElement currencyDropdown = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class,'ng-select-container') and .//div[contains(text(),'Select Currency')]]")));
-	        currencyDropdown.click();
-	        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class,'ng-option')]//span[contains(text(),'" + currencyname + "')]")));
-	        option.click();
-	        
-	        WebElement nextbutton03 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-			nextbutton03.click();
-			
-			WebElement nextbutton04 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-			nextbutton04.click();
-			Thread.sleep(5000);
-	        System.out.print("Add Campaign for Manual FLow");
-	     // Wait for Add Campaign icon and click it using JavaScript
-	        WebElement addCampaignIcon = wait.until(ExpectedConditions.presenceOfElementLocated(
-	            By.xpath("//img[contains(@src, 'add-compaign.svg')]")));
-	        js.executeScript("arguments[0].click();", addCampaignIcon);
-	        wait.until(ExpectedConditions.invisibilityOfElementLocated(
-	                By.cssSelector(".modal-backdrop, .overlay, .loader")));
-	        // Wait for Close icon and click it normally
-	        WebElement closeIcon = wait.until(ExpectedConditions.elementToBeClickable(
-	            By.cssSelector("img[src='./assets/img/svg/close-cross.svg']")));
-	        closeIcon.click();
-	        wait.until(ExpectedConditions.invisibilityOfElementLocated(
-	                By.cssSelector(".modal-backdrop, .overlay, .loader")));
-	        // Wait again for Add Campaign icon and click it using JavaScript
-	        WebElement addCampaignIcon1 = wait.until(ExpectedConditions.presenceOfElementLocated(
-	            By.xpath("//img[contains(@src, 'add-compaign.svg')]")));
-	        js.executeScript("arguments[0].click();", addCampaignIcon1);
-	        Thread.sleep(3000);
-	    	    String platformtype = row.getCell(16).getStringCellValue();
-	        	WebElement platformtypefield = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[1]/div[1]/ng-select/div/div/div[2]/input")));
-	        	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[1]/div[1]/ng-select/div/div/div[2]/input")));
-	        	platformtypefield.click();
-	        	platformtypefield.sendKeys(Keys.ENTER);
-	        	platformtypefield.clear();
-		    	   
-	        	platformtypefield.sendKeys(platformtype);
-	        	platformtypefield.sendKeys(Keys.ENTER);
-	        	Thread.sleep(2000);
-	        	String platform = row.getCell(17).getStringCellValue();
-	        	WebElement platformfield = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[1]/div[2]/ng-select/div/div/div[2]/input")));
-	        	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[1]/div[2]/ng-select/div/div/div[2]/input")));
-	        	js.executeScript("arguments[0].click();", platformfield);
-	        	platformfield.clear();		    	   
-	        	platformfield.sendKeys(platform);
-	        	Thread.sleep(2000);
-	        	platformfield.sendKeys(Keys.ENTER);
-	     
-	        	
-	        	
-	        	WebElement nextbutton09 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-				nextbutton09.click();
-	        	
-				 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-label")));
-					try{
-							    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("mat-mdc-snack-bar-label")));
+			  WebElement billingformatdropdown = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".ng-select-container")));
+		        billingformatdropdown.click();
+		        String billingFormat = row.getCell(14).getStringCellValue();
+		        WebElement billingformatdropdownoption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'ng-option')]//span[contains(text(),'" + billingFormat + "')]")));
+		        billingformatdropdownoption.click();     
+		        
+		        String currencyname = row.getCell(15).getStringCellValue();
+		        WebElement currencyDropdown = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class,'ng-select-container') and .//div[contains(text(),'Select Currency')]]")));
+		        currencyDropdown.click();
+		        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class,'ng-option')]//span[contains(text(),'" + currencyname + "')]")));
+		        option.click();
+		        
+		        WebElement nextbutton03 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
+				nextbutton03.click();
+				
+				WebElement nextbutton04 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
+				nextbutton04.click();
+		        System.out.print("Add Campaign for Manual FLow");
+		     // Wait for Add Campaign icon and click it using JavaScript
+		        WebElement addCampaignIcon = wait.until(ExpectedConditions.presenceOfElementLocated(
+		            By.xpath("//img[contains(@src, 'add-compaign.svg')]")));
+		        js.executeScript("arguments[0].click();", addCampaignIcon);
+		        wait.until(ExpectedConditions.invisibilityOfElementLocated(
+		                By.cssSelector(".modal-backdrop, .overlay, .loader")));
+		        // Wait for Close icon and click it normally
+		        WebElement closeIcon = wait.until(ExpectedConditions.elementToBeClickable(
+		            By.cssSelector("img[src='./assets/img/svg/close-cross.svg']")));
+		        closeIcon.click();
+		        wait.until(ExpectedConditions.invisibilityOfElementLocated(
+		                By.cssSelector(".modal-backdrop, .overlay, .loader")));
+		        // Wait again for Add Campaign icon and click it using JavaScript
+		        WebElement addCampaignIcon1 = wait.until(ExpectedConditions.presenceOfElementLocated(
+		            By.xpath("//img[contains(@src, 'add-compaign.svg')]")));
+		        js.executeScript("arguments[0].click();", addCampaignIcon1);
+		        Thread.sleep(3000);
+		    	    String platformtype = row.getCell(16).getStringCellValue();
+		        	WebElement platformtypefield = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[1]/div[1]/ng-select/div/div/div[2]/input")));
+		        	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[1]/div[1]/ng-select/div/div/div[2]/input")));
+		        	platformtypefield.click();
+		        	platformtypefield.sendKeys(Keys.ENTER);
+		        	platformtypefield.clear();
+			    	   
+		        	platformtypefield.sendKeys(platformtype);
+		        	platformtypefield.sendKeys(Keys.ENTER);
+		        	Thread.sleep(2000);
+		        	String platform = row.getCell(17).getStringCellValue();
+		        	WebElement platformfield = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[1]/div[2]/ng-select/div/div/div[2]/input")));
+		        	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[1]/div[2]/ng-select/div/div/div[2]/input")));
+		        	js.executeScript("arguments[0].click();", platformfield);
+		        	platformfield.clear();		    	   
+		        	platformfield.sendKeys(platform);
+		        	Thread.sleep(2000);
+		        	platformfield.sendKeys(Keys.ENTER);
+		     
+		        	
+		        	
+		        	WebElement nextbutton09 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
+		        	js.executeScript("arguments[0].scrollIntoView(true);", nextbutton09); // Scrolls to the element
+		        	js.executeScript("arguments[0].focus();", nextbutton09);   
+		        	nextbutton09.click();
+		        	
+					WebElement nextbutton090 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
+					js.executeScript("arguments[0].scrollIntoView(true);", nextbutton090); // Scrolls to the element
+		        	js.executeScript("arguments[0].focus();", nextbutton090);  
+					nextbutton090.click();
+					
+		        	Thread.sleep(2000);
+		        	// Read the category value from Excel (and trim to avoid trailing spaces)
+					String category = row.getCell(18).getStringCellValue().trim();
+					System.out.println("Category from Excel: " + category);
+
+					// Open the dropdown
+					WebElement categoryFieldContainer = wait.until(ExpectedConditions.elementToBeClickable(
+					    By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[1]/ng-select/div")
+					));
+					categoryFieldContainer.click();
+
+					// Wait for the input field and send the category text
+					WebElement categoryInput = wait.until(ExpectedConditions.elementToBeClickable(
+					    By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[1]/ng-select/div/div/div[2]/input")
+					));
+					categoryInput.clear();
+					categoryInput.click();
+					categoryInput.sendKeys(category);
+
+					// Retry loop to avoid stale elements
+					boolean matched = false;
+
+					System.out.println("Dropdown options:");
+					for (int retry = 0; retry < 3 && !matched; retry++) {
+					    try {
+					        // Wait explicitly for the options to be visible on each retry
+					        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ng-option")));
+
+					        List<WebElement> options = driver.findElements(By.cssSelector("div.ng-option"));
+
+					        for (WebElement optionz : options) {
+					            String text = optionz.getText().trim();
+					            System.out.println("Option: " + text);
+
+					            if (text.equalsIgnoreCase(category)) {
+					                // Ensure the element is clickable before clicking
+					                wait.until(ExpectedConditions.elementToBeClickable(optionz)).click();
+					                matched = true;
+					                break;
+					            }
+					        }
+					    } catch (org.openqa.selenium.StaleElementReferenceException e) {
+					        System.out.println("Caught StaleElementReferenceException. Retrying...");
+					        Thread.sleep(500); // Pause before retrying
+					    }				}
+
+					if (!matched) {
+					    throw new RuntimeException("No matching Category option found for: " + category);
 					}
-					catch(ElementClickInterceptedException e){
-						System.out.println("conitnue");
+					categoryInput.sendKeys(Keys.ENTER);
+
+		        	String campaignname = row.getCell(19).getStringCellValue();
+		        	WebElement campaignnamefield = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/input")));
+		        	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/input")));
+		        	js.executeScript("arguments[0].scrollIntoView(true);", campaignnamefield); // Scrolls to the element
+		        	js.executeScript("arguments[0].focus();", campaignnamefield);   
+		        	js.executeScript("arguments[0].click();", campaignnamefield);
+		        	campaignnamefield.clear();		    	   
+		        	campaignnamefield.sendKeys(campaignname);
+		        	campaignnamefield.sendKeys(Keys.ENTER);
+		        	Thread.sleep(2000);
+		        	WebElement nextbutton05 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span")));
+		        	js.executeScript("arguments[0].scrollIntoView(true);", nextbutton05); // Scrolls to the element
+		        	//js.executeScript("arguments[0].focus();", nextbutton05);   
+		        	nextbutton05.click();
+					//js.executeScript("document.body.style.zoom='90%'");
+					Thread.sleep(5000);
+					WebElement nextbutton06 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
+					js.executeScript("arguments[0].scrollIntoView(true);", nextbutton06); // Scrolls to the element
+		        	//js.executeScript("arguments[0].focus();", nextbutton06);
+					nextbutton06.click();
+					Thread.sleep(2000);
+					String buytype = formatter.formatCellValue(row.getCell(20)).trim();
+					System.out.println("Buy Type from Excel: " + buytype);
+
+					// First, click "Next" button multiple times to ensure dropdown is ready
+					for (int i = 0; i < 2; i++) {
+					    try {
+					        WebElement nextBtn = wait.until(ExpectedConditions.elementToBeClickable(
+					            By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
+					        js.executeScript("arguments[0].scrollIntoView(true);", nextBtn); // Scrolls to the element
+				        	js.executeScript("arguments[0].focus();", nextBtn);
+					        js.executeScript("arguments[0].click();", nextBtn);
+					        Thread.sleep(1000);
+					        System.out.println("✅ Clicked 'Next' button - attempt " + (i + 1));
+					    } catch (Exception e) {
+					        System.out.println("⚠️ Could not click 'Next' button on attempt " + (i + 1) + ": " + e.getMessage());
+					    }
 					}
-				WebElement nextbutton090 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-				nextbutton090.click();
-				
-	        	Thread.sleep(2000);
-	        	 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-label")));
-	 			try{
-	 					    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("mat-mdc-snack-bar-label")));
-	 			}
-	 			catch(ElementClickInterceptedException e){
-	 				System.out.println("conitnue");
-	 			}
-	        	// Read the category value from Excel (and trim to avoid trailing spaces)
-				String category = row.getCell(18).getStringCellValue().trim();
-				System.out.println("Category from Excel: " + category);
-				 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".mat-mdc-snack-bar-label")));
-				// Open the dropdown
-				WebElement categoryFieldContainer = wait.until(ExpectedConditions.elementToBeClickable(
-				    By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[1]/ng-select/div")
-				));
-				categoryFieldContainer.click();
 
-				// Wait for the input field and send the category text
-				WebElement categoryInput = wait.until(ExpectedConditions.elementToBeClickable(
-				    By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[1]/ng-select/div/div/div[2]/input")
-				));
-				categoryInput.clear();
-				categoryInput.click();
-				categoryInput.sendKeys(category);
+					// Now open the Buy Type dropdown
+					WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.ng-select-container")));
+					js.executeScript("arguments[0].scrollIntoView(true);", dropdown);
+					//js.executeScript("arguments[0].scrollIntoView(true);", dropdown); // Scrolls to the element
+					js.executeScript("arguments[0].focus();", dropdown);   
+					dropdown.click(); // Only click — no typing
+					System.out.println("🟡 Dropdown clicked, waiting for options...");
 
-				// Retry loop to avoid stale elements
-				boolean matched = false;
+					// Wait for options to appear
+					wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("div.ng-option")));
 
-				System.out.println("Dropdown options:");
-				for (int retry = 0; retry < 3 && !matched; retry++) {
-				    try {
-				        // Wait explicitly for the options to be visible on each retry
-				        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ng-option")));
+					List<WebElement> options = driver.findElements(By.cssSelector("div.ng-option"));
+					boolean matchedd = false;
 
-				        List<WebElement> options = driver.findElements(By.cssSelector("div.ng-option"));
+					System.out.println("🟢 Options visible: " + options.size());
+					for (WebElement optioni : options) {
+					    String optionText = optioni.getText().trim();
+					    System.out.println("➡️ Option: " + optionText);
 
-				        for (WebElement optionz : options) {
-				            String text = optionz.getText().trim();
-				            System.out.println("Option: " + text);
+					    if (optionText.equalsIgnoreCase(buytype)) {
+					        js.executeScript("arguments[0].click();", optioni); // JS click to avoid intercept
+					        System.out.println("✅ Selected Buy Type: " + buytype);
+					        matchedd = true;
+					        break;
+					    }
+					}
 
-				            if (text.equalsIgnoreCase(category)) {
-				                // Ensure the element is clickable before clicking
-				                wait.until(ExpectedConditions.elementToBeClickable(optionz)).click();
-				                matched = true;
-				                break;
-				            }
-				        }
-				    } catch (org.openqa.selenium.StaleElementReferenceException e) {
-				        System.out.println("Caught StaleElementReferenceException. Retrying...");
-				        Thread.sleep(500); // Pause before retrying
-				    }				}
+					if (!matchedd) {
+					    throw new RuntimeException("❌ Buy Type '" + buytype + "' not found in dropdown options.");
+					}
+					String quantity = row.getCell(21).getStringCellValue();
+					WebElement quantityfield = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/input")));
+					wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/input")));
 
-				if (!matched) {
-				    throw new RuntimeException("No matching Category option found for: " + category);
-				}
-				categoryInput.sendKeys(Keys.ENTER);
+					js.executeScript("arguments[0].scrollIntoView(true);", quantityfield);
+					js.executeScript("arguments[0].focus();", quantityfield);
 
-	        	String campaignname = row.getCell(19).getStringCellValue();
-	        	WebElement campaignnamefield = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/input")));
-	        	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/input")));
-	        	js.executeScript("arguments[0].click();", campaignnamefield);
-	        	campaignnamefield.clear();		    	   
-	        	campaignnamefield.sendKeys(campaignname);
-	        	campaignnamefield.sendKeys(Keys.ENTER);
-	        	Thread.sleep(2000);
-	        	WebElement nextbutton05 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span")));
-				nextbutton05.click();
-				//js.executeScript("document.body.style.zoom='90%'");
-				Thread.sleep(2000);
-				WebElement nextbutton06 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-				nextbutton06.click();
-				Thread.sleep(2000);
-				String buytype = formatter.formatCellValue(row.getCell(20)).trim();
-				System.out.println("Buy Type from Excel: " + buytype);
+					js.executeScript("arguments[0].click();", quantityfield);
+					quantityfield.clear();		   	   
+					quantityfield.sendKeys(quantity);
 
-				// First, click "Next" button multiple times to ensure dropdown is ready
-				for (int i = 0; i < 2; i++) {
-				    try {
-				        WebElement nextBtn = wait.until(ExpectedConditions.elementToBeClickable(
-				            By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-				        js.executeScript("arguments[0].click();", nextBtn);
-				        Thread.sleep(1000);
-				        System.out.println("✅ Clicked 'Next' button - attempt " + (i + 1));
-				    } catch (Exception e) {
-				        System.out.println("⚠️ Could not click 'Next' button on attempt " + (i + 1) + ": " + e.getMessage());
-				    }
-				}
 
-				// Now open the Buy Type dropdown
-				WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.ng-select-container")));
-				js.executeScript("arguments[0].scrollIntoView(true);", dropdown);
-				dropdown.click(); // Only click — no typing
-				System.out.println("🟡 Dropdown clicked, waiting for options...");
+					String clientrate = row.getCell(22).getStringCellValue();
+					WebElement clientratefield = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[3]/div[1]/input")));
+					wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[3]/div[1]/input")));
 
-				// Wait for options to appear
-				wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("div.ng-option")));
+					js.executeScript("arguments[0].scrollIntoView(true);", clientratefield);
+					js.executeScript("arguments[0].focus();", clientratefield);
 
-				List<WebElement> options = driver.findElements(By.cssSelector("div.ng-option"));
-				boolean matchedd = false;
+					js.executeScript("arguments[0].click();", clientratefield);
+					clientratefield.clear();		    	   
+					clientratefield.sendKeys(clientrate);
 
-				System.out.println("🟢 Options visible: " + options.size());
-				for (WebElement optioni : options) {
-				    String optionText = optioni.getText().trim();
-				    System.out.println("➡️ Option: " + optionText);
 
-				    if (optionText.equalsIgnoreCase(buytype)) {
-				        js.executeScript("arguments[0].click();", optioni); // JS click to avoid intercept
-				        System.out.println("✅ Selected Buy Type: " + buytype);
-				        matchedd = true;
-				        break;
-				    }
-				}
+					WebElement vendorratefield = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[4]/div[1]/input")));
 
-				if (!matchedd) {
-				    throw new RuntimeException("❌ Buy Type '" + buytype + "' not found in dropdown options.");
-				}
-	        	String quantity = row.getCell(21).getStringCellValue();
-	        	WebElement quantityfield = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/input")));
-	        	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/input")));
-	        	js.executeScript("arguments[0].click();", quantityfield);
-	        	quantityfield.clear();		   	   
-	        	quantityfield.sendKeys(quantity);
-	        	
-	        	
-	        	String clientrate = row.getCell(22).getStringCellValue();
-	        	WebElement clientratefield = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[3]/div[1]/input")));
-	        	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[3]/div[1]/input")));
-	        	js.executeScript("arguments[0].click();", clientratefield);
-	        	clientratefield.clear();		    	   
-	        	clientratefield.sendKeys(clientrate);
-	        	
-	        	WebElement vendorratefield = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[4]/div[1]/input")));
-	        	vendorratefield.click();
-	        	
-	        	
-	        	WebElement yestoclientratechanges = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"vailidateRate\"]/div[3]/div/div/span[2]")));
-	        	yestoclientratechanges.click();
-	        	try {
-	        	    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-pane")));
-	        	    System.out.println("✅ Overlay is gone. Safe to click Submit.");
-	        	} catch (TimeoutException e) {
-	        	    System.out.println("⚠️ Overlay still visible after wait, proceeding anyway.");
-	        	}
-	        	WebElement nextbutton07 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-				nextbutton07.click();
-				
-				WebElement nextbutton08 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-				nextbutton08.click();
-				Thread.sleep(4000);
-				
-				// 1️⃣ Read and clean the Excel value (preserves spaces)
-				String vendorNameRaw = formatter.formatCellValue(row.getCell(24));
-				String vendorName = vendorNameRaw.replace('\u00A0', ' ').trim();
-				System.out.println("🔍 Excel input: [" + vendorNameRaw + "]");
-				System.out.println("✅ Cleaned vendorName: [" + vendorName + "]");
+					
 
-				// 2️⃣ Locate and open the dropdown input
-				WebElement vendorInput = wait.until(ExpectedConditions.elementToBeClickable(
-				    By.cssSelector("div.ng-select-container div.ng-input input")
-				));
-				js.executeScript("arguments[0].scrollIntoView({block: 'center'});", vendorInput);
-				vendorInput.click();
-				Thread.sleep(2000);
-				
-				// 3️⃣ Forcefully set the full string with JS to preserve spaces
-				js.executeScript(
+					vendorratefield.click();
+
+
+					WebElement yestoclientratechanges = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"vailidateRate\"]/div[3]/div/div/span[2]")));
+
+					js.executeScript("arguments[0].scrollIntoView(true);", yestoclientratechanges);
+					js.executeScript("arguments[0].focus();", yestoclientratechanges);
+
+					yestoclientratechanges.click();
+					try {
+		        	    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-pane")));
+		        	    System.out.println("✅ Overlay is gone. Safe to click Submit.");
+		        	} catch (TimeoutException e) {
+		        	    System.out.println("⚠️ Overlay still visible after wait, proceeding anyway.");
+		        	}
+
+					WebElement nextbutton07 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
+
+					js.executeScript("arguments[0].scrollIntoView(true);", nextbutton07);
+					js.executeScript("arguments[0].focus();", nextbutton07);
+
+					nextbutton07.click();
+
+					Thread.sleep(2000);
+					WebElement nextbutton08 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
+
+					js.executeScript("arguments[0].scrollIntoView(true);", nextbutton08);
+					js.executeScript("arguments[0].focus();", nextbutton08);
+
+					nextbutton08.click();
+
+					Thread.sleep(2000);
+
+
+					String vendorNameRaw = formatter.formatCellValue(row.getCell(24));
+					String vendorName = vendorNameRaw.replace('\u00A0', ' ').trim();
+					System.out.println("🔍 Excel input: [" + vendorNameRaw + "]");
+					System.out.println("✅ Cleaned vendorName: [" + vendorName + "]");
+
+					// 2️⃣ Locate and open the dropdown input
+					WebElement vendorInput = wait.until(ExpectedConditions.elementToBeClickable(
+					    By.cssSelector("div.ng-select-container div.ng-input input")
+					));
+					js.executeScript("arguments[0].scrollIntoView({block: 'center'});", vendorInput);
+					vendorInput.click();
+					Thread.sleep(300);
+
+					// ✅ Inject full string (with spaces) and dispatch events
+					js.executeScript(
 					    "arguments[0].value = arguments[1];" +
 					    "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));" +
 					    "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
 					    vendorInput, vendorName
 					);
+					vendorInput.sendKeys(Keys.ENTER);
 					System.out.println("✍️ Injected vendor name via JS: [" + vendorName + "]");
+
 					int retryCount = 0;
 					int maxRetries = 5;
 					boolean selected = false;
 
 					while (retryCount < maxRetries && !selected) {
 					    try {
+					    	vendorInput.sendKeys(Keys.ENTER);
+
 					        // Clear previous text
 					        vendorInput.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 					        vendorInput.sendKeys(Keys.DELETE);
 					        Thread.sleep(300);
+					        vendorInput.sendKeys(Keys.ENTER);
 
 					        // Step 1: Type small prefix to trigger dropdown
-					        vendorInput.sendKeys(vendorName.substring(0, 2));
+					        vendorInput.sendKeys(vendorName.substring(0, 10));
 					        Thread.sleep(800);
 
 					        // Step 2: Wait for dropdown options to appear
 					        wait.until(ExpectedConditions.visibilityOfElementLocated(
 					            By.cssSelector(".ng-dropdown-panel .ng-option")
 					        ));
-
+					        
 					        // Step 3: Select first option
 					        vendorInput.sendKeys(Keys.ARROW_DOWN);
 					        Thread.sleep(300);
 					        vendorInput.sendKeys(Keys.ENTER);
 					        Thread.sleep(500);
-					        Thread.sleep(2000);
-					        
-					       
+
 					        // Step 4: Check if selection stuck
 					        // More reliable way to check selected value:
 					        WebElement selectedTextElem = driver.findElement(By.cssSelector("div.ng-select .ng-value span"));
@@ -639,284 +669,268 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					    System.out.println("❌ Vendor selection failed after " + maxRetries + " attempts.");
 					}
 
+					// ADD CAMPAIGN button
+					WebElement addCampaignButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'ADD CAMPAIGN')]")));
+
+					js.executeScript("arguments[0].scrollIntoView(true);", addCampaignButton);
+					js.executeScript("arguments[0].focus();", addCampaignButton);
+
+					addCampaignButton.click();
+					System.out.println("✅ 'ADD CAMPAIGN' button clicked.");
+
+					Thread.sleep(5000);
+
+					WebElement addCampaignIcon3 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//img[contains(@src, 'add-compaign.svg')]")));
+
+					js.executeScript("arguments[0].scrollIntoView(true);", addCampaignIcon3);
+					js.executeScript("arguments[0].focus();", addCampaignIcon3);
+
+					js.executeScript("arguments[0].click();", addCampaignIcon3);
+
+					wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-backdrop, .overlay, .spinner, .cdk-overlay-backdrop")));
+
+					WebElement closeIcon2 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/close-cross.svg']")));
+
+					js.executeScript("arguments[0].scrollIntoView(true);", closeIcon2);
+					js.executeScript("arguments[0].focus();", closeIcon2);
+
+					js.executeScript("arguments[0].click();", closeIcon2);
+
+					wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal-backdrop, .overlay, .spinner, .cdk-overlay-backdrop")));
+
+
+					// Integration add campaign
+					System.out.print("Integration add campaign");
+
+					WebElement addCampaignIcon2 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//img[contains(@src, 'add-compaign.svg')]")));
+
+					js.executeScript("arguments[0].scrollIntoView(true);", addCampaignIcon2);
+					js.executeScript("arguments[0].focus();", addCampaignIcon2);
+
+					js.executeScript("arguments[0].click();", addCampaignIcon2);
+
+					Thread.sleep(2000);
+
+					WebElement nextbutton8 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
+
+					js.executeScript("arguments[0].scrollIntoView(true);", nextbutton8);
+					js.executeScript("arguments[0].focus();", nextbutton8);
+					js.executeScript("arguments[0].click();", nextbutton8);
+
+					Thread.sleep(5000);
+
+					String platformtype1 = row.getCell(25).getStringCellValue().trim();
+					System.out.println("Platform Type from Excel: [" + platformtype1 + "]");
+
+					WebElement platformtypefield1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[1]/div[1]/ng-select/div/div/div[2]/input")));
+
+					js.executeScript("arguments[0].scrollIntoView(true);", platformtypefield1);
+					js.executeScript("arguments[0].focus();", platformtypefield1);
+
+					js.executeScript("arguments[0].click();", platformtypefield1); 
+					platformtypefield1.clear();
+					platformtypefield1.sendKeys(platformtype1);
+
 					Thread.sleep(1000);
-					//vendorInput.sendKeys(Keys.ENTER);
-					//System.out.println("✅ Sent ENTER — hopefully selected: [" + afterJS + "]");
+
+					platformtypefield1.sendKeys(Keys.ENTER);
+					System.out.println("✅ Platform type '" + platformtype1 + "' selected.");
+
+					Thread.sleep(2000);
+
+					String platform1 = row.getCell(26).getStringCellValue();
+					WebElement platformfield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[1]/div[2]/ng-select/div/div/div[2]/input")));
+					wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[1]/div[2]/ng-select/div/div/div[2]/input")));
+
+					js.executeScript("arguments[0].scrollIntoView(true);", platformfield1);
+					js.executeScript("arguments[0].focus();", platformfield1);
+
+					js.executeScript("arguments[0].click();", platformfield1);
+					platformfield1.clear();
+					platformfield1.sendKeys(platform1);
+
+					Thread.sleep(2000);
+
+					platformfield1.sendKeys(Keys.ENTER);
+
+					String account = row.getCell(27).getStringCellValue();
+					WebElement accountfield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[1]/ng-select/div/div/div[2]/input")));
+					wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[1]/ng-select/div/div/div[2]/input")));
+
+					js.executeScript("arguments[0].scrollIntoView(true);", accountfield1);
+					js.executeScript("arguments[0].focus();", accountfield1);
+
+					js.executeScript("arguments[0].click();", accountfield1);
+					accountfield1.clear();		    	   
+					accountfield1.sendKeys(account);
+					Thread.sleep(2000);
+					accountfield1.sendKeys(Keys.ENTER);
+
+					String adaccount = row.getCell(28).getStringCellValue();
+					WebElement adaccountfield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/ng-select/div/div/div[2]/input")));
+					wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/ng-select/div/div/div[2]/input")));
+
+					js.executeScript("arguments[0].scrollIntoView(true);", adaccountfield1);
+					//js.executeScript("arguments[0].focus();", adaccountfield1);
+
+					//js.executeScript("arguments[0].click();", adaccountfield1);
+					adaccountfield1.clear();		    	   
+					adaccountfield1.sendKeys(adaccount);
 					
-				WebElement addCampaignButton = wait.until(ExpectedConditions.elementToBeClickable(
-				    By.xpath("//span[contains(text(),'ADD CAMPAIGN')]")
-				));
+					adaccountfield1.sendKeys(Keys.ENTER);
+					Thread.sleep(2000);
+					String category1 = row.getCell(29).getStringCellValue().trim();
+					System.out.println("📥 Category from Excel: " + category1);
 
-				// Scroll into view in case it's not visible
-				js.executeScript("arguments[0].scrollIntoView(true);", addCampaignButton);
-
-				// Click the button
-				addCampaignButton.click();
-				System.out.println("✅ 'ADD CAMPAIGN' button clicked.");
-				
-				Thread.sleep(5000);
-				   WebElement addCampaignIcon3 = wait.until(ExpectedConditions.presenceOfElementLocated(
-				            By.xpath("//img[contains(@src, 'add-compaign.svg')]")));
-				        js.executeScript("arguments[0].click();", addCampaignIcon3);
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(
-				                By.cssSelector(".modal-backdrop, .overlay, .spinner, .cdk-overlay-backdrop")));
-
-				        // Wait for Close icon and click it normally
-				        try {
-				            List<WebElement> closeIcons = driver.findElements(By.cssSelector("img[src='./assets/img/svg/close-cross.svg']"));
-
-				            WebElement visibleCloseIcon = closeIcons.stream()
-				                .filter(WebElement::isDisplayed)
-				                .findFirst()
-				                .orElseThrow(() -> new RuntimeException("No visible close icon found"));
-
-				            js.executeScript("arguments[0].scrollIntoView({block: 'center'});", visibleCloseIcon);
-				            js.executeScript("arguments[0].focus();", visibleCloseIcon);
-				            Thread.sleep(200);
-
-				            try {
-				                visibleCloseIcon.click();
-				            } catch (ElementClickInterceptedException e) {
-				                js.executeScript("arguments[0].click();", visibleCloseIcon);
-				            }
-
-				            wait.until(ExpectedConditions.invisibilityOfElementLocated(
-				                By.cssSelector(".modal-backdrop, .overlay, .spinner, .cdk-overlay-backdrop")));
-
-				            System.out.println("✅ Close icon clicked and overlay dismissed.");
-
-				        } catch (Exception e) {
-				            System.out.println("⚠️ Close icon not found or not clickable. Skipping... (" + e.getMessage() + ")");
-				        }
-
-
-				//Integration add campaign
-				System.out.print("Integration add campaign");
-				WebElement addCampaignIcon2 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//img[contains(@src, 'add-compaign.svg')]")));
-				js.executeScript("arguments[0].click();", addCampaignIcon2);
-				Thread.sleep(2000);
-				
-				try {
-				    WebElement nextbutton8 = wait.until(ExpectedConditions.elementToBeClickable(
-				        By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")
-				    ));
-				    
-				    try {
-				        nextbutton8.click(); // try regular click
-				    } catch (ElementClickInterceptedException e) {
-				        System.out.println("⚠️ Click intercepted, retrying with JS click: " + e.getMessage());
-				        js.executeScript("arguments[0].click();", nextbutton8); // JS click fallback
-				    }
-				} catch (Exception e) {
-				    System.out.println("❌ Submit button not found or not clickable: " + e.getMessage());
-				}
-				Thread.sleep(5000);   
-				String platformtype1 = row.getCell(25).getStringCellValue().trim();
-				System.out.println("Platform Type from Excel: [" + platformtype1 + "]");
-
-				// Locate the input field inside the ng-select
-				WebElement platformtypefield1 = wait.until(ExpectedConditions.elementToBeClickable(
-				    By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[1]/div[1]/ng-select/div/div/div[2]/input")
-				));
-
-				// Scroll into view
-				js.executeScript("arguments[0].scrollIntoView(true);", platformtypefield1);
-				try {
-					platformtypefield1.click();
-				} catch (ElementClickInterceptedException e) {
-				    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", platformtypefield1);
-				}     // Open dropdown
-				platformtypefield1.clear();      // Clear any existing value
-				platformtypefield1.sendKeys(platformtype1); // Type the value from Excel
-
-				Thread.sleep(1000); // Optional: wait for matching options to appear
-
-				platformtypefield1.sendKeys(Keys.ENTER); // Now select the option
-				System.out.println("✅ Platform type '" + platformtype1 + "' selected.");
-		         Thread.sleep(2000);
-		         
-		         String platform1 = row.getCell(26).getStringCellValue();
-		         WebElement platformfield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[1]/div[2]/ng-select/div/div/div[2]/input")));
-		         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[1]/div[2]/ng-select/div/div/div[2]/input")));
-		         js.executeScript("arguments[0].click();", platformfield1);
-		         platformfield1.clear();		    	   
-		         platformfield1.sendKeys(platform1);
-		         Thread.sleep(2000);
-		         platformfield1.sendKeys(Keys.ENTER);
-				 
-		         String account = row.getCell(27).getStringCellValue();
-		         WebElement accountfield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[1]/ng-select/div/div/div[2]/input")));
-		         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[1]/ng-select/div/div/div[2]/input")));
-		         js.executeScript("arguments[0].click();", accountfield1);
-		         accountfield1.clear();		    	   
-		         accountfield1.sendKeys(account);
-		        
-		         accountfield1.sendKeys(Keys.ENTER);
-		         Thread.sleep(2000);
-		         String adaccount = row.getCell(28).getStringCellValue();
-		         WebElement adaccountfield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/ng-select/div/div/div[2]/input")));
-		         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/ng-select/div/div/div[2]/input")));
-		         js.executeScript("arguments[0].click();", adaccountfield1);
-		         adaccountfield1.clear();		    	   
-		         adaccountfield1.sendKeys(adaccount);
-		         Thread.sleep(2000);
-		         adaccountfield1.sendKeys(Keys.ENTER);
-		          
-		         String category1 = row.getCell(29).getStringCellValue().trim();
-		         System.out.println("📥 Category from Excel: " + category1);
-
-		         try {
-		             // Wait for the category dropdown input based on placeholder text
-		        	 WebElement categoryInput1 = wait.until(ExpectedConditions.visibilityOfElementLocated(
-		        			    By.xpath("//ng-select[@placeholder='Select Campaign Category']//input[@aria-autocomplete='list']")
-		        			));
-		             wait.until(ExpectedConditions.elementToBeClickable(categoryInput1));
-		             // Scroll into view and click
-		             js.executeScript("arguments[0].scrollIntoView(true);", categoryInput1);
-		             try {
-		                 // Try native click first
-		                 categoryInput1.click();
-		             } catch (ElementClickInterceptedException e) {
-		                 // Fallback to JavaScript click
-		                 js.executeScript("arguments[0].click();", categoryInput1);
-		             }
-		             categoryInput1.clear();
-		             categoryInput1.sendKeys(category1);
-
-		             Thread.sleep(1500);  // Wait for dropdown options to appear
-
-		             // Wait for all options under ng-option to appear
-		             List<WebElement> options1 = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
-		                 By.cssSelector("div.ng-option")
-		             ));
-
-		             boolean matched1 = false;
-		             for (WebElement option1 : options1) {
-		                 String text = option1.getText().trim();
-		                 System.out.println("➡️ Option: " + text);
-		                 if (text.equalsIgnoreCase(category1)) {
-		                     option1.click();
-		                     matched1 = true;
-		                     System.out.println("✅ Selected Category: " + text);
-		                     break;
-		                 }
-		             }
-
-		             if (!matched1) {
-		                 throw new RuntimeException("❌ Category not found in dropdown: " + category1);
-		             }
-
-		         } catch (Exception e) {
-		             System.out.println("❌ Exception while selecting category: " + e.getMessage());
-		             throw e;
-		         }
-
-		         
-		         
-//		         
-//		         String category1 = row.getCell(29).getStringCellValue().trim();
-//		         System.out.println("Category from Excel: " + category1);
-//
-//		         // Click on the dropdown container to open it
-//		         WebElement categoryDropdown = wait.until(ExpectedConditions.elementToBeClickable(
-//		             By.cssSelector("div[aria-haspopup='listbox'] input[aria-autocomplete='list']")
-//		         ));
-//		         js.executeScript("arguments[0].scrollIntoView(true);", categoryDropdown);
-//		         categoryDropdown.click();
-//
-//		         // Clear any prefilled input and type the desired category
-//		         categoryDropdown.clear();
-//		         categoryDropdown.sendKeys(category1);
-//
-//		         Thread.sleep(1000); // Wait for the options to load
-//
-//		         boolean matched1 = false;
-//
-//		         // Retry loop in case of stale elements
-//		         for (int attempt = 0; attempt < 3 && !matched1; attempt++) {
-//		             try {
-//		                 wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("div.ng-option")));
-//		                 List<WebElement> options1 = driver.findElements(By.cssSelector("div.ng-option"));
-//
-//		                 System.out.println("Dropdown options:");
-//		                 for (WebElement option1 : options1) {
-//		                     String text = option1.getText().trim();
-//		                     System.out.println("➡️ Option: " + text);
-//
-//		                     if (text.equalsIgnoreCase(category1)) {
-//		                         wait.until(ExpectedConditions.elementToBeClickable(option1)).click();
-//		                         System.out.println("✅ Selected category: " + category1);
-//		                         matched1 = true;
-//		                         break;
-//		                     }
-//		                 }
-//		             } catch (StaleElementReferenceException e) {
-//		                 System.out.println("⚠️ Stale element, retrying... Attempt " + (attempt + 1));
-//		                 Thread.sleep(500);
-//		             }
-//		         }
-//
-//		         if (!matched) {
-//		             throw new RuntimeException("❌ No matching Category option found for: " + category1);
-//		         }
-
-		        
-		        	String campaignname1 = row.getCell(30).getStringCellValue();
-		        	WebElement campaignnamefield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[3]/div[2]/input")));
-		        	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[3]/div[2]/input")));
-		        	js.executeScript("arguments[0].click();", campaignnamefield1);
-		        	campaignnamefield1.clear();		    	   
-		        	campaignnamefield1.sendKeys(campaignname1);
-		        	campaignnamefield1.sendKeys(Keys.ENTER);
-		        	Thread.sleep(2000);
-		        	
-		        	
-		        	Thread.sleep(2000);
-		        	try{ wait.until(ExpectedConditions.invisibilityOfElementLocated(
-		        		    By.cssSelector("div.offcanvas-body[style*='padding: 0px']")));
-		        	}catch(Exception e) {}
-		        	
-		        	WebElement nextbutton0511 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span")));
 					try {
-		        	nextbutton0511.click();}
-					catch(Exception e) {
-						js.executeScript("arguments[0].click();", nextbutton0511);
+					    WebElement categoryInput1 = wait.until(ExpectedConditions.elementToBeClickable(
+					        By.xpath("//div[@class='ng-select-container' and .//div[contains(@class, 'ng-placeholder') and text()='Select Campaign Category']]//input[@aria-autocomplete='list']")
+					    ));
+
+					    js.executeScript("arguments[0].scrollIntoView(true);", categoryInput1);
+					    js.executeScript("arguments[0].focus();", categoryInput1);
+
+					    js.executeScript("arguments[0].click();", categoryInput1); 
+					    categoryInput1.clear();
+					    categoryInput1.sendKeys(category1);
+
+					    Thread.sleep(1500);  // Wait for dropdown options to appear
+
+					    List<WebElement> options1 = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
+					        By.cssSelector("div.ng-option")
+					    ));
+
+					    boolean matched1 = false;
+					    for (WebElement option1 : options1) {
+					        String text = option1.getText().trim();
+					        System.out.println("➡️ Option: " + text);
+					        if (text.equalsIgnoreCase(category1)) {
+					            js.executeScript("arguments[0].scrollIntoView(true);", option1);
+					            js.executeScript("arguments[0].focus();", option1);
+					            option1.click();
+					            matched1 = true;
+					            System.out.println("✅ Selected Category: " + text);
+					            break;
+					        }
+					    }
+
+					    if (!matched1) {
+					        throw new RuntimeException("❌ Category not found in dropdown: " + category1);
+					    }
+
+					} catch (Exception e) {
+					    System.out.println("❌ Exception while selecting category: " + e.getMessage());
+					    throw e;
 					}
+
+
+			         
+			         
+//			         
+//			         String category1 = row.getCell(29).getStringCellValue().trim();
+//			         System.out.println("Category from Excel: " + category1);
+	//
+//			         // Click on the dropdown container to open it
+//			         WebElement categoryDropdown = wait.until(ExpectedConditions.elementToBeClickable(
+//			             By.cssSelector("div[aria-haspopup='listbox'] input[aria-autocomplete='list']")
+//			         ));
+//			         js.executeScript("arguments[0].scrollIntoView(true);", categoryDropdown);
+//			         categoryDropdown.click();
+	//
+//			         // Clear any prefilled input and type the desired category
+//			         categoryDropdown.clear();
+//			         categoryDropdown.sendKeys(category1);
+	//
+//			         Thread.sleep(1000); // Wait for the options to load
+	//
+//			         boolean matched1 = false;
+	//
+//			         // Retry loop in case of stale elements
+//			         for (int attempt = 0; attempt < 3 && !matched1; attempt++) {
+//			             try {
+//			                 wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("div.ng-option")));
+//			                 List<WebElement> options1 = driver.findElements(By.cssSelector("div.ng-option"));
+	//
+//			                 System.out.println("Dropdown options:");
+//			                 for (WebElement option1 : options1) {
+//			                     String text = option1.getText().trim();
+//			                     System.out.println("➡️ Option: " + text);
+	//
+//			                     if (text.equalsIgnoreCase(category1)) {
+//			                         wait.until(ExpectedConditions.elementToBeClickable(option1)).click();
+//			                         System.out.println("✅ Selected category: " + category1);
+//			                         matched1 = true;
+//			                         break;
+//			                     }
+//			                 }
+//			             } catch (StaleElementReferenceException e) {
+//			                 System.out.println("⚠️ Stale element, retrying... Attempt " + (attempt + 1));
+//			                 Thread.sleep(500);
+//			             }
+//			         }
+	//
+//			         if (!matched) {
+//			             throw new RuntimeException("❌ No matching Category option found for: " + category1);
+//			         }
+
+			        
+					String campaignname1 = row.getCell(30).getStringCellValue();
+					WebElement campaignnamefield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[3]/div[2]/input")));
+					wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[3]/div[2]/input")));
+
+					js.executeScript("arguments[0].scrollIntoView(true);", campaignnamefield1);
+					js.executeScript("arguments[0].focus();", campaignnamefield1);
+
+					js.executeScript("arguments[0].click();", campaignnamefield1);
+					campaignnamefield1.clear();		    	   
+					campaignnamefield1.sendKeys(campaignname1);
+					campaignnamefield1.sendKeys(Keys.ENTER);
+					Thread.sleep(2000);
+
+					Thread.sleep(2000);
+					WebElement nextbutton0511 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span")));
+					js.executeScript("arguments[0].scrollIntoView(true);", nextbutton0511);
+					js.executeScript("arguments[0].focus();", nextbutton0511);
+					js.executeScript("arguments[0].click();", nextbutton0511); 
+
 					//js.executeScript("document.body.style.zoom='90%'");
 					Thread.sleep(2000);
-					//js.executeScript("document.body.style.zoom='40%'");
+
 					WebElement nextbutton061 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
-					try {
-						nextbutton061.click();}
-						catch(Exception e) {
-							js.executeScript("arguments[0].click();", nextbutton061);
-						}
+					js.executeScript("arguments[0].scrollIntoView(true);", nextbutton061);
+					js.executeScript("arguments[0].focus();", nextbutton061);
+					js.executeScript("arguments[0].click();", nextbutton061); 
 					Thread.sleep(2000);
+
 					String buytype2 = formatter.formatCellValue(row.getCell(31)).trim();
 					System.out.println("Buy Type from Excel: " + buytype2);
-
-					// First, click "Next" button multiple times to ensure dropdown is ready
+					
+					// Click "Next" button multiple times to ensure dropdown readiness
 					for (int i = 0; i < 2; i++) {
 					    try {
 					        WebElement nextBtn1 = wait.until(ExpectedConditions.elementToBeClickable(
 					            By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
+					        js.executeScript("arguments[0].scrollIntoView(true);", nextBtn1);
+					        js.executeScript("arguments[0].focus();", nextBtn1);
 					        js.executeScript("arguments[0].click();", nextBtn1);
+					        Thread.sleep(2000);
 					        Thread.sleep(1000);
 					        System.out.println("✅ Clicked 'Next' button - attempt " + (i + 1));
 					    } catch (Exception e) {
 					        System.out.println("⚠️ Could not click 'Next' button on attempt " + (i + 1) + ": " + e.getMessage());
 					    }
 					}
-					
-					// Now open the Buy Type dropdown
+					Thread.sleep(2000);
+					// Open Buy Type dropdown
 					WebElement dropdown1 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.ng-select-container")));
 					js.executeScript("arguments[0].scrollIntoView(true);", dropdown1);
-					js.executeScript("arguments[0].click();", dropdown1); // Only click — no typing
+				//	js.executeScript("arguments[0].focus();", dropdown1);
+					dropdown1.click();
 					System.out.println("🟡 Dropdown clicked, waiting for options...");
-
+					Thread.sleep(2000);
 					// Wait for options to appear
-					wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("div.ng-option")));
-
+					//wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("div.ng-option")));
+					
 					List<WebElement> options2 = driver.findElements(By.cssSelector("div.ng-option"));
 					boolean matchedd2 = false;
 
@@ -926,7 +940,10 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					    System.out.println("➡️ Option: " + optionText);
 
 					    if (optionText.equalsIgnoreCase(buytype2)) {
-					        js.executeScript("arguments[0].click();", optioni2); // JS click to avoid intercept
+					      //  js.executeScript("arguments[0].scrollIntoView(true);", optioni2);
+					       // js.executeScript("arguments[0].focus();", optioni2);
+					        js.executeScript("arguments[0].click();", optioni2);
+					       // optioni2.click();
 					        System.out.println("✅ Selected Buy Type: " + buytype2);
 					        matchedd2 = true;
 					        break;
@@ -937,145 +954,133 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					    throw new RuntimeException("❌ Buy Type '" + buytype2 + "' not found in dropdown options.");
 					}
 
+					String quantity1 = row.getCell(32).getStringCellValue();
+					WebElement quantityfield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/input")));
+					wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/input")));
 
+					js.executeScript("arguments[0].scrollIntoView(true);", quantityfield1);
+					js.executeScript("arguments[0].focus();", quantityfield1);
+
+					js.executeScript("arguments[0].click();", quantityfield1);
+					quantityfield1.clear();		   	   
+					quantityfield1.sendKeys(quantity1);
+
+					String clientrate1 = row.getCell(33).getStringCellValue();
+					WebElement clientratefield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[3]/div[1]/input")));
+					wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[3]/div[1]/input")));
+
+					js.executeScript("arguments[0].scrollIntoView(true);", clientratefield1);
+					js.executeScript("arguments[0].focus();", clientratefield1);
+
+					js.executeScript("arguments[0].click();", clientratefield1);
+					clientratefield1.clear();		    	   
+					clientratefield1.sendKeys(clientrate1);
+
+					WebElement vendorratefield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[4]/div[1]/input")));
 					
-					
-		        	
-		        	String quantity1 = row.getCell(32).getStringCellValue();
-		        	WebElement quantityfield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/input")));
-		        	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[2]/div[2]/input")));
-		        	js.executeScript("arguments[0].click();", quantityfield1);
-		        	quantityfield1.clear();		   	   
-		        	quantityfield1.sendKeys(quantity1);
-		        	
-		        	
-		        	String clientrate1 = row.getCell(33).getStringCellValue();
-		        	WebElement clientratefield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[3]/div[1]/input")));
-		        	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[3]/div[1]/input")));
-		        	js.executeScript("arguments[0].click();", clientratefield1);
-		        	clientratefield1.clear();		    	   
-		        	clientratefield1.sendKeys(clientrate1);
-		        	
-		        	WebElement vendorratefield1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[4]/div[1]/input")));
-		        	vendorratefield1.click();
-		        	
-		        	WebElement yestoclientratechanges1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"vailidateRate\"]/div[3]/div/div/span[2]")));
-		        	yestoclientratechanges1.click();
-		        	
-//		        	String vendorrate = row.getCell(22).getStringCellValue();
-//		        	wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-campaign-new/div/div[2]/div[1]/div[4]/div[1]/input")));
-//		        	js.executeScript("arguments[0].click();", vendorratefield);
-//		        	vendorratefield.clear();		    	   
-//		        	vendorratefield.sendKeys(vendorrate);
-		        
-		        	WebElement nextbutton071 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
+					vendorratefield1.click();
+
+					WebElement yestoclientratechanges1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"vailidateRate\"]/div[3]/div/div/span[2]")));
+					js.executeScript("arguments[0].scrollIntoView(true);", yestoclientratechanges1);
+					js.executeScript("arguments[0].focus();", yestoclientratechanges1);
+					yestoclientratechanges1.click();
+
+					WebElement nextbutton071 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
+					js.executeScript("arguments[0].scrollIntoView(true);", nextbutton071);
+					js.executeScript("arguments[0].focus();", nextbutton071);
 					nextbutton071.click();
-					
+
 					WebElement nextbutton081 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
+					js.executeScript("arguments[0].scrollIntoView(true);", nextbutton081);
+					js.executeScript("arguments[0].focus();", nextbutton081);
 					nextbutton081.click();
-					
+
 					Thread.sleep(2000);
-					Thread.sleep(4000);
-					WebElement addCampaignButton21 = wait.until(ExpectedConditions.elementToBeClickable(
-						    By.xpath("//span[contains(text(),'ADD CAMPAIGN')]")
-						));
 
-						// Scroll into view in case it's not visible
-						js.executeScript("arguments[0].scrollIntoView(true);", addCampaignButton21);
-
-						// Click the button
-						addCampaignButton21.click();
-					
-					// 1️⃣ Read and clean the Excel value (preserves spaces)
+					// Clean vendor name with non-breaking space replaced
 					String vendorNameRaw1 = formatter.formatCellValue(row.getCell(35));
 					String vendorName1 = vendorNameRaw1.replace('\u00A0', ' ').trim();
 					System.out.println("🔍 Excel input: [" + vendorNameRaw1 + "]");
 					System.out.println("✅ Cleaned vendorName: [" + vendorName1 + "]");
 
-					// 2️⃣ Locate and open the dropdown input
+					// Locate and open the dropdown input
 					WebElement vendorInput1 = wait.until(ExpectedConditions.elementToBeClickable(
 					    By.cssSelector("div.ng-select-container div.ng-input input")
 					));
 					js.executeScript("arguments[0].scrollIntoView({block: 'center'});", vendorInput1);
 					vendorInput1.click();
 					Thread.sleep(300);
-					// 3️⃣ Forcefully set the full string with JS to preserve spaces
+
+					// Inject full string (with spaces) and dispatch events
 					js.executeScript(
-						    "arguments[0].value = arguments[1];" +
-						    "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));" +
-						    "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
-						    vendorInput1, vendorName1
-						);
-						System.out.println("✍️ Injected vendor name via J: [" + vendorName1 + "]");
+					    "arguments[0].value = arguments[1];" +
+					    "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));" +
+					    "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
+					    vendorInput1, vendorName1
+					);
+					vendorInput1.sendKeys(Keys.ENTER);
+					System.out.println("✍️ Injected vendor name via JS: [" + vendorName1 + "]");
 
-						int retryCount1 = 0;
-						int maxRetries1 = 5;
-						boolean selected1 = false;
+					int retryCount1 = 0;
+					int maxRetries1 = 5;
+					boolean selected1 = false;
 
-						while (retryCount1 < maxRetries1 && !selected1) {
-						    try {
-						        // Clear previous input text
-						        vendorInput1.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-						        vendorInput1.sendKeys(Keys.DELETE);
-						        Thread.sleep(300);
+					while (retryCount1 < maxRetries1 && !selected1) {
+					    try {
+					        // Clear previous input text
+					        vendorInput1.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+					        vendorInput1.sendKeys(Keys.DELETE);
+					        Thread.sleep(300);
 
-						        // Step 1: Type small prefix to trigger dropdown
-						        vendorInput1.sendKeys(vendorName1.substring(0, 2));
-						        Thread.sleep(800);
+					        // Step 1: Type small prefix to trigger dropdown
+					        vendorInput1.sendKeys(vendorName1.substring(0, 10));
+					        Thread.sleep(800);
 
-						        // Step 2: Wait for dropdown options to appear
-						        wait.until(ExpectedConditions.visibilityOfElementLocated(
-						            By.cssSelector(".ng-dropdown-panel .ng-option")
-						        ));
+					        // Step 2: Wait for dropdown options to appear
+					        wait.until(ExpectedConditions.visibilityOfElementLocated(
+					            By.cssSelector(".ng-dropdown-panel .ng-option")
+					        ));
 
-						        // Step 3: Select first option
-						        vendorInput1.sendKeys(Keys.ARROW_DOWN);
-						        Thread.sleep(300);
-						        vendorInput1.sendKeys(Keys.ENTER);
-						       
-						        Thread.sleep(500);
-						        // Step 4: Check if selection stuck
-						        WebElement selectedTextElem1 =new WebDriverWait(driver, Duration.ofSeconds(60))
-						        	    .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ng-select .ng-value span")));
-						        String selectedValue1 = selectedTextElem1.getText().trim();
+					        // Step 3: Select first option
+					        vendorInput1.sendKeys(Keys.ARROW_DOWN);
+					        Thread.sleep(300);
+					        vendorInput1.sendKeys(Keys.ENTER);
+					        Thread.sleep(500);
 
-						        if (selectedValue1.equalsIgnoreCase(vendorName1)) {
-						            selected1 = true;
-						            System.out.println("✅ Successfully selected vendor1: " + selectedValue1);
-						        } else {
-						            retryCount1++;
-						            System.out.println("🔁 Retry #" + retryCount1 + " — Vendor1 selection mismatch, retrying...");
-						        }
+					        // Step 4: Check if selection stuck
+					        WebElement selectedTextElem1 = driver.findElement(By.cssSelector("div.ng-select .ng-value span"));
+					        String selectedValue1 = selectedTextElem1.getText().trim();
 
-						    } catch (Exception e) {
-						        retryCount1++;
-						        System.out.println("⚠️ Exception in retry #" + retryCount1 + ": " + e.getMessage());
-						        Thread.sleep(500);
-						    }
-						}
+					        if (selectedValue1.equalsIgnoreCase(vendorName1)) {
+					            selected1 = true;
+					            System.out.println("✅ Successfully selected vendor1: " + selectedValue1);
+					        } else {
+					            retryCount1++;
+					            System.out.println("🔁 Retry #" + retryCount1 + " — Vendor1 selection mismatch, retrying...");
+					        }
 
-						if (!selected1) {
-						    System.out.println("❌ Vendor1 selection failed after " + maxRetries1 + " attempts.");
-						}
+					    } catch (Exception e) {
+					        retryCount1++;
+					        System.out.println("⚠️ Exception in retry #" + retryCount1 + ": " + e.getMessage());
+					        Thread.sleep(500);
+					    }
+					}
 
-						Thread.sleep(1000);
-
-					// Wait for the ADD CAMPAIGN button to be clickable
-					WebElement addCampaignButton78 = wait.until(ExpectedConditions.elementToBeClickable(
+					if (!selected1) {
+					    System.out.println("❌ Vendor1 selection failed after " + maxRetries1 + " attempts.");
+					}
+					Thread.sleep(2000);
+					// Wait for ADD CAMPAIGN button, scroll and click
+					WebElement addCampaignButton1 = wait.until(ExpectedConditions.elementToBeClickable(
 					    By.xpath("//span[contains(text(),'ADD CAMPAIGN')]")
 					));
-
-					// Scroll into view in case it's not visible
-					js.executeScript("arguments[0].scrollIntoView(true);", addCampaignButton78);
-
-					// Click the button
-					addCampaignButton78.click();
+					js.executeScript("arguments[0].scrollIntoView(true);", addCampaignButton1);
+					js.executeScript("arguments[0].focus();", addCampaignButton1);
+					addCampaignButton1.click();
 					System.out.println("✅ 'ADD CAMPAIGN' button clicked.");
-					
-					
 
-						  
-  Thread.sleep(10000);
+					Thread.sleep(10000);
+
     }
 	
     }
@@ -1083,174 +1088,139 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 @And("User creates estimate with outputs")
 public void user_createsestimate_withoutputs() throws InterruptedException, FileNotFoundException, IOException {
 	String excelFilePath = "DigitalproVBF.xlsx";  // Path to your Excel file
-    FileInputStream file = new FileInputStream(new File(excelFilePath));
-    try (Workbook workbook = new XSSFWorkbook(file)) {
-		Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
-		Row row = sheet.getRow(1);
-	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-    JavascriptExecutor js = (JavascriptExecutor) driver;
-	System.out.println("Navigating to Client docs page");
-	By backdropSelector = By.cssSelector("ngb-offcanvas-backdrop.offcanvas-backdrop.fade.show");
-
-	try {
-	    // Wait until the backdrop is invisible, but only if it is present
-	    if (driver.findElements(backdropSelector).size() > 0) {
-	        wait.until(ExpectedConditions.invisibilityOfElementLocated(backdropSelector));
-	    }
-	} catch (TimeoutException e) {
-	    // Timeout happened — the element didn't become invisible in time
-	    // You can log this or just ignore and continue
-	    System.out.println("Backdrop still visible after waiting, continuing...");
-	}
-	WebElement clientdocsButton = wait.until(ExpectedConditions.elementToBeClickable(
-	         By.cssSelector("body > app-root > div > div > div > main > div > app-d-dashboard > div > div:nth-child(2) > div > div > div:nth-child(3)")));
-	clientdocsButton.click();
-	
-	System.out.println("Navigated to client docs page and Estimate Creation process is started");
-	 WebElement createEstimateButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src*='butt-create-estimate.svg']")));
-	 js.executeScript("arguments[0].scrollIntoView(true);", createEstimateButton);
-	 createEstimateButton.click();
-	 
-	 WebElement selectallestimateButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"planning-est\"]/div/table/thead/tr/th[1]/input")));
-	 js.executeScript("arguments[0].scrollIntoView(true);", selectallestimateButton);
-	 selectallestimateButton.click();
-	 
-	  js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-	    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/AdditionalLineItems.svg']")));
-	    WebElement imageadl = driver.findElement(By.cssSelector("img[src='./assets/img/svg/AdditionalLineItems.svg']"));
-	    imageadl.click();
-	      Thread.sleep(2000);
-	      String itemtype = row.getCell(36).toString();
-	      wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[3]/div/table/tr/td[2]/ng-select/div/div/div[2]/input")));
-		  WebElement itemtypes = driver.findElement(By.xpath("//*[@id=\"selection1\"]/div[3]/div/table/tr/td[2]/ng-select/div/div/div[2]/input"));
-		  itemtypes.sendKeys(Keys.ENTER);
-		  itemtypes.sendKeys(itemtype);
-		  itemtypes.sendKeys(Keys.ENTER);
-		  itemtypes.sendKeys(Keys.ENTER);
-		  String description = row.getCell(37).toString();
-		  wait.until(ExpectedConditions.elementToBeClickable(By.name("adddescription")));
-		  WebElement descriptions = driver.findElement(By.name("adddescription"));
-		  descriptions.clear();
-		  descriptions.sendKeys(description);
-		  descriptions.sendKeys(Keys.ENTER);
-		  String amount = row.getCell(38).toString();
-		  wait.until(ExpectedConditions.elementToBeClickable(By.name("lineitemAmount")));
-		  WebElement amounts = driver.findElement(By.name("lineitemAmount"));
-		  amounts.sendKeys(amount);
-		  amounts.sendKeys(Keys.ENTER);
-		  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#selection1 > div.row.ng-star-inserted > div > table > tr > td:nth-child(8) > span")));
-		  driver.findElement(By.cssSelector("#selection1 > div.row.ng-star-inserted > div > table > tr > td:nth-child(8) > span")).click();
-		  System.out.println("Added additional line item");
-		  
-		  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-		  driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
-		  Thread.sleep(5000);   
-		   
-		  WebElement estimatedatecalendarButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='billdate']/div/div/mat-datepicker-toggle/button/span[3]")));
-		  estimatedatecalendarButton.click();
-		  
-	        String jobDateFromExcelday = row.getCell(39).toString().trim().split("\\.")[0]; // e.g., "12/06/2025"
-	        String estimatedatecalendarButtonmonthFromExcel = row.getCell(40).toString().trim();
-	        String estimatedatecalendarButtonyearFromExcel = row.getCell(41).toString().trim(); 
-	        selectDateFromCalendar(driver, wait, jobDateFromExcelday, estimatedatecalendarButtonmonthFromExcel, estimatedatecalendarButtonyearFromExcel);
-		  //System.out.println("📅 Date to click: " + estimatedatecalendarButtondateFromExcel);
-		  WebDriverWait dateWait = new WebDriverWait(driver, Duration.ofSeconds(60));
-//		  WebElement dateElement = dateWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(@class, 'mat-calendar-body-cell-content') and normalize-space(text())='" + estimatedatecalendarButtondateFromExcel + "']")));
-//		  dateElement.click();
-//		  System.out.println("✅ Clicked date: " + estimatedatecalendarButtondateFromExcel);
+	 FileInputStream file = new FileInputStream(new File(excelFilePath));
+	    try (Workbook workbook = new XSSFWorkbook(file)) {
+			Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
+			Row row = sheet.getRow(1);
+		 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(120));
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+	    JavascriptExecutor js = (JavascriptExecutor) driver;
+		System.out.println("Navigating to Client docs page");
+		WebElement clientdocsButton = wait.until(ExpectedConditions.elementToBeClickable(
+		         By.cssSelector("body > app-root > div > div > div > main > div > app-d-dashboard > div > div:nth-child(2) > div > div > div:nth-child(3)")));
+		js.executeScript("arguments[0].scrollIntoView(true);", clientdocsButton); // Scrolls to the element
+		js.executeScript("arguments[0].focus();", clientdocsButton);              // Focuses the element
+		js.executeScript("arguments[0].click();", clientdocsButton); 
 		
-		  
-
-			String jobperiodFromExcelday2 = row.getCell(11).toString().trim().split("\\.")[0]; // e.g., "12/06/2025"
-		  String etaxtemplate = row.getCell(42).toString();
-		  WebElement estimatetaxtemplate = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[1]/div[2]/ng-select/div/div/div[3]/input")));
-		  estimatetaxtemplate.sendKeys(etaxtemplate);
-		  estimatetaxtemplate.sendKeys(Keys.ENTER);
+		System.out.println("Navigated to client docs page and Estimate Creation process is started");
+		 WebElement createEstimateButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src*='butt-create-estimate.svg']")));
+		// js.executeScript("arguments[0].scrollIntoView(true);", createEstimateButton);
+		 js.executeScript("arguments[0].scrollIntoView(true);", createEstimateButton); // Scrolls to the element
+			js.executeScript("arguments[0].focus();", createEstimateButton);              // Focuses the element
+			js.executeScript("arguments[0].click();", createEstimateButton);
+		 
+		 WebElement selectallestimateButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"planning-est\"]/div/table/thead/tr/th[1]/input")));
+		 js.executeScript("arguments[0].scrollIntoView(true);", selectallestimateButton); // Scrolls to the element
+		 js.executeScript("arguments[0].focus();", selectallestimateButton);              // Focuses the element
+		 js.executeScript("arguments[0].click();", selectallestimateButton); 
+		 
 		  js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-		  String printformat = row.getCell(43).toString();
-		  WebElement printformatelement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[6]/div[1]/ng-select/div/div/div[3]/input")));
-		  printformatelement.sendKeys(printformat);
-		  printformatelement.sendKeys(Keys.ENTER);
-		  
-		  String documentname = row.getCell(44).toString();
-		  WebElement documentnameelement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[6]/div[2]/input")));
-		  documentnameelement.sendKeys(documentname);
-		  documentnameelement.sendKeys(Keys.ENTER);
-		  
-		  wait.until(ExpectedConditions.invisibilityOfElementLocated(
-				    By.cssSelector(".cdk-overlay-backdrop")));
-		  
-		  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-		  driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
-		  
-		  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-		  driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
-		  
-		  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-		  driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
-		  
-		  System.out.println("Estimate is Created, Downloading Outputs for unapproved estimate");		
-		  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
-		  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
-       	  Thread.sleep(2000);  // Let modal appear
-			 wait.until(ExpectedConditions.elementToBeClickable(
-			         By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
-			 Thread.sleep(5000); 
-			 System.out.println("PDF download should be complete now.");
-			 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-	         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
-			 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
-			 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
-			 Thread.sleep(2000);  // Let modal appear
-			 WebElement radioBtn = driver.findElement(By.cssSelector("input[type='radio'][value='Excel'][name='DocumentType']"));
-			 radioBtn.click();
-			 wait.until(ExpectedConditions.elementToBeClickable(
-			         By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
-			 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-	         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
-			 Thread.sleep(2000);
-			 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
-			 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
-			 Thread.sleep(2000);
-			 WebElement billformatdropdown = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".ng-select-container")));
-			 billformatdropdown.click();
-			 WebElement input = wait.until(ExpectedConditions.elementToBeClickable( By.cssSelector(".ng-input input")));
-	         input.clear();
-	         input.sendKeys("Old Format");
-	         WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'ng-option') and normalize-space()='Old Format']")));
-	         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
-	         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
-	         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-	         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
-	         
-	         System.out.println("Approving Estimate");
-	         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
-	         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-approve.svg']"))).click();
-	         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-approval\"]/div[4]/div/div/span[1]"))).click();
-	         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-approval\"]/div[5]/div/div/span[2]"))).click();
-	         
-	         System.out.println("Estimate is Approved, Downloading Outputs for approved estimate");		
-	         By iconSelector = By.cssSelector("img[src='./assets/img/svg/action_icon.svg']");
-	      WebElement actionbuttonIcon = null;
-	      int attempts = 0;
-	      while (attempts < 2) {
-	          try {
-	              actionbuttonIcon = wait.until(ExpectedConditions.presenceOfElementLocated(iconSelector));
-	              wait.until(ExpectedConditions.elementToBeClickable(actionbuttonIcon));
-	              actionbuttonIcon.click(); // This is where it was failing
-	              break; // success
-	          } catch (StaleElementReferenceException e) {
-	              attempts++;
-	              if (attempts == 2) {
-	                  throw new RuntimeException("StaleElementReferenceException even after retry");
-	              }
-	          }
-	      }
+		    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/AdditionalLineItems.svg']")));
+		    WebElement imageadl = driver.findElement(By.cssSelector("img[src='./assets/img/svg/AdditionalLineItems.svg']"));
+		    js.executeScript("arguments[0].scrollIntoView(true);", imageadl); // Scrolls to the element
+			 js.executeScript("arguments[0].focus();", imageadl);              // Focuses the element
+			 js.executeScript("arguments[0].click();", imageadl); 
+		      Thread.sleep(2000);
+		      String itemtype = row.getCell(36).toString();
+		      wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[3]/div/table/tr/td[2]/ng-select/div/div/div[2]/input")));
+			  WebElement itemtypes = driver.findElement(By.xpath("//*[@id=\"selection1\"]/div[3]/div/table/tr/td[2]/ng-select/div/div/div[2]/input"));
+			    js.executeScript("arguments[0].scrollIntoView(true);", itemtypes); // Scrolls to the element
+				 js.executeScript("arguments[0].focus();", itemtypes);              // Focuses the element
+				 js.executeScript("arguments[0].click();", itemtypes); 
+			  itemtypes.sendKeys(Keys.ENTER);
+			  itemtypes.sendKeys(itemtype);
+			  itemtypes.sendKeys(Keys.ENTER);
+			  itemtypes.sendKeys(Keys.ENTER);
+			  String description = row.getCell(37).toString();
+			  wait.until(ExpectedConditions.elementToBeClickable(By.name("adddescription")));
+			  WebElement descriptions = driver.findElement(By.name("adddescription"));
+			  js.executeScript("arguments[0].scrollIntoView(true);", descriptions); // Scrolls to the element
+				 js.executeScript("arguments[0].focus();", descriptions);              // Focuses the element
+				 js.executeScript("arguments[0].click();", descriptions); 
+			  descriptions.clear();
+			  descriptions.sendKeys(description);
+			  descriptions.sendKeys(Keys.ENTER);
+			  String amount = row.getCell(38).toString();
+			  wait.until(ExpectedConditions.elementToBeClickable(By.name("lineitemAmount")));
+			  WebElement amounts = driver.findElement(By.name("lineitemAmount"));
+			  js.executeScript("arguments[0].scrollIntoView(true);", amounts); // Scrolls to the element
+				 js.executeScript("arguments[0].focus();", amounts);              // Focuses the element
+				 js.executeScript("arguments[0].click();", amounts); 
+			  amounts.sendKeys(amount);
+			  amounts.sendKeys(Keys.ENTER);
+			//  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#selection1 > div.row.ng-star-inserted > div > table > tr > td:nth-child(8) > span")));
+			  WebElement row1 = driver.findElement(By.cssSelector("#selection1 > div.row.ng-star-inserted > div > table > tr > td:nth-child(8) > span"));
+			 // JavascriptExecutor js = (JavascriptExecutor) driver;
+			  js.executeScript("arguments[0].scrollIntoView(true);", row1);
+			  js.executeScript("arguments[0].focus();", row1); // Optional
+			  js.executeScript("arguments[0].click();", row1);
+
+			  System.out.println("Added additional line item");
+			  
+			  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
+			  driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
+			  Thread.sleep(5000);   
+			   
+			  WebElement estimatedatecalendarButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='billdate']/div/div/mat-datepicker-toggle/button/span[3]")));
+			  js.executeScript("arguments[0].scrollIntoView(true);", estimatedatecalendarButton); // Scrolls to the element
+				 js.executeScript("arguments[0].focus();", estimatedatecalendarButton);              // Focuses the element
+				 js.executeScript("arguments[0].click();", estimatedatecalendarButton); 
+			  
+		        String jobDateFromExcelday = row.getCell(39).toString().trim().split("\\.")[0]; // e.g., "12/06/2025"
+		        String estimatedatecalendarButtonmonthFromExcel = row.getCell(40).toString().trim();
+		        String estimatedatecalendarButtonyearFromExcel = row.getCell(41).toString().trim(); 
+		        selectDateFromCalendar(driver, wait, jobDateFromExcelday, estimatedatecalendarButtonmonthFromExcel, estimatedatecalendarButtonyearFromExcel);
+			  //System.out.println("📅 Date to click: " + estimatedatecalendarButtondateFromExcel);
+			  WebDriverWait dateWait = new WebDriverWait(driver, Duration.ofSeconds(120));
+//			  WebElement dateElement = dateWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(@class, 'mat-calendar-body-cell-content') and normalize-space(text())='" + estimatedatecalendarButtondateFromExcel + "']")));
+//			  dateElement.click();
+//			  System.out.println("✅ Clicked date: " + estimatedatecalendarButtondateFromExcel);
+			
+			  
+
+				String jobperiodFromExcelday2 = row.getCell(11).toString().trim().split("\\.")[0]; // e.g., "12/06/2025"
+			  String etaxtemplate = row.getCell(42).toString();
+			  WebElement estimatetaxtemplate = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[1]/div[2]/ng-select/div/div/div[3]/input")));
+			  js.executeScript("arguments[0].scrollIntoView(true);", estimatetaxtemplate); // Scrolls to the element
+				js.executeScript("arguments[0].focus();", estimatetaxtemplate);              // Focuses the element
+				//js.executeScript("arguments[0].click();", estimatetaxtemplate);
+			  estimatetaxtemplate.sendKeys(etaxtemplate);
+			  estimatetaxtemplate.sendKeys(Keys.ENTER);
+			  js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+			  String printformat = row.getCell(43).toString();
+			  WebElement printformatelement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[6]/div[1]/ng-select/div/div/div[3]/input")));
+			  js.executeScript("arguments[0].scrollIntoView(true);", printformatelement); // Scrolls to the element
+				js.executeScript("arguments[0].focus();", printformatelement);  
+			  printformatelement.sendKeys(printformat);
+			  printformatelement.sendKeys(Keys.ENTER);
+			  
+			  String documentname = row.getCell(44).toString();
+			  WebElement documentnameelement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div[6]/div[2]/input")));
+			  js.executeScript("arguments[0].scrollIntoView(true);", documentnameelement); // Scrolls to the element
+				js.executeScript("arguments[0].focus();", documentnameelement);  
+			  documentnameelement.sendKeys(documentname);
+			  documentnameelement.sendKeys(Keys.ENTER);
+			  
+			  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
+			  driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
+			  
+			  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
+			  driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
+			  
+			  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
+			  driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-estimate > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
+			  
+			  System.out.println("Estimate is Created, Downloading Outputs for unapproved estimate");		
+			  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
 			  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
 	       	  Thread.sleep(2000);  // Let modal appear
-				 wait.until(ExpectedConditions.elementToBeClickable(
-				         By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
+	       	WebElement pint = wait.until(ExpectedConditions.elementToBeClickable(
+	       		    By.xpath("//span[@class='submit-button' and text()='Print']")));
+
+	       		//JavascriptExecutor js = (JavascriptExecutor) driver;
+	       		js.executeScript("arguments[0].scrollIntoView(true);", pint);
+	       		js.executeScript("arguments[0].focus();", pint); // Optional
+	       		js.executeScript("arguments[0].click();", pint);
 				 Thread.sleep(5000); 
 				 System.out.println("PDF download should be complete now.");
 				 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
@@ -1258,8 +1228,10 @@ public void user_createsestimate_withoutputs() throws InterruptedException, File
 				 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
 				 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
 				 Thread.sleep(2000);  // Let modal appear
-				 WebElement radioBtn1 = driver.findElement(By.cssSelector("input[type='radio'][value='Excel'][name='DocumentType']"));
-				 radioBtn1.click();
+				 WebElement radioBtn = driver.findElement(By.cssSelector("input[type='radio'][value='Excel'][name='DocumentType']"));
+				 js.executeScript("arguments[0].scrollIntoView(true);", radioBtn); // Scrolls to the element
+				 js.executeScript("arguments[0].focus();", radioBtn);              // Focuses the element
+				 js.executeScript("arguments[0].click();", radioBtn); 
 				 wait.until(ExpectedConditions.elementToBeClickable(
 				         By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
 				 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
@@ -1268,16 +1240,94 @@ public void user_createsestimate_withoutputs() throws InterruptedException, File
 				 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
 				 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
 				 Thread.sleep(2000);
-				 WebElement billformatdropdown1 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".ng-select-container")));
-				 billformatdropdown1.click();
-				 WebElement input1 = wait.until(ExpectedConditions.elementToBeClickable( By.cssSelector(".ng-input input")));
-		         input1.clear();
-		         input1.sendKeys("Old Format");
-		         WebElement option1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'ng-option') and normalize-space()='Old Format']")));
-		         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option1);
+				 WebElement billformatdropdown = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".ng-select-container")));
+				 billformatdropdown.click();
+				 WebElement input = wait.until(ExpectedConditions.elementToBeClickable( By.cssSelector(".ng-input input")));
+		        
+		         js.executeScript("arguments[0].scrollIntoView(true);", input); // Scrolls to the element
+		         js.executeScript("arguments[0].focus();", input);  
+		         input.clear();// Focuses the element
+		        // js.executeScript("arguments[0].click();", element); 
+		         input.sendKeys("Old Format");
+		         WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'ng-option') and normalize-space()='Old Format']")));
+		         js.executeScript("arguments[0].scrollIntoView(true);", option); // Scrolls to the element
+		         js.executeScript("arguments[0].focus();", option);              // Focuses the element
+		         
+		         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
 		         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
 		         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
 		         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
+		         
+		         System.out.println("Approving Estimate");
+		         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
+		         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-approve.svg']"))).click();
+		         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-approval\"]/div[4]/div/div/span[1]"))).click();
+		         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-approval\"]/div[5]/div/div/span[2]"))).click();
+		         
+		         System.out.println("Estimate is Approved, Downloading Outputs for approved estimate");		
+		         By iconSelector = By.cssSelector("img[src='./assets/img/svg/action_icon.svg']");
+		      WebElement actionbuttonIcon = null;
+		      int attempts = 0;
+		      while (attempts < 2) {
+		          try {
+		              actionbuttonIcon = wait.until(ExpectedConditions.presenceOfElementLocated(iconSelector));
+		              wait.until(ExpectedConditions.elementToBeClickable(actionbuttonIcon));
+		              actionbuttonIcon.click(); // This is where it was failing
+		              break; // success
+		          } catch (StaleElementReferenceException e) {
+		              attempts++;
+		              if (attempts == 2) {
+		                  throw new RuntimeException("StaleElementReferenceException even after retry");
+		              }
+		          }
+		      }
+				  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
+		       	  Thread.sleep(2000);  // Let modal appear
+		       	WebElement pint1 = wait.until(ExpectedConditions.elementToBeClickable(
+		       		    By.xpath("//span[@class='submit-button' and text()='Print']")));
+
+		       		//JavascriptExecutor js = (JavascriptExecutor) driver;
+		       		js.executeScript("arguments[0].scrollIntoView(true);", pint1);
+		       		js.executeScript("arguments[0].focus();", pint1); // Optional but sometimes helpful
+		       		js.executeScript("arguments[0].click();", pint1);
+					 Thread.sleep(5000); 
+					 System.out.println("PDF download should be complete now.");
+					 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
+			         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
+					 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
+					 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
+					 Thread.sleep(2000);  // Let modal appear
+					 WebElement radioBtn1 = driver.findElement(By.cssSelector("input[type='radio'][value='Excel'][name='DocumentType']"));
+					
+					 js.executeScript("arguments[0].scrollIntoView(true);", radioBtn1); // Scrolls to the element
+					 js.executeScript("arguments[0].focus();", radioBtn1);              // Focuses the element
+					 js.executeScript("arguments[0].click();", radioBtn1); //radioBtn1.click();
+					 wait.until(ExpectedConditions.elementToBeClickable(
+					         By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
+					 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
+			         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
+					 Thread.sleep(2000);
+					 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
+					 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
+					 Thread.sleep(2000);
+					 WebElement billformatdropdown1 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".ng-select-container")));
+					 js.executeScript("arguments[0].scrollIntoView(true);", billformatdropdown1); // Scrolls to the element
+					 js.executeScript("arguments[0].focus();", billformatdropdown1);              // Focuses the element
+					 js.executeScript("arguments[0].click();", billformatdropdown1); 
+					
+					 WebElement input1 = wait.until(ExpectedConditions.elementToBeClickable( By.cssSelector(".ng-input input")));
+			         
+			         js.executeScript("arguments[0].scrollIntoView(true);", input1); // Scrolls to the element
+			         js.executeScript("arguments[0].focus();", input1);              // Focuses the element
+			         js.executeScript("arguments[0].click();", input1); 
+			         input1.clear();
+			         input1.sendKeys("Old Format");
+			         WebElement option1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'ng-option') and normalize-space()='Old Format']")));
+			         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option1);
+			         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
+			         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
+			         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
+		       
 	       
     }
 }
@@ -1285,160 +1335,106 @@ public void user_createsestimate_withoutputs() throws InterruptedException, File
 @And("User creates po with outputs")
 public void user_createspo_withoutputs() throws InterruptedException, FileNotFoundException, IOException {
 	String excelFilePath = "DigitalproVBF.xlsx";  // Path to your Excel file
-    FileInputStream file = new FileInputStream(new File(excelFilePath));
-    try (Workbook workbook = new XSSFWorkbook(file)) {
-		Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
-		Row row = sheet.getRow(1);
-	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-    JavascriptExecutor js = (JavascriptExecutor) driver;
-	System.out.println("Navigating to Vendor docs page");
-	wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
-	js.executeScript("window.scrollTo(0, 0)");
-	Actions actions = new Actions(driver);
-	for (int i = 0; i < 5; i++) {
-	    actions.sendKeys(Keys.PAGE_UP).perform();
-	}
-	  
-	WebElement vendordocsButton = wait.until(ExpectedConditions.elementToBeClickable(
-	         By.cssSelector("body > app-root > div > div > div > main > div > app-d-dashboard > div > div:nth-child(2) > div > div > div:nth-child(4)")));
-	vendordocsButton.click();	
-	
-	
-	System.out.println("Navigated to vendor docs page and PO Creation process is started");
-	 WebElement createPOButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src*='butt-issue-po.svg']")));
-	 js.executeScript("arguments[0].scrollIntoView(true);", createPOButton);
-	 createPOButton.click();
-	 for (int i = 0; i < 5; i++) {
+	 FileInputStream file = new FileInputStream(new File(excelFilePath));
+	    try (Workbook workbook = new XSSFWorkbook(file)) {
+			Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
+			Row row = sheet.getRow(1);
+		 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(120));
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+	    JavascriptExecutor js = (JavascriptExecutor) driver;
+		System.out.println("Navigating to Vendor docs page");
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
+	    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
+		js.executeScript("window.scrollTo(0, 0)");
+		Actions actions = new Actions(driver);
+		for (int i = 0; i < 5; i++) {
 		    actions.sendKeys(Keys.PAGE_UP).perform();
 		}
-		js.executeScript("window.scrollTo(0, 0)");
-		Thread.sleep(2000);
-	    DataFormatter formatter1 = new DataFormatter();
-	 String vendorNameRaw1 = formatter1.formatCellValue(row.getCell(24));
-		String vendorName1 = vendorNameRaw1.replace('\u00A0', ' ').trim();
-		System.out.println("🔍 Excel input: [" + vendorNameRaw1 + "]");
-		System.out.println("✅ Cleaned vendorName: [" + vendorName1 + "]");
-		Thread.sleep(2000);
-		// 2️⃣ Locate and open the dropdown input
-		WebElement vendorInput = wait.until(ExpectedConditions.elementToBeClickable(
-		    By.cssSelector("div.ng-select-container div.ng-input input")
-		));
-		js.executeScript("arguments[0].scrollIntoView(true);", vendorInput);
-		vendorInput.click();
-		vendorInput.clear();
-
-		// 3️⃣ Forcefully set the full string with JS to preserve spaces
-		js.executeScript(
-		    "arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input'));",
-		    vendorInput, vendorName1
-		);
-
-		// 4️⃣ Log the value after JS injection for confirmation
-		String afterJS = vendorInput.getAttribute("value");
-		System.out.println("✍️ After JS, input shows: [" + afterJS + "]");
-
-		// 5️⃣ Pause briefly to allow dropdown options to populate
-		Thread.sleep(1000);
-
-		// 6️⃣ Press ENTER to select the first matching item
-		//vendorInput.sendKeys(Keys.ENTER);
-		vendorInput.sendKeys(Keys.ENTER);
-//		WebElement firstOption = wait.until(ExpectedConditions.visibilityOfElementLocated(
-//			    By.cssSelector(".ng-dropdown-panel .ng-option")
-//			));
-//			firstOption.click();
-		System.out.println("✅ Sent ENTER — hopefully selected: [" + afterJS + "]");
+		  
+		WebElement vendordocsButton = wait.until(ExpectedConditions.elementToBeClickable(
+		         By.cssSelector("body > app-root > div > div > div > main > div > app-d-dashboard > div > div:nth-child(2) > div > div > div:nth-child(4)")));
+		vendordocsButton.click();	
 		
-		WebElement selectallpo = wait.until(ExpectedConditions.elementToBeClickable(
-			    By.xpath("//*[@id=\"planning\"]/div/table/thead/tr/th[1]/input")
+		
+		System.out.println("Navigated to vendor docs page and PO Creation process is started");
+		 WebElement createPOButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src*='butt-issue-po.svg']")));
+		 js.executeScript("arguments[0].scrollIntoView(true);", createPOButton);
+		 createPOButton.click();
+		 for (int i = 0; i < 5; i++) {
+			    actions.sendKeys(Keys.PAGE_UP).perform();
+			}
+			js.executeScript("window.scrollTo(0, 0)");
+			Thread.sleep(2000);
+		    DataFormatter formatter1 = new DataFormatter();
+		 String vendorNameRaw1 = formatter1.formatCellValue(row.getCell(24));
+			String vendorName1 = vendorNameRaw1.replace('\u00A0', ' ').trim();
+			System.out.println("🔍 Excel input: [" + vendorNameRaw1 + "]");
+			System.out.println("✅ Cleaned vendorName: [" + vendorName1 + "]");
+
+			// 2️⃣ Locate and open the dropdown input
+			WebElement vendorInput = wait.until(ExpectedConditions.elementToBeClickable(
+			    By.cssSelector("div.ng-select-container div.ng-input input")
 			));
-		selectallpo.click();
-		 String poamount = row.getCell(45).toString();
-		  wait.until(ExpectedConditions.elementToBeClickable(By.name("rate")));
-		  WebElement poamounts = driver.findElement(By.name("rate"));
-		  poamounts.clear();
-		  poamounts.sendKeys(poamount);
-		  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-digital-issue-po > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted"))).click();
-		  String etaxtemplate = row.getCell(46).toString();
-		  WebElement estimatetaxtemplate = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div/div[1]/ng-select/div/div/div[3]/input")));
-		  estimatetaxtemplate.sendKeys(etaxtemplate);
-		  estimatetaxtemplate.sendKeys(Keys.ENTER);
-		  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-digital-issue-po > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted"))).click();
-		  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-digital-issue-po > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted"))).click();
-		  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-digital-issue-po > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted"))).click();
-		  System.out.println("PO created, Downloading outputs for unapproved status now");
-		  By iconSelector1 = By.cssSelector("img[src='./assets/img/svg/action_icon.svg']");
-	      WebElement actionbuttonIcon1 = null;
-	      int attempts1 = 0;
-	      while (attempts1 < 2) {
-	          try {
-	              actionbuttonIcon1 = wait.until(ExpectedConditions.presenceOfElementLocated(iconSelector1));
-	              wait.until(ExpectedConditions.elementToBeClickable(actionbuttonIcon1));
-	              actionbuttonIcon1.click(); // This is where it was failing
-	              break; // success
-	          } catch (StaleElementReferenceException e) {
-	              attempts1++;
-	              if (attempts1 == 2) {
-	                  throw new RuntimeException("StaleElementReferenceException even after retry");
-	              }
-	          }
-	      }
-		  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
-       	  Thread.sleep(2000);  // Let modal appear
-			 wait.until(ExpectedConditions.elementToBeClickable(
-			         By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
-			 Thread.sleep(5000); 
-			 System.out.println("PDF download should be complete now.");
-			 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-	         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
-			 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
-			 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
-			 Thread.sleep(2000);  // Let modal appear
-			 WebElement radioBtn = driver.findElement(By.cssSelector("input[type='radio'][value='Excel'][name='DocumentType']"));
-			 radioBtn.click();
-			 wait.until(ExpectedConditions.elementToBeClickable(
-			         By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
-			 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-	         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
-			 Thread.sleep(2000);
-			 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
-			 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
-			 Thread.sleep(2000);
-			 WebElement billformatdropdown = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".ng-select-container")));
-			 billformatdropdown.click();
-			 WebElement input = wait.until(ExpectedConditions.elementToBeClickable( By.cssSelector(".ng-input input")));
-	         input.clear();
-	         input.sendKeys("Old Format");
-	         WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'ng-option') and normalize-space()='Old Format']")));
-	         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
-	         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
-	         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-	         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
-	         System.out.println("Approving Estimate");
-	         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
-	         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-approve.svg']"))).click();
-	         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-approval\"]/div[3]/div/div/table/tr/td[1]/span"))).click();
-	         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-approval\"]/div[5]/div/div/span[2]"))).click();
-	         
-	         System.out.println("PO is Approved, Downloading Outputs for approved PO");		
-	         By iconSelector = By.cssSelector("img[src='./assets/img/svg/action_icon.svg']");
-	      WebElement actionbuttonIcon = null;
-	      int attempts = 0;
-	      while (attempts < 2) {
-	          try {
-	              actionbuttonIcon = wait.until(ExpectedConditions.presenceOfElementLocated(iconSelector));
-	              wait.until(ExpectedConditions.elementToBeClickable(actionbuttonIcon));
-	              actionbuttonIcon.click(); // This is where it was failing
-	              break; // success
-	          } catch (StaleElementReferenceException e) {
-	              attempts++;
-	              if (attempts == 2) {
-	                  throw new RuntimeException("StaleElementReferenceException even after retry");
-	              }
-	          }
-	      }
+			js.executeScript("arguments[0].scrollIntoView(true);", vendorInput);
+			vendorInput.click();
+			vendorInput.clear();
+
+			// 3️⃣ Forcefully set the full string with JS to preserve spaces
+			js.executeScript(
+			    "arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input'));",
+			    vendorInput, vendorName1
+			);
+
+			// 4️⃣ Log the value after JS injection for confirmation
+			String afterJS = vendorInput.getAttribute("value");
+			System.out.println("✍️ After JS, input shows: [" + afterJS + "]");
+
+			// 5️⃣ Pause briefly to allow dropdown options to populate
+			Thread.sleep(1000);
+
+			// 6️⃣ Press ENTER to select the first matching item
+			vendorInput.sendKeys(Keys.ENTER);
+			//vendorInput.sendKeys(Keys.ENTER);
+//			WebElement firstOption = wait.until(ExpectedConditions.visibilityOfElementLocated(
+//				    By.cssSelector(".ng-dropdown-panel .ng-option")
+//				));
+//				firstOption.click();
+			System.out.println("✅ Sent ENTER — hopefully selected: [" + afterJS + "]");
+			
+			WebElement selectallpo = wait.until(ExpectedConditions.elementToBeClickable(
+				    By.xpath("//*[@id=\"planning\"]/div/table/thead/tr/th[1]/input")
+				));
+			selectallpo.click();
+			 String poamount = row.getCell(45).toString();
+			  wait.until(ExpectedConditions.elementToBeClickable(By.name("rate")));
+			  WebElement poamounts = driver.findElement(By.name("rate"));
+			  poamounts.clear();
+			  poamounts.sendKeys(poamount);
+			  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-digital-issue-po > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted"))).click();
+			  String etaxtemplate = row.getCell(46).toString();
+			  WebElement estimatetaxtemplate = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div[2]/div[1]/div/div[1]/ng-select/div/div/div[3]/input")));
+			  estimatetaxtemplate.sendKeys(etaxtemplate);
+			  estimatetaxtemplate.sendKeys(Keys.ENTER);
+			  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-digital-issue-po > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted"))).click();
+			  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-digital-issue-po > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted"))).click();
+			  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-digital-issue-po > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted"))).click();
+			  System.out.println("PO created, Downloading outputs for unapproved status now");
+			  By iconSelector1 = By.cssSelector("img[src='./assets/img/svg/action_icon.svg']");
+		      WebElement actionbuttonIcon1 = null;
+		      int attempts1 = 0;
+		      while (attempts1 < 2) {
+		          try {
+		              actionbuttonIcon1 = wait.until(ExpectedConditions.presenceOfElementLocated(iconSelector1));
+		              wait.until(ExpectedConditions.elementToBeClickable(actionbuttonIcon1));
+		              actionbuttonIcon1.click(); // This is where it was failing
+		              break; // success
+		          } catch (StaleElementReferenceException e) {
+		              attempts1++;
+		              if (attempts1 == 2) {
+		                  throw new RuntimeException("StaleElementReferenceException even after retry");
+		              }
+		          }
+		      }
 			  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
 	       	  Thread.sleep(2000);  // Let modal appear
 				 wait.until(ExpectedConditions.elementToBeClickable(
@@ -1450,8 +1446,8 @@ public void user_createspo_withoutputs() throws InterruptedException, FileNotFou
 				 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
 				 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
 				 Thread.sleep(2000);  // Let modal appear
-				 WebElement radioBtn1 = driver.findElement(By.cssSelector("input[type='radio'][value='Excel'][name='DocumentType']"));
-				 radioBtn1.click();
+				 WebElement radioBtn = driver.findElement(By.cssSelector("input[type='radio'][value='Excel'][name='DocumentType']"));
+				 radioBtn.click();
 				 wait.until(ExpectedConditions.elementToBeClickable(
 				         By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
 				 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
@@ -1460,16 +1456,70 @@ public void user_createspo_withoutputs() throws InterruptedException, FileNotFou
 				 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
 				 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
 				 Thread.sleep(2000);
-				 WebElement billformatdropdown1 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".ng-select-container")));
-				 billformatdropdown1.click();
-				 WebElement input1 = wait.until(ExpectedConditions.elementToBeClickable( By.cssSelector(".ng-input input")));
-		         input1.clear();
-		         input1.sendKeys("Old Format");
-		         WebElement option1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'ng-option') and normalize-space()='Old Format']")));
-		         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option1);
+				 WebElement billformatdropdown = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".ng-select-container")));
+				 billformatdropdown.click();
+				 WebElement input = wait.until(ExpectedConditions.elementToBeClickable( By.cssSelector(".ng-input input")));
+		         input.clear();
+		         input.sendKeys("Old Format");
+		         WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'ng-option') and normalize-space()='Old Format']")));
+		         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
 		         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
 		         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
 		         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
+		         System.out.println("Approving Estimate");
+		         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
+		         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-approve.svg']"))).click();
+		         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-approval\"]/div[3]/div/div/table/tr/td[1]/span"))).click();
+		         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-approval\"]/div[5]/div/div/span[2]"))).click();
+		         
+		         System.out.println("PO is Approved, Downloading Outputs for approved PO");		
+		         By iconSelector = By.cssSelector("img[src='./assets/img/svg/action_icon.svg']");
+		      WebElement actionbuttonIcon = null;
+		      int attempts = 0;
+		      while (attempts < 2) {
+		          try {
+		              actionbuttonIcon = wait.until(ExpectedConditions.presenceOfElementLocated(iconSelector));
+		              wait.until(ExpectedConditions.elementToBeClickable(actionbuttonIcon));
+		              actionbuttonIcon.click(); // This is where it was failing
+		              break; // success
+		          } catch (StaleElementReferenceException e) {
+		              attempts++;
+		              if (attempts == 2) {
+		                  throw new RuntimeException("StaleElementReferenceException even after retry");
+		              }
+		          }
+		      }
+				  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
+		       	  Thread.sleep(2000);  // Let modal appear
+					 wait.until(ExpectedConditions.elementToBeClickable(
+					         By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
+					 Thread.sleep(5000); 
+					 System.out.println("PDF download should be complete now.");
+					 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
+			         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
+					 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
+					 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
+					 Thread.sleep(2000);  // Let modal appear
+					 WebElement radioBtn1 = driver.findElement(By.cssSelector("input[type='radio'][value='Excel'][name='DocumentType']"));
+					 radioBtn1.click();
+					 wait.until(ExpectedConditions.elementToBeClickable(
+					         By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
+					 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
+			         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
+					 Thread.sleep(2000);
+					 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
+					 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
+					 Thread.sleep(2000);
+					 WebElement billformatdropdown1 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".ng-select-container")));
+					 billformatdropdown1.click();
+					 WebElement input1 = wait.until(ExpectedConditions.elementToBeClickable( By.cssSelector(".ng-input input")));
+			         input1.clear();
+			         input1.sendKeys("Old Format");
+			         WebElement option1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'ng-option') and normalize-space()='Old Format']")));
+			         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option1);
+			         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
+			         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
+			         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
 		  
     } 
 }
@@ -1612,10 +1662,10 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 			vendorbillamountelement.clear();
 			vendorbillamountelement.sendKeys(vendorbillamount);
 		
-			String reversalamount = row.getCell(54).toString();
-			WebElement reversalamountelement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[2]/div[1]/div[4]/div[2]/input")));
-			reversalamountelement.clear();
-			reversalamountelement.sendKeys(reversalamount);
+//			String reversalamount = row.getCell(54).toString();
+//			WebElement reversalamountelement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[2]/div[1]/div[4]/div[2]/input")));
+//			reversalamountelement.clear();
+//			reversalamountelement.sendKeys(reversalamount);
 			
 			WebElement estimatedatecalendarButton1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"ReceivedDate\"]/div/div/mat-datepicker-toggle/button/span[3]")));
 			  estimatedatecalendarButton1.click();
@@ -1646,123 +1696,132 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 		        
 				  WebElement nextButton0001 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 				  nextButton0001.click();
-				  try {
-					  //  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-					    //By reversalIconSelector = By.cssSelector("img[src*='add-reversal.svg']");
-					    By closeIconSelector = By.xpath("/html/body/ngb-offcanvas-panel/div[1]/span/img");
-
-					    By reversalIconSelector = By.cssSelector("img[src*='add-reversal.svg']");
-					    int attempts = 0;
-
-					    while (attempts < 3) {
-					        try {
-					            WebElement reversalIcon = wait.until(ExpectedConditions.elementToBeClickable(reversalIconSelector));
-					            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", reversalIcon);
-					            reversalIcon.click();
-					            break; // If click succeeds, exit the loop
-					        } catch (StaleElementReferenceException e) {
-					            System.out.println("StaleElementReferenceException caught, retrying... Attempt " + (attempts + 1));
-					            attempts++;
-					            Thread.sleep(500); // Optional delay before retrying
-					        }
-					    }
-
-//					    // Step 1: Click the first reversal icon
-//					    WebElement reversalIcon = wait.until(ExpectedConditions.elementToBeClickable(reversalIconSelector));
-//					    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", reversalIcon);
-//					    reversalIcon.click();
-
-					    // Step 2: Click the close icon
-					    WebElement closeIcon = wait.until(ExpectedConditions.elementToBeClickable(closeIconSelector));
-					    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", closeIcon);
-					    closeIcon.click();
-
-					    // Step 3: Retry clicking reversal icon (handles stale element issue)
-					    for (int attempt = 1; attempt <= 2; attempt++) {
-					        try {
-					            WebElement freshReversalIcon = wait.until(ExpectedConditions.elementToBeClickable(reversalIconSelector));
-					            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", freshReversalIcon);
-					            freshReversalIcon.click();
-					            break; // success, exit the loop
-					        } catch (StaleElementReferenceException e) {
-					            System.out.println("Attempt " + attempt + ": StaleElementReferenceException encountered. Retrying...");
-					            if (attempt == 2) throw e; // rethrow if second attempt fails
-					        } catch (Exception e) {
-					            System.out.println("Reversal icon click failed: " + e.getMessage());
-					            throw e;
-					        }
-					    }
-
-					} catch (Exception e) {
-					    System.out.println("Unexpected error in reversal icon logic: " + e.getMessage());
-					    throw e;
-					}
-				  
-				  WebElement nextButton0002 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-add-reversal-entry > div > div:nth-child(3) > div > span")));
-				  nextButton0002.click();
-				  
-				  WebElement clientreversalrate = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-add-reversal-entry/div/div[2]/div/div[2]/div[1]/input")));
-				  clientreversalrate.clear();
-				  clientreversalrate.sendKeys(reversalamount);
-				  
-				  WebElement nextButton0003 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-add-reversal-entry/div/div[3]/div/span[2]")));
-				  nextButton0003.click();
-				  
-				  WebElement clientratechange = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"vailidateRate\"]/div[3]/div/div/span[2]")));
-				  clientratechange.click();
-				  
-				  WebElement nextButton0004 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-add-reversal-entry/div/div[3]/div/span[2]")));
-				  nextButton0004.click();
-				 
-				  
-				  WebElement nextButton00005 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(" body > ngb-offcanvas-panel > div.offcanvas-body > app-add-reversal-entry > div > div:nth-child(3) > div > span.submit-button.ng-star-inserted")));
-				  nextButton00005.click();
-//				  WebElement nextButton00004 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-add-reversal-entry/div/div[3]/div/span[2]")));
-//				  nextButton00004.click();
-				  wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".offcanvas-header")));
-				  WebElement nextButton0005 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-				  nextButton0005.click();
-				  
+//				  try {
+//					  //  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+//					    //By reversalIconSelector = By.cssSelector("img[src*='add-reversal.svg']");
+//					    By closeIconSelector = By.xpath("/html/body/ngb-offcanvas-panel/div[1]/span/img");
+//
+//					    By reversalIconSelector = By.cssSelector("img[src*='add-reversal.svg']");
+//					    int attempts = 0;
+//
+//					    while (attempts < 3) {
+//					        try {
+//					            WebElement reversalIcon = wait.until(ExpectedConditions.elementToBeClickable(reversalIconSelector));
+//					            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", reversalIcon);
+//					            reversalIcon.click();
+//					            break; // If click succeeds, exit the loop
+//					        } catch (StaleElementReferenceException e) {
+//					            System.out.println("StaleElementReferenceException caught, retrying... Attempt " + (attempts + 1));
+//					            attempts++;
+//					            Thread.sleep(500); // Optional delay before retrying
+//					        }
+//					    }
+//
+////					    // Step 1: Click the first reversal icon
+////					    WebElement reversalIcon = wait.until(ExpectedConditions.elementToBeClickable(reversalIconSelector));
+////					    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", reversalIcon);
+////					    reversalIcon.click();
+//
+//					    // Step 2: Click the close icon
+//					    WebElement closeIcon = wait.until(ExpectedConditions.elementToBeClickable(closeIconSelector));
+//					    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", closeIcon);
+//					    closeIcon.click();
+//
+//					    // Step 3: Retry clicking reversal icon (handles stale element issue)
+//					    for (int attempt = 1; attempt <= 2; attempt++) {
+//					        try {
+//					            WebElement freshReversalIcon = wait.until(ExpectedConditions.elementToBeClickable(reversalIconSelector));
+//					            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", freshReversalIcon);
+//					            freshReversalIcon.click();
+//					            break; // success, exit the loop
+//					        } catch (StaleElementReferenceException e) {
+//					            System.out.println("Attempt " + attempt + ": StaleElementReferenceException encountered. Retrying...");
+//					            if (attempt == 2) throw e; // rethrow if second attempt fails
+//					        } catch (Exception e) {
+//					            System.out.println("Reversal icon click failed: " + e.getMessage());
+//					            throw e;
+//					        }
+//					    }
+//
+//					} catch (Exception e) {
+//					    System.out.println("Unexpected error in reversal icon logic: " + e.getMessage());
+//					    throw e;
+//					}
+//				  
+//				  WebElement nextButton0002 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-add-reversal-entry > div > div:nth-child(3) > div > span")));
+//				  nextButton0002.click();
+//				  Thread.sleep(3000);
+//				  WebElement clientreversalrate = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-add-reversal-entry/div/div[2]/div/div[2]/div[1]/input")));
+//				  clientreversalrate.clear();
+//				  js.executeScript("arguments[0].scrollIntoView(true);", clientreversalrate); // Scrolls to the element
+//		        //	js.executeScript("arguments[0].focus();", clientreversalrate);
+//		       // 	js.executeScript("arguments[0].click();", clientreversalrate);
+//				  clientreversalrate.sendKeys(reversalamount);
+//				  
+//				  WebElement nextButton0003 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-add-reversal-entry/div/div[3]/div/span[2]")));
+//				  nextButton0003.click();
+//				  Thread.sleep(3000);
+//				  WebElement clientratechange = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"vailidateRate\"]/div[3]/div/div/span[2]")));
+//				  js.executeScript("arguments[0].scrollIntoView(true);", clientratechange); // Scrolls to the element
+//		        //	js.executeScript("arguments[0].focus();", campaignnamefield);
+//		        	js.executeScript("arguments[0].click();", clientratechange);
+//				  Thread.sleep(3000);
+//				  WebElement nextButton0004 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-add-reversal-entry/div/div[3]/div/span[2]")));
+//				  nextButton0004.click();
+//				  Thread.sleep(3000);
+//				  
+//				  WebElement nextButton00005 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(" body > ngb-offcanvas-panel > div.offcanvas-body > app-add-reversal-entry > div > div:nth-child(3) > div > span.submit-button.ng-star-inserted")));
+//				  js.executeScript("arguments[0].scrollIntoView(true);", nextButton00005); // Scrolls to the element
+//		        	//js.executeScript("arguments[0].focus();", campaignnamefield);
+//		        	js.executeScript("arguments[0].click();", nextButton00005);
+////				  WebElement nextButton00004 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/ngb-offcanvas-panel/div[2]/app-add-reversal-entry/div/div[3]/div/span[2]")));
+////				  nextButton00004.click();
+//				  Thread.sleep(3000);
+//				  wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".offcanvas-header")));
+//				  WebElement nextButton0005 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
+//				  nextButton0005.click();
+				  Thread.sleep(3000);
 				  
 				  WebElement selectall = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"planning-log-m\"]/div/table/thead/tr[2]/th[1]/input")));
 				  selectall.click();
-				  
+				  Thread.sleep(3000);
 				  WebElement nextButton0006 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 				  nextButton0006.click();
-				 
+				  Thread.sleep(3000);
 				  
 				  WebElement vendorratechanges = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"vailidateRate\"]/div[3]/div/div/span[2]")));
 				  vendorratechanges.click();
-				  
+				  Thread.sleep(3000);
 				  
 				
 				  WebElement nextButton0007 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 				  nextButton0007.click();
-				  
+				  Thread.sleep(3000);
 				  WebElement nextButton0008 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 				  nextButton0008.click();
-				  
+				  Thread.sleep(3000);
 				  WebElement validateib = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"VaildateIB\"]/div[3]/div/div/span[2]")));
 				  validateib.click();
-				  
+				  Thread.sleep(3000);
 				  Thread.sleep(2000);
 				  System.out.println("Creating vendor bill for Integrated flow");
-				  
+				  Thread.sleep(3000);
 				  WebElement campaignspage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-d-dashboard/div/div[2]/div/div/div[2]")));
 				  campaignspage.click();
-				
+				  Thread.sleep(3000);
 				  WebElement activationtab = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2-link\"]/span")));
 				  activationtab.click(); 
-				  
+				  Thread.sleep(3000);
 				  WebElement integrationtab = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[2]/div[2]")));
 				  integrationtab.click();
-				  
+				  Thread.sleep(3000);
 				  WebElement linktabb1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[3]/div[2]")));
 				  linktabb1.click();
-				  
+				  Thread.sleep(3000);
 				  Thread.sleep(2000);
 				  WebElement unlinktab = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[3]/div[1]")));
 				  unlinktab.click();
+				  Thread.sleep(3000);
 				  Thread.sleep(2000);
 //				  WebElement linktabb = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[3]/div[2]")));
 //				  linktabb.click();
@@ -1778,7 +1837,7 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 				  String account2 = row.getCell(27).getStringCellValue();
 				  intaccount1.sendKeys(account2);
 				  intaccount1.sendKeys(Keys.ENTER);
-				  
+				  Thread.sleep(3000);
 				  String adaccount3 = row.getCell(28).getStringCellValue();  // e.g., "IN_Carlelo_INR_GUR"
 
 				// Step 1: Get all dropdowns on the page
@@ -1798,36 +1857,40 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 				        option.click();
 				        break;
 				    }
-				}				  
+				}		
+				Thread.sleep(3000);
 				  WebElement nextButton0011 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#section1 > div > div:nth-child(2) > div > div > span.submit-button")));
 				  nextButton0011.click();
-				  
+				  Thread.sleep(3000);
 				  WebElement radioaccid = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/div/div/app-link-campaign/div/div[2]/div/div[3]/div/mat-sidenav-content/div/div[1]/table/tbody/tr/td[1]/input")));
 				  radioaccid.click();
-				  
+				  Thread.sleep(3000);
 				  
 				  WebElement nextButton0012 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#client-estimate > div:nth-child(4) > div > div > span.submit-button")));
 				  nextButton0012.click();
-				  
+				  Thread.sleep(3000);
 				  WebElement linkButton0012 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"client-estimate-review\"]/div[3]/div/div/span[2]")));
 				  linkButton0012.click();
 				  wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
 			         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
-			  
+			         Thread.sleep(3000);
 				  WebElement vendordocsButton1 = wait.until(ExpectedConditions.elementToBeClickable(
 					         By.cssSelector("body > app-root > div > div > div > main > div > app-d-dashboard > div > div:nth-child(2) > div > div > div:nth-child(4)")));
 					vendordocsButton1.click();
-					
+					Thread.sleep(3000);
 				  By logbillsvgSelector1 = By.cssSelector("img[src='./assets/img/svg/Log-bill-digi.svg']");
 					WebElement logbillsvgImage1 = wait.until(ExpectedConditions.elementToBeClickable(logbillsvgSelector1));
 					logbillsvgImage1.click();
+					Thread.sleep(3000);
 					By integratedSvgSelector = By.cssSelector("img[src='./assets/img/svg/Intergeted.svg']");
 					WebElement integratedSvg = wait.until(ExpectedConditions.elementToBeClickable(integratedSvgSelector));
 					integratedSvg.click();
+					Thread.sleep(3000);
 					Thread.sleep(2000);
 					 WebElement intvendor = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[1]/div[1]/ng-select/div/div/div[2]/input")));
 					 intvendor.sendKeys(vendorName);
 					 intvendor.sendKeys(Keys.ENTER);
+					 Thread.sleep(3000);
 					 Thread.sleep(2000);
 					 WebElement intplatformtype = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[1]/div[2]/ng-select/div/div/div[2]/input")));
 					 String platformtype2 = row.getCell(26).getStringCellValue().trim();
@@ -1880,12 +1943,13 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 					  Thread.sleep(3000);
 					  WebElement vendorratechange12 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"vailidateRate\"]/div[3]/div/div/span[2]")));
 					  vendorratechange12.click();
-					  
+					  Thread.sleep(3000);
 					  WebElement nextButton0014 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill-intergrated > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 					  nextButton0014.click();
-
+					  Thread.sleep(3000);
 					  WebElement nextButton0016 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill-intergrated > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-					  nextButton0016.click();				  
+					  nextButton0016.click();	
+					  Thread.sleep(3000);
    }
  }
 
@@ -2030,8 +2094,8 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
     try (Workbook workbook = new XSSFWorkbook(file)) {
 		Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 		Row row = sheet.getRow(1);
-	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+	 WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(120));
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
     JavascriptExecutor js = (JavascriptExecutor) driver;
 			
 	Actions actions = new Actions(driver);
@@ -2041,93 +2105,108 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 	js.executeScript("window.scrollTo(0, 0)");
 	wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
     wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
-	
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"bill-to-client\"]/table/tbody/tr/td[7]/span[1]/img"))).click();
-	 
-	 WebElement cancelIcon = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-cancel.svg']")));
-			cancelIcon.click();
- 
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"dialog-delete\"]/div[3]/div/div/span[2]"))).click();
-	 
-	 WebElement vendordocsButton1 = wait.until(ExpectedConditions.elementToBeClickable(
-	         By.cssSelector("body > app-root > div > div > div > main > div > app-d-dashboard > div > div:nth-child(2) > div > div > div:nth-child(4)")));
-	vendordocsButton1.click();	
+    Thread.sleep(2000);
+    WebElement clientDocspage1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-d-dashboard/div/div[2]/div/div/div[3]")));
+    js.executeScript("arguments[0].scrollIntoView(true);", clientDocspage1); // Scrolls to the element
+	js.executeScript("arguments[0].focus();", clientDocspage1);
+	js.executeScript("arguments[0].click();", clientDocspage1);
 	Thread.sleep(2000);
-	
-	for (int i = 0; i < 2; i++) {
-	    try {
-	        // Re-fetch action icons list freshly each iteration
-	        List<WebElement> actionIcons = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
-	            By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")
-	        ));
+	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"bill-to-client\"]/table/tbody/tr/td[7]/span[1]/img"))).click();
+	 Thread.sleep(2000);
+//	 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
-	        if (actionIcons.isEmpty()) {
-	            System.out.println("No action icons available at iteration " + i);
-	            break;
-	        }
+	 try {
+	     // Step 1: Cancel current action
+	     WebElement cancelIcon = wait.until(ExpectedConditions.elementToBeClickable(
+	         By.cssSelector("img[src='./assets/img/svg/action-cancel.svg']")));
+	     cancelIcon.click();
 
-	        WebElement lastActionIcon = actionIcons.get(actionIcons.size() - 1);
+	     // Confirm dialog
+	     WebElement confirmCancel = wait.until(ExpectedConditions.elementToBeClickable(
+	         By.xpath("//*[@id='dialog-delete']/div[3]/div/div/span[2]")));
+	     confirmCancel.click();
 
-	        // Wait explicitly for clickable
-	        wait.until(ExpectedConditions.elementToBeClickable(lastActionIcon));
+	     // Step 2: Click Vendor Docs section
+	     WebElement vendordocsButton1 = wait.until(ExpectedConditions.elementToBeClickable(
+	         By.cssSelector("body > app-root > div > div > div > main > div > app-d-dashboard > div > div:nth-child(2) > div > div > div:nth-child(4)")));
+	     vendordocsButton1.click();
 
-	        // Scroll into view
-	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lastActionIcon);
+	     // Step 3: Loop to delete 2 vendor bills
+	     for (int i = 0; i < 2; i++) {
+	         try {
+	             // Get current list of action icons
+	             List<WebElement> actionIcons = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
+	                 By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
 
-	        // Try normal click first
-	        try {
-	            lastActionIcon.click();
-	        } catch (Exception e) {
-	            // If normal click fails, fallback to JS click
-	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", lastActionIcon);
-	        }
+	             if (actionIcons.size() < 1) {
+	                 System.out.println("No vendor bills found at iteration " + i);
+	                 break;
+	             }
 
-	        // Wait for delete button to be clickable
-	        WebElement deleteBtn = wait.until(ExpectedConditions.elementToBeClickable(
-	            By.cssSelector("img[src='./assets/img/svg/action-delete.svg']")
-	        ));
+	             int beforeCount = actionIcons.size();
+	             WebElement targetIcon = actionIcons.get(beforeCount - 1);
 
-	        try {
-	            deleteBtn.click();
-	        } catch (Exception e) {
-	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", deleteBtn);
-	        }
+	             // Scroll into view and click action icon
+	             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", targetIcon);
+	             wait.until(ExpectedConditions.elementToBeClickable(targetIcon)).click();
 
-	        // Wait for "Yes" button to be clickable and click
-	        WebElement yesBtn = wait.until(ExpectedConditions.elementToBeClickable(
-	            By.xpath("//*[@id='dialog-delete']/div[3]/div/div/span[2]")
-	        ));
+	             // Click delete icon
+	             WebElement deleteBtn = wait.until(ExpectedConditions.elementToBeClickable(
+	                 By.cssSelector("img[src='./assets/img/svg/action-delete.svg']")));
+	             deleteBtn.click();
 
-	        try {
-	            yesBtn.click();
-	        } catch (Exception e) {
-	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", yesBtn);
-	        }
+	             // Click "Yes" in confirmation dialog
+	             WebElement yesBtn = wait.until(ExpectedConditions.elementToBeClickable(
+	                 By.xpath("//*[@id='dialog-delete']/div[3]/div/div/span[2]")));
+	             yesBtn.click();
 
-	        // Wait some time for UI to update after deletion
-	        Thread.sleep(1500);
+	             // Wait until number of action icons decreases
+	             wait.until(ExpectedConditions.numberOfElementsToBeLessThan(
+	                 By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"), beforeCount));
 
-	    } catch (StaleElementReferenceException e) {
-	        System.out.println("Stale element detected, retrying iteration " + i);
-	        i--; // retry iteration
-	    } catch (Exception e) {
-	        System.out.println("Unexpected error at iteration " + i + ": " + e.getMessage());
-	        e.printStackTrace();
-	    }
-	}
+	             System.out.println("Vendor bill deleted successfully at iteration " + (i + 1));
 
+	         } catch (StaleElementReferenceException e) {
+	             System.out.println("Stale element at iteration " + i + ", retrying...");
+	             i--; // retry same iteration
+	         } catch (Exception e) {
+	             System.out.println("Unexpected error at iteration " + i + ": " + e.getMessage());
+	             e.printStackTrace();
+	             break; // optional: exit loop on critical failure
+	         }
+	     }
+
+	     // Final cleanup: Wait for overlays to disappear
+	     try {
+	         wait.until(ExpectedConditions.invisibilityOfElementLocated(
+	             By.cssSelector(".modal-backdrop, .overlay, .spinner, .cdk-overlay-backdrop")));
+	     } catch (Exception e) {
+	         System.out.println("No overlay, proceeding...");
+	     }
+
+	 } catch (Exception e) {
+	     System.out.println("Critical failure in vendor bill deletion: " + e.getMessage());
+	     e.printStackTrace();
+	 }
 
 	    // Optional short wait between deletions
 	    Thread.sleep(2000);
 	    WebElement campaignspage1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-d-dashboard/div/div[2]/div/div/div[2]")));
+//		  campaignspage1.click();
+		  js.executeScript("arguments[0].scrollIntoView(true);", campaignspage1); // Scrolls to the element
+      	//js.executeScript("arguments[0].focus();", campaignspage1);
 		  campaignspage1.click();
-		
+		  Thread.sleep(2000);
 		  WebElement activationtab1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2-link\"]/span")));
-		  activationtab1.click(); 
-		  
+		  js.executeScript("arguments[0].scrollIntoView(true);", activationtab1); // Scrolls to the element
+	      	//js.executeScript("arguments[0].focus();", campaignspage1);
+		  activationtab1.click();
+		  Thread.sleep(2000);
 		  WebElement integrationtab1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[2]/div[2]")));
+		  js.executeScript("arguments[0].scrollIntoView(true);", integrationtab1); // Scrolls to the element
+	      	//js.executeScript("arguments[0].focus();", campaignspage1);
 		  integrationtab1.click();
-		  
+		  Thread.sleep(2000);
 		  WebElement linktabb2 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[3]/div[2]")));
 		  linktabb2.click();
 		  
@@ -2138,12 +2217,13 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 		  
 		  WebElement linktabb3 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab2\"]/div/app-activation/div[3]/div[2]")));
 		  linktabb3.click();
-		
+		  Thread.sleep(2000);
 		  WebElement unlinkaction = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"activation\"]/div[1]/table/tbody/tr/td[1]/span")));
 		  unlinkaction.click();
-		  
+		  Thread.sleep(2000);
 		  WebElement unlinkyes = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-unlink\"]/div[3]/div/div/span[2]")));
 		  unlinkyes.click();
+		  Thread.sleep(2000);
 	    
 	}
     }

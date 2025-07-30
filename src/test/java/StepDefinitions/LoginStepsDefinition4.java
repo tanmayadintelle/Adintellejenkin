@@ -551,8 +551,8 @@ public class LoginStepsDefinition4 {
 			driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div")).click();			
 			
 		    String HSN = row.getCell(5).toString();
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[6]/ng-select/div/div/div[2]/input")));
-		    WebElement HSNField = driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[6]/ng-select/div/div/div[2]/input"));
+		   // wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[6]/ng-select/div/div/div[2]/input")));
+		    WebElement HSNField = driver.findElement(By.xpath("//*[@id=\"action-dialog-delete\"]/div/table/tr/td[6]/ng-select/div/div/div[3]/input"));
 			HSNField.sendKeys(HSN);
 		    HSNField.sendKeys(Keys.ENTER);
 		    Thread.sleep(1000);
