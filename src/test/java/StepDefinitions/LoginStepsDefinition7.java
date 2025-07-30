@@ -310,7 +310,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
  	 js.executeScript("arguments[0].click();", nextButton);
 	// nextButton.click();
 
-		Thread.sleep(4000);
+		Thread.sleep(5000);
 		String JobName = row.getCell(4).getStringCellValue(); 	
 		//waitload.until(ExpectedConditions.elementToBeClickable(By.name("JobName")));
 	    WebElement JobNameField = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("JobName")));
@@ -2031,8 +2031,8 @@ public void user_createsclientbill() throws InterruptedException, FileNotFoundEx
 	WebElement nextButtonclientbill1 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#client-bill > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 	nextButtonclientbill1.click();
 	
-	WebElement selectallreversalcheckbox = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"activation\"]/div/table/thead/tr/th[1]/input")));
-	selectallreversalcheckbox.click();
+//	WebElement selectallreversalcheckbox = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"activation\"]/div/table/thead/tr/th[1]/input")));
+//	selectallreversalcheckbox.click();
 	
 	WebElement nextButtonclientbill2 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#client-bill > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 	nextButtonclientbill2.click();
