@@ -1224,10 +1224,10 @@ Thread.sleep(2000);
  	 rescheduleSearchField.clear();
  	 rescheduleSearchField.sendKeys(rescheduleSearch);
 
-
-			
+ 	 Thread.sleep(1000);		
 	WebElement firstCheckbox = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@type='checkbox' and contains(@name,'ChkCshIDs')]")));
-	firstCheckbox.click();
+	js.executeScript("arguments[0].scrollIntoView(true);", firstCheckbox);
+	js.executeScript("arguments[0].click();", firstCheckbox);
  	      
 
 	// Step 1: Get day from Excel (e.g., "26")
@@ -1258,7 +1258,8 @@ Thread.sleep(2000);
 		        try {
 		        	 Thread.sleep(2000);
 		            wait.until(ExpectedConditions.visibilityOf(dayElement));
-		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dayElement);
+		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", dayElement);
+//		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dayElement);
 		            Thread.sleep(500); // Let scroll finish
 		            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElement);
 		            System.out.println("✅ Clicked on date: " + day);
