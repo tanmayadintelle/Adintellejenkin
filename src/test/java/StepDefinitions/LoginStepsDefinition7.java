@@ -2120,17 +2120,17 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 	     WebElement cancelIcon = wait.until(ExpectedConditions.elementToBeClickable(
 	         By.cssSelector("img[src='./assets/img/svg/action-cancel.svg']")));
 	     cancelIcon.click();
-
+	     Thread.sleep(2000);
 	     // Confirm dialog
 	     WebElement confirmCancel = wait.until(ExpectedConditions.elementToBeClickable(
 	         By.xpath("//*[@id='dialog-delete']/div[3]/div/div/span[2]")));
 	     confirmCancel.click();
-
+	     Thread.sleep(2000);
 	     // Step 2: Click Vendor Docs section
 	     WebElement vendordocsButton1 = wait.until(ExpectedConditions.elementToBeClickable(
 	         By.cssSelector("body > app-root > div > div > div > main > div > app-d-dashboard > div > div:nth-child(2) > div > div > div:nth-child(4)")));
 	     vendordocsButton1.click();
-
+	     Thread.sleep(2000);
 	     // Step 3: Loop to delete 2 vendor bills
 	     for (int i = 0; i < 2; i++) {
 	         try {
@@ -2149,17 +2149,18 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 	             // Scroll into view and click action icon
 	             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", targetIcon);
 	             wait.until(ExpectedConditions.elementToBeClickable(targetIcon)).click();
-
+	             Thread.sleep(2000);
 	             // Click delete icon
 	             WebElement deleteBtn = wait.until(ExpectedConditions.elementToBeClickable(
 	                 By.cssSelector("img[src='./assets/img/svg/action-delete.svg']")));
+	             js.executeScript("arguments[0].scrollIntoView(true);", deleteBtn);
 	             deleteBtn.click();
-
+	             Thread.sleep(2000);
 	             // Click "Yes" in confirmation dialog
 	             WebElement yesBtn = wait.until(ExpectedConditions.elementToBeClickable(
 	                 By.xpath("//*[@id='dialog-delete']/div[3]/div/div/span[2]")));
 	             yesBtn.click();
-
+	             Thread.sleep(2000);
 	             // Wait until number of action icons decreases
 	             wait.until(ExpectedConditions.numberOfElementsToBeLessThan(
 	                 By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"), beforeCount));
@@ -2175,6 +2176,7 @@ public void user_Unlinks_integrated_campaign() throws IOException, InterruptedEx
 	             break; // optional: exit loop on critical failure
 	         }
 	     }
+	     Thread.sleep(2000);
 
 	     // Final cleanup: Wait for overlays to disappear
 	     try {
