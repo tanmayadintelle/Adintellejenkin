@@ -1,4 +1,4 @@
-@Sanity
+
 Feature: Digital
 Scenario Outline: Sanity testing for Digital Client Billing First
 Given User logs in and navigate to digital page for cbf

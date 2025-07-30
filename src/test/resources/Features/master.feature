@@ -1,4 +1,4 @@
-
+@Sanity
 Feature: Master
 
 Scenario Outline: Sanity testing for Master

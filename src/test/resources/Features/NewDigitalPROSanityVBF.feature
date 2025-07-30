@@ -1,7 +1,7 @@
 
 Feature: Digital
 Scenario Outline: Sanity testing for Digital Vendor Billing First
-Given User logs in and navigate to digital page
+Given User logs in and navigate to digital page for vbf
 When User creates a new job and adds a campaign
 And User creates estimate with outputs
 Then User creates po with outputs
