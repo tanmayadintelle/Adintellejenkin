@@ -1400,7 +1400,7 @@ public void user_createspo_withoutputs() throws InterruptedException, FileNotFou
 //				));
 //				firstOption.click();
 			System.out.println("✅ Sent ENTER — hopefully selected: [" + afterJS + "]");
-			
+			Thread.sleep(2000);
 			WebElement selectallpo = wait.until(ExpectedConditions.elementToBeClickable(
 				    By.xpath("//*[@id=\"planning\"]/div/table/thead/tr/th[1]/input")
 				));
