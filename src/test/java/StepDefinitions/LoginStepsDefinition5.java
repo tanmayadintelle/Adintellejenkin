@@ -79,7 +79,12 @@ public class LoginStepsDefinition5 {
 	    prefs.put("profile.default_content_settings.popups", 0);
         prefs.put("safebrowsing.enabled", true);
 	    ChromeOptions options = new ChromeOptions();
-		
+	    options.addArguments("--headless=new");        // ✅ Use modern headless mode
+	    options.addArguments("--disable-gpu");         // ✅ Helps avoid rendering issues
+	    options.addArguments("window-size=1920,1080"); // ✅ Ensure browser has space to render
+	    options.addArguments("--no-sandbox");          // ✅ Especially useful in CI environments
+	    options.addArguments("--disable-dev-shm-usage"); // ✅ Prevent crashes on low-memory systems
+
 	    options.setExperimentalOption("prefs", prefs);
 	    options.setAcceptInsecureCerts(true);
 //	    options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
