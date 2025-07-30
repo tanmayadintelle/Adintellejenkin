@@ -2506,7 +2506,7 @@ Thread.sleep(2000);
 
 	 			// Click the button
 	 			
-	 			System.out.print("Client bill created for Vendor provisioning");
+	 			System.out.println("Client bill created for Vendor provisioning");
 	 			Thread.sleep(3000);	 			
 	 			
 	 			String xpathaddsidebar5 = "//*[@id=\"mySidebar\"]/div/div/span[3]";
@@ -2637,6 +2637,9 @@ Thread.sleep(2000);
  		            .until(ExpectedConditions.elementToBeClickable(proceedBtn));
  		       ((JavascriptExecutor) driver)
  		      .executeScript("arguments[0].scrollIntoView({block:'center'});", proceedElement);
+ 		      js.executeScript("arguments[0].scrollIntoView(true);", proceedElement); // Scrolls to the element
+	        	js.executeScript("arguments[0].focus();", proceedElement);
+	        	
 // 		      wait.until(ExpectedConditions.invisibilityOfElementLocated(
 // 		    	        By.cssSelector("div.modal.fade.in[style*='display: block']")));
 // 		        js.executeScript("arguments[0].scrollIntoView(true);", proceedElement);
@@ -2649,6 +2652,7 @@ Thread.sleep(2000);
  		            System.out.println("⚠️ Actions click failed, trying JS click fallback: " + e.getMessage());
  		            // Fallback to JS click
  		            js.executeScript("arguments[0].click();", proceedElement);
+ 		            
  		            System.out.println("✅ Proceed button clicked by JS fallback on attempt " + attempt2);
  		        }
  		        System.out.println("✅ Proceed button clicked on attempt " + attempt2);
