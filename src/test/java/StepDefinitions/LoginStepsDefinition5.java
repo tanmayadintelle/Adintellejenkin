@@ -1239,7 +1239,7 @@ Thread.sleep(2000);
 	// Step 2: Click the ScheduledDate input to open the datepicker
 	WebElement dateFieldreschedule = wait.until(ExpectedConditions.elementToBeClickable(By.id("ScheduledDate")));
 	dateFieldreschedule.click();
-
+	Thread.sleep(1000);
 	// Step 3: Wait for the datepicker popup to be visible
 	wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
 
