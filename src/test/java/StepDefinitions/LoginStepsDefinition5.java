@@ -2664,6 +2664,14 @@ Thread.sleep(2000);
  		          }
  		      }
  		        System.out.println("✅ Proceed button clicked on attempt " + attempt2);
+ 		       try {
+ 		            File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+ 		            File destFile = new File("screenshots/proceed_attempt_" + attempt2 + ".png");
+ 		            FileUtils.copyFile(scrFile, destFile);
+ 		            System.out.println("📸 Screenshot saved: " + destFile.getAbsolutePath());
+ 		        } catch (Exception ssEx) {
+ 		            System.out.println("❌ Failed to capture screenshot on attempt " + attempt2 + ": " + ssEx.getMessage());
+ 		        }
  		      // takeScreenshot(driver, "clicked_proceed_attempt_" + attempt2 + ".png");
  		        break;
 
@@ -2687,8 +2695,31 @@ Thread.sleep(2000);
  		        if (attempt2 == 10) {
  		            throw e; // only throw if last retry fails
  		        }
+ 		        
+ 		        
  		    }
- 		}
+ 		    
+ 		   try {
+ 		        Thread.sleep(1000); // Wait between retries
+ 		    } catch (InterruptedException ie) {
+ 		        Thread.currentThread().interrupt();
+ 		    }
+
+ 		    // Screenshot even if an error occurred (for failed attempts)
+ 		    try {
+ 		        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+ 		        File destFile = new File("screenshots/proceed_attempt_" + attempt2 + "_fail.png");
+ 		        FileUtils.copyFile(scrFile, destFile);
+ 		        System.out.println("📸 Screenshot (fail) saved: " + destFile.getAbsolutePath());
+ 		    } catch (Exception ssEx) {
+ 		        System.out.println("❌ Failed to capture fail screenshot on attempt " + attempt2 + ": " + ssEx.getMessage());
+ 		    }
+ 			}
+ 		
+ 		
+ 		
+ 		
+ 		
 
  		 	Thread.sleep(5000);
  		 	
