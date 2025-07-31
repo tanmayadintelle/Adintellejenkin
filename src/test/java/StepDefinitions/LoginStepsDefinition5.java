@@ -676,6 +676,7 @@ public class LoginStepsDefinition5 {
       try {
   	    WebElement okButton = new WebDriverWait(driver, Duration.ofSeconds(80))
   	        .until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='OK' or text()='Ok']")));
+  	  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okButton);
   	    okButton.click();
   	    Thread.sleep(4000); // If needed, else replace with explicit wait
   	} catch (TimeoutException e) {
