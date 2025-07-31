@@ -2670,6 +2670,7 @@ Thread.sleep(2000);
  		      }
  		        System.out.println("✅ Proceed button clicked on attempt " + attempt2);
  		       try {
+ 		    	   Thread.sleep(1000);
  		            File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
  		            File destFile = new File("screenshots/proceed_attempt_" + attempt2 + ".png");
  		            FileUtils.copyFile(scrFile, destFile);
@@ -2712,6 +2713,7 @@ Thread.sleep(2000);
 
  		    // Screenshot even if an error occurred (for failed attempts)
  		    try {
+ 		    	 Thread.sleep(1000);
  		        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
  		        File destFile = new File("screenshots/proceed_attempt_" + attempt2 + "_fail.png");
  		        FileUtils.copyFile(scrFile, destFile);
