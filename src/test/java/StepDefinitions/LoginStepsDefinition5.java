@@ -1254,7 +1254,7 @@ Thread.sleep(2000);
 		    int attemptsr = 0;
 		    boolean clicked1 = false;
 
-		    while (attemptsr < 3 && !clicked1) {
+		    while (attemptsr < 5 && !clicked1) {
 		        try {
 		        	 Thread.sleep(2000);
 		            wait.until(ExpectedConditions.visibilityOf(dayElement));
@@ -1265,6 +1265,7 @@ Thread.sleep(2000);
 		            System.out.println("✅ Clicked on date: " + day);
 		            clicked1 = true;
 		        } catch (Exception e) {
+		        	dayElement.click();
 		            System.out.println("⚠️ Attempt " + (attemptsr + 1) + ": Failed to click on date " + day + " - " + e.getMessage());
 		            Thread.sleep(1000);
 		            attemptsr++;
@@ -1348,6 +1349,7 @@ Thread.sleep(2000);
 		        break;
 
 		    } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
+		    	
 		        System.out.println("⚠️ Retryable exception on attempt " + finalOkAttempt + ": " + e.getMessage());
 		    } catch (TimeoutException te) {
 		        System.out.println("⏳ OK button not clickable in time on attempt " + finalOkAttempt);
