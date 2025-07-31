@@ -1257,15 +1257,22 @@ Thread.sleep(2000);
 		    while (attemptsr < 5 && !clicked1) {
 		        try {
 		        	 Thread.sleep(2000);
-		            wait.until(ExpectedConditions.visibilityOf(dayElement));
-		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", dayElement);
+		            
+		            
 //		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dayElement);
 		            Thread.sleep(500); // Let scroll finish
-		            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElement);
-		            System.out.println("✅ Clicked on date: " + day);
+		            wait.until(ExpectedConditions.elementToBeClickable(dayElement));
+		            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", dayElement);
+		            try {
+		                dayElement.click(); // native click
+		                System.out.println("✅ Native click succeeded");
+		            } catch (Exception clickFail) {
+		                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElement);
+		                System.out.println("✅ Fallback JS click succeeded");
+		            }
 		            clicked1 = true;
 		        } catch (Exception e) {
-		        	dayElement.click();
+		        	
 		            System.out.println("⚠️ Attempt " + (attemptsr + 1) + ": Failed to click on date " + day + " - " + e.getMessage());
 		            Thread.sleep(1000);
 		            attemptsr++;
