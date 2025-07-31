@@ -669,7 +669,7 @@ public class LoginStepsDefinition5 {
       
 
       js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-      
+      Thread.sleep(2000);
       
       wait.until(ExpectedConditions.elementToBeClickable(By.id("submit_btn"))).click();
    
