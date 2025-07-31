@@ -97,7 +97,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    System.out.print("Website opened");
 			    driver.manage().window().maximize();
 			    
-			    String excelFilePath = "D:\\fd\\btladintelleautomation\\DigitalproCBF.xlsx";  // Path to your Excel file
+			    String excelFilePath = "DigitalproCBF.xlsx";  // Path to your Excel file
 		        FileInputStream file = new FileInputStream(new File(excelFilePath));
 		        try (Workbook workbook = new XSSFWorkbook(file)) {
 					Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
@@ -209,7 +209,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 
 @When("User creates a new job and adds a campaign for cbf")
 public void user_createsnewjob_and_addsacampaign() throws InterruptedException, FileNotFoundException, IOException {
-	String excelFilePath = "D:\\fd\\btladintelleautomation\\DigitalproCBF.xlsx";  // Path to your Excel file
+	String excelFilePath = "DigitalproCBF.xlsx";  // Path to your Excel file
     FileInputStream file = new FileInputStream(new File(excelFilePath));
     try (Workbook workbook = new XSSFWorkbook(file)) {
 		Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
@@ -587,7 +587,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				        Thread.sleep(300);
 
 				        // Step 1: Type small prefix to trigger dropdown
-				        vendorInput.sendKeys(vendorName.substring(0, 2));
+				        vendorInput.sendKeys(vendorName.substring(0, 10));
 				        Thread.sleep(800);
 
 				        // Step 2: Wait for dropdown options to appear
@@ -989,7 +989,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				        Thread.sleep(300);
 
 				        // Step 1: Type small prefix to trigger dropdown
-				        vendorInput1.sendKeys(vendorName1.substring(0, 2));
+				        vendorInput1.sendKeys(vendorName1.substring(0, 10));
 				        Thread.sleep(800);
 
 				        // Step 2: Wait for dropdown options to appear
@@ -1043,7 +1043,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 
 @And("User creates estimate with outputs for cbf")
 public void user_createsestimate_withoutputs() throws InterruptedException, FileNotFoundException, IOException {
-	String excelFilePath = "D:\\fd\\btladintelleautomation\\DigitalproCBF.xlsx";  // Path to your Excel file
+	String excelFilePath = "DigitalproCBF.xlsx";  // Path to your Excel file
     FileInputStream file = new FileInputStream(new File(excelFilePath));
     try (Workbook workbook = new XSSFWorkbook(file)) {
 		Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
