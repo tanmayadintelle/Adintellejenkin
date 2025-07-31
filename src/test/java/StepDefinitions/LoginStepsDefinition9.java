@@ -218,6 +218,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-select\"]/div[3]/div/div/div[2]")));
     WebElement importfromexcel = driver.findElement(By.xpath("//*[@id=\"action-dialog-select\"]/div[3]/div/div/div[2]"));
     importfromexcel.click();
+    Thread.sleep(5000);
     //waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/app-estimate-import/div[2]/div/div/div[1]/div/div[2]/div[1]/div[2]/div/i")));
 //    WebElement clientnamedropdown = driver.findElement(By.xpath("/html/body/app-root/app-estimate-import/div[2]/div/div/div[1]/div/div[2]/div[1]/div[2]/div/i"));
 //    clientnamedropdown.click();
@@ -225,25 +226,23 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 //    inputContainer.click();
     
     System.out.println("Select Client");   
-    WebElement arrowDiv = wait.until(ExpectedConditions.elementToBeClickable(
-    		
-    	    By.cssSelector("div.selectdecorate.card-icon")));
+    System.out.println("Select Client");
 
-    	// Scroll element into view
-    	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", arrowDiv);
+    WebElement arrowDivClient = wait.until(ExpectedConditions.elementToBeClickable(
+        By.cssSelector("div.selectdecorate.card-icon")));
 
-    	// Click using JavaScript if normal click sometimes fails
-    	try {
-    	    arrowDiv.click();
-    	} catch (Exception e) {
-    	    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", arrowDiv);
-    	}
-    	Thread.sleep(5000);
+    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", arrowDivClient);
+
+    try {
+        arrowDivClient.click();
+    } catch (Exception e) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", arrowDivClient);
+    }
 
     String clientname = row.getCell(2).getStringCellValue();
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"mat-input-2\"]")));
-    
     WebElement clientnamesearchoption = driver.findElement(By.xpath("//*[@id=\"mat-input-2\"]"));
+    clientnamesearchoption.clear(); // Optional: clear existing text
     clientnamesearchoption.sendKeys(clientname);
     
     waitload.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.mat-radio-outer-circle")));
