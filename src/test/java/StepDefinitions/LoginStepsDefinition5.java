@@ -79,12 +79,7 @@ public class LoginStepsDefinition5 {
 	    prefs.put("profile.default_content_settings.popups", 0);
         prefs.put("safebrowsing.enabled", true);
 	    ChromeOptions options = new ChromeOptions();
-	    options.addArguments("--headless=new");        // ✅ Use modern headless mode
-	    options.addArguments("--disable-gpu");         // ✅ Helps avoid rendering issues
-	    options.addArguments("window-size=1920,1080"); // ✅ Ensure browser has space to render
-	    options.addArguments("--no-sandbox");          // ✅ Especially useful in CI environments
-	    options.addArguments("--disable-dev-shm-usage"); // ✅ Prevent crashes on low-memory systems
-
+		
 	    options.setExperimentalOption("prefs", prefs);
 	    options.setAcceptInsecureCerts(true);
 //	    options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
@@ -669,14 +664,13 @@ public class LoginStepsDefinition5 {
       
 
       js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-      Thread.sleep(2000);
+      
       
       wait.until(ExpectedConditions.elementToBeClickable(By.id("submit_btn"))).click();
    
       try {
   	    WebElement okButton = new WebDriverWait(driver, Duration.ofSeconds(80))
   	        .until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='OK' or text()='Ok']")));
-  	  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", okButton);
   	    okButton.click();
   	    Thread.sleep(4000); // If needed, else replace with explicit wait
   	} catch (TimeoutException e) {
@@ -2671,7 +2665,7 @@ Thread.sleep(2000);
  		      }
  		        System.out.println("✅ Proceed button clicked on attempt " + attempt2);
  		       try {
- 		    	   Thread.sleep(1000);
+ 		    	   Thread.sleep(2000);
  		            File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
  		            File destFile = new File("screenshots/proceed_attempt_" + attempt2 + ".png");
  		            FileUtils.copyFile(scrFile, destFile);
@@ -2714,7 +2708,7 @@ Thread.sleep(2000);
 
  		    // Screenshot even if an error occurred (for failed attempts)
  		    try {
- 		    	 Thread.sleep(1000);
+ 		    	Thread.sleep(2000);
  		        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
  		        File destFile = new File("screenshots/proceed_attempt_" + attempt2 + "_fail.png");
  		        FileUtils.copyFile(scrFile, destFile);
