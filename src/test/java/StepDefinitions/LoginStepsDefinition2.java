@@ -68,12 +68,12 @@ public class LoginStepsDefinition2 {
 	    // Add preferences to Chrome options
 //	    options.setExperimentalOption("prefs", prefs);
 //	    
-//	    options.addArguments("--headless=new"); // Use new headless for better rendering
-//	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-//	    options.addArguments("--window-size=1920,1080");
-//	    options.addArguments("--no-sandbox");
-//	    options.addArguments("--disable-dev-shm-usage");
-//	    options.addArguments("--remote-allow-origins=*");
+	    options.addArguments("--headless=new"); // Use new headless for better rendering
+	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+	    options.addArguments("--window-size=1920,1080");
+	    options.addArguments("--no-sandbox");
+	    options.addArguments("--disable-dev-shm-usage");
+	    options.addArguments("--remote-allow-origins=*");
 	    driver =new ChromeDriver(options);
 	    System.out.print("WebDriver initalized");
 	    driver.get("https://pro.adintelle.com/v7/m-box/campaign"); 
