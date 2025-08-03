@@ -61,6 +61,12 @@ public void user_logs_in_and_navigate_to_reports_page() throws InterruptedExcept
     // Write code here that turns the phrase above into concrete actions
 		   // Write code here that turns the phrase above into concrete actions
 				ChromeOptions options = new ChromeOptions();
+				   options.addArguments("--headless=new"); // Use new headless for better rendering
+				    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+				    options.addArguments("--window-size=1920,1080");
+				    options.addArguments("--no-sandbox");
+				    options.addArguments("--disable-dev-shm-usage");
+				    options.addArguments("--remote-allow-origins=*");
 			    // Create a HashMap for preferences
 //				ChromeOptions options = new ChromeOptions();
 //				options.addArguments("--headless=new");
@@ -771,6 +777,7 @@ public void user_downloads_purchase_register() throws FileNotFoundException, IOE
 	        Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 	        Row row = sheet.getRow(1); // 2nd row (index 1) for date input
 	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+	Thread.sleep(10000);
 	WebElement statusReportsSpan = wait.until(ExpectedConditions.elementToBeClickable(
 	    By.xpath("//span[text()='Purchase Register']")));
 	statusReportsSpan.click();
@@ -849,7 +856,7 @@ public void user_downloads_purchase_register() throws FileNotFoundException, IOE
     String endMonth1 = row.getCell(19).toString().trim();
     String endYear1 = row.getCell(20).toString().trim();
 
-    Thread.sleep(4000);
+    Thread.sleep(10000);
     String calendarToggleXPath1 = "/html/body/app-root/div/div/div/main/div/app-reports-purchase-register/div/div[2]/div/div[4]/div/div/div/div/div[1]/mat-form-field/div[1]/div[2]/div[2]/mat-datepicker-toggle/button/span[3]";
     driver.findElement(By.xpath(calendarToggleXPath1)).click();
     selectDateFromCalendar(driver, wait, startDay1, startMonth1, startYear1);
