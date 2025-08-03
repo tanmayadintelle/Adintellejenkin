@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
@@ -103,12 +104,19 @@ public class LoginStepsDefinition5 {
 	    prefs1.put("directory_upgrade", true);             
 	    prefs1.put("safebrowsing.enabled", true);          
 	    options.setExperimentalOption("prefs", prefs1);
+	    options.addArguments("--headless=new"); // Use new headless for better rendering
+	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+	    options.addArguments("--window-size=1920,1080");
+	    options.addArguments("--no-sandbox");
+	    options.addArguments("--disable-dev-shm-usage");
+	    options.addArguments("--remote-allow-origins=*");
 	    driver =new ChromeDriver(options);
+	   
 	    System.out.print("WebDriver initalized");
 	    driver.get("https://pro.adintelle.com/v7/login"); 
 	    System.out.print("Website opened");
-	    driver.manage().window().maximize();
-	    
+	    driver.manage().window().setSize(new Dimension(1920, 1080));
+	  
 	    String excelFilePath = "Presspro.xlsx";  // Path to your Excel file
         FileInputStream file = new FileInputStream(new File(excelFilePath));
         try (Workbook workbook = new XSSFWorkbook(file)) {
@@ -173,7 +181,7 @@ public class LoginStepsDefinition5 {
 	        elementarrow.click();
 	        
 	        System.out.println("Logged in");
-	        ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
+	       // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
 	        //WebDriverWait waitid = new WebDriverWait(driver, Duration.ofSeconds(60));
 	        List<WebElement> icons = driver.findElements(
 	        	    By.xpath("//*[name()='svg']/*[name()='path' and contains(@d, 'M17.8059')]")
@@ -2631,93 +2639,68 @@ Thread.sleep(2000);
  		  Thread.sleep(6000);
  		//button[text()='Proceed']
  		 By proceedBtn = By.xpath("//button[normalize-space(text())='Proceed']");
+ 		boolean proceedClickedSuccessfully = false;
+
  		for (int attempt2 = 1; attempt2 <= 10; attempt2++) {
  		    try {
- 		    	Thread.sleep(10000);
- 		    	Thread.sleep(6000);
- 		    	 Thread.sleep(3000);
+ 		        Thread.sleep(10000 + 6000 + 3000);
  		        System.out.println("Attempting to click Proceed, attempt " + attempt2);
  		        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
- 		       Thread.sleep(500);
- 		        // Wait for any modal to disappear
+ 		        Thread.sleep(500);
+
  		        new WebDriverWait(driver, Duration.ofSeconds(30))
  		            .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
 
  		        WebElement proceedElement = new WebDriverWait(driver, Duration.ofSeconds(30))
  		            .until(ExpectedConditions.elementToBeClickable(proceedBtn));
- 		       Thread.sleep(300);
- 		       ((JavascriptExecutor) driver)
- 		      .executeScript("arguments[0].scrollIntoView({block:'center'});", proceedElement);
- 		      Thread.sleep(300);
- 		      js.executeScript("arguments[0].scrollIntoView(true);", proceedElement); 
- 		     Thread.sleep(300);// Scrolls to the element
-	        	js.executeScript("arguments[0].focus();", proceedElement);
-	        	
-// 		      wait.until(ExpectedConditions.invisibilityOfElementLocated(
-// 		    	        By.cssSelector("div.modal.fade.in[style*='display: block']")));
-// 		        js.executeScript("arguments[0].scrollIntoView(true);", proceedElement);
- 		        Thread.sleep(500); // small buffer
- 		       try {
- 		          js.executeScript("arguments[0].click();", proceedElement);
- 		          System.out.println("✅ Proceed button clicked by JS click fallback on attempt " + attempt2);
- 		      } catch (Exception e2) {
- 		          System.out.println("⚠️ JS click failed, trying dispatchEvent fallback: " + e2.getMessage());
- 		          try {
- 		              js.executeScript(
- 		                  "var event = new MouseEvent('click', {bubbles: true, cancelable: true}); arguments[0].dispatchEvent(event);",
- 		                  proceedElement
- 		              );
- 		              System.out.println("✅ Proceed button clicked by dispatchEvent fallback on attempt " + attempt2);
- 		          } catch (Exception e3) {
- 		              System.out.println("❌ dispatchEvent failed on attempt " + attempt2 + ": " + e3.getMessage());
- 		          }
- 		      }
- 		        System.out.println("✅ Proceed button clicked on attempt " + attempt2);
- 		       try {
- 		    	   Thread.sleep(2000);
- 		            File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
- 		            File destFile = new File("screenshots/proceed_attempt_" + attempt2 + ".png");
- 		            FileUtils.copyFile(scrFile, destFile);
- 		            System.out.println("📸 Screenshot saved: " + destFile.getAbsolutePath());
- 		        } catch (Exception ssEx) {
- 		            System.out.println("❌ Failed to capture screenshot on attempt " + attempt2 + ": " + ssEx.getMessage());
+ 		        Thread.sleep(300);
+
+ 		        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", proceedElement);
+ 		        Thread.sleep(300);
+ 		        js.executeScript("arguments[0].focus();", proceedElement);
+ 		        Thread.sleep(300);
+
+ 		        try {
+ 		            js.executeScript("arguments[0].click();", proceedElement);
+ 		            System.out.println("✅ Proceed button clicked by JS click fallback on attempt " + attempt2);
+ 		        } catch (Exception e2) {
+ 		            System.out.println("⚠️ JS click failed, trying dispatchEvent fallback: " + e2.getMessage());
+ 		            js.executeScript(
+ 		                "var event = new MouseEvent('click', {bubbles: true, cancelable: true}); arguments[0].dispatchEvent(event);",
+ 		                proceedElement
+ 		            );
+ 		            System.out.println("✅ Proceed button clicked by dispatchEvent fallback on attempt " + attempt2);
  		        }
- 		      // takeScreenshot(driver, "clicked_proceed_attempt_" + attempt2 + ".png");
+
+ 		        // ✅ WAIT FOR EXPECTED RESULT AFTER CLICK
+ 		        // Replace the XPath below with something meaningful that indicates the click succeeded
+ 		        new WebDriverWait(driver, Duration.ofSeconds(15)).until(
+ 		            ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(text(),'Summary')]"))
+ 		        );
+
+ 		        // Click worked
+ 		        proceedClickedSuccessfully = true;
+
+ 		        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+ 		        File destFile = new File("screenshots/proceed_attempt_" + attempt2 + ".png");
+ 		        FileUtils.copyFile(scrFile, destFile);
+ 		        System.out.println("📸 Screenshot saved: " + destFile.getAbsolutePath());
+
  		        break;
 
- 		       // System.out.println("✅ Proceed button clicked on attempt " + attempt2);
- 		       // break; // success, exit loop
-
  		    } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
- 		    	
  		        System.out.println("⚠️ Retryable exception on attempt " + attempt2 + ": " + e.getMessage());
- 		      
- 		        Thread.sleep(2000); // Give DOM time to stabilize
-
+ 		        Thread.sleep(2000);
  		    } catch (TimeoutException te) {
- 		        System.out.println("⏳ Proceed button not clickable on attempt " + attempt2 + ": " + te.getMessage());
- 		    
+ 		        System.out.println("⏳ Proceed click did not trigger expected result: " + te.getMessage());
  		        Thread.sleep(3000);
-
  		    } catch (Exception e) {
  		        System.out.println("❌ Unhandled error on attempt " + attempt2 + ": " + e.getMessage());
- 		      
- 		        if (attempt2 == 10) {
- 		            throw e; // only throw if last retry fails
- 		        }
- 		        
- 		        
- 		    }
- 		    
- 		   try {
- 		        Thread.sleep(1000); // Wait between retries
- 		    } catch (InterruptedException ie) {
- 		        Thread.currentThread().interrupt();
+ 		        if (attempt2 == 10) throw e;
  		    }
 
- 		    // Screenshot even if an error occurred (for failed attempts)
+ 		    Thread.sleep(1000);
  		    try {
- 		    	Thread.sleep(2000);
  		        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
  		        File destFile = new File("screenshots/proceed_attempt_" + attempt2 + "_fail.png");
  		        FileUtils.copyFile(scrFile, destFile);
@@ -2725,11 +2708,12 @@ Thread.sleep(2000);
  		    } catch (Exception ssEx) {
  		        System.out.println("❌ Failed to capture fail screenshot on attempt " + attempt2 + ": " + ssEx.getMessage());
  		    }
- 			}
- 		
- 		
- 		
- 		
+ 		}
+
+ 		if (!proceedClickedSuccessfully) {
+ 		    throw new RuntimeException("❌ Proceed button failed to trigger expected outcome after 10 attempts.");
+ 		}
+
  		
 
  		 	Thread.sleep(5000);

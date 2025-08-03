@@ -74,7 +74,7 @@ public class LoginStepsDefinition4 {
 	    // Add preferences to Chrome options
 	    options.setExperimentalOption("prefs", prefs);
 	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String downloadDir = "BTLoutputs" + timestamp;
+	    String downloadDir = "BTLoutputs\\" + timestamp;
 
 	    File downloadFolder = new File(downloadDir);
 	    if (!downloadFolder.exists()) {
@@ -168,7 +168,7 @@ public class LoginStepsDefinition4 {
 		    
 		  
 		    JavascriptExecutor jszoom = (JavascriptExecutor) driver;
-		   // jszoom.executeScript("document.body.style.zoom='40%'");
+		    jszoom.executeScript("document.body.style.zoom='40%'");
 		    waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"planning\"]/div/table/thead/tr/th[1]")));
 		    waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/newjob.svg']")));
 //		    JavascriptExecutor jsif = (JavascriptExecutor) driver;
