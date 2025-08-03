@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -35,6 +36,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -65,22 +68,31 @@ public void user_logs_in_and_navigate_to_reports_page() throws InterruptedExcept
 //				options.addArguments("--disable-gpu");
 //				options.addArguments("--no-sandbox");
 //				options.addArguments("--disable-dev-shm-usage");
+			//	String downloadFilepath = Paths.get("reports").toAbsolutePath().toString();
+			    HashMap<String, Object> prefs = new HashMap<>();  
+			    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+			    Path downloadPath = Paths.get("reports", timestamp).toAbsolutePath(); // ✅ Absolute path
 
-			    HashMap<String, Object> prefs = new HashMap<>();    
+			    // Create folder if not exists
+			    File downloadFolder = downloadPath.toFile();
+			    if (!downloadFolder.exists()) {
+			        downloadFolder.mkdirs();
+			    }
+
 			    // Block notifications by setting the preference value to 2 (block)
 			    prefs.put("profile.default_content_setting_values.notifications", 2); 
 			    // Add preferences to Chrome options
 			    options.setExperimentalOption("prefs", prefs);
-			    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-			    String downloadDir = "reports\\" + timestamp;
+			    String timestamp2 = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+			    String downloadDir = "reports\\" + timestamp2;
 
-			    File downloadFolder = new File(downloadDir);
-			    if (!downloadFolder.exists()) {
-			        downloadFolder.mkdirs(); // ✅ Create the folder if not there
+			    File downloadFolder2 = new File(downloadDir);
+			    if (!downloadFolder2.exists()) {
+			        downloadFolder2.mkdirs(); // ✅ Create the folder if not there
 			    }
 			    Map<String, Object> prefs1 = new HashMap<>();
 			    prefs1.put("profile.default_content_setting_values.notifications", 2);
-			    prefs1.put("download.default_directory", downloadDir); // ✅ Your download path
+			    prefs1.put("download.default_directory", downloadPath.toString()); // ✅ Your download path
 			    prefs1.put("plugins.always_open_pdf_externally", true);
 			    prefs1.put("download.prompt_for_download", false); 
 			    prefs1.put("directory_upgrade", true);             
@@ -90,7 +102,7 @@ public void user_logs_in_and_navigate_to_reports_page() throws InterruptedExcept
 			    System.out.print("WebDriver initalized");
 			    driver.get("https://pro.adintelle.com/v7/login"); 
 			    System.out.print("Website opened");
-			    driver.manage().window().maximize();
+			    driver.manage().window().setSize(new Dimension(1920, 1080));
 			    
 			    String excelFilePath = "Reportsmyjobspage.xlsx";  // Path to your Excel file
 		        FileInputStream file = new FileInputStream(new File(excelFilePath));
@@ -116,7 +128,7 @@ public void user_logs_in_and_navigate_to_reports_page() throws InterruptedExcept
 				    waitload1.until(ExpectedConditions.elementToBeClickable(By.name("password")));
 				    
 					WebElement passwordField = driver.findElement(By.name("password")); 
-					passwordField.sendKeys("Citi5bank$123456");
+					passwordField.sendKeys("Citi5bank$1234567");
 					waitload1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"login_button_text_active\"]")));
 					driver.findElement(By.xpath("//*[@id=\"login_button_text_active\"]")).click();
 				    Thread.sleep(3000);
@@ -305,8 +317,10 @@ public void user_downloads_status_reports() throws InterruptedException, FileNot
     		    	String finalName = "StatusReport_" + "Digital" + "_" + fromDate + "_to_" + toDate;
 
     		    	// Locate latest folder
-    		    	String reportFolderRoot = "D:\\fd\\btladintelleautomation\\reports";
-    		    	File latestFolder = getLatestReportFolder(reportFolderRoot);
+    		    	Path basePath = Paths.get("").toAbsolutePath();
+    		    	Path reportFolderRoot = basePath.resolve("reports");
+    		    	File latestFolder = getLatestReportFolder(reportFolderRoot.toString());
+
 
     		    	if (latestFolder != null) {
     		    	    renameFileInFolder(latestFolder, finalName);
@@ -468,9 +482,11 @@ public void user_downloads_status_reports() throws InterruptedException, FileNot
 		    	String finalName1 = "StatusReport_" + "BTL" + "_" + fromDate1 + "_to_" + toDate1;
 
 		    	// Locate latest folder
-		    	String reportFolderRoot1 = "reports";
-		    	File latestFolder1 = getLatestReportFolder(reportFolderRoot1);
-
+		    	Path basePath1 = Paths.get("").toAbsolutePath();
+		    	Path reportFolderRoot1 = basePath1.resolve("reports");
+		    	File latestFolder1 = getLatestReportFolder(reportFolderRoot1.toString());
+		    	
+		    	
 		    	if (latestFolder1 != null) {
 		    	    renameFileInFolder(latestFolder1, finalName1);
 		    	    
@@ -500,6 +516,7 @@ public void user_downloads_sales_register() throws IOException, InterruptedExcep
 	        Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 	        Row row = sheet.getRow(1); // 2nd row (index 1) for date input
 	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+	Thread.sleep(5000);
 	WebElement statusReportsSpan = wait.until(ExpectedConditions.elementToBeClickable(
 	    By.xpath("//span[text()='Sales Register']")));
 	statusReportsSpan.click();
@@ -655,8 +672,9 @@ public void user_downloads_sales_register() throws IOException, InterruptedExcep
     	String finalName = "SalesRegister_" + activityNameForFile + "_" + fromDate + "_to_" + toDate;
 
     	// Locate latest folder
-    	String reportFolderRoot = "reports";
-    	File latestFolder = getLatestReportFolder(reportFolderRoot);
+    	Path basePath = Paths.get("").toAbsolutePath();
+    	Path reportFolderRoot = basePath.resolve("reports");
+    	File latestFolder = getLatestReportFolder(reportFolderRoot.toString());
 
     	if (latestFolder != null) {
     	    renameFileInFolder(latestFolder, finalName);
@@ -720,17 +738,20 @@ public void user_downloads_sales_register() throws IOException, InterruptedExcep
 	String finalName1 = "SalesReport_" + "Allmediums" + "_" + fromDate1 + "_to_" + toDate1;
 
 	// Locate latest folder
-	String reportFolderRoot1 = "reports";
-	File latestFolder1 = getLatestReportFolder(reportFolderRoot1);
+	Path basePath1 = Paths.get("").toAbsolutePath();
+	Path reportFolderRoot1 = basePath1.resolve("reports");
+	File latestFolder1 = getLatestReportFolder(reportFolderRoot1.toString());
+
 
 	if (latestFolder1 != null) {
 	    renameFileInFolder(latestFolder1, finalName1);
 	} else {
 	    System.out.println("❌ Could not locate report folder.");
 	}
-	Thread.sleep(4000);
-    
-	 wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/app-root/div/div/div/main/div/app-reports-sales-register/div/div[1]/div/div/span[1]"))).click();
+	Thread.sleep(6000);
+	
+
+	 wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//app-reports-sales-register//span[contains(text(), 'Sales Register')]"))).click();
     wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-reports-sales-register/div/div[1]/div/div/span[1]"))).click();
     new WebDriverWait(driver, Duration.ofSeconds(5)).until(driver1 -> true);
     
@@ -828,7 +849,7 @@ public void user_downloads_purchase_register() throws FileNotFoundException, IOE
     String endMonth1 = row.getCell(19).toString().trim();
     String endYear1 = row.getCell(20).toString().trim();
 
-    
+    Thread.sleep(4000);
     String calendarToggleXPath1 = "/html/body/app-root/div/div/div/main/div/app-reports-purchase-register/div/div[2]/div/div[4]/div/div/div/div/div[1]/mat-form-field/div[1]/div[2]/div[2]/mat-datepicker-toggle/button/span[3]";
     driver.findElement(By.xpath(calendarToggleXPath1)).click();
     selectDateFromCalendar(driver, wait, startDay1, startMonth1, startYear1);
@@ -946,8 +967,10 @@ public void user_downloads_purchase_register() throws FileNotFoundException, IOE
     	String finalName = "PurchaseRegister_" + activityNameForFile + "_" + fromDate + "_to_" + toDate;
 
     	// Locate latest folder
-    	String reportFolderRoot = "reports";
-    	File latestFolder = getLatestReportFolder(reportFolderRoot);
+    	Path basePath = Paths.get("").toAbsolutePath();
+    	Path reportFolderRoot = basePath.resolve("reports");
+    	File latestFolder = getLatestReportFolder(reportFolderRoot.toString());
+
 
     	if (latestFolder != null) {
     	    renameFileInFolder(latestFolder, finalName);
@@ -1063,8 +1086,9 @@ public void user_downloads_purchase_register() throws FileNotFoundException, IOE
     	String finalName1 = "PurchaseRegister_" + "Allmediums" + "_" + fromDate1 + "_to_" + toDate1;
 
     	// Locate latest folder
-    	String reportFolderRoot1 = "reports";
-    	File latestFolder1 = getLatestReportFolder(reportFolderRoot1);
+    	Path basePath1 = Paths.get("").toAbsolutePath();
+    	Path reportFolderRoot1 = basePath1.resolve("reports");
+    	File latestFolder1 = getLatestReportFolder(reportFolderRoot1.toString());
 
     	if (latestFolder1 != null) {
     	    renameFileInFolder(latestFolder1, finalName1);
