@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
@@ -67,7 +68,6 @@ public class LoginStepsDefinition2 {
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
 	    // Add preferences to Chrome options
 //	    options.setExperimentalOption("prefs", prefs);
-//	    
 	    options.addArguments("--headless=new"); // Use new headless for better rendering
 	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
 	    options.addArguments("--window-size=1920,1080");
@@ -78,8 +78,8 @@ public class LoginStepsDefinition2 {
 	    System.out.print("WebDriver initalized");
 	    driver.get("https://pro.adintelle.com/v7/m-box/campaign"); 
 	    System.out.print("Website opened");
-	    
-	    driver.manage().window().maximize();
+	    driver.manage().window().setSize(new Dimension(1920, 1080));
+	   // driver.manage().window().maximize();
 	    String excelFilePath = "Master.xlsx";  // Path to your Excel file
         FileInputStream file = new FileInputStream(new File(excelFilePath));
         try (Workbook workbook = new XSSFWorkbook(file)) {
