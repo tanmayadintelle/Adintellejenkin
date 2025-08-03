@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.awt.Dimension;
+//import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.time.format.DateTimeParseException;
 import java.util.Map;
@@ -27,6 +27,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -139,7 +140,8 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    System.out.print("WebDriver initalized");
 			    driver.get("https://pro.adintelle.com/v7/login"); 
 			    System.out.print("Website opened");
-			    driver.manage().window().maximize();
+			    driver.manage().window().setSize(new Dimension(1920, 1080));
+			   // driver.manage().window().maximize();
 			    	
 			    String excelFilePath = "DigitalproVBF.xlsx";  // Path to your Excel file
 		        FileInputStream file = new FileInputStream(new File(excelFilePath));

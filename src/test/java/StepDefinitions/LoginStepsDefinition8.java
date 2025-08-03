@@ -19,6 +19,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -77,7 +78,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    // Add preferences to Chrome options
 			    options.setExperimentalOption("prefs", prefs);
 			    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-			    String downloadDir = "D:\\fd\\btladintelleautomation\\digitaloutputscbf\\" + timestamp;
+			    String downloadDir = "digitaloutputscbf\\" + timestamp;
 
 			    File downloadFolder = new File(downloadDir);
 			    if (!downloadFolder.exists()) {
@@ -95,7 +96,8 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    System.out.print("WebDriver initalized");
 			    driver.get("https://pro.adintelle.com/v7/login"); 
 			    System.out.print("Website opened");
-			    driver.manage().window().maximize();
+			    driver.manage().window().setSize(new Dimension(1920, 1080));
+			   // driver.manage().window().maximize();
 			    
 			    String excelFilePath = "DigitalproCBF.xlsx";  // Path to your Excel file
 		        FileInputStream file = new FileInputStream(new File(excelFilePath));
