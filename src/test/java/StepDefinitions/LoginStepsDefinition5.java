@@ -2641,47 +2641,57 @@ Thread.sleep(2000);
  		//button[text()='Proceed']
  		 By proceedBtn = By.xpath("//button[normalize-space(text())='Proceed']");
  		boolean proceedClickedSuccessfully = false;
+ 		//JavascriptExecutor js = (JavascriptExecutor) driver;
 
  		for (int attempt2 = 1; attempt2 <= 10; attempt2++) {
  		    try {
- 		        Thread.sleep(10000 + 6000 + 3000);
- 		        System.out.println("Attempting to click Proceed, attempt " + attempt2);
+ 		        System.out.println("🌀 Attempting to click Proceed, attempt " + attempt2);
+
+ 		        // Initial wait to let the page settle
+ 		        Thread.sleep(19000); // 10 + 6 + 3 seconds
+
+ 		        // Scroll to bottom
  		        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
  		        Thread.sleep(500);
 
- 		        new WebDriverWait(driver, Duration.ofSeconds(30))
+ 		        // Wait for modal to disappear if it exists
+ 		        new WebDriverWait(driver, Duration.ofSeconds(10))
  		            .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
 
- 		        WebElement proceedElement = new WebDriverWait(driver, Duration.ofSeconds(30))
+ 		        // Wait for Proceed button to be clickable
+ 		        WebElement proceedElement = new WebDriverWait(driver, Duration.ofSeconds(15))
  		            .until(ExpectedConditions.elementToBeClickable(proceedBtn));
  		        Thread.sleep(300);
 
- 		        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", proceedElement);
+ 		        // Scroll and focus on Proceed button
+ 		        js.executeScript("arguments[0].scrollIntoView({block:'center'});", proceedElement);
  		        Thread.sleep(300);
  		        js.executeScript("arguments[0].focus();", proceedElement);
  		        Thread.sleep(300);
 
+ 		        // Click via JS
  		        try {
  		            js.executeScript("arguments[0].click();", proceedElement);
- 		            System.out.println("✅ Proceed button clicked by JS click fallback on attempt " + attempt2);
+ 		            System.out.println("✅ Proceed button clicked via JS on attempt " + attempt2);
  		        } catch (Exception e2) {
  		            System.out.println("⚠️ JS click failed, trying dispatchEvent fallback: " + e2.getMessage());
  		            js.executeScript(
  		                "var event = new MouseEvent('click', {bubbles: true, cancelable: true}); arguments[0].dispatchEvent(event);",
  		                proceedElement
  		            );
- 		            System.out.println("✅ Proceed button clicked by dispatchEvent fallback on attempt " + attempt2);
+ 		            System.out.println("✅ Proceed button clicked via dispatchEvent fallback on attempt " + attempt2);
  		        }
 
- 		        // ✅ WAIT FOR EXPECTED RESULT AFTER CLICK
- 		        // Replace the XPath below with something meaningful that indicates the click succeeded
- 		        new WebDriverWait(driver, Duration.ofSeconds(15)).until(
- 		            ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(text(),'Summary')]"))
- 		        );
+ 		        // Wait for either Summary to appear OR Proceed button to go away
+ 		        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.or(
+ 		            ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(text(),'Summary')]")),
+ 		            ExpectedConditions.invisibilityOfElementLocated(proceedBtn)
+ 		        ));
 
- 		        // Click worked
+ 		        // ✅ Click succeeded
  		        proceedClickedSuccessfully = true;
 
+ 		        // Screenshot success
  		        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
  		        File destFile = new File("screenshots/proceed_attempt_" + attempt2 + ".png");
  		        FileUtils.copyFile(scrFile, destFile);
@@ -2700,7 +2710,7 @@ Thread.sleep(2000);
  		        if (attempt2 == 10) throw e;
  		    }
 
- 		    Thread.sleep(1000);
+ 		    // Capture screenshot for failed attempt
  		    try {
  		        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
  		        File destFile = new File("screenshots/proceed_attempt_" + attempt2 + "_fail.png");
@@ -2709,6 +2719,8 @@ Thread.sleep(2000);
  		    } catch (Exception ssEx) {
  		        System.out.println("❌ Failed to capture fail screenshot on attempt " + attempt2 + ": " + ssEx.getMessage());
  		    }
+
+ 		    Thread.sleep(1000);
  		}
 
  		if (!proceedClickedSuccessfully) {
