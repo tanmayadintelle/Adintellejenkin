@@ -90,7 +90,8 @@ public class LoginStepsDefinition5 {
 //	    options.addArguments("--remote-allow-origins=*");
 //	    options.addArguments("--headless=chrome");
 	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String downloadDir = "pressoutput\\" + timestamp;
+	    //String downloadDir = "pressoutput\\" + timestamp;
+	    String downloadDir = new File("pressoutput\\" + timestamp).getAbsolutePath();
 
 	    File downloadFolder = new File(downloadDir);
 	    if (!downloadFolder.exists()) {
@@ -104,18 +105,18 @@ public class LoginStepsDefinition5 {
 	    prefs1.put("directory_upgrade", true);             
 	    prefs1.put("safebrowsing.enabled", true);          
 	    options.setExperimentalOption("prefs", prefs1);
-//	    options.addArguments("--headless=new"); // Use new headless for better rendering
-//	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-//	    options.addArguments("--window-size=1920,1080");
-//	    options.addArguments("--no-sandbox");
-//	    options.addArguments("--disable-dev-shm-usage");
-//	    options.addArguments("--remote-allow-origins=*");
+	    options.addArguments("--headless=new"); // Use new headless for better rendering
+	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+	    options.addArguments("--window-size=1920,1080");
+	    options.addArguments("--no-sandbox");
+	    options.addArguments("--disable-dev-shm-usage");
+	    options.addArguments("--remote-allow-origins=*");
 	    driver =new ChromeDriver(options);
-	   
+	    driver.manage().window().setSize(new Dimension(1920, 1080));
 	    System.out.print("WebDriver initalized");
 	    driver.get("https://pro.adintelle.com/v7/login"); 
 	    System.out.print("Website opened");
-	    driver.manage().window().setSize(new Dimension(1920, 1080));
+	    
 	  
 	    String excelFilePath = "Presspro.xlsx";  // Path to your Excel file
         FileInputStream file = new FileInputStream(new File(excelFilePath));
@@ -181,7 +182,7 @@ public class LoginStepsDefinition5 {
 	        elementarrow.click();
 	        
 	        System.out.println("Logged in");
-	       // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
+	        ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='90%'");
 	        //WebDriverWait waitid = new WebDriverWait(driver, Duration.ofSeconds(60));
 	        List<WebElement> icons = driver.findElements(
 	        	    By.xpath("//*[name()='svg']/*[name()='path' and contains(@d, 'M17.8059')]")
