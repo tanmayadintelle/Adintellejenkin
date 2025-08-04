@@ -104,7 +104,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 		        try (Workbook workbook = new XSSFWorkbook(file)) {
 					Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 					Row row = sheet.getRow(1); // Get the second row (0-indexed));
-					WebDriverWait waitload2 = new WebDriverWait(driver, Duration.ofSeconds(60));
+					WebDriverWait waitload2 = new WebDriverWait(driver, Duration.ofSeconds(100));
 					  
 				    waitload2.until(ExpectedConditions.elementToBeClickable(By.name("username")));
 					// Step 3: Find the form fields on the webpage and fill them with data from Excel
@@ -117,8 +117,8 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 				    waitload2.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"identify_user_button_text_active\"]")));
 				    driver.findElement(By.xpath("//*[@id=\"identify_user_button_text_active\"]")).click();
 				    
-				    WebDriverWait waitload1 = new WebDriverWait(driver, Duration.ofSeconds(60));
-				    WebDriverWait waitloadz = new WebDriverWait(driver, Duration.ofSeconds(10));
+				    WebDriverWait waitload1 = new WebDriverWait(driver, Duration.ofSeconds(100));
+				    WebDriverWait waitloadz = new WebDriverWait(driver, Duration.ofSeconds(100));
 					   
 				    waitload1.until(ExpectedConditions.elementToBeClickable(By.name("password")));
 				    
@@ -184,7 +184,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 		            By.className("cdk-overlay-backdrop")));
 
 		        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt("appIframeAgency"));
-		        WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
+		        WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(100));
 			    
 				
 			    //Client selection
@@ -218,14 +218,14 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-select\"]/div[3]/div/div/div[2]")));
     WebElement importfromexcel = driver.findElement(By.xpath("//*[@id=\"action-dialog-select\"]/div[3]/div/div/div[2]"));
     importfromexcel.click();
-    Thread.sleep(5000);
+    Thread.sleep(10000);
     //waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/app-estimate-import/div[2]/div/div/div[1]/div/div[2]/div[1]/div[2]/div/i")));
 //    WebElement clientnamedropdown = driver.findElement(By.xpath("/html/body/app-root/app-estimate-import/div[2]/div/div/div[1]/div/div[2]/div[1]/div[2]/div/i"));
 //    clientnamedropdown.click();
 //    WebElement inputContainer = driver.findElement(By.cssSelector(".mat-form-field-infix"));
 //    inputContainer.click();
     
-    System.out.println("Select Client");   
+   // System.out.println("Select Client");   
     System.out.println("Select Client");
 
     WebElement arrowDivClient = wait.until(ExpectedConditions.elementToBeClickable(
@@ -234,8 +234,10 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", arrowDivClient);
 
     try {
+    	Thread.sleep(2000);
         arrowDivClient.click();
     } catch (Exception e) {
+    	Thread.sleep(2000);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", arrowDivClient);
     }
 
@@ -412,7 +414,7 @@ public void user_createsestimate_withoutputs() throws InterruptedException, File
     waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-select\"]/div[3]/div/div/div[2]")));
     WebElement importfromexcel1 = driver.findElement(By.xpath("//*[@id=\"action-dialog-select\"]/div[3]/div/div/div[2]"));
     importfromexcel1.click();
-    Thread.sleep(5000);
+    Thread.sleep(10000);
     System.out.println("Select Client");
 
     WebElement arrowDivClient = wait.until(ExpectedConditions.elementToBeClickable(
