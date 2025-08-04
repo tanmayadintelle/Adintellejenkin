@@ -105,8 +105,16 @@ public class LoginStepsDefinition4 {
 //	    options.addArguments("--no-sandbox");
 //	    options.addArguments("--disable-dev-shm-usage");
 //	    options.addArguments("--remote-allow-origins=*");
+	    options.addArguments("--headless=new");             // ✅ Modern headless mode (preferred)
+	    options.addArguments("--disable-gpu");              // ✅ Required for stability on headless
+	    options.addArguments("--window-size=1920,1080");    // ✅ Sets screen size explicitly
+	    options.addArguments("--no-sandbox");               // ✅ Prevents permission issues
+	    options.addArguments("--disable-dev-shm-usage");    // ✅ Avoids shared memory crashes
+
+	    // Optional, if you face CORS/network issues:
+	    options.addArguments("--remote-allow-origins=*");
 	    driver =new ChromeDriver(options);
-	  //  driver.manage().window().setSize(new Dimension(1920, 1080));
+	   // driver.manage().window().setSize(new Dimension(1920, 1080));
 	    System.out.print("WebDriver initalized");
 	    driver.get("https://pro.adintelle.com/v7/login"); 
 	    reduceResolution();
