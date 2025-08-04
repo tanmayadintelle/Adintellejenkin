@@ -17,9 +17,9 @@ New-Item -ItemType Directory -Path $tempFolder | Out-Null
 
 foreach ($folder in $folders) {
     if (Test-Path $folder) {
-        Get-ChildItem -Path $folder -Recurse -File |
-            Where-Object { $_.LastWriteTime.Date -eq (Get-Date).Date } |
-            ForEach-Object {
+        Get-ChildItem -Path $folder -Recurse |
+   	 Where-Object { $_.LastWriteTime.Date -eq (Get-Date).Date } |
+   	   ForEach-Object {
                 $relativePath = $_.FullName.Substring((Get-Item $folder).FullName.Length).TrimStart("\")
                 $destination = Join-Path $tempFolder (Join-Path $folder $relativePath)
                 $destinationDir = Split-Path $destination
