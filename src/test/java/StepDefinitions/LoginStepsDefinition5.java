@@ -104,12 +104,12 @@ public class LoginStepsDefinition5 {
 	    prefs1.put("directory_upgrade", true);             
 	    prefs1.put("safebrowsing.enabled", true);          
 	    options.setExperimentalOption("prefs", prefs1);
-	    options.addArguments("--headless=new"); // Use new headless for better rendering
-	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-	    options.addArguments("--window-size=1920,1080");
-	    options.addArguments("--no-sandbox");
-	    options.addArguments("--disable-dev-shm-usage");
-	    options.addArguments("--remote-allow-origins=*");
+//	    options.addArguments("--headless=new"); // Use new headless for better rendering
+//	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+//	    options.addArguments("--window-size=1920,1080");
+//	    options.addArguments("--no-sandbox");
+//	    options.addArguments("--disable-dev-shm-usage");
+//	    options.addArguments("--remote-allow-origins=*");
 	    driver =new ChromeDriver(options);
 	   
 	    System.out.print("WebDriver initalized");
