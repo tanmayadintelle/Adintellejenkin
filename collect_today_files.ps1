@@ -17,42 +17,32 @@ $today = (Get-Date).Date
 $basePath = (Get-Location).Path
 
 foreach ($folder in $folders) {
-    Write-Host "`n--- Processing folder: $folder ---"
-
     $fullFolderPath = Join-Path $basePath $folder
 
-    if (-not (Test-Path $fullFolderPath)) {
-        Write-Host "✗ Folder does not exist: $fullFolderPath"
-        continue
-    }
+    if (Test-Path $fullFolderPath) {
+        $items = Get-ChildItem -Path $fullFolderPath -Recurse -Force
+        foreach ($item in $items) {
+            $isMatch = ($item.CreationTime.Date -eq $today) -or ($item.LastWriteTime.Date -eq $today)
+            $flag = if ($isMatch) { "✔" } else { "✗" }
+            Write-Host "$flag $($item.FullName) - Created: $($item.CreationTime) - Modified: $($item.LastWriteTime)"
 
-    $items = Get-ChildItem -Path $fullFolderPath -Recurse -Force
+            if ($isMatch) {
+                $relativePath = $item.FullName.Substring($basePath.Length).TrimStart('\')
+                $destination = Join-Path $tempFolder $relativePath
+                $destinationDir = Split-Path $destination
 
-    foreach ($item in $items) {
-        $createdToday = $item.CreationTime.Date -eq $today
-        $modifiedToday = $item.LastWriteTime.Date -eq $today
-        $isMatch = $createdToday -or $modifiedToday
+                if (!(Test-Path $destinationDir)) {
+                    New-Item -ItemType Directory -Path $destinationDir -Force | Out-Null
+                }
 
-        $flag = if ($isMatch) { "✔" } else { "✗" }
-        Write-Host ("$flag {0,-80} Created: {1}  Modified: {2}" -f $item.FullName, $item.CreationTime.Date, $item.LastWriteTime.Date)
-
-        if ($isMatch) {
-            $relativePath = $item.FullName.Substring($basePath.Length).TrimStart('\')
-            $destination = Join-Path $tempFolder $relativePath
-            $destinationDir = Split-Path $destination
-
-            if (!(Test-Path $destinationDir)) {
-                New-Item -ItemType Directory -Path $destinationDir -Force | Out-Null
-            }
-
-            if (-not $item.PSIsContainer) {
-                Copy-Item $item.FullName -Destination $destination -Force
+                if (-not $item.PSIsContainer) {
+                    Copy-Item $item.FullName -Destination $destination -Force
+                }
             }
         }
     }
 }
 
-# Create zip output
 if (!(Test-Path "zips")) {
     New-Item -ItemType Directory -Path "zips" | Out-Null
 }
