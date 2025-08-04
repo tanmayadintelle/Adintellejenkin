@@ -22,11 +22,8 @@ foreach ($folder in $folders) {
     if (Test-Path $fullFolderPath) {
         $items = Get-ChildItem -Path $fullFolderPath -Recurse -Force
         foreach ($item in $items) {
-            $isMatch = ($item.CreationTime.Date -eq $today) -or ($item.LastWriteTime.Date -eq $today)
-            $flag = if ($isMatch) { "✔" } else { "✗" }
-            Write-Host "$flag $($item.FullName) - Created: $($item.CreationTime) - Modified: $($item.LastWriteTime)"
-
-            if ($isMatch) {
+            if (($item.CreationTime.Date -eq $today) -or ($item.LastWriteTime.Date -eq $today)) {
+                # Calculate relative path from base folder
                 $relativePath = $item.FullName.Substring($basePath.Length).TrimStart('\')
                 $destination = Join-Path $tempFolder $relativePath
                 $destinationDir = Split-Path $destination
@@ -43,6 +40,7 @@ foreach ($folder in $folders) {
     }
 }
 
+# Create zip output folder if not exist
 if (!(Test-Path "zips")) {
     New-Item -ItemType Directory -Path "zips" | Out-Null
 }
