@@ -68,13 +68,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    HashMap<String, Object> prefs = new HashMap<>();    
 			    // Block notifications by setting the preference value to 2 (block)
 			    prefs.put("profile.default_content_setting_values.notifications", 2); 
-			    options.setExperimentalOption("prefs", prefs);
-			    options.addArguments("--headless=new"); // Use new headless for better rendering
-			    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-			    options.addArguments("--window-size=1920,1080");
-			    options.addArguments("--no-sandbox");
-			    options.addArguments("--disable-dev-shm-usage");
-			    options.addArguments("--remote-allow-origins=*");
+			 
 			    // Add preferences to Chrome options
 			    options.setExperimentalOption("prefs", prefs);
 			    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -91,7 +85,14 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    prefs1.put("plugins.always_open_pdf_externally", true);
 			    prefs1.put("download.prompt_for_download", false); 
 			    prefs1.put("directory_upgrade", true);             
-			    prefs1.put("safebrowsing.enabled", true);          
+			    prefs1.put("safebrowsing.enabled", true);  
+			    options.setExperimentalOption("prefs", prefs);
+			    options.addArguments("--headless=new"); // Use new headless for better rendering
+			    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+			    options.addArguments("--window-size=1920,1080");
+			    options.addArguments("--no-sandbox");
+			    options.addArguments("--disable-dev-shm-usage");
+			    options.addArguments("--remote-allow-origins=*");
 			    options.setExperimentalOption("prefs", prefs1);
 			    driver =new ChromeDriver(options);
 			    driver.manage().window().setSize(new Dimension(1920, 1080));
@@ -190,7 +191,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    
 				waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[contains(@src, 'newjob.svg')]")));
 			    JavascriptExecutor jszoom = (JavascriptExecutor) driver;
-		        jszoom.executeScript("document.body.style.zoom='100%'");
+		        jszoom.executeScript("document.body.style.zoom='90%'");
 		        WebElement imgElement = driver.findElement(By.xpath("//img[contains(@src, 'newjob.svg')]"));
 		        js.executeScript("arguments[0].scrollIntoView(true);", imgElement); // Scrolls to the element
 		        js.executeScript("arguments[0].focus();", imgElement);              // Focuses the element
