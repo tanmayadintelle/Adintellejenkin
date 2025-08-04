@@ -64,21 +64,22 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
     // Write code here that turns the phrase above into concrete actions
 		   // Write code here that turns the phrase above into concrete actions
 				ChromeOptions options = new ChromeOptions();
-			    // Create a HashMap for preferences
-//				ChromeOptions options = new ChromeOptions();
-	//		options.addArguments("--headless=new");
-				options.addArguments("--window-size=1920,1080");
-//				options.addArguments("--disable-gpu");
-//				options.addArguments("--no-sandbox");
-//				options.addArguments("--disable-dev-shm-usage");
-
+			
 			    HashMap<String, Object> prefs = new HashMap<>();    
 			    // Block notifications by setting the preference value to 2 (block)
 			    prefs.put("profile.default_content_setting_values.notifications", 2); 
+			    options.setExperimentalOption("prefs", prefs);
+			    options.addArguments("--headless=new"); // Use new headless for better rendering
+			    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+			    options.addArguments("--window-size=1920,1080");
+			    options.addArguments("--no-sandbox");
+			    options.addArguments("--disable-dev-shm-usage");
+			    options.addArguments("--remote-allow-origins=*");
 			    // Add preferences to Chrome options
 			    options.setExperimentalOption("prefs", prefs);
 			    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-			    String downloadDir = "digitaloutputscbf\\" + timestamp;
+			  //  String downloadDir = "digitaloutputscbf\\" + timestamp;
+			    String downloadDir = new File("digitaloutputscbf\\" + timestamp).getAbsolutePath();
 
 			    File downloadFolder = new File(downloadDir);
 			    if (!downloadFolder.exists()) {
@@ -93,10 +94,11 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    prefs1.put("safebrowsing.enabled", true);          
 			    options.setExperimentalOption("prefs", prefs1);
 			    driver =new ChromeDriver(options);
+			    driver.manage().window().setSize(new Dimension(1920, 1080));
 			    System.out.print("WebDriver initalized");
 			    driver.get("https://pro.adintelle.com/v7/login"); 
 			    System.out.print("Website opened");
-			    driver.manage().window().setSize(new Dimension(1920, 1080));
+			   // driver.manage().window().setSize(new Dimension(1920, 1080));
 			   // driver.manage().window().maximize();
 			    
 			    String excelFilePath = "DigitalproCBF.xlsx";  // Path to your Excel file

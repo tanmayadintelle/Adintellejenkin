@@ -66,35 +66,11 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
     // Write code here that turns the phrase above into concrete actions
 		   // Write code here that turns the phrase above into concrete actions
 				ChromeOptions options = new ChromeOptions();
-				options.addArguments("--window-size=1920,1080");
-			//	options.addArguments("--window-size=1920,1080");
-			    // Create a HashMap for preferences
-				//ChromeOptions options = new ChromeOptions();
-				
-				
-//				options.addArguments("--headless=new");
-	//			options.addArguments("--window-size=1920,1080");
-//				options.addArguments("--disable-gpu");
-//				options.addArguments("--no-sandbox");
-//				options.addArguments("--disable-dev-shm-usage");
-//				
-				
-				//options.addArguments("--headless=new"); // or just "--headless" if old version
-//				options.addArguments("--window-size=1920,1080");
-//			    HashMap<String, Object> prefs1 = new HashMap<>();  
-//			    prefs1.put("profile.default_content_setting_values.notifications", 2);
-//			    prefs1.put("download.default_directory", downloadDir); // ✅ Your download path
-//			    prefs1.put("plugins.always_open_pdf_externally", true);
-//			    prefs1.put("download.prompt_for_download", false); 
-//			    prefs1.put("directory_upgrade", true);             
-//			    prefs1.put("safebrowsing.enabled", true);          
-//			   // options.setExperimentalOption("prefs", prefs1);
-			    // Block notifications by setting the preference value to 2 (block)
-			  //  prefs1.put("profile.default_content_setting_values.notifications", 2); 
-			    // Add preferences to Chrome options
-			    //options.setExperimentalOption("prefs", prefs);
+			 //   prefs.put("profile.default_content_setting_values.notifications", 2); 
+			  
 			    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-			    String downloadDir = "digitaloutputsvbf\\" + timestamp;
+			   // String downloadDir = "digitaloutputsvbf\\" + timestamp;
+			    String downloadDir = new File("digitaloutputsvbf\\" + timestamp).getAbsolutePath();
 
 			    File downloadFolder = new File(downloadDir);
 			    if (!downloadFolder.exists()) {
@@ -107,35 +83,16 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    prefs1.put("download.prompt_for_download", false); 
 			    prefs1.put("directory_upgrade", true);             
 			    prefs1.put("safebrowsing.enabled", true);     
-//			    options.addArguments("--headless=new"); // or just "--headless" for older Chrome
-//			    options.addArguments("--remote-allow-origins=*");
-//		        options.addArguments("--window-size=1920,1080"); // set your desired resolution
-//			    options.addArguments("--disable-gpu"); // recommended for headless
-//			    options.addArguments("--no-sandbox");
-//			    options.setAcceptInsecureCerts(true);// recommended for CI environments
-
-			   // WebDriver driver = new ChromeDriver(options);
-			   // options.setExperimentalOption("prefs", prefs1);
-//			    options.addArguments("--headless=new");  // new headless mode (default in Chrome 112+)
-//			    options.addArguments("--window-size=1920,1080"); // force screen size
-//			    options.addArguments("--disable-gpu");  // legacy compatibility
-//			    options.addArguments("--force-device-scale-factor=1");
-			    //options.setExperimentalOption("prefs", prefs);
-//			    options.setAcceptInsecureCerts(true);
-//			    options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
-//			    options.addArguments("--disable-blink-features=AutomationControlled");
-		//    options.addArguments("--window-size=1366,768");
-		   // options.addArguments("--force-device-scale-factor=0.8");
-			//    options.addArguments("--remote-allow-origins=*");
-			 //   options.addArguments("--headless=chrome");
-//			    prefs1.put("profile.default_content_setting_values.notifications", 2);
-//			    prefs1.put("download.default_directory", downloadDir); // ✅ Your download path
-//			    prefs1.put("plugins.always_open_pdf_externally", true);
-//			    prefs1.put("download.prompt_for_download", false); 
-//			    prefs1.put("directory_upgrade", true);             
-//			    prefs1.put("safebrowsing.enabled", true); 
+//			 
 			    
 			    options.setExperimentalOption("prefs", prefs1);
+			//    options.setExperimentalOption("prefs", prefs);
+			    options.addArguments("--headless=new"); // Use new headless for better rendering
+			    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+			    options.addArguments("--window-size=1920,1080");
+			    options.addArguments("--no-sandbox");
+			    options.addArguments("--disable-dev-shm-usage");
+			    options.addArguments("--remote-allow-origins=*");
 			    driver =new ChromeDriver(options);
 			    System.out.print("WebDriver initalized");
 			    driver.get("https://pro.adintelle.com/v7/login"); 
