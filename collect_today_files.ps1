@@ -1,47 +1,14 @@
-$folders = @(
-    "BTLoutputs",
-    "digitaloutputsvbf",
-    "digitaloutputscbf",
-    "pressoutput",
-    "reports",
-    "Masterscreenshots"
-)
-
-$tempFolder = "todays_files"
-if (Test-Path $tempFolder) {
-    Remove-Item $tempFolder -Recurse -Force
+Write-Host "`n--- Processing folder: $folder ---"
+$fullFolderPath = Join-Path (Get-Location) $folder
+if (-not (Test-Path $fullFolderPath)) {
+    Write-Host "✗ Folder does not exist: $fullFolderPath"
+    continue
 }
-New-Item -ItemType Directory -Path $tempFolder | Out-Null
-
-$today = (Get-Date).Date
-$basePath = (Get-Location).Path
-
-foreach ($folder in $folders) {
-    $fullFolderPath = Join-Path $basePath $folder
-
-    if (Test-Path $fullFolderPath) {
-        $items = Get-ChildItem -Path $fullFolderPath -Recurse -Force
-        foreach ($item in $items) {
-            if (($item.CreationTime.Date -eq $today) -or ($item.LastWriteTime.Date -eq $today)) {
-                $relativePath = $item.FullName.Substring($basePath.Length).TrimStart('\')
-                $destination = Join-Path $tempFolder $relativePath
-                $destinationDir = Split-Path $destination
-
-                if (!(Test-Path $destinationDir)) {
-                    New-Item -ItemType Directory -Path $destinationDir -Force | Out-Null
-                }
-
-                if (-not $item.PSIsContainer) {
-                    Copy-Item $item.FullName -Destination $destination -Force
-                }
-            }
-        }
-    }
+Get-ChildItem -Path $fullFolderPath -Recurse -Force | ForEach-Object {
+    $isMatch = ($_.CreationTime.Date -eq (Get-Date).Date) -or ($_.LastWriteTime.Date -eq (Get-Date).Date)
+    Write-Host ("{0} {1,-50} CT: {2:MM/dd/yyyy}  LW: {3:MM/dd/yyyy}"
+        -f ($isMatch ? "✔" : "✗"),
+           $_.FullName,
+           $_.CreationTime,
+           $_.LastWriteTime)
 }
-
-# Create zip output
-if (!(Test-Path "zips")) {
-    New-Item -ItemType Directory -Path "zips" | Out-Null
-}
-
-Compress-Archive -Path "$tempFolder\*" -DestinationPath "zips\TodaysOutput.zip" -Force
