@@ -327,6 +327,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 			WebElement nextbutton04 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job-digi > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 			nextbutton04.click();
 	        System.out.print("Add Campaign for Manual FLow");
+	        Thread.sleep(5000);
 	     // Wait for Add Campaign icon and click it using JavaScript
 	        WebElement addCampaignIcon = wait.until(ExpectedConditions.presenceOfElementLocated(
 	            By.xpath("//img[contains(@src, 'add-compaign.svg')]")));

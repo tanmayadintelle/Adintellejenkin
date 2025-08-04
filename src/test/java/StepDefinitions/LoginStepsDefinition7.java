@@ -323,6 +323,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				nextbutton04.click();
 		        System.out.print("Add Campaign for Manual FLow");
 		     // Wait for Add Campaign icon and click it using JavaScript
+		        Thread.sleep(5000);
 		        WebElement addCampaignIcon = wait.until(ExpectedConditions.presenceOfElementLocated(
 		            By.xpath("//img[contains(@src, 'add-compaign.svg')]")));
 		        js.executeScript("arguments[0].click();", addCampaignIcon);
