@@ -1,14 +1,60 @@
-Write-Host "`n--- Processing folder: $folder ---"
-$fullFolderPath = Join-Path (Get-Location) $folder
-if (-not (Test-Path $fullFolderPath)) {
-    Write-Host "✗ Folder does not exist: $fullFolderPath"
-    continue
+$folders = @(
+    "BTLoutputs",
+    "digitaloutputsvbf",
+    "digitaloutputscbf",
+    "pressoutput",
+    "reports",
+    "Masterscreenshots"
+)
+
+$tempFolder = "todays_files"
+if (Test-Path $tempFolder) {
+    Remove-Item $tempFolder -Recurse -Force
 }
-Get-ChildItem -Path $fullFolderPath -Recurse -Force | ForEach-Object {
-    $isMatch = ($_.CreationTime.Date -eq (Get-Date).Date) -or ($_.LastWriteTime.Date -eq (Get-Date).Date)
-    Write-Host ("{0} {1,-50} CT: {2:MM/dd/yyyy}  LW: {3:MM/dd/yyyy}"
-        -f ($isMatch ? "✔" : "✗"),
-           $_.FullName,
-           $_.CreationTime,
-           $_.LastWriteTime)
+New-Item -ItemType Directory -Path $tempFolder | Out-Null
+
+$today = (Get-Date).Date
+$basePath = (Get-Location).Path
+
+foreach ($folder in $folders) {
+    Write-Host "`n--- Processing folder: $folder ---"
+
+    $fullFolderPath = Join-Path $basePath $folder
+
+    if (-not (Test-Path $fullFolderPath)) {
+        Write-Host "✗ Folder does not exist: $fullFolderPath"
+        continue
+    }
+
+    $items = Get-ChildItem -Path $fullFolderPath -Recurse -Force
+
+    foreach ($item in $items) {
+        $createdToday = $item.CreationTime.Date -eq $today
+        $modifiedToday = $item.LastWriteTime.Date -eq $today
+        $isMatch = $createdToday -or $modifiedToday
+
+        $flag = if ($isMatch) { "✔" } else { "✗" }
+        Write-Host ("$flag {0,-80} Created: {1}  Modified: {2}" -f $item.FullName, $item.CreationTime.Date, $item.LastWriteTime.Date)
+
+        if ($isMatch) {
+            $relativePath = $item.FullName.Substring($basePath.Length).TrimStart('\')
+            $destination = Join-Path $tempFolder $relativePath
+            $destinationDir = Split-Path $destination
+
+            if (!(Test-Path $destinationDir)) {
+                New-Item -ItemType Directory -Path $destinationDir -Force | Out-Null
+            }
+
+            if (-not $item.PSIsContainer) {
+                Copy-Item $item.FullName -Destination $destination -Force
+            }
+        }
+    }
 }
+
+# Create zip output
+if (!(Test-Path "zips")) {
+    New-Item -ItemType Directory -Path "zips" | Out-Null
+}
+
+Compress-Archive -Path "$tempFolder\*" -DestinationPath "zips\TodaysOutput.zip" -Force
