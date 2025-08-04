@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -56,6 +57,12 @@ public class LoginStepsDefinition4 {
 
 	    // Write code here that turns the phrase above into concrete actions
 		ChromeOptions options = new ChromeOptions();
+		  options.addArguments("--headless=new"); // Use new headless for better rendering
+		    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+		    options.addArguments("--window-size=1920,1080");
+		    options.addArguments("--no-sandbox");
+		    options.addArguments("--disable-dev-shm-usage");
+		    options.addArguments("--remote-allow-origins=*");
 //		options.addArguments("--headless=new"); // Or "--headless" for older Chrome
 //		options.addArguments("--window-size=1920,1080");
 //		options.addArguments("--disable-gpu");
@@ -93,7 +100,8 @@ public class LoginStepsDefinition4 {
 	    driver.get("https://pro.adintelle.com/v7/login"); 
 	    reduceResolution();
 	    System.out.print("Website opened");
-	    driver.manage().window().maximize();
+	   // driver.manage().window().setSize(new Dimension(1920, 1080));
+	    //driver.manage().window().maximize();
 	    
 	    String excelFilePath = "Book2.xlsx";  // Path to your Excel file
         FileInputStream file = new FileInputStream(new File(excelFilePath));
@@ -168,12 +176,12 @@ public class LoginStepsDefinition4 {
 		    
 		  
 		    JavascriptExecutor jszoom = (JavascriptExecutor) driver;
-		    jszoom.executeScript("document.body.style.zoom='40%'");
+		    //jszoom.executeScript("document.body.style.zoom='40%'");
 		    waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"planning\"]/div/table/thead/tr/th[1]")));
 		    waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/newjob.svg']")));
 //		    JavascriptExecutor jsif = (JavascriptExecutor) driver;
 //	        jsif.executeScript("arguments[0].scrollTop = arguments[0].scrollHeight", iframe);
-		   // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
+		    ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='40%'");
 		    driver.findElement(By.xpath("//img[@src='./assets/img/svg/newjob.svg']")).click();
 		    waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/div/div/app-new-job/div/div[3]/div/div[2]/div/div/div/div/div[1]/div[1]/span/img")));
 		    System.out.println("Inside New Job activity");
