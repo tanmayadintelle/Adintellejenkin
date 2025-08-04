@@ -20,10 +20,16 @@ foreach ($folder in $folders) {
     $fullFolderPath = Join-Path $basePath $folder
 
     if (Test-Path $fullFolderPath) {
+        Write-Host "Checking folder: $folder"
         $items = Get-ChildItem -Path $fullFolderPath -Recurse -Force
         foreach ($item in $items) {
-            if (($item.CreationTime.Date -eq $today) -or ($item.LastWriteTime.Date -eq $today)) {
-                # Calculate relative path from base folder
+            $creationDate = $item.CreationTime.Date
+            $writeDate = $item.LastWriteTime.Date
+            $isToday = ($creationDate -eq $today) -or ($writeDate -eq $today)
+
+            Write-Host ("{0} | Created: {1} | Modified: {2} | Matches Today? {3}" -f $item.FullName, $creationDate, $writeDate, $isToday)
+
+            if ($isToday) {
                 $relativePath = $item.FullName.Substring($basePath.Length).TrimStart('\')
                 $destination = Join-Path $tempFolder $relativePath
                 $destinationDir = Split-Path $destination
@@ -37,12 +43,14 @@ foreach ($folder in $folders) {
                 }
             }
         }
+    } else {
+        Write-Host "Folder not found: $folder"
     }
 }
 
-# Create zip output folder if not exist
 if (!(Test-Path "zips")) {
     New-Item -ItemType Directory -Path "zips" | Out-Null
 }
 
 Compress-Archive -Path "$tempFolder\*" -DestinationPath "zips\TodaysOutput.zip" -Force
+Write-Host "Archive created at zips\TodaysOutput.zip"
