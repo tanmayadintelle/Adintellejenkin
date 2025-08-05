@@ -104,7 +104,7 @@ public class LoginStepsDefinition5 {
 	    System.out.print("WebDriver initalized");
 	    driver.get("https://pro.adintelle.com/v7/login"); 
 	    System.out.print("Website opened");
-	    driver.manage().window().maximize();
+	    //driver.manage().window().maximize();
 
 	    JavascriptExecutor js = (JavascriptExecutor) driver;
 	    String excelFilePath = "Presspro.xlsx";  // Path to your Excel file
