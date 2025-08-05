@@ -564,7 +564,7 @@ public class LoginStepsDefinition5 {
                  System.out.println("Attempt " + (attemptss + 1) + " failed. Retrying...");
              }
          }
-         Thread.sleep(2000);
+         Thread.sleep(5000);
          WebElement stpckElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("stpck")));
 
       // Scroll into view
