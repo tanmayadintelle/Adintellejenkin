@@ -1854,7 +1854,7 @@ public void user_createsclientbill() throws InterruptedException, FileNotFoundEx
 						js.executeScript("arguments[0].scrollIntoView(true);", intvendor); // Scrolls to the element
 			        	//js.executeScript("arguments[0].focus();", integratedSvg);
 			        	js.executeScript("arguments[0].click();", intvendor);
-					// intvendor.sendKeys(vendorName);
+					 intvendor.sendKeys(vendorName);
 					 intvendor.sendKeys(Keys.ENTER);
 					 Thread.sleep(2000);
 					 WebElement intplatformtype = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[1]/div[2]/ng-select/div/div/div[2]/input")));
