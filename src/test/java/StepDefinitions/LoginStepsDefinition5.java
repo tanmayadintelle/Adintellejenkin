@@ -125,6 +125,7 @@ public class LoginStepsDefinition5 {
 		    waitload2.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"identify_user_button_text_active\"]")));
 		    driver.findElement(By.xpath("//*[@id=\"identify_user_button_text_active\"]")).click();
 		    
+		    
 		    WebDriverWait waitload1 = new WebDriverWait(driver, Duration.ofSeconds(80));
 		    WebDriverWait waitloadz = new WebDriverWait(driver, Duration.ofSeconds(80));
 			   
@@ -172,6 +173,9 @@ public class LoginStepsDefinition5 {
 	        
 	        System.out.println("Logged in");
 	        //WebDriverWait waitid = new WebDriverWait(driver, Duration.ofSeconds(60));
+	        JavascriptExecutor jszoom = (JavascriptExecutor) driver;
+		    jszoom.executeScript("document.body.style.zoom='90%'");
+	        
 	        List<WebElement> icons = driver.findElements(
 	        	    By.xpath("//*[name()='svg']/*[name()='path' and contains(@d, 'M17.8059')]")
 	        	);
