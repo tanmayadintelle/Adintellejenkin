@@ -56,9 +56,9 @@ public class LoginStepsDefinition5 {
 	@Given("User completes Press pro sanity flow")
 	public void user_is_on_login_page() throws IOException, InterruptedException {
 		   ChromeOptions options = new ChromeOptions();
-		   options.addArguments("--headless=new");                      // Use new headless mode
+		  // options.addArguments("--headless=new");                      // Use new headless mode
 	        options.addArguments("--disable-gpu");                       // Disable GPU (best for CI/CD)
-	        options.addArguments("--window-size=1920,1080");             // Set proper window size
+	       // options.addArguments("--window-size=1920,1080");             // Set proper window size
 	        options.addArguments("--no-sandbox");                        // Bypass OS security (required for CI)
 	        options.addArguments("--disable-dev-shm-usage");             // Fix for Linux memory limit
 	        options.addArguments("--remote-allow-origins=*");            // Allow cross-origin requests
@@ -554,8 +554,11 @@ public class LoginStepsDefinition5 {
                  
                  WebElement element = driver.findElement(By.xpath(xpathaddnew));
                  Thread.sleep(2000);
+                 js.executeScript("arguments[0].scrollIntoView(true);", element); // Scrolls to the element
+ 	        	// js.executeScript("arguments[0].focus();", campaignnamefield);
+ 	        	 js.executeScript("arguments[0].click();", element);
                  // Click the element
-                 element.click();
+              //   element.click();
                  System.out.println("Element clicked successfully!");
                  break; // Exit the loop if the click is successful
              } catch (Exception e) {
