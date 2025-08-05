@@ -542,7 +542,9 @@ public class LoginStepsDefinition5 {
          js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
          
        
-         wait.until(ExpectedConditions.elementToBeClickable(By.id("submit_btn"))).click();
+         WebElement submitBtn = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("submit_btn")));
+         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", submitBtn);
+
          Thread.sleep(2000);
          try {
         	    WebElement okButton = new WebDriverWait(driver, Duration.ofSeconds(80))
