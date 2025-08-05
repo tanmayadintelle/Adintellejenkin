@@ -73,7 +73,7 @@ public class LoginStepsDefinition5 {
 		options.addArguments("--no-sandbox");
 		 options.addArguments("--headless=new"); // Use new headless for better rendering
 		    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-		    options.addArguments("--window-size=1920,1080");
+		    options.addArguments("--window-size=1366,768");
 		    options.addArguments("--no-sandbox");
 		    options.addArguments("--disable-dev-shm-usage");
 		    options.addArguments("--remote-allow-origins=*");
@@ -100,7 +100,7 @@ public class LoginStepsDefinition5 {
 	    prefs1.put("safebrowsing.enabled", true);          
 	    options.setExperimentalOption("prefs", prefs1);
 	    driver =new ChromeDriver(options);
-	    driver.manage().window().setSize(new Dimension(1920, 1080));
+	    driver.manage().window().setSize(new Dimension(1366, 768));
 	    System.out.print("WebDriver initalized");
 	    driver.get("https://pro.adintelle.com/v7/login"); 
 	    System.out.print("Website opened");
