@@ -1857,12 +1857,14 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 				        	//js.executeScript("arguments[0].focus();", integratedSvg);
 				        	//js.executeScript("arguments[0].click();", integratedSvg);
 						 intvendor.sendKeys(vendorName);
+						 Thread.sleep(2000);
 						 intvendor.sendKeys(Keys.ENTER);
 						 Thread.sleep(2000);
 						 WebElement intplatformtype = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[1]/div[2]/ng-select/div/div/div[2]/input")));
 						 String platformtype2 = row.getCell(26).getStringCellValue().trim();
 						 js.executeScript("arguments[0].scrollIntoView(true);", intplatformtype);
 						 intplatformtype.sendKeys(platformtype2);
+						 Thread.sleep(2000);
 						 intplatformtype.sendKeys(Keys.ENTER);
 						 
 						 Thread.sleep(2000);
@@ -1870,12 +1872,14 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 						 String account1 = row.getCell(27).getStringCellValue();
 						 js.executeScript("arguments[0].scrollIntoView(true);", intaccount);
 						 intaccount.sendKeys(account1);
+						 Thread.sleep(2000);
 						 intaccount.sendKeys(Keys.ENTER);
 						 Thread.sleep(2000);
 						 WebElement adaccount = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[1]/div[4]/ng-select/div/div/div[2]/input")));
 						 String adaccount1 = row.getCell(28).getStringCellValue();
 						 js.executeScript("arguments[0].scrollIntoView(true);", adaccount);
 						 adaccount.sendKeys(adaccount1);
+						 Thread.sleep(2000);
 						 adaccount.sendKeys(Keys.ENTER);
 						 Thread.sleep(2000);
 						 WebElement billmonth2 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[1]/div[5]/table/tr/td[1]/ng-select/div/div/div[3]/input")));
@@ -1883,6 +1887,7 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 						 js.executeScript("arguments[0].scrollIntoView(true);", billmonth2);
 						 billmonth2.clear();
 						 billmonth2.sendKeys(billmonth1);
+						 Thread.sleep(2000);
 						 billmonth2.sendKeys(Keys.ENTER);
 						 Thread.sleep(2000);
 						 WebElement year1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[1]/div[5]/table/tr/td[2]/ng-select/div/div/div[3]/input")));
@@ -1890,6 +1895,7 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 						 js.executeScript("arguments[0].scrollIntoView(true);", year1);
 						 year1.clear();
 						 year1.sendKeys(billyear1);
+						 Thread.sleep(2000);
 						 year1.sendKeys(Keys.ENTER);
 						 Thread.sleep(2000);
 						 
@@ -1908,6 +1914,7 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 						 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", tax1);
 						 tax1.clear();
 						 tax1.sendKeys(billtax1);
+						 Thread.sleep(2000);
 						 tax1.sendKeys(Keys.ENTER);
 						 Thread.sleep(2000);
 						 WebElement nextButton0013 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill-intergrated > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
