@@ -534,7 +534,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 		        	} catch (TimeoutException e) {
 		        	    System.out.println("⚠️ Overlay still visible after wait, proceeding anyway.");
 		        	}
-					Thread.sleep(2000);
+					Thread.sleep(5000);
 					WebElement nextbutton07 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
 
 					js.executeScript("arguments[0].scrollIntoView(true);", nextbutton07);
