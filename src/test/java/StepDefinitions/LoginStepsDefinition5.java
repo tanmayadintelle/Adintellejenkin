@@ -581,8 +581,26 @@ public class LoginStepsDefinition5 {
              }
          }
          Thread.sleep(2000);
-         wait.until(ExpectedConditions.elementToBeClickable(By.id("stpck"))).click();
-         
+         WebElement stpckElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("stpck")));
+
+      // Scroll into view
+      ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", stpckElement);
+      Thread.sleep(300); // Let scrolling complete
+
+      // Try clicking using JavaScript
+      try {
+          ((JavascriptExecutor) driver).executeScript("arguments[0].click();", stpckElement);
+          System.out.println("✅ Clicked 'stpck' using JavaScript");
+      } catch (Exception e) {
+          System.out.println("⚠️ JavaScript click failed, trying fallback: " + e.getMessage());
+
+          // Fallback with dispatchEvent
+          ((JavascriptExecutor) driver).executeScript(
+              "var event = new MouseEvent('click', {bubbles: true, cancelable: true}); arguments[0].dispatchEvent(event);",
+              stpckElement
+          );
+          System.out.println("✅ Clicked 'stpck' using dispatchEvent fallback");
+      }
          String packagecode = row.getCell(19).toString();
          WebElement packagecodefield = wait.until(ExpectedConditions.elementToBeClickable(By.id("PackageCode")));
          packagecodefield.click();
