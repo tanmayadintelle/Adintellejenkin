@@ -55,57 +55,41 @@ public class LoginStepsDefinition5 {
 	@SuppressWarnings("deprecation")
 	@Given("User completes Press pro sanity flow")
 	public void user_is_on_login_page() throws IOException, InterruptedException {
+		   ChromeOptions options = new ChromeOptions();
+		   options.addArguments("--headless=new");                      // Use new headless mode
+	        options.addArguments("--disable-gpu");                       // Disable GPU (best for CI/CD)
+	        options.addArguments("--window-size=1920,1080");             // Set proper window size
+	        options.addArguments("--no-sandbox");                        // Bypass OS security (required for CI)
+	        options.addArguments("--disable-dev-shm-usage");             // Fix for Linux memory limit
+	        options.addArguments("--remote-allow-origins=*");            // Allow cross-origin requests
+	        options.addArguments("--disable-blink-features=AutomationControlled"); // Bypass detection
 
-	    // Write code here that turns the phrase above into concrete actions
-		ChromeOptions options = new ChromeOptions();
-	    // Create a HashMap for preferences
-//		ChromeOptions options = new ChromeOptions();
-//		options.addArguments("--headless=new");
-//		options.addArguments("--window-size=1920,1080");
-//		options.addArguments("--disable-gpu");
-//		options.addArguments("--no-sandbox");
-//		options.addArguments("--disable-dev-shm-usage");
-		options.addArguments("--remote-allow-origins=*");
-		options.addArguments("--disable-blink-features=AutomationControlled");
-		// DON’T use headless in scheduler
-		//options.addArguments("--start-maximized"); 
-		options.addArguments("--disable-gpu");
-		options.addArguments("--no-sandbox");
-		 options.addArguments("--headless=new"); // Use new headless for better rendering
-		    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-		   // options.addArguments("--window-size=1366,768");
-		    options.addArguments("--no-sandbox");
-		    options.addArguments("--disable-dev-shm-usage");
-		    options.addArguments("--remote-allow-origins=*");
+	        // === Setup Download Directory ===
+	        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	        String downloadDir = new File("pressoutput\\" + timestamp).getAbsolutePath();
 
-	    HashMap<String, Object> prefs = new HashMap<>();    
-	    // Block notifications by setting the preference value to 2 (block)
-	    prefs.put("profile.default_content_setting_values.notifications", 2); 
-	    // Add preferences to Chrome options
-	    options.setExperimentalOption("prefs", prefs);
-	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String downloadDir = "pressoutput\\" + timestamp;
+	        File downloadFolder = new File(downloadDir);
+	        if (!downloadFolder.exists()) {
+	            downloadFolder.mkdirs(); // Create folder if it doesn't exist
+	        }
 
-	    File downloadFolder = new File(downloadDir);
-	    if (!downloadFolder.exists()) {
-	        downloadFolder.mkdirs(); // ✅ Create the folder if not there
-	      
-	    }
-	    Map<String, Object> prefs1 = new HashMap<>();
-	    prefs1.put("profile.default_content_setting_values.notifications", 2);
-	    prefs1.put("download.default_directory", downloadDir); // ✅ Your download path
-	    prefs1.put("plugins.always_open_pdf_externally", true);
-	    prefs1.put("download.prompt_for_download", false); 
-	    prefs1.put("directory_upgrade", true);             
-	    prefs1.put("safebrowsing.enabled", true);          
-	    options.setExperimentalOption("prefs", prefs1);
-	    driver =new ChromeDriver(options);
-	  //  driver.manage().window().setSize(new Dimension(1366, 768));
-	    System.out.print("WebDriver initalized");
-	    driver.get("https://pro.adintelle.com/v7/login"); 
-	    System.out.print("Website opened");
-	    //driver.manage().window().maximize();
+	        // === Setup Preferences for Chrome ===
+	        Map<String, Object> prefs = new HashMap<>();
+	        prefs.put("profile.default_content_setting_values.notifications", 2); // Block popups
+	        prefs.put("download.default_directory", downloadDir);                // Set download folder
+	        prefs.put("plugins.always_open_pdf_externally", true);               // Bypass Chrome PDF viewer
+	        prefs.put("download.prompt_for_download", false);                    // No download popup
+	        prefs.put("directory_upgrade", true);
+	        prefs.put("safebrowsing.enabled", true);
 
+	        options.setExperimentalOption("prefs", prefs);
+
+	        // === Start ChromeDriver ===
+	        driver = new ChromeDriver(options);
+	        System.out.println("✅ WebDriver initialized in headless mode.");
+
+	        driver.get("https://pro.adintelle.com/v7/login");
+	        System.out.println("🌐 Website opened.");	
 	    JavascriptExecutor js = (JavascriptExecutor) driver;
 	    String excelFilePath = "Presspro.xlsx";  // Path to your Excel file
         FileInputStream file = new FileInputStream(new File(excelFilePath));
