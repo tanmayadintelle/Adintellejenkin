@@ -13,14 +13,13 @@ if (Test-Path $tempFolder) {
 }
 New-Item -ItemType Directory -Path $tempFolder | Out-Null
 
-$today = (Get-Date).Date
+$cutoffTime = (Get-Date).Date  # Midnight today
 $basePath = (Get-Location).Path
 
 foreach ($folder in $folders) {
     $fullFolderPath = Join-Path $basePath $folder
 
     if (Test-Path $fullFolderPath) {
-        # Get all child items (files and folders) recursively
         $items = Get-ChildItem -Path $fullFolderPath -Recurse -Force
 
         foreach ($item in $items) {
@@ -28,16 +27,16 @@ foreach ($folder in $folders) {
             $destination = Join-Path $tempFolder $relativePath
             $destinationDir = Split-Path $destination
 
-            # If folder (directory) created today - copy entire folder + contents
-            if ($item.PSIsContainer -and $item.CreationTime.Date -eq $today) {
-                # Copy whole folder with contents if not already copied
-                if (!(Test-Path $destination)) {
-                    Copy-Item -Path $item.FullName -Destination $destination -Recurse -Force
+            if ($item.PSIsContainer) {
+                # Copy folder only if it was created or modified today
+                if ($item.CreationTime -ge $cutoffTime -or $item.LastWriteTime -ge $cutoffTime) {
+                    if (!(Test-Path $destination)) {
+                        Copy-Item -Path $item.FullName -Destination $destination -Recurse -Force
+                    }
                 }
-            }
-            # Else if file (not folder) created or modified today - copy file
-            elseif (-not $item.PSIsContainer) {
-                if (($item.CreationTime.Date -eq $today) -or ($item.LastWriteTime.Date -eq $today)) {
+            } else {
+                # Copy file only if it was created or modified today
+                if ($item.CreationTime -ge $cutoffTime -or $item.LastWriteTime -ge $cutoffTime) {
                     if (!(Test-Path $destinationDir)) {
                         New-Item -ItemType Directory -Path $destinationDir -Force | Out-Null
                     }
@@ -48,7 +47,6 @@ foreach ($folder in $folders) {
     }
 }
 
-# Create zip output folder if not exists
 if (!(Test-Path "zips")) {
     New-Item -ItemType Directory -Path "zips" | Out-Null
 }
