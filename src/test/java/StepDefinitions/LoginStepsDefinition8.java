@@ -1838,40 +1838,54 @@ public void user_createsclientbill() throws InterruptedException, FileNotFoundEx
 					Thread.sleep(2000);
 				  By logbillsvgSelector1 = By.cssSelector("img[src='./assets/img/svg/Log-bill-digi.svg']");
 					WebElement logbillsvgImage1 = wait.until(ExpectedConditions.elementToBeClickable(logbillsvgSelector1));
-					logbillsvgImage1.click();
+					js.executeScript("arguments[0].scrollIntoView(true);", logbillsvgImage1); // Scrolls to the element
+		        	//js.executeScript("arguments[0].focus();", logbillsvgImage1);
+		        	js.executeScript("arguments[0].click();", logbillsvgImage1);
+					//logbillsvgImage1.click();
 					Thread.sleep(2000);
 					By integratedSvgSelector = By.cssSelector("img[src='./assets/img/svg/Intergeted.svg']");
 					WebElement integratedSvg = wait.until(ExpectedConditions.elementToBeClickable(integratedSvgSelector));
-					integratedSvg.click();
+					js.executeScript("arguments[0].scrollIntoView(true);", integratedSvg); // Scrolls to the element
+		        	//js.executeScript("arguments[0].focus();", integratedSvg);
+		        	js.executeScript("arguments[0].click();", integratedSvg);
+					//integratedSvg.click();
 					Thread.sleep(2000);
 					 WebElement intvendor = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[1]/div[1]/ng-select/div/div/div[2]/input")));
+						js.executeScript("arguments[0].scrollIntoView(true);", intvendor); // Scrolls to the element
+			        	//js.executeScript("arguments[0].focus();", integratedSvg);
+			        	//js.executeScript("arguments[0].click();", integratedSvg);
 					 intvendor.sendKeys(vendorName);
 					 intvendor.sendKeys(Keys.ENTER);
 					 Thread.sleep(2000);
 					 WebElement intplatformtype = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[1]/div[2]/ng-select/div/div/div[2]/input")));
 					 String platformtype2 = row.getCell(26).getStringCellValue().trim();
+					 js.executeScript("arguments[0].scrollIntoView(true);", intplatformtype);
 					 intplatformtype.sendKeys(platformtype2);
 					 intplatformtype.sendKeys(Keys.ENTER);
 					 
 					 Thread.sleep(2000);
 					 WebElement intaccount = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[1]/div[3]/ng-select/div/div/div[2]/input")));
 					 String account1 = row.getCell(27).getStringCellValue();
+					 js.executeScript("arguments[0].scrollIntoView(true);", intaccount);
 					 intaccount.sendKeys(account1);
 					 intaccount.sendKeys(Keys.ENTER);
 					 Thread.sleep(2000);
 					 WebElement adaccount = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[1]/div[4]/ng-select/div/div/div[2]/input")));
 					 String adaccount1 = row.getCell(28).getStringCellValue();
+					 js.executeScript("arguments[0].scrollIntoView(true);", adaccount);
 					 adaccount.sendKeys(adaccount1);
 					 adaccount.sendKeys(Keys.ENTER);
 					 Thread.sleep(2000);
 					 WebElement billmonth2 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[1]/div[5]/table/tr/td[1]/ng-select/div/div/div[3]/input")));
 					 String billmonth1 = row.getCell(65).getStringCellValue();
+					 js.executeScript("arguments[0].scrollIntoView(true);", billmonth2);
 					 billmonth2.clear();
 					 billmonth2.sendKeys(billmonth1);
 					 billmonth2.sendKeys(Keys.ENTER);
 					 Thread.sleep(2000);
 					 WebElement year1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[1]/div[5]/table/tr/td[2]/ng-select/div/div/div[3]/input")));
 					 String billyear1 = row.getCell(66).getStringCellValue();
+					 js.executeScript("arguments[0].scrollIntoView(true);", year1);
 					 year1.clear();
 					 year1.sendKeys(billyear1);
 					 year1.sendKeys(Keys.ENTER);
@@ -1879,20 +1893,24 @@ public void user_createsclientbill() throws InterruptedException, FileNotFoundEx
 					 
 					 WebElement fetchBillIcon = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src*='FeatchBill.svg']")));
 					 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", fetchBillIcon);
+					// js.executeScript("arguments[0].scrollIntoView(true);", year1);
 					 fetchBillIcon.click();
 					 Thread.sleep(10000);
 					 WebElement nextButton0009 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill-intergrated > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
+					 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", nextButton0009);
 					 nextButton0009.click();
 					 Thread.sleep(10000);
 					 
 					 WebElement tax1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div/div[1]/div[4]/div[2]/ng-select/div/div/div[2]/input")));
 					 String billtax1 = row.getCell(46).getStringCellValue();
+					 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", tax1);
 					 tax1.clear();
 					 tax1.sendKeys(billtax1);
 					 tax1.sendKeys(Keys.ENTER);
 					 Thread.sleep(2000);
 					 WebElement nextButton0013 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill-intergrated > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
-					  nextButton0013.click();
+					 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", nextButton0013);
+					 nextButton0013.click();
 					  Thread.sleep(2000);
 					  WebElement nextButton0015 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill-intergrated > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 					  nextButton0015.click();
