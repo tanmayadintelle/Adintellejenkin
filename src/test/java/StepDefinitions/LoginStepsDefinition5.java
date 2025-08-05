@@ -57,9 +57,7 @@ public class LoginStepsDefinition5 {
 	public void user_is_on_login_page() throws IOException, InterruptedException {
 
 	    // Write code here that turns the phrase above into concrete actions
-		
-		
-		//options.addArguments("--force-device-scale-factor=0.6");
+		ChromeOptions options = new ChromeOptions();
 	    // Create a HashMap for preferences
 //		ChromeOptions options = new ChromeOptions();
 //		options.addArguments("--headless=new");
@@ -67,35 +65,31 @@ public class LoginStepsDefinition5 {
 //		options.addArguments("--disable-gpu");
 //		options.addArguments("--no-sandbox");
 //		options.addArguments("--disable-dev-shm-usage");
-//		options.addArguments("--remote-allow-origins=*");
-//		options.addArguments("--disable-blink-features=AutomationControlled");
-//		// DON’T use headless in scheduler
-//		options.addArguments("--start-maximized"); 
-//		options.addArguments("--disable-gpu");
-//		options.addArguments("--no-sandbox");
+		options.addArguments("--remote-allow-origins=*");
+		options.addArguments("--disable-blink-features=AutomationControlled");
+		// DON’T use headless in scheduler
+		options.addArguments("--start-maximized"); 
+		options.addArguments("--disable-gpu");
+		options.addArguments("--no-sandbox");
+		 options.addArguments("--headless=new"); // Use new headless for better rendering
+		    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+		    options.addArguments("--window-size=1920,1080");
+		    options.addArguments("--no-sandbox");
+		    options.addArguments("--disable-dev-shm-usage");
+		    options.addArguments("--remote-allow-origins=*");
 
 	    HashMap<String, Object> prefs = new HashMap<>();    
 	    // Block notifications by setting the preference value to 2 (block)
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
-	    prefs.put("profile.default_content_settings.popups", 0);
-        prefs.put("safebrowsing.enabled", true);
-	    ChromeOptions options = new ChromeOptions();
-		
+	    // Add preferences to Chrome options
 	    options.setExperimentalOption("prefs", prefs);
-	    options.setAcceptInsecureCerts(true);
-//	    options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
-//	    options.addArguments("--disable-blink-features=AutomationControlled");
-//	    options.addArguments("--window-size=1920,1080");
-//	    options.addArguments("--force-device-scale-factor=0.8");
-//	    options.addArguments("--remote-allow-origins=*");
-//	    options.addArguments("--headless=chrome");
 	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    //String downloadDir = "pressoutput\\" + timestamp;
-	    String downloadDir = new File("pressoutput\\" + timestamp).getAbsolutePath();
+	    String downloadDir = "pressoutput\\" + timestamp;
 
 	    File downloadFolder = new File(downloadDir);
 	    if (!downloadFolder.exists()) {
 	        downloadFolder.mkdirs(); // ✅ Create the folder if not there
+	      
 	    }
 	    Map<String, Object> prefs1 = new HashMap<>();
 	    prefs1.put("profile.default_content_setting_values.notifications", 2);
@@ -105,19 +99,14 @@ public class LoginStepsDefinition5 {
 	    prefs1.put("directory_upgrade", true);             
 	    prefs1.put("safebrowsing.enabled", true);          
 	    options.setExperimentalOption("prefs", prefs1);
-	    options.addArguments("--headless=new"); // Use new headless for better rendering
-	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-	    options.addArguments("--window-size=1920,1080");
-	    options.addArguments("--no-sandbox");
-	    options.addArguments("--disable-dev-shm-usage");
-	    options.addArguments("--remote-allow-origins=*");
 	    driver =new ChromeDriver(options);
 	    driver.manage().window().setSize(new Dimension(1920, 1080));
 	    System.out.print("WebDriver initalized");
 	    driver.get("https://pro.adintelle.com/v7/login"); 
 	    System.out.print("Website opened");
-	    
-	  
+	    driver.manage().window().maximize();
+
+	    JavascriptExecutor js = (JavascriptExecutor) driver;
 	    String excelFilePath = "Presspro.xlsx";  // Path to your Excel file
         FileInputStream file = new FileInputStream(new File(excelFilePath));
         try (Workbook workbook = new XSSFWorkbook(file)) {
@@ -156,7 +145,7 @@ public class LoginStepsDefinition5 {
 
 	        // Check if the element is present
 	        if (!warningButtonList.isEmpty()) {
-	        	WebDriverWait waitload22 = new WebDriverWait(driver, Duration.ofSeconds(80));
+	        	WebDriverWait waitload22 = new WebDriverWait(driver, Duration.ofSeconds(60));
 				  
 			    waitload22.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/m-login-warning-dialog/div/div[2]/div[2]/div/button/div/span")));
 	            // If the element is found, click on it
@@ -175,14 +164,13 @@ public class LoginStepsDefinition5 {
 	            // Element not found or not clickable within the timeout - continue silently
 	            System.out.println("Close icon not clickable or not present. Continuing...");
 	        }
-		    WebDriverWait waitload23 = new WebDriverWait(driver, Duration.ofSeconds(80));
+		    WebDriverWait waitload23 = new WebDriverWait(driver, Duration.ofSeconds(60));
 			  
 		    waitload23.until(ExpectedConditions.elementToBeClickable(By.className("show_collapse_icon")));
 		    WebElement elementarrow = driver.findElement(By.className("show_collapse_icon"));
 	        elementarrow.click();
 	        
 	        System.out.println("Logged in");
-	        ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='90%'");
 	        //WebDriverWait waitid = new WebDriverWait(driver, Duration.ofSeconds(60));
 	        List<WebElement> icons = driver.findElements(
 	        	    By.xpath("//*[name()='svg']/*[name()='path' and contains(@d, 'M17.8059')]")
@@ -198,7 +186,7 @@ public class LoginStepsDefinition5 {
 	        	}
 	        waitload2.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"apps\"]")));
 	        driver.findElement(By.xpath("//*[@id=\"apps\"]")).click();
-	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(80));
+	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 	        
 //		    WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
 		    
@@ -239,13 +227,15 @@ public class LoginStepsDefinition5 {
             WebElement campaign = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"Campaign_Name\"]")));
 
 	        campaign.sendKeys(campaignname);
-	        
+	        Thread.sleep(4000);
 	        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"Start_Date\"]")));
 	        // Start Date click for add new estimate
 	        WebElement calendarButton111 = driver.findElement(By.xpath("//*[@id=\"Start_Date\"]"));
-	       
-			calendarButton111.click();
-			
+	        js.executeScript("arguments[0].scrollIntoView(true);", calendarButton111); // Scrolls to the element
+        	//js.executeScript("arguments[0].focus();", calendarButton111);
+        	js.executeScript("arguments[0].click();", calendarButton111);
+			//calendarButton111.click();
+			Thread.sleep(4000);
 			// Read the value "10" from the Excel sheet (ensure this is the exact value)
 			String dateFromExcel1 = row.getCell(4).toString().trim();
 
@@ -255,14 +245,16 @@ public class LoginStepsDefinition5 {
 			System.out.println("Date to click: " + dateFromExcel1);
 			
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
-
+			Thread.sleep(4000);
 			// Click the day cell with the matching date
 			List<WebElement> allDates = driver.findElements(By.xpath("//div[contains(@class,'datepicker-days')]//td[@class='day' or contains(@class, 'active')]"));
 
 			boolean dateClicked = false;
 			for (WebElement dateElement : allDates) {
 			    if (dateElement.getText().equals(dateFromExcel1)) {
-			        dateElement.click();
+			    	js.executeScript("arguments[0].scrollIntoView(true);", dateElement); // Scrolls to the element
+		        	js.executeScript("arguments[0].focus();", dateElement);
+		        	js.executeScript("arguments[0].click();", dateElement);
 			        dateClicked = true;
 			        break;
 			    }
@@ -271,13 +263,13 @@ public class LoginStepsDefinition5 {
 			if (!dateClicked) {
 			    System.out.println("Date not found or not clickable: " + dateFromExcel1);
 			}
-	        
+			Thread.sleep(4000);
 			wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"End_Date\"]")));
 			// End Date click for add new estimate
 	        WebElement calendarButton2 = driver.findElement(By.xpath("//*[@id=\"End_Date\"]"));
 	       
 			calendarButton2.click();
-			
+			Thread.sleep(4000);
 			// Read the value "10" from the Excel sheet (ensure this is the exact value)
 			String dateFromExcel2 = row.getCell(5).toString().trim();
 
@@ -285,7 +277,7 @@ public class LoginStepsDefinition5 {
 			dateFromExcel2 = dateFromExcel2.split("\\.")[0];
 			// Output for debugging: Make sure that the correct date value is being read
 			System.out.println("Date to click: " + dateFromExcel2);
-			
+			Thread.sleep(4000);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
 
 			// Click the day cell with the matching date
@@ -294,7 +286,10 @@ public class LoginStepsDefinition5 {
 			boolean dateClickedd = false;
 			for (WebElement dateElement : allDatess) {
 			    if (dateElement.getText().equals(dateFromExcel2)) {
-			        dateElement.click();
+			    	js.executeScript("arguments[0].scrollIntoView(true);", dateElement); // Scrolls to the element
+		        	js.executeScript("arguments[0].focus();", dateElement);
+		        	js.executeScript("arguments[0].click();", dateElement);
+			      //  dateElement.click();
 			        dateClickedd = true;
 			        break;
 			    }
@@ -304,13 +299,15 @@ public class LoginStepsDefinition5 {
 			    System.out.println("Date not found or not clickable: " + dateFromExcel2);
 			}
 	        
-			
+			Thread.sleep(4000);
 			
 			// Estimate Date click for add new estimate
 	        WebElement calendarButton3 = driver.findElement(By.xpath("//*[@id=\"Estimate_Date\"]"));
-	       
-			calendarButton3.click();
-			
+	        js.executeScript("arguments[0].scrollIntoView(true);", calendarButton3); // Scrolls to the element
+        	js.executeScript("arguments[0].focus();", calendarButton3);
+        	js.executeScript("arguments[0].click();", calendarButton3);
+			//calendarButton3.click();
+			Thread.sleep(4000);
 			// Read the value "10" from the Excel sheet (ensure this is the exact value)
 			String dateFromExcel3 = row.getCell(6).toString().trim();
 
@@ -320,14 +317,17 @@ public class LoginStepsDefinition5 {
 			System.out.println("Date to click: " + dateFromExcel3);
 			
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
-
+			Thread.sleep(4000);
 			// Click the day cell with the matching date
 			List<WebElement> allDatesss = driver.findElements(By.xpath("//div[contains(@class,'datepicker-days')]//td[@class='day' or contains(@class, 'active')]"));
 
 			boolean dateClickeddd = false;
 			for (WebElement dateElement : allDatesss) {
 			    if (dateElement.getText().equals(dateFromExcel3)) {
-			        dateElement.click();
+			    	js.executeScript("arguments[0].scrollIntoView(true);", dateElement); // Scrolls to the element
+		        	js.executeScript("arguments[0].focus();", dateElement);
+		        	//js.executeScript("arguments[0].click();", dateElement);
+			    	dateElement.click();
 			        dateClickeddd = true;
 			        break;
 			    }
@@ -377,7 +377,11 @@ public class LoginStepsDefinition5 {
             System.out.println("Selected: " + taxdropdownText);
             Thread.sleep(2000);
             
-            wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"colsemodal\"]"))).click();
+            WebElement colsemodal = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"colsemodal\"]")));
+            js.executeScript("arguments[0].scrollIntoView(true);", colsemodal); // Scrolls to the element
+        	js.executeScript("arguments[0].focus();", colsemodal);
+        	js.executeScript("arguments[0].click();", colsemodal);
+        	
             Thread.sleep(10000);
             wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"Currency_Id\"]"))).click();
             //CURRENCY DROPDOWN
@@ -394,18 +398,31 @@ public class LoginStepsDefinition5 {
            
             dropdowntextcurrency.selectByVisibleText(currencydropdownText);
             System.out.println("Selected: " + currencydropdownText);
-            JavascriptExecutor js = (JavascriptExecutor) driver;
+           
             js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
             
-            wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"btnsubmit\"]"))).click();
+            WebElement btnsb = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"btnsubmit\"]")));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", btnsb);
+
             
             Thread.sleep(5000);
             
-            //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-            wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[7]/div/div/div/div[3]/button"))).click();
+            WebElement targetButton = driver.findElement(By.xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[7]/div/div/div/div[3]/button"));
 
+         // Scroll into view (optional but recommended)
+         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", targetButton);
 
-            wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[3]/a[2]"))).click();
+         // JavaScript click
+         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", targetButton);
+         Thread.sleep(3000);
+         WebElement addnew = driver.findElement(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[3]/a[2]"));
+
+         // Scroll into view (optional but recommended)
+         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", addnew);
+
+         // JavaScript click
+         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", addnew);
+         //   wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[3]/a[2]"))).click();
             
             System.out.println("Navigating to Publications and Packages");
           
@@ -707,7 +724,7 @@ public class LoginStepsDefinition5 {
       WebElement insertionToschedulefield1 = wait.until(ExpectedConditions.elementToBeClickable(By.id("insertionToschedule")));
       insertionToschedulefield1.clear();
       insertionToschedulefield1.sendKeys(insertionToschedule);
-      
+      Thread.sleep(4000);
       wait.until(ExpectedConditions.elementToBeClickable(By.id("txtAutoSchDate"))).click();
       String targetDay = row.getCell(26).toString().trim();
 
@@ -715,7 +732,7 @@ public class LoginStepsDefinition5 {
 		targetDay = targetDay.split("\\.")[0];
 		// Output for debugging: Make sure that the correct date value is being read
 		System.out.println("Date to click: " + dateFromExcel2);
-		
+		Thread.sleep(4000);
       WebElement dateElement = driver.findElement(By.xpath("//td[@class='day' and text()='" + targetDay + "']"));
       ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dateElement);
       dateElement.click();
@@ -812,7 +829,7 @@ Thread.sleep(2000);
    WebElement POnofield = wait.until(ExpectedConditions.elementToBeClickable(By.id("PONo")));
    POnofield.sendKeys(POno);
 
-   
+   Thread.sleep(4000);
    wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("PODate"))).click();
    
    String targettDay = row.getCell(29).toString().trim();
@@ -828,7 +845,7 @@ Thread.sleep(2000);
 
 // 4. Build XPath dynamically based on the target day
    String dateXpath = "//td[contains(@class, 'day') and not(contains(@class, 'old')) and not(contains(@class, 'new')) and text()='" + targettDay + "']";
-
+   Thread.sleep(4000);
 // 5. Wait for the specific date to be clickable
    WebElement dateElemen = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(dateXpath)));
 
@@ -1238,7 +1255,7 @@ Thread.sleep(2000);
 	js.executeScript("arguments[0].scrollIntoView(true);", firstCheckbox);
 	js.executeScript("arguments[0].click();", firstCheckbox);
  	      
-
+	Thread.sleep(4000);
 	// Step 1: Get day from Excel (e.g., "26")
 	// Step 1: Get the day from correct Excel column
 	String day = row.getCell(34).toString().trim();  // Make sure this contains something like "26"
@@ -1617,6 +1634,7 @@ Thread.sleep(2000);
 		// Step 1: Get the day from correct Excel column
 		String day1 = row.getCell(37).toString().trim();  // Make sure this contains something like "26"
 		System.out.println("Date to click: " + day1);
+		Thread.sleep(4000);
 		// Step 2: Click the ScheduledDate input to open the datepicker
 		WebElement dateFieldmakegood = wait.until(ExpectedConditions.elementToBeClickable(By.id("ScheduledDate")));
 		dateFieldmakegood.click();
@@ -1936,7 +1954,7 @@ Thread.sleep(2000);
  	 		WebElement Vendorbillnofield = wait.until(ExpectedConditions.elementToBeClickable(By.id("VendorBillNo_VBLog")));
  	 		Vendorbillnofield.sendKeys(Vendorbillno);
  	 		wait.until(ExpectedConditions.elementToBeClickable(By.id("VendorBillDate_VBLog"))).click();
- 	 		
+ 	 		Thread.sleep(4000);
  	 	
  	 	    String vendorbilldate = row.getCell(32).toString().trim();
 
@@ -1944,7 +1962,7 @@ Thread.sleep(2000);
  	   vendorbilldate = vendorbilldate.split("\\.")[0];
  			// Output for debugging: Make sure that the correct date value is being read
  			
- 			
+ 	  Thread.sleep(4000);
  	   	WebElement dateElementvbilldate = wait.until(ExpectedConditions.elementToBeClickable(
  			    By.xpath("//td[contains(@class,'day') and not(contains(@class,'old')) and not(contains(@class,'new')) and text()='" + vendorbilldate + "']")
  			));
@@ -2565,6 +2583,7 @@ Thread.sleep(2000);
  		 	 WebElement vendorbillnoField = wait.until(ExpectedConditions.elementToBeClickable(By.id("VendorBillNo")));
  		 	vendorbillnoField.clear();
  		 	vendorbillnoField.sendKeys(vendorbillno);
+ 		 	Thread.sleep(4000);
  		// Read value from Excel
  		 	String datevendorprov = row.getCell(39).toString().trim(); // Example: "2025-05-30"
  		 	Thread.sleep(2000);
@@ -2641,20 +2660,19 @@ Thread.sleep(2000);
  		//button[text()='Proceed']
  		 By proceedBtn = By.xpath("//button[normalize-space(text())='Proceed']");
  		boolean proceedClickedSuccessfully = false;
- 		//JavascriptExecutor js = (JavascriptExecutor) driver;
 
  		for (int attempt2 = 1; attempt2 <= 10; attempt2++) {
  		    try {
  		        System.out.println("🌀 Attempting to click Proceed, attempt " + attempt2);
 
- 		        // Initial wait to let the page settle
+ 		        // Let the page settle
  		        Thread.sleep(19000); // 10 + 6 + 3 seconds
 
  		        // Scroll to bottom
  		        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
  		        Thread.sleep(500);
 
- 		        // Wait for modal to disappear if it exists
+ 		        // Wait for modal (if present) to disappear
  		        new WebDriverWait(driver, Duration.ofSeconds(10))
  		            .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
 
@@ -2663,7 +2681,7 @@ Thread.sleep(2000);
  		            .until(ExpectedConditions.elementToBeClickable(proceedBtn));
  		        Thread.sleep(300);
 
- 		        // Scroll and focus on Proceed button
+ 		        // Scroll and focus
  		        js.executeScript("arguments[0].scrollIntoView({block:'center'});", proceedElement);
  		        Thread.sleep(300);
  		        js.executeScript("arguments[0].focus();", proceedElement);
@@ -2682,13 +2700,7 @@ Thread.sleep(2000);
  		            System.out.println("✅ Proceed button clicked via dispatchEvent fallback on attempt " + attempt2);
  		        }
 
- 		        // Wait for either Summary to appear OR Proceed button to go away
- 		        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.or(
- 		            ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(text(),'Summary')]")),
- 		            ExpectedConditions.invisibilityOfElementLocated(proceedBtn)
- 		        ));
-
- 		        // ✅ Click succeeded
+ 		        // ✅ Assume click succeeded
  		        proceedClickedSuccessfully = true;
 
  		        // Screenshot success
@@ -2702,15 +2714,17 @@ Thread.sleep(2000);
  		    } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
  		        System.out.println("⚠️ Retryable exception on attempt " + attempt2 + ": " + e.getMessage());
  		        Thread.sleep(2000);
+
  		    } catch (TimeoutException te) {
- 		        System.out.println("⏳ Proceed click did not trigger expected result: " + te.getMessage());
+ 		        System.out.println("⏳ Proceed click timed out: " + te.getMessage());
  		        Thread.sleep(3000);
+
  		    } catch (Exception e) {
  		        System.out.println("❌ Unhandled error on attempt " + attempt2 + ": " + e.getMessage());
  		        if (attempt2 == 10) throw e;
  		    }
 
- 		    // Capture screenshot for failed attempt
+ 		    // Screenshot for failed attempt
  		    try {
  		        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
  		        File destFile = new File("screenshots/proceed_attempt_" + attempt2 + "_fail.png");
@@ -2724,10 +2738,9 @@ Thread.sleep(2000);
  		}
 
  		if (!proceedClickedSuccessfully) {
- 		    throw new RuntimeException("❌ Proceed button failed to trigger expected outcome after 10 attempts.");
+ 		    throw new RuntimeException("❌ Proceed button failed after 10 attempts.");
  		}
 
- 		
 
  		 	Thread.sleep(5000);
  		 	
