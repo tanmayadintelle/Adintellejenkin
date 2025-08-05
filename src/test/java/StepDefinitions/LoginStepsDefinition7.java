@@ -87,7 +87,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    
 			    options.setExperimentalOption("prefs", prefs1);
 			//    options.setExperimentalOption("prefs", prefs);
-			    options.addArguments("--headless=new"); // Use new headless for better rendering
+			    //options.addArguments("--headless=new"); // Use new headless for better rendering
 			    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
 			    options.addArguments("--window-size=1920,1080");
 			    options.addArguments("--no-sandbox");
@@ -1855,8 +1855,8 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 						 WebElement intvendor = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection1\"]/div[1]/div[1]/ng-select/div/div/div[2]/input")));
 							js.executeScript("arguments[0].scrollIntoView(true);", intvendor); // Scrolls to the element
 				        	//js.executeScript("arguments[0].focus();", integratedSvg);
-				        	js.executeScript("arguments[0].click();", intvendor);
-						// intvendor.sendKeys(vendorName);
+				        	//js.executeScript("arguments[0].click();", intvendor);
+						 intvendor.sendKeys(vendorName);
 						 Thread.sleep(2000);
 						 intvendor.sendKeys(Keys.ENTER);
 						 Thread.sleep(2000);
