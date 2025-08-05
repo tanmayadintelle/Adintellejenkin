@@ -1882,10 +1882,10 @@ public void user_createsvendorbill() throws InterruptedException, FileNotFoundEx
 					 WebElement fetchBillIcon = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src*='FeatchBill.svg']")));
 					 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", fetchBillIcon);
 					 fetchBillIcon.click();
-					 Thread.sleep(5000);
+					 Thread.sleep(10000);
 					 WebElement nextButton0009 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-log-bill-intergrated > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 					 nextButton0009.click();
-					 Thread.sleep(5000);
+					 Thread.sleep(10000);
 					 
 					 WebElement tax1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div/div[1]/div[4]/div[2]/ng-select/div/div/div[2]/input")));
 					 String billtax1 = row.getCell(46).getStringCellValue();
