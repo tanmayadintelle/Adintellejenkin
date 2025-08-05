@@ -68,7 +68,7 @@ public class LoginStepsDefinition5 {
 		options.addArguments("--remote-allow-origins=*");
 		options.addArguments("--disable-blink-features=AutomationControlled");
 		// DON’T use headless in scheduler
-		options.addArguments("--start-maximized"); 
+		//options.addArguments("--start-maximized"); 
 		options.addArguments("--disable-gpu");
 		options.addArguments("--no-sandbox");
 		 options.addArguments("--headless=new"); // Use new headless for better rendering
