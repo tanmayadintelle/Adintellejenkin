@@ -539,7 +539,13 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 
 					js.executeScript("arguments[0].scrollIntoView(true);", nextbutton07);
 					js.executeScript("arguments[0].focus();", nextbutton07);
-
+					try {
+				        wait.until(ExpectedConditions.invisibilityOfElementLocated(
+				            By.cssSelector("div.cdk-overlay-backdrop")));
+				    } catch (ElementClickInterceptedException ex) {
+				    	System.out.println("⚠️ Overlay may not be present or didn't disappear in time.");
+				        Thread.sleep(1000);
+				    }
 					nextbutton07.click();
 
 					Thread.sleep(2000);
