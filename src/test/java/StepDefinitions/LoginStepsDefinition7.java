@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 //import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -270,16 +271,17 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 	// nextButton.click();
 
 		Thread.sleep(5000);
-		String JobName = row.getCell(4).getStringCellValue(); 	
+		//String JobName = row.getCell(4).getStringCellValue(); 	
 		//waitload.until(ExpectedConditions.elementToBeClickable(By.name("JobName")));
 	    WebElement JobNameField = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("JobName")));
-	    
+	    String baseJobName = "digitalvbfautomationsanity";
+	    DateTimeFormatter formatterr = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+	    String jobName = baseJobName + "_" + LocalDateTime.now().format(formatterr);
 	    js.executeScript("arguments[0].scrollIntoView(true);", JobNameField);
-	    // Scrolls to the element
-	    js.executeScript("arguments[0].focus();", JobNameField);              // Focuses the element
 	    JobNameField.clear();
-	    JobNameField.sendKeys(JobName);
+	    JobNameField.sendKeys(jobName);
 	    
+	    Thread.sleep(2000);
 	    WebElement jobdatecalendar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"deliveryDate\"]/div/div/mat-datepicker-toggle/button/span[3]")));
 		jobdatecalendar.click();
         String jobDateFromExcelday = row.getCell(5).toString().trim().split("\\.")[0]; // e.g., "12/06/2025"
