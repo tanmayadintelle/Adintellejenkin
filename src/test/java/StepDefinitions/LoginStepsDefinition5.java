@@ -825,11 +825,11 @@ public class LoginStepsDefinition5 {
       viewTab.click();
       Thread.sleep(2000);
       wait.until(ExpectedConditions.presenceOfElementLocated(
-    		    By.xpath("//tr[td[contains(normalize-space(),'" + campaignname + "')]]")
+    		    By.xpath("//tr[td[contains(normalize-space(),'" + campaignName + "')]]")
     		));
       
       Thread.sleep(3000);
-      String dynamicXpath = "//tr[td[contains(normalize-space(),'" + campaignname + "')]]//input[@class='ChkStyle']";
+      String dynamicXpath = "//tr[td[contains(normalize-space(),'" + campaignName + "')]]//input[@class='ChkStyle']";
 
       WebElement approvalCheckbox = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(dynamicXpath)));
 
@@ -887,7 +887,7 @@ Thread.sleep(2000);
 	System.out.print("Estimate Approved");
 	Thread.sleep(1000);
 	
-	String dynamicXpathh = "//td[contains(normalize-space(), '" + campaignname + "')]";
+	String dynamicXpathh = "//td[contains(normalize-space(), '" + campaignName + "')]";
 
 	WebElement campaignCell = null;
 
@@ -902,7 +902,7 @@ Thread.sleep(2000);
 	        // Click the cell (this will trigger rowClick(...))
 	        campaignCell.click();
 
-	        System.out.println("Clicked campaign: " + campaignname);
+	        System.out.println("Clicked campaign: " + campaignName);
 	        break;  // Exit the loop if the click is successful
 
 	    } catch (StaleElementReferenceException e) {
