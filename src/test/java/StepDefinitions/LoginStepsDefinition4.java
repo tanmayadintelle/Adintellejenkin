@@ -2,6 +2,8 @@ package StepDefinitions;
 
 import java.io.FileInputStream;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -234,16 +236,28 @@ public class LoginStepsDefinition4 {
 			Thread.sleep(1000);
 			waitload.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 			driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
-			waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[1]/input")));		
-			String Jobname = row.getCell(19).toString();
-		    WebElement jobnameField = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[1]/input"));
-		    
-		    jobnameField.clear();
-			jobnameField.sendKeys(Jobname);
-			
-			jobnameField.sendKeys(Keys.TAB);
-			Thread.sleep(1000);
-			jobnameField.sendKeys(Keys.ENTER);
+			WebElement jobnameField = waitload.until(
+				    ExpectedConditions.elementToBeClickable(
+				        By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[1]/input")
+				    )
+				);
+
+				// 2️⃣ Build dynamic job name for BTL automation
+				String baseJobName = "btlautomationsanity";
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+				String jobName = baseJobName + "_" + LocalDateTime.now().format(formatter);
+				JavascriptExecutor js = (JavascriptExecutor) driver;
+				// 3️⃣ Scroll into view and input
+				js.executeScript("arguments[0].scrollIntoView(true);", jobnameField);
+				jobnameField.clear();
+				jobnameField.sendKeys(jobName);
+
+				// 4️⃣ Optionally wait and finalize
+				Thread.sleep(1000);
+				jobnameField.sendKeys(Keys.ENTER);
+
+				// ✅ Log it
+				System.out.println("✅ Set dynamic job name: " + jobName);
 			waitload.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")));
 			
 			
@@ -405,16 +419,28 @@ public class LoginStepsDefinition4 {
 			 wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/icon-edit.svg']")));
 			 WebElement editjob = driver.findElement(By.xpath("//img[@src='./assets/img/svg/icon-edit.svg']"));
 	         editjob.click();
-	         
+	         Thread.sleep(2000);
 	         wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[1]/input"))); 
-	     	String Jobnamee = row.getCell(49).toString();
+	     	//String Jobnamee = row.getCell(49).toString();
 		    WebElement jobnameFieldd = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[1]/input"));
 		    
+		    String baseJobName1 = "btlautomationsanitymodified";
+		    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+		    String jobNamee = baseJobName1 + "_" + LocalDateTime.now().format(formatter1);
+
+		    // 3️⃣ Instantiate JavascriptExecutor and scroll the element into view
+		   // JavascriptExecutor js = (JavascriptExecutor) driver;
+		    js.executeScript("arguments[0].scrollIntoView(true);", jobnameFieldd);
+
+		    // 4️⃣ Clear the field and type the dynamic job name
 		    jobnameFieldd.clear();
-			jobnameFieldd.sendKeys(Jobnamee);
-			
-			jobnameFieldd.sendKeys(Keys.TAB);
-			jobnameFieldd.sendKeys(Keys.ENTER);
+		    jobnameFieldd.sendKeys(jobNamee);
+
+		    // 5️⃣ Optionally wait briefly to allow the UI to update
+		    Thread.sleep(1000);
+
+		    // 6️⃣ Submit the field (ENTER key)
+		    jobnameFieldd.sendKeys(Keys.ENTER);
 			
 			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[3]/div/div/mat-datepicker-toggle/button/span[3]"))); 
 			WebElement calendarButton1111 = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[3]/div/div/mat-datepicker-toggle/button/span[3]"));
