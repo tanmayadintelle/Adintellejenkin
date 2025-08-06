@@ -77,7 +77,7 @@ public void user_logs_in_and_navigate_to_reports_page() throws InterruptedExcept
 			//	String downloadFilepath = Paths.get("reports").toAbsolutePath().toString();
 			    HashMap<String, Object> prefs = new HashMap<>();  
 			    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-			    Path downloadPath = Paths.get("reports", timestamp).toAbsolutePath(); // ✅ Absolute path
+			    Path downloadPath = Paths.get("screenshots\\reports", timestamp).toAbsolutePath(); // ✅ Absolute path
 
 			    // Create folder if not exists
 			    File downloadFolder = downloadPath.toFile();
