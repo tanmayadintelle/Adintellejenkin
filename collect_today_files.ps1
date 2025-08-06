@@ -13,7 +13,8 @@ if (Test-Path $tempFolder) {
 }
 New-Item -ItemType Directory -Path $tempFolder | Out-Null
 
-$cutoffTime = (Get-Date).Date  # Midnight today
+# ✅ Set cutoff time to today at 6:00 AM
+$cutoffTime = (Get-Date).Date.AddHours(6)
 $basePath = (Get-Location).Path
 
 foreach ($folder in $folders) {
@@ -27,16 +28,13 @@ foreach ($folder in $folders) {
             $destination = Join-Path $tempFolder $relativePath
             $destinationDir = Split-Path $destination
 
-            if ($item.PSIsContainer) {
-                # Copy folder only if it was created or modified today
-                if ($item.CreationTime -ge $cutoffTime -or $item.LastWriteTime -ge $cutoffTime) {
+            # ✅ Include only items modified or created after 6:00 AM today
+            if ($item.CreationTime -ge $cutoffTime -or $item.LastWriteTime -ge $cutoffTime) {
+                if ($item.PSIsContainer) {
                     if (!(Test-Path $destination)) {
                         Copy-Item -Path $item.FullName -Destination $destination -Recurse -Force
                     }
-                }
-            } else {
-                # Copy file only if it was created or modified today
-                if ($item.CreationTime -ge $cutoffTime -or $item.LastWriteTime -ge $cutoffTime) {
+                } else {
                     if (!(Test-Path $destinationDir)) {
                         New-Item -ItemType Directory -Path $destinationDir -Force | Out-Null
                     }
