@@ -459,9 +459,27 @@ public class LoginStepsDefinition4 {
 		    objectiveFieldd.sendKeys(objectivee);
 		    objectiveFieldd.sendKeys(Keys.TAB);
 		    objectiveFieldd.sendKeys(Keys.ENTER);
-		    Thread.sleep(2000);
+		    Thread.sleep(5000);
+		    try {
+		       // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("cdk-overlay-backdrop")));
+		    } catch (TimeoutException e) {
+		        System.out.println("⚠️ Overlay may not be present or didn't disappear in time.");
+		    } catch (Exception e) {
+		        System.out.println("❌ Unexpected error: " + e.getMessage());
+		    }
+
 		    //driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[2]/mat-form-field/div[1]/div[2]/div[2]/mat-datepicker-toggle/button/span[3]")));
+		    try {
+		        //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("cdk-overlay-backdrop")));
+		    } catch (TimeoutException e) {
+		        System.out.println("⚠️ Overlay may not be present or didn't disappear in time.");
+		    } catch (Exception e) {
+		        System.out.println("❌ Unexpected error: " + e.getMessage());
+		    }
+
 		    WebElement calendarButtonn = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[2]/mat-form-field/div[1]/div[2]/div[2]/mat-datepicker-toggle/button/span[3]"));
 			calendarButtonn.click();
 			JavascriptExecutor jsk = (JavascriptExecutor) driver;
