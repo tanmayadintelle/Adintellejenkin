@@ -73,7 +73,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    options.setExperimentalOption("prefs", prefs);
 			    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 			  //  String downloadDir = "digitaloutputscbf\\" + timestamp;
-			    String downloadDir = new File("digitaloutputscbf\\" + timestamp).getAbsolutePath();
+			    String downloadDir = new File("screenshots\\digitaloutputscbf\\" + timestamp).getAbsolutePath();
 
 			    File downloadFolder = new File(downloadDir);
 			    if (!downloadFolder.exists()) {

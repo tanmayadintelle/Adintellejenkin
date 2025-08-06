@@ -66,7 +66,7 @@ public class LoginStepsDefinition5 {
 
 	        // === Setup Download Directory ===
 	        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	        String downloadDir = new File("pressoutput\\" + timestamp).getAbsolutePath();
+	        String downloadDir = new File("screenshots\\pressoutput\\" + timestamp).getAbsolutePath();
 
 	        File downloadFolder = new File(downloadDir);
 	        if (!downloadFolder.exists()) {

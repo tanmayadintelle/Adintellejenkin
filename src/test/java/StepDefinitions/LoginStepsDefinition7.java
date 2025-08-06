@@ -70,7 +70,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			  
 			    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 			   // String downloadDir = "digitaloutputsvbf\\" + timestamp;
-			    String downloadDir = new File("digitaloutputsvbf\\" + timestamp).getAbsolutePath();
+			    String downloadDir = new File("screenshots\\digitaloutputsvbf\\" + timestamp).getAbsolutePath();
 
 			    File downloadFolder = new File(downloadDir);
 			    if (!downloadFolder.exists()) {

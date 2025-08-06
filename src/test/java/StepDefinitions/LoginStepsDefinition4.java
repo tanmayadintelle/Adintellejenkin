@@ -77,7 +77,7 @@ public class LoginStepsDefinition4 {
 	    driver.manage().window().setSize(new Dimension(1920, 1080));
 	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 	   // String downloadDir = "BTLoutputs\\" + timestamp;
-	    String downloadDir = new File("BTLoutputs\\" + timestamp).getAbsolutePath();
+	    String downloadDir = new File("screenshots\\BTLoutputs\\" + timestamp).getAbsolutePath();
 
 	    File downloadFolder = new File(downloadDir);
 	    if (!downloadFolder.exists()) {
