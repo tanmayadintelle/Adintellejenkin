@@ -3,6 +3,8 @@ package StepDefinitions;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 //import java.util.NoSuchElementException;
 import java.util.Set;
@@ -208,13 +210,23 @@ public class LoginStepsDefinition5 {
 	        
 	        WebElement button = driver.findElement(By.xpath("//button[text()='Create Estimate']"));
 	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
-	      
-	        String campaignname = row.getCell(3).toString();
-	 		   
-           
-            WebElement campaign = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"Campaign_Name\"]")));
+	      Thread.sleep(3000);
+	        WebElement campaignField = wait.until(
+	        	    ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"Campaign_Name\"]"))
+	        	);
 
-	        campaign.sendKeys(campaignname);
+	        	// 2️⃣ Build a dynamic campaign name, e.g., base name + timestamp
+	        	String baseCampaignName = "pressautomationsanity";
+	        	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+	        	String campaignName = baseCampaignName + "_" + LocalDateTime.now().format(dtf);
+
+	        	// 3️⃣ Scroll into view (helps with headless rendering)
+	        	//JavascriptExecutor js = (JavascriptExecutor) driver;
+	        	js.executeScript("arguments[0].scrollIntoView(true);", campaignField);
+
+	        	// 4️⃣ Clear field and enter campaign name
+	        	campaignField.clear();
+	        	campaignField.sendKeys(campaignName);
 	        Thread.sleep(4000);
 	        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"Start_Date\"]")));
 	        // Start Date click for add new estimate
@@ -419,7 +431,7 @@ public class LoginStepsDefinition5 {
             Publicationfield.sendKeys(Publication);
             Publicationfield.click();
            
-            Thread.sleep(4000);
+            Thread.sleep(5000);
             String publicationText = row.getCell(13).toString().trim();
 
          // XPath dynamically built using the Excel value
@@ -435,6 +447,7 @@ public class LoginStepsDefinition5 {
             	 Thread.sleep(6000);
                  // Wait for the element to be clickable freshly each time
                  WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+                 js.executeScript("arguments[0].scrollIntoView(true);", element); // Scrolls to the element
                  element.click();
                  
                  clicked = true;
