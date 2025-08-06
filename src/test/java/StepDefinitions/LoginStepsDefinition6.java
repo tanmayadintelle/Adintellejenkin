@@ -324,7 +324,7 @@ public void user_downloads_status_reports() throws InterruptedException, FileNot
 
     		    	// Locate latest folder
     		    	Path basePath = Paths.get("").toAbsolutePath();
-    		    	Path reportFolderRoot = basePath.resolve("reports");
+    		    	Path reportFolderRoot = basePath.resolve("screenshots//reports");
     		    	File latestFolder = getLatestReportFolder(reportFolderRoot.toString());
 
 
@@ -679,7 +679,7 @@ public void user_downloads_sales_register() throws IOException, InterruptedExcep
 
     	// Locate latest folder
     	Path basePath = Paths.get("").toAbsolutePath();
-    	Path reportFolderRoot = basePath.resolve("reports");
+    	Path reportFolderRoot = basePath.resolve("screenshots//reports");
     	File latestFolder = getLatestReportFolder(reportFolderRoot.toString());
 
     	if (latestFolder != null) {
@@ -975,7 +975,7 @@ public void user_downloads_purchase_register() throws FileNotFoundException, IOE
 
     	// Locate latest folder
     	Path basePath = Paths.get("").toAbsolutePath();
-    	Path reportFolderRoot = basePath.resolve("reports");
+    	Path reportFolderRoot = basePath.resolve("screenshots//reports");
     	File latestFolder = getLatestReportFolder(reportFolderRoot.toString());
 
 
