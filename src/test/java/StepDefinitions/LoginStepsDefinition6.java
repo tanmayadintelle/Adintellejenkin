@@ -90,7 +90,7 @@ public void user_logs_in_and_navigate_to_reports_page() throws InterruptedExcept
 			    // Add preferences to Chrome options
 			    options.setExperimentalOption("prefs", prefs);
 			    String timestamp2 = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-			    String downloadDir = "reports\\" + timestamp2;
+			    String downloadDir = "screenshots\\reports\\" + timestamp2;
 
 			    File downloadFolder2 = new File(downloadDir);
 			    if (!downloadFolder2.exists()) {
