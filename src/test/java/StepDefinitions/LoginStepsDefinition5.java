@@ -216,7 +216,7 @@ public class LoginStepsDefinition5 {
 	        	);
 
 	        	// 2️⃣ Build a dynamic campaign name, e.g., base name + timestamp
-	        	String baseCampaignName = "pressautomationsanity";
+	        	String baseCampaignName = "pressautomsanity";
 	        	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
 	        	String campaignName = baseCampaignName + "_" + LocalDateTime.now().format(dtf);
 
@@ -614,9 +614,12 @@ public class LoginStepsDefinition5 {
          Thread.sleep(5000); // Wait for suggestions to appear or DOM to update
 
       // Wait for the list of <li> elements to be visible
-         List<WebElement> listItems = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
-             By.xpath("//li[contains(@class, 'list-group-item')]")
-         ));
+         List<WebElement> listItems = wait.until(
+        		    ExpectedConditions.visibilityOfAllElementsLocatedBy(
+        		        By.xpath("//li[contains(@class, 'list-group-item')]")
+        		    )
+        		);
+
 
          // Check if the list is not empty, then click the first element
          if (!listItems.isEmpty()) {
