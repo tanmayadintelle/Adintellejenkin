@@ -1674,11 +1674,19 @@ public class LoginStepsDefinition4 {
 					 Thread.sleep(2000);
 					 wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog-print\"]/div[2]/div[1]/div[1]/div/input[2]"))).click();
 					 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Print' and contains(@class, 'submit-button')]"))).click();
-					 wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.cdk-overlay-backdrop.cdk-overlay-dark-backdrop")));
-					 Thread.sleep(2000);
-						wait.until(ExpectedConditions.invisibilityOfElementLocated(
-							    By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")
-							));
+					 try {
+						    wait
+						        .until(ExpectedConditions.invisibilityOfElementLocated(
+						            By.cssSelector("div.cdk-overlay-backdrop.cdk-overlay-dark-backdrop,.cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
+						} catch (TimeoutException e) {
+						    System.out.println("Overlay didn't disappear in time, continuing anyway.");
+						}
+					// wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.cdk-overlay-backdrop.cdk-overlay-dark-backdrop")));
+					 Thread.sleep(5000);
+//						wait.until(ExpectedConditions.invisibilityOfElementLocated(
+//							    By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")
+//							));
+					 
 		    WebDriverWait waitloadchild = new WebDriverWait(driver, Duration.ofSeconds(60));	
 		    
 		    

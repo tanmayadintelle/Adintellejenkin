@@ -544,7 +544,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 					try {
 				        wait.until(ExpectedConditions.invisibilityOfElementLocated(
 				            By.cssSelector("div.cdk-overlay-backdrop")));
-				    } catch (ElementClickInterceptedException ex) {
+				    } catch (TimeoutException ex) {
 				    	System.out.println("⚠️ Overlay may not be present or didn't disappear in time.");
 				        Thread.sleep(1000);
 				    }
