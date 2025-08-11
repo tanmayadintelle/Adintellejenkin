@@ -48,6 +48,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -326,6 +328,7 @@ public class LoginStepsDefinition10 {
 	        if (docNoIndex == -1) {
 	            throw new RuntimeException("Doc No column not found");
 	        }
+	        Thread.sleep(4000);
 
 	        // Step 2: Get the first Doc No from the first row
 	        WebElement firstRow =  wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//mat-row[1]")));
@@ -423,7 +426,7 @@ public class LoginStepsDefinition10 {
        
 
 	@And("Downloads reports")
-	public void display_status_download_reports() throws InterruptedException {
+	public void display_status_download_reports() throws InterruptedException, IOException {
 		 JavascriptExecutor jls = (JavascriptExecutor) driver;
 		 Thread.sleep(2000);
 		 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
@@ -520,6 +523,14 @@ public class LoginStepsDefinition10 {
 				 	        jls.executeScript("arguments[0].scrollIntoView(true);", applyButton2);
 				 	        applyButton2.click();
 				 	        Thread.sleep(10000);
+				 	       String baseFolder = "screenshots\\BillTransfer";
+				 	      boolean found = isDocNoPresentInLatestExcel(baseFolder, firstDocNo);
+
+				 	      if (found) {
+				 	          System.out.println("Doc number " + firstDocNo + " found in the Excel report.");
+				 	      } else {
+				 	          System.out.println("Doc number " + firstDocNo + " NOT found in the Excel report.");
+				 	      }
 				        		
 			        	
 	}
@@ -554,6 +565,51 @@ public class LoginStepsDefinition10 {
         }
     }
 
+    public boolean isDocNoPresentInLatestExcel(String baseFolder, String firstDocNo) throws IOException {
+        // Find latest folder inside baseFolder (screenshots\BillTransfer)
+        File folder = new File(baseFolder);
+        File[] subfolders = folder.listFiles(File::isDirectory);
+        if (subfolders == null || subfolders.length == 0) {
+            System.out.println("No subfolders found inside " + baseFolder);
+            return false;
+        }
+
+        // Sort folders by lastModified descending to get latest folder
+        Arrays.sort(subfolders, Comparator.comparingLong(File::lastModified).reversed());
+        File latestFolder = subfolders[0];
+
+        // Find latest Excel file inside latest folder
+        File[] excelFiles = latestFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".xlsx"));
+        if (excelFiles == null || excelFiles.length == 0) {
+            System.out.println("No Excel files found inside " + latestFolder.getAbsolutePath());
+            return false;
+        }
+        Arrays.sort(excelFiles, Comparator.comparingLong(File::lastModified).reversed());
+        File latestExcelFile = excelFiles[0];
+
+        // Open Excel and search for firstDocNo
+        try (FileInputStream fis = new FileInputStream(latestExcelFile);
+             Workbook workbook = WorkbookFactory.create(fis)) {
+
+            Sheet sheet = workbook.getSheetAt(0); // Assuming first sheet
+
+            for (Row row : sheet) {
+                for (Cell cell : row) {
+                    if (cell.getCellType() == CellType.STRING) {
+                        if (cell.getStringCellValue().equals(firstDocNo)) {
+                            return true;
+                        }
+                    } else if (cell.getCellType() == CellType.NUMERIC) {
+                        if (String.valueOf((long) cell.getNumericCellValue()).equals(firstDocNo)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false; // not found
+    }
 //    private void reduceResolution() throws AWTException {
 //        System.setProperty("java.awt.headless", "false");
 //        Robot robot = new Robot();
@@ -598,6 +654,7 @@ public class LoginStepsDefinition10 {
 //        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
 //    }
 
+    
     
 	@Then("Closes the chrome Browser")
 	public void closes_the_browser() {
