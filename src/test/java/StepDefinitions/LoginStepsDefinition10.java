@@ -159,7 +159,7 @@ public class LoginStepsDefinition10 {
 			usernameField.sendKeys("tanmay.nayak");
 			// ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
 			Thread.sleep(6000);
-			 takeFullPageScreenshot("Login screen");
+			 
 			// String Quantity = row.getCell(6).toString();
 		    driver.findElement(By.name("acceptTerms")).click();
 		    waitload2.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"identify_user_button_text_active\"]")));
@@ -172,6 +172,7 @@ public class LoginStepsDefinition10 {
 		    
 			WebElement passwordField = driver.findElement(By.name("password")); 
 			passwordField.sendKeys("Citi5bank$1234567");
+			takeFullPageScreenshot("Login screen");
 			waitload1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"login_button_text_active\"]")));
 			driver.findElement(By.xpath("//*[@id=\"login_button_text_active\"]")).click();
 		    Thread.sleep(3000);
