@@ -57,15 +57,39 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.awt.AWTException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.cucumber.java.en.Given;
 public class LoginStepsDefinition10 {
 	static WebDriver driver;
 	static String downloadDir;   
-	 public void takeScreenshot(String testName) throws IOException {
-	        // Create a new folder based on the current date/time
-		 File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-	        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	        FileUtils.copyFile(screenshot, new File(downloadDir + "\\" + testName + "_" + timestamp + ".png"));
-	    }
+    public void takeFullPageScreenshot(String testName) throws IOException {
+        // Cast to ChromeDriver to use getFullPageScreenshotAs()
+        ChromeDriver chromeDriver = (ChromeDriver) driver;
+        File screenshot = chromeDriver.getScreenshotAs(OutputType.FILE);
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File destFile = new File(downloadDir + "\\" + testName + "_" + timestamp + ".png");
+        FileUtils.copyFile(screenshot, destFile);
+        System.out.println("✅ Full-page screenshot saved: " + destFile.getAbsolutePath());
+    }
+
 	
 	@SuppressWarnings("deprecation")
 	@Given("User completes Bill Transfer flow")
@@ -129,7 +153,7 @@ public class LoginStepsDefinition10 {
 			
 			usernameField.sendKeys("tanmay.nayak");
 			 ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
-			    takeScreenshot("Login screen");
+			 takeFullPageScreenshot("Login screen");
 			// String Quantity = row.getCell(6).toString();
 		    driver.findElement(By.name("acceptTerms")).click();
 		    waitload2.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"identify_user_button_text_active\"]")));
@@ -352,7 +376,7 @@ public class LoginStepsDefinition10 {
 	            System.out.println("Bill number " + firstDocNo + " is present on the success screen.");
 	            ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
 	            Thread.sleep(2000);
-	            takeScreenshot("Success screen");
+	            takeFullPageScreenshot("Success screen");
 	        } else {
 	        	 Thread.sleep(5000);
 	            WebElement successTab =  wait.until(ExpectedConditions.elementToBeClickable(
@@ -380,14 +404,14 @@ public class LoginStepsDefinition10 {
 	                System.out.println("Bill number " + firstDocNo + " is present on the error screen.");
 	                ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
 	                Thread.sleep(2000);
-	                takeScreenshot("Error screen");
+	                takeFullPageScreenshot("Error screen");
 	            } else {
 	            	new WebDriverWait(driver, Duration.ofSeconds(10))
 	                .until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
 	            	((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
 	                System.out.println("Bill number " + firstDocNo + " NOT found on both success and error screens.");
 	                Thread.sleep(2000);
-	                takeScreenshot("NOT found on both success and error screen");
+	                takeFullPageScreenshot("NOT found on both success and error screen");
 	            }
 	        }
 
