@@ -81,19 +81,15 @@ import io.cucumber.java.en.Given;
 public class LoginStepsDefinition10 {
 	static WebDriver driver;
 	static String downloadDir;   
-    public void takeFullPageScreenshot(String testName) throws IOException {
-    	
-    	 File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-	        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	        FileUtils.copyFile(screenshot, new File(downloadDir + "\\" + testName + "_" + timestamp + ".png"));
-        // Cast to ChromeDriver to use getFullPageScreenshotAs()
-//        ChromeDriver chromeDriver = (ChromeDriver) driver;
-//        File screenshot = chromeDriver.getScreenshotAs(OutputType.FILE);
-//        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//        File destFile = new File(downloadDir + "\\" + testName + "_" + timestamp + ".png");
-//        FileUtils.copyFile(screenshot, destFile);
-     //   System.out.println("✅ Full-page screenshot saved: " + destFile.getAbsolutePath());
-    }
+	static String firstDocNo;
+	public void takeFullPageScreenshot(String testName) throws IOException {
+	    File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+	    String filename = testName + "_" + firstDocNo + ".png";
+	    File destFile = new File(downloadDir + "\\" + filename);
+	    FileUtils.copyFile(screenshot, destFile);
+	    System.out.println("✅ Screenshot saved as: " + destFile.getAbsolutePath());
+	}
+
 
 	
 	@SuppressWarnings("deprecation")
@@ -159,7 +155,7 @@ public class LoginStepsDefinition10 {
 			usernameField.sendKeys("tanmay.nayak");
 			// ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
 			Thread.sleep(6000);
-			 takeFullPageScreenshot("Login screen");
+			// takeFullPageScreenshot("Login screen");
 			// String Quantity = row.getCell(6).toString();
 		    driver.findElement(By.name("acceptTerms")).click();
 		    waitload2.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"identify_user_button_text_active\"]")));
@@ -167,7 +163,7 @@ public class LoginStepsDefinition10 {
 		    
 		    WebDriverWait waitload1 = new WebDriverWait(driver, Duration.ofSeconds(60));
 			  
-			   
+			    
 		    waitload1.until(ExpectedConditions.elementToBeClickable(By.name("password")));
 		    
 			WebElement passwordField = driver.findElement(By.name("password")); 
@@ -295,10 +291,10 @@ public class LoginStepsDefinition10 {
 	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", last30Days);
 
 	        
-	        Thread.sleep(8000);
+	        Thread.sleep(10000);
 	        WebElement applyButton =  wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()=' Apply ']")));
 	        jls.executeScript("arguments[0].scrollIntoView(true);", applyButton);
-	        applyButton.click();
+	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", applyButton );
 	        
 	        Thread.sleep(8000);
 	       
@@ -333,7 +329,7 @@ public class LoginStepsDefinition10 {
 
 	        // Step 2: Get the first Doc No from the first row
 	        WebElement firstRow =  wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//mat-row[1]")));
-	        String firstDocNo = firstRow.findElement(By.xpath(".//mat-cell[" + docNoIndex + "]")).getText().trim();
+	        firstDocNo = firstRow.findElement(By.xpath(".//mat-cell[" + docNoIndex + "]")).getText().trim();
 	        System.out.println("First Doc No: " + firstDocNo);
 
 	        // Step 3: Find the row with that Doc No and check its checkbox
