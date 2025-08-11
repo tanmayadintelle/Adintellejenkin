@@ -553,9 +553,9 @@ public class LoginStepsDefinition10 {
         }
     }
 
-    private static String timestamp() {
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-    }
+//    private static String timestamp() {
+//        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+//    }
 
     
 	@Then("Closes the chrome Browser")
