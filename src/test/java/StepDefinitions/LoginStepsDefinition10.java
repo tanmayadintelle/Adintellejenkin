@@ -86,7 +86,7 @@ public class LoginStepsDefinition10 {
 	    // Block notifications by setting the preference value to 2 (block)
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
 
-	    options.addArguments("--headless=new"); // Use new headless for better rendering
+//	    options.addArguments("--headless=new"); // Use new headless for better rendering
 	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
 	    options.addArguments("--window-size=1920,1080");
 	    options.addArguments("--no-sandbox");
@@ -124,10 +124,12 @@ public class LoginStepsDefinition10 {
 		    waitload2.until(ExpectedConditions.elementToBeClickable(By.name("username")));
 			// Step 3: Find the form fields on the webpage and fill them with data from Excel
 		    Thread.sleep(2000);
-		    takeScreenshot("Login screen");
+		   
 			WebElement usernameField = driver.findElement(By.name("username")); // Replace with actual ID
 			
 			usernameField.sendKeys("tanmay.nayak");
+			 ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
+			    takeScreenshot("Login screen");
 			// String Quantity = row.getCell(6).toString();
 		    driver.findElement(By.name("acceptTerms")).click();
 		    waitload2.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"identify_user_button_text_active\"]")));
