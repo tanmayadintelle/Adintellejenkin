@@ -79,6 +79,8 @@ public class LoginStepsDefinition10 {
 	    options.addArguments("--no-sandbox");
 	    options.addArguments("--disable-dev-shm-usage");
 	    options.addArguments("--remote-allow-origins=*");
+	    options.addArguments("--force-device-scale-factor=1");
+	    options.addArguments("--force-color-profile=srgb");
 	    driver =new ChromeDriver(options);
 //	    System.out.print("WebDriver initalized");
 //	    driver.get("https://pro.adintelle.com/v7/m-box/campaign"); 
