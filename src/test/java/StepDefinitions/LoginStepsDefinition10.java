@@ -59,11 +59,25 @@ import io.cucumber.java.en.When;
 
 public class LoginStepsDefinition10 {
 	static WebDriver driver;
+	static String downloadDir;   
+	 public void takeScreenshot(String testName) throws IOException {
+	        // Create a new folder based on the current date/time
+		 File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+	        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	        FileUtils.copyFile(screenshot, new File(downloadDir + "\\" + testName + "_" + timestamp + ".png"));
+	    }
 	
 	@SuppressWarnings("deprecation")
 	@Given("User completes Bill Transfer flow")
 	public void user_is_on_login_page_billtransfer() throws IOException, InterruptedException, AWTException {
+	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+		   // String downloadDir = "BTLoutputs\\" + timestamp;
+		    downloadDir = new File("screenshots\\BillTransfer\\" + timestamp).getAbsolutePath();
 
+		    File downloadFolder = new File(downloadDir);
+		    if (!downloadFolder.exists()) {
+		        downloadFolder.mkdirs(); // ✅ Create the folder if not there
+		    }
 	    // Write code here that turns the phrase above into concrete actions
 		ChromeOptions options = new ChromeOptions();
 
@@ -71,37 +85,24 @@ public class LoginStepsDefinition10 {
 	    HashMap<String, Object> prefs = new HashMap<>();    
 	    // Block notifications by setting the preference value to 2 (block)
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
-	    // Add preferences to Chrome options
-	//    options.setExperimentalOption("prefs", prefs);
+
 	    options.addArguments("--headless=new"); // Use new headless for better rendering
 	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
 	    options.addArguments("--window-size=1920,1080");
 	    options.addArguments("--no-sandbox");
 	    options.addArguments("--disable-dev-shm-usage");
 	    options.addArguments("--remote-allow-origins=*");
-//	    options.addArguments("--force-device-scale-factor=1");
-//	    options.addArguments("--force-color-profile=srgb");
-	//    driver =new ChromeDriver(options);
-//	    System.out.print("WebDriver initalized");
-//	    driver.get("https://pro.adintelle.com/v7/m-box/campaign"); 
-//	    System.out.print("Website opened");
-	  
-	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	   // String downloadDir = "BTLoutputs\\" + timestamp;
-	    downloadDir = new File("screenshots\\BillTransfer\\" + timestamp).getAbsolutePath();
 
-	    File downloadFolder = new File(downloadDir);
-	    if (!downloadFolder.exists()) {
-	        downloadFolder.mkdirs(); // ✅ Create the folder if not there
-	    }
-	    Map<String, Object> prefs1 = new HashMap<>();
-	    prefs1.put("profile.default_content_setting_values.notifications", 2);
-	    prefs1.put("download.default_directory", downloadDir); // ✅ Your download path
+	  
+	
+	   // Map<String, Object> prefs1 = new HashMap<>();
+	    prefs.put("profile.default_content_setting_values.notifications", 2);
+	    prefs.put("download.default_directory", downloadDir); // ✅ Your download path
 //	    prefs1.put("plugins.always_open_pdf_externally", true);
 //	    prefs1.put("download.prompt_for_download", false); 
 //	    prefs1.put("directory_upgrade", true);             
 //	    prefs1.put("safebrowsing.enabled", true);          
-	    options.setExperimentalOption("prefs", prefs1);
+	    options.setExperimentalOption("prefs", prefs);
 	    options.addArguments("--disable-blink-features=AutomationControlled");
 
 	    driver =new ChromeDriver(options);
@@ -389,13 +390,7 @@ public class LoginStepsDefinition10 {
 
         }
 	}
-	static String downloadDir;   
-	 public void takeScreenshot(String testName) throws IOException {
-	        // Create a new folder based on the current date/time
-		 File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-	        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	        FileUtils.copyFile(screenshot, new File(downloadDir + "\\" + testName + "_" + timestamp + ".png"));
-	    }
+
        
 
 	@And("Downloads reports")
