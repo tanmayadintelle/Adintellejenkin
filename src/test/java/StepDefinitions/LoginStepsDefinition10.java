@@ -81,7 +81,7 @@ public class LoginStepsDefinition10 {
 	    options.addArguments("--remote-allow-origins=*");
 	    options.addArguments("--force-device-scale-factor=1");
 	    options.addArguments("--force-color-profile=srgb");
-	    driver =new ChromeDriver(options);
+	//    driver =new ChromeDriver(options);
 //	    System.out.print("WebDriver initalized");
 //	    driver.get("https://pro.adintelle.com/v7/m-box/campaign"); 
 //	    System.out.print("Website opened");
@@ -537,18 +537,20 @@ public class LoginStepsDefinition10 {
             }
         }
     }
-    public static void captureScreenshot(WebDriver driver, String screenshotName, File downloadFolder) {
+    public static void captureScreenshot(WebDriver driver, String screenshotName, File downloadFolder) throws InterruptedException {
         File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         //File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-
+        Thread.sleep(1000);
         // Build destination file path
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File dest = new File(downloadFolder, screenshotName + "_billtransfer_" + timestamp + ".png");
 
         try {
+        	Thread.sleep(1000);
             FileUtils.copyFile(src, dest);
             System.out.println("✅ Screenshot saved: " + dest.getAbsolutePath());
         } catch (IOException e) {
+        	Thread.sleep(1000);
             System.err.println("❌ Failed to save screenshot: " + e.getMessage());
         }
     }
