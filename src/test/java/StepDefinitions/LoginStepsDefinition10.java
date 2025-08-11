@@ -343,7 +343,8 @@ public class LoginStepsDefinition10 {
 	        boolean isPresent = !matched.isEmpty() && matched.get(0).isDisplayed();
 
 	        if (isPresent) {
-	        	
+	        	new WebDriverWait(driver, Duration.ofSeconds(10))
+	            .until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
 	            System.out.println("Bill number " + firstDocNo + " is present on the success screen.");
 	            ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
 	            Thread.sleep(2000);
@@ -370,11 +371,15 @@ public class LoginStepsDefinition10 {
 	            boolean isPresentSuccess = !matchedError.isEmpty() && matchedError.get(0).isDisplayed();
 
 	            if (isPresentSuccess) {
+	            	new WebDriverWait(driver, Duration.ofSeconds(10))
+	                .until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
 	                System.out.println("Bill number " + firstDocNo + " is present on the error screen.");
 	                ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
 	                Thread.sleep(2000);
 	                captureScreenshot(driver, "Error_" + firstDocNo,downloadFolder);
 	            } else {
+	            	new WebDriverWait(driver, Duration.ofSeconds(10))
+	                .until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
 	            	((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
 	                System.out.println("Bill number " + firstDocNo + " NOT found on both success and error screens.");
 	                Thread.sleep(2000);
