@@ -343,8 +343,9 @@ public class LoginStepsDefinition10 {
 	        boolean isPresent = !matched.isEmpty() && matched.get(0).isDisplayed();
 
 	        if (isPresent) {
-	        	Thread.sleep(2000);
+	        	
 	            System.out.println("Bill number " + firstDocNo + " is present on the success screen.");
+	            Thread.sleep(2000);
 	            captureScreenshot(driver, "Success_" + firstDocNo,downloadFolder);
 	        } else {
 	        	 Thread.sleep(5000);
