@@ -72,7 +72,7 @@ public class LoginStepsDefinition10 {
 	    // Block notifications by setting the preference value to 2 (block)
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
 	    // Add preferences to Chrome options
-	    options.setExperimentalOption("prefs", prefs);
+	//    options.setExperimentalOption("prefs", prefs);
 	    options.addArguments("--headless=new"); // Use new headless for better rendering
 	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
 	    options.addArguments("--window-size=1920,1080");
@@ -83,7 +83,7 @@ public class LoginStepsDefinition10 {
 //	    System.out.print("WebDriver initalized");
 //	    driver.get("https://pro.adintelle.com/v7/m-box/campaign"); 
 //	    System.out.print("Website opened");
-	    driver.manage().window().setSize(new Dimension(1920, 1080));
+	  
 	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 	   // String downloadDir = "BTLoutputs\\" + timestamp;
 	    String downloadDir = new File("screenshots\\BillTransfer\\" + timestamp).getAbsolutePath();
@@ -108,7 +108,7 @@ public class LoginStepsDefinition10 {
 	    driver.get("https://pro.adintelle.com/v7/login"); 
 	    reduceResolution();
 	    System.out.print("Website opened");
-	  //  driver.manage().window().setSize(new Dimension(1920, 1080));
+	   driver.manage().window().setSize(new Dimension(1920, 1080));
 	   // driver.manage().window().maximize();
 	    
 	    String excelFilePath = "Book2.xlsx";  // Path to your Excel file
@@ -341,6 +341,7 @@ public class LoginStepsDefinition10 {
 	        boolean isPresent = !matched.isEmpty() && matched.get(0).isDisplayed();
 
 	        if (isPresent) {
+	        	Thread.sleep(2000);
 	            System.out.println("Bill number " + firstDocNo + " is present on the success screen.");
 	            captureScreenshot(driver, "Success_" + firstDocNo);
 	        } else {
@@ -366,9 +367,11 @@ public class LoginStepsDefinition10 {
 
 	            if (isPresentSuccess) {
 	                System.out.println("Bill number " + firstDocNo + " is present on the error screen.");
+	                Thread.sleep(2000);
 	                captureScreenshot(driver, "Error_" + firstDocNo);
 	            } else {
 	                System.out.println("Bill number " + firstDocNo + " NOT found on both success and error screens.");
+	                Thread.sleep(2000);
 	                captureScreenshot(driver, "NotFoundinSuccessorError_" + firstDocNo);
 	            }
 	        }
@@ -460,11 +463,11 @@ public class LoginStepsDefinition10 {
 				        		    By.xpath("//*[@id=\"m_Filter_Datepicker\"]/div/span")));
 				        	js.executeScript("arguments[0].scrollIntoView(true);", calendarIcon);
 				        		calendarIcon.click();
-				      
+				        		Thread.sleep(2000);
 				        	WebElement last30days1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[8]/div[1]/ul/li[4]")));				 	       
 				        	js.executeScript("arguments[0].scrollIntoView(true);", last30days1);
 				        	last30days1.click();
-				        	
+				        	Thread.sleep(2000);
 //				        	 WebElement applyButton1 =  wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Apply']")));
 //				 	        jls.executeScript("arguments[0].scrollIntoView(true);", applyButton1);
 //				 	        applyButton1.click();
