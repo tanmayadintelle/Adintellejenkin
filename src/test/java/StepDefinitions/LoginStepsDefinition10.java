@@ -97,10 +97,10 @@ public class LoginStepsDefinition10 {
 	    Map<String, Object> prefs1 = new HashMap<>();
 	    prefs1.put("profile.default_content_setting_values.notifications", 2);
 	    prefs1.put("download.default_directory", downloadDir); // ✅ Your download path
-	    prefs1.put("plugins.always_open_pdf_externally", true);
-	    prefs1.put("download.prompt_for_download", false); 
-	    prefs1.put("directory_upgrade", true);             
-	    prefs1.put("safebrowsing.enabled", true);          
+//	    prefs1.put("plugins.always_open_pdf_externally", true);
+//	    prefs1.put("download.prompt_for_download", false); 
+//	    prefs1.put("directory_upgrade", true);             
+//	    prefs1.put("safebrowsing.enabled", true);          
 	    options.setExperimentalOption("prefs", prefs1);
 	    options.addArguments("--disable-blink-features=AutomationControlled");
 
