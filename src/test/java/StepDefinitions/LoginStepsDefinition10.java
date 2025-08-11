@@ -73,12 +73,12 @@ public class LoginStepsDefinition10 {
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
 	    // Add preferences to Chrome options
 	//    options.setExperimentalOption("prefs", prefs);
-	    options.addArguments("--headless=new"); // Use new headless for better rendering
-	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-	    options.addArguments("--window-size=1920,1080");
-	    options.addArguments("--no-sandbox");
-	    options.addArguments("--disable-dev-shm-usage");
-	    options.addArguments("--remote-allow-origins=*");
+//	    options.addArguments("--headless=new"); // Use new headless for better rendering
+//	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+//	    options.addArguments("--window-size=1920,1080");
+//	    options.addArguments("--no-sandbox");
+//	    options.addArguments("--disable-dev-shm-usage");
+//	    options.addArguments("--remote-allow-origins=*");
 	    driver =new ChromeDriver(options);
 //	    System.out.print("WebDriver initalized");
 //	    driver.get("https://pro.adintelle.com/v7/m-box/campaign"); 
@@ -343,7 +343,7 @@ public class LoginStepsDefinition10 {
 	        if (isPresent) {
 	        	Thread.sleep(2000);
 	            System.out.println("Bill number " + firstDocNo + " is present on the success screen.");
-	            captureScreenshot(driver, "Success_" + firstDocNo);
+	            captureScreenshot(driver, "Success_" + firstDocNo,downloadFolder);
 	        } else {
 	        	 Thread.sleep(5000);
 	            WebElement successTab =  wait.until(ExpectedConditions.elementToBeClickable(
@@ -368,11 +368,11 @@ public class LoginStepsDefinition10 {
 	            if (isPresentSuccess) {
 	                System.out.println("Bill number " + firstDocNo + " is present on the error screen.");
 	                Thread.sleep(2000);
-	                captureScreenshot(driver, "Error_" + firstDocNo);
+	                captureScreenshot(driver, "Error_" + firstDocNo,downloadFolder);
 	            } else {
 	                System.out.println("Bill number " + firstDocNo + " NOT found on both success and error screens.");
 	                Thread.sleep(2000);
-	                captureScreenshot(driver, "NotFoundinSuccessorError_" + firstDocNo);
+	                captureScreenshot(driver, "NotFoundinSuccessorError_" + firstDocNo,downloadFolder);
 	            }
 	        }
 
@@ -462,11 +462,14 @@ public class LoginStepsDefinition10 {
 				        	WebElement calendarIcon = wait.until(ExpectedConditions.elementToBeClickable(
 				        		    By.xpath("//*[@id=\"m_Filter_Datepicker\"]/div/span")));
 				        	js.executeScript("arguments[0].scrollIntoView(true);", calendarIcon);
-				        		calendarIcon.click();
-				        		Thread.sleep(2000);
-				        	WebElement last30days1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[8]/div[1]/ul/li[4]")));				 	       
-				        	js.executeScript("arguments[0].scrollIntoView(true);", last30days1);
-				        	last30days1.click();
+				        	calendarIcon.click();
+				        	Thread.sleep(2000);
+				        				
+				        	WebElement last30Day1s =wait.until(ExpectedConditions.elementToBeClickable(
+				        		    By.cssSelector("body > div.daterangepicker.dropdown-menu.ltr.opensright.show-calendar > div.ranges > ul > li:nth-child(4)")
+				        			)); 
+				        	js.executeScript("arguments[0].scrollIntoView(true);", last30Day1s);
+				        	last30Day1s.click();
 				        	Thread.sleep(2000);
 //				        	 WebElement applyButton1 =  wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Apply']")));
 //				 	        jls.executeScript("arguments[0].scrollIntoView(true);", applyButton1);
@@ -532,13 +535,19 @@ public class LoginStepsDefinition10 {
             }
         }
     }
-    public static void captureScreenshot(WebDriver driver, String screenshotName) {
+    public static void captureScreenshot(WebDriver driver, String screenshotName, File downloadFolder) {
         File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        //File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+
+        // Build destination file path
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File dest = new File(downloadFolder, screenshotName + "_billtransfer_" + timestamp + ".png");
+
         try {
-            FileUtils.copyFile(src, new File("screenshots/" + screenshotName + "billtransfer_" + timestamp() + ".png"));
-            System.out.println("Screenshot saved: " + screenshotName);
+            FileUtils.copyFile(src, dest);
+            System.out.println("✅ Screenshot saved: " + dest.getAbsolutePath());
         } catch (IOException e) {
-            System.err.println("Screenshot failed: " + e.getMessage());
+            System.err.println("❌ Failed to save screenshot: " + e.getMessage());
         }
     }
 
