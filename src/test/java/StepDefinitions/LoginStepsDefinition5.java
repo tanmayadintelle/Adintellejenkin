@@ -59,11 +59,11 @@ public class LoginStepsDefinition5 {
 	public void user_is_on_login_page() throws IOException, InterruptedException {
 		   ChromeOptions options = new ChromeOptions();
 		  // options.addArguments("--headless=new");                      // Use new headless mode
-	        options.addArguments("--disable-gpu");                       // Disable GPU (best for CI/CD)
+	      //  options.addArguments("--disable-gpu");                       // Disable GPU (best for CI/CD)
 	       // options.addArguments("--window-size=1920,1080");             // Set proper window size
-	        options.addArguments("--no-sandbox");                        // Bypass OS security (required for CI)
-	        options.addArguments("--disable-dev-shm-usage");             // Fix for Linux memory limit
-	        options.addArguments("--remote-allow-origins=*");            // Allow cross-origin requests
+	      //  options.addArguments("--no-sandbox");                        // Bypass OS security (required for CI)
+	      //  options.addArguments("--disable-dev-shm-usage");             // Fix for Linux memory limit
+	      //  options.addArguments("--remote-allow-origins=*");            // Allow cross-origin requests
 	        options.addArguments("--disable-blink-features=AutomationControlled"); // Bypass detection
 
 	        // === Setup Download Directory ===
@@ -613,35 +613,71 @@ public class LoginStepsDefinition5 {
          
          Thread.sleep(5000); // Wait for suggestions to appear or DOM to update
 
-      // Wait for the list of <li> elements to be visible
-         List<WebElement> listItems = wait.until(
-        		    ExpectedConditions.visibilityOfAllElementsLocatedBy(
-        		        By.xpath("//li[contains(@class, 'list-group-item')]")
-        		    )
-        		);
+//         List<WebElement> listItems = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+//        		    By.xpath("//li[contains(@class, 'list-group-item')]")
+//        		));
+//
+//        		if (!listItems.isEmpty()) {
+//        		    WebElement firstItem = listItems.get(0);
+//
+//        		    // 1. Scroll element into view using JavaScript
+//        		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", firstItem);
+//
+//        		    // 2. Optionally hover over it using Actions class
+//        		    new Actions(driver).moveToElement(firstItem).perform();
+//
+//        		    // 3. Focus the element (via JS) for good measure
+//        		    ((JavascriptExecutor) driver).executeScript("arguments[0].focus();", firstItem);
+//
+//        		    // 4. Finally, click the element
+//        		    firstItem.click();
+//        		} else {
+//        		    System.out.println("No list items found!");
+//        		}
 
 
-         // Check if the list is not empty, then click the first element
-         if (!listItems.isEmpty()) {
-             listItems.get(0).click();  // Click the first element
-         } else {
-             System.out.println("No list items found!");
-         }
+             Thread.sleep(4000);
+         //    wait.until(ExpectedConditions.elementToBeClickable(By.id("SavePackSel"))).click();
 
          Thread.sleep(4000);
-         wait.until(ExpectedConditions.elementToBeClickable(By.id("SavePackSel"))).click();
+        
+             // Wait for element to become visible and clickable
+             WebElement SavePackSel = wait.until(ExpectedConditions.elementToBeClickable(By.id("SavePackSel")));
+
+             try {
+                 // Try standard click
+            	 SavePackSel.click();
+             }
+             catch(TimeoutException te) {
+            	 js.executeScript("arguments[0].click();", SavePackSel);
+             }
+             
+
+             By locator = By.xpath("//button[contains(text(), 'Select Revision Date')]");
+
+             WebElement buttonlocator = wait.until(ExpectedConditions.elementToBeClickable(locator));
+
+             // Scroll into view for better reliability
+             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", buttonlocator);
+
+             // Click the button
+             js.executeScript("arguments[0].click();", SavePackSel);
+         Thread.sleep(3000);
          String spacewidth1 = row.getCell(20).toString();
          WebElement spacewidthfield1 = wait.until(ExpectedConditions.elementToBeClickable(By.id("Dimension1")));
+         js.executeScript("arguments[0].scrollIntoView({block: 'center'});", spacewidthfield1);
          spacewidthfield1.sendKeys(spacewidth1);
          Thread.sleep(3000);
          String spaceheight1 = row.getCell(21).toString();
          spacewidthfield1.click();
          WebElement spaceheightfield1 = wait.until(ExpectedConditions.elementToBeClickable(By.id("Dimension2")));
+         js.executeScript("arguments[0].scrollIntoView({block: 'center'});", spaceheightfield1);
          spaceheightfield1.sendKeys(spaceheight1);
          Thread.sleep(3000);
          Thread.sleep(2000);
          String rate1 = row.getCell(22).toString();
          WebElement ratefield1 = wait.until(ExpectedConditions.elementToBeClickable(By.id("Rate")));
+         js.executeScript("arguments[0].scrollIntoView({block: 'center'});", ratefield1);
          ratefield1.sendKeys(rate1);
          Thread.sleep(3000);
         
@@ -683,37 +719,48 @@ public class LoginStepsDefinition5 {
 
          // Wait for the element to be clickable
          WebElement noOfInsertionField1 = wait.until(ExpectedConditions.elementToBeClickable(By.id("NoOfInsertion")));
-
-         // Step 1: Remove readonly and disabled attributes (if applicable)
-         js.executeScript("arguments[0].removeAttribute('readonly');", noOfInsertionField1);
-         js.executeScript("arguments[0].removeAttribute('disabled');", noOfInsertionField1);
-
-         // Step 2: Clear the field by setting its value to an empty string
-         js.executeScript("arguments[0].value = '';", noOfInsertionField1);  // Clear the field
-         js.executeScript("arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", noOfInsertionField1);  // Trigger input event
-
-         // Step 3: Alternatively, if you want to simulate BACK_SPACE, use Actions
-         // Focus on the element and backspace multiple times to clear the field (optional)
-         Actions action = new Actions(driver);
-         action.moveToElement(noOfInsertionField1)
-                .click()
-                .sendKeys(Keys.END) // Move to the end of the field
-                .sendKeys(Keys.BACK_SPACE, Keys.BACK_SPACE, Keys.BACK_SPACE) // Delete existing characters
-                .perform();
-
-         // Step 4: Enter the new value from Excel
-         action.moveToElement(noOfInsertionField1)
-                .click()
-                .sendKeys(noOfInsertion1)  // Set the new value from Excel
-                .perform();
-
-         // Optional Debugging: Print the value before and after clearing
-         String valueBeforeClear = js.executeScript("return arguments[0].value;", noOfInsertionField1).toString();
-         System.out.println("Value before clearing: " + valueBeforeClear);
-
-         // Wait for the final value to be updated
-         String valueAfterUpdate = js.executeScript("return arguments[0].value;", noOfInsertionField1).toString();
-         System.out.println("Final value after update: " + valueAfterUpdate);
+         noOfInsertionField1.click();
+         
+         
+         Thread.sleep(200);
+         Actions actions78 = new Actions(driver);
+         actions78.moveToElement(noOfInsertionField1)
+         .click()
+         .sendKeys(Keys.END) // Move to end of field
+         .sendKeys(Keys.BACK_SPACE, Keys.BACK_SPACE, Keys.BACK_SPACE) // Delete any existing characters
+         .sendKeys(noOfInsertion1)
+         .perform();
+         
+//         // Step 1: Remove readonly and disabled attributes (if applicable)
+//         js.executeScript("arguments[0].removeAttribute('readonly');", noOfInsertionField1);
+//         js.executeScript("arguments[0].removeAttribute('disabled');", noOfInsertionField1);
+//
+//         // Step 2: Clear the field by setting its value to an empty string
+//         js.executeScript("arguments[0].value = '';", noOfInsertionField1);  // Clear the field
+//         js.executeScript("arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", noOfInsertionField1);  // Trigger input event
+//
+//         // Step 3: Alternatively, if you want to simulate BACK_SPACE, use Actions
+//         // Focus on the element and backspace multiple times to clear the field (optional)
+//         Actions action = new Actions(driver);
+//         action.moveToElement(noOfInsertionField1)
+//                .click()
+//                .sendKeys(Keys.END) // Move to the end of the field
+//                .sendKeys(Keys.BACK_SPACE, Keys.BACK_SPACE, Keys.BACK_SPACE) // Delete existing characters
+//                .perform();
+//
+//         // Step 4: Enter the new value from Excel
+//         action.moveToElement(noOfInsertionField1)
+//                .click()
+//                .sendKeys(noOfInsertion1)  // Set the new value from Excel
+//                .perform();
+//
+//         // Optional Debugging: Print the value before and after clearing
+//         String valueBeforeClear = js.executeScript("return arguments[0].value;", noOfInsertionField1).toString();
+//         System.out.println("Value before clearing: " + valueBeforeClear);
+//
+//         // Wait for the final value to be updated
+//         String valueAfterUpdate = js.executeScript("return arguments[0].value;", noOfInsertionField1).toString();
+//         System.out.println("Final value after update: " + valueAfterUpdate);
       
 
       js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
