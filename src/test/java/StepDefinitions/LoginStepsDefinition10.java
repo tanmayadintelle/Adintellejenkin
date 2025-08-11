@@ -348,7 +348,7 @@ public class LoginStepsDefinition10 {
 	            System.out.println("Bill number " + firstDocNo + " is present on the success screen.");
 	            ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
 	            Thread.sleep(2000);
-	            captureScreenshot(driver, "Success_" + firstDocNo,downloadFolder);
+	            takeScreenshot("Success screen");
 	        } else {
 	        	 Thread.sleep(5000);
 	            WebElement successTab =  wait.until(ExpectedConditions.elementToBeClickable(
@@ -376,20 +376,26 @@ public class LoginStepsDefinition10 {
 	                System.out.println("Bill number " + firstDocNo + " is present on the error screen.");
 	                ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
 	                Thread.sleep(2000);
-	                captureScreenshot(driver, "Error_" + firstDocNo,downloadFolder);
+	                takeScreenshot("Error screen");
 	            } else {
 	            	new WebDriverWait(driver, Duration.ofSeconds(10))
 	                .until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
 	            	((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
 	                System.out.println("Bill number " + firstDocNo + " NOT found on both success and error screens.");
 	                Thread.sleep(2000);
-	                captureScreenshot(driver, "NotFoundinSuccessorError_" + firstDocNo,downloadFolder);
+	                takeScreenshot("NOT found on both success and error screen");
 	            }
 	        }
 
         }
 	}
-	    
+	static String screenshotFolderPath;   
+	 public void takeScreenshot(String testName) throws IOException {
+	        // Create a new folder based on the current date/time
+		 File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+	        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	        FileUtils.copyFile(screenshot, new File(screenshotFolderPath + "\\" + testName + "_" + timestamp + ".png"));
+	    }
        
 
 	@And("Downloads reports")
@@ -546,23 +552,23 @@ public class LoginStepsDefinition10 {
 //            }
 //        }
 //    }
-    public static void captureScreenshot(WebDriver driver, String screenshotName, File downloadFolder) throws InterruptedException {
-        File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        //File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        Thread.sleep(1000);
-        // Build destination file path
-        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File dest = new File(downloadFolder, screenshotName + "_billtransfer_" + timestamp + ".png");
-
-        try {
-        	Thread.sleep(1000);
-            FileUtils.copyFile(src, dest);
-            System.out.println("✅ Screenshot saved: " + dest.getAbsolutePath());
-        } catch (IOException e) {
-        	Thread.sleep(1000);
-            System.err.println("❌ Failed to save screenshot: " + e.getMessage());
-        }
-    }
+//    public static void captureScreenshot(WebDriver driver, String screenshotName, File downloadFolder) throws InterruptedException {
+//        File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//        //File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//        Thread.sleep(1000);
+//        // Build destination file path
+//        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//        File dest = new File(downloadFolder, screenshotName + "_billtransfer_" + timestamp + ".png");
+//
+//        try {
+//        	Thread.sleep(1000);
+//            FileUtils.copyFile(src, dest);
+//            System.out.println("✅ Screenshot saved: " + dest.getAbsolutePath());
+//        } catch (IOException e) {
+//        	Thread.sleep(1000);
+//            System.err.println("❌ Failed to save screenshot: " + e.getMessage());
+//        }
+//    }
 
 //    private static String timestamp() {
 //        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
