@@ -123,6 +123,7 @@ public class LoginStepsDefinition10 {
 			  
 		    waitload2.until(ExpectedConditions.elementToBeClickable(By.name("username")));
 			// Step 3: Find the form fields on the webpage and fill them with data from Excel
+		    Thread.sleep(2000);
 		    takeScreenshot("Login screen");
 			WebElement usernameField = driver.findElement(By.name("username")); // Replace with actual ID
 			
