@@ -345,6 +345,7 @@ public class LoginStepsDefinition10 {
 	        if (isPresent) {
 	        	
 	            System.out.println("Bill number " + firstDocNo + " is present on the success screen.");
+	            ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
 	            Thread.sleep(2000);
 	            captureScreenshot(driver, "Success_" + firstDocNo,downloadFolder);
 	        } else {
@@ -370,9 +371,11 @@ public class LoginStepsDefinition10 {
 
 	            if (isPresentSuccess) {
 	                System.out.println("Bill number " + firstDocNo + " is present on the error screen.");
+	                ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
 	                Thread.sleep(2000);
 	                captureScreenshot(driver, "Error_" + firstDocNo,downloadFolder);
 	            } else {
+	            	((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
 	                System.out.println("Bill number " + firstDocNo + " NOT found on both success and error screens.");
 	                Thread.sleep(2000);
 	                captureScreenshot(driver, "NotFoundinSuccessorError_" + firstDocNo,downloadFolder);
