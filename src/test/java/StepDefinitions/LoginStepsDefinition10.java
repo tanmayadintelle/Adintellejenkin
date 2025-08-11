@@ -389,12 +389,12 @@ public class LoginStepsDefinition10 {
 
         }
 	}
-	static String screenshotFolderPath;   
+	static String downloadDir;   
 	 public void takeScreenshot(String testName) throws IOException {
 	        // Create a new folder based on the current date/time
 		 File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 	        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	        FileUtils.copyFile(screenshot, new File(screenshotFolderPath + "\\" + testName + "_" + timestamp + ".png"));
+	        FileUtils.copyFile(screenshot, new File(downloadDir + "\\" + testName + "_" + timestamp + ".png"));
 	    }
        
 
