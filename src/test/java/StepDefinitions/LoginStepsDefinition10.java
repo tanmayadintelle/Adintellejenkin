@@ -81,28 +81,19 @@ import io.cucumber.java.en.Given;
 public class LoginStepsDefinition10 {
 	static WebDriver driver;
 	static String downloadDir;   
-	public void takeFullPageScreenshot(String testName) throws IOException {
-	    // Give time for rendering in headless mode
-	    new WebDriverWait(driver, Duration.ofSeconds(5)).until(
-	        webDriver -> ((JavascriptExecutor) webDriver)
-	            .executeScript("return document.readyState").equals("complete"));
-
-	    // Scroll to top to ensure visibility
-	    ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
-	    
-	    // Add a short sleep to allow rendering
-	    try {
-	        Thread.sleep(1000);
-	    } catch (InterruptedException e) {
-	        e.printStackTrace();
-	    }
-
-	    File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    FileUtils.copyFile(screenshot, new File(downloadDir + "\\" + testName + "_" + timestamp + ".png"));
-
-	    System.out.println("✅ Screenshot saved: " + testName);
-	}
+    public void takeFullPageScreenshot(String testName) throws IOException {
+    	
+    	 File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+	        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	        FileUtils.copyFile(screenshot, new File(downloadDir + "\\" + testName + "_" + timestamp + ".png"));
+        // Cast to ChromeDriver to use getFullPageScreenshotAs()
+//        ChromeDriver chromeDriver = (ChromeDriver) driver;
+//        File screenshot = chromeDriver.getScreenshotAs(OutputType.FILE);
+//        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//        File destFile = new File(downloadDir + "\\" + testName + "_" + timestamp + ".png");
+//        FileUtils.copyFile(screenshot, destFile);
+     //   System.out.println("✅ Full-page screenshot saved: " + destFile.getAbsolutePath());
+    }
 
 	
 	@SuppressWarnings("deprecation")
@@ -124,11 +115,9 @@ public class LoginStepsDefinition10 {
 	    // Block notifications by setting the preference value to 2 (block)
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
 
-	    options.addArguments("--headless=old"); // Use new headless for better rendering
+	    options.addArguments("--headless=new"); // Use new headless for better rendering
 	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
 	    options.addArguments("--window-size=1920,1080");
-	    options.addArguments("--window-position=-2400,-2400");
-
 	    options.addArguments("--no-sandbox");
 	    options.addArguments("--disable-dev-shm-usage");
 	    options.addArguments("--remote-allow-origins=*");
