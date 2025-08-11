@@ -13,6 +13,13 @@
   </properties>
 
   <dependencies>
+  
+  <dependency>
+    <groupId>ru.yandex.qatools.ashot</groupId>
+    <artifactId>ashot</artifactId>
+    <version>1.5.4</version>
+</dependency>
+
     <!-- Cucumber -->
     <dependency>
       <groupId>io.cucumber</groupId>
