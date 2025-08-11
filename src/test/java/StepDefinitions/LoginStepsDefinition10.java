@@ -82,13 +82,17 @@ public class LoginStepsDefinition10 {
 	static WebDriver driver;
 	static String downloadDir;   
     public void takeFullPageScreenshot(String testName) throws IOException {
+    	
+    	 File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+	        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	        FileUtils.copyFile(screenshot, new File(downloadDir + "\\" + testName + "_" + timestamp + ".png"));
         // Cast to ChromeDriver to use getFullPageScreenshotAs()
-        ChromeDriver chromeDriver = (ChromeDriver) driver;
-        File screenshot = chromeDriver.getScreenshotAs(OutputType.FILE);
-        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File destFile = new File(downloadDir + "\\" + testName + "_" + timestamp + ".png");
-        FileUtils.copyFile(screenshot, destFile);
-        System.out.println("✅ Full-page screenshot saved: " + destFile.getAbsolutePath());
+//        ChromeDriver chromeDriver = (ChromeDriver) driver;
+//        File screenshot = chromeDriver.getScreenshotAs(OutputType.FILE);
+//        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//        File destFile = new File(downloadDir + "\\" + testName + "_" + timestamp + ".png");
+//        FileUtils.copyFile(screenshot, destFile);
+     //   System.out.println("✅ Full-page screenshot saved: " + destFile.getAbsolutePath());
     }
 
 	
