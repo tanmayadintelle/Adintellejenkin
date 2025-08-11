@@ -59,10 +59,7 @@ import io.cucumber.java.en.When;
 
 import java.awt.AWTException;
 import java.io.File;
-import ru.yandex.qatools.ashot.AShot;
-import ru.yandex.qatools.ashot.Screenshot;
-import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
-import javax.imageio.ImageIO;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -84,18 +81,16 @@ import io.cucumber.java.en.Given;
 public class LoginStepsDefinition10 {
 	static WebDriver driver;
 	static String downloadDir;   
-	public void takeFullPageScreenshot(String testName) throws IOException {
-	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    File destFile = new File(downloadDir + "\\" + testName + "_" + timestamp + ".png");
+    public void takeFullPageScreenshot(String testName) throws IOException {
+        // Cast to ChromeDriver to use getFullPageScreenshotAs()
+        ChromeDriver chromeDriver = (ChromeDriver) driver;
+        File screenshot = chromeDriver.getScreenshotAs(OutputType.FILE);
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File destFile = new File(downloadDir + "\\" + testName + "_" + timestamp + ".png");
+        FileUtils.copyFile(screenshot, destFile);
+        System.out.println("✅ Full-page screenshot saved: " + destFile.getAbsolutePath());
+    }
 
-	    Screenshot screenshot = new AShot()
-	        .shootingStrategy(ShootingStrategies.viewportPasting(100))  // scroll & stitch full page
-	        .takeScreenshot(driver);
-
-	    ImageIO.write(screenshot.getImage(), "PNG", destFile);
-
-	    System.out.println("✅ Full-page screenshot saved: " + destFile.getAbsolutePath());
-	}
 	
 	@SuppressWarnings("deprecation")
 	@Given("User completes Bill Transfer flow")
