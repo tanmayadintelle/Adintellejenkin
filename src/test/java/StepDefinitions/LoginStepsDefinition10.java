@@ -79,8 +79,8 @@ public class LoginStepsDefinition10 {
 	    options.addArguments("--no-sandbox");
 	    options.addArguments("--disable-dev-shm-usage");
 	    options.addArguments("--remote-allow-origins=*");
-	    options.addArguments("--force-device-scale-factor=1");
-	    options.addArguments("--force-color-profile=srgb");
+//	    options.addArguments("--force-device-scale-factor=1");
+//	    options.addArguments("--force-color-profile=srgb");
 	//    driver =new ChromeDriver(options);
 //	    System.out.print("WebDriver initalized");
 //	    driver.get("https://pro.adintelle.com/v7/m-box/campaign"); 
@@ -108,7 +108,7 @@ public class LoginStepsDefinition10 {
 
 	    System.out.print("WebDriver initalized");
 	    driver.get("https://pro.adintelle.com/v7/login"); 
-	    reduceResolution();
+	    //reduceResolution();
 	    System.out.print("Website opened");
 	   driver.manage().window().setSize(new Dimension(1920, 1080));
 	   // driver.manage().window().maximize();
@@ -524,28 +524,28 @@ public class LoginStepsDefinition10 {
         }
     }
 
-    private void reduceResolution() throws AWTException {
-        System.setProperty("java.awt.headless", "false");
-        Robot robot = new Robot();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        for (int i = 0; i < 1; i++) {
-            robot.keyPress(KeyEvent.VK_CONTROL);
-            robot.keyPress(KeyEvent.VK_MINUS);
-            robot.keyRelease(KeyEvent.VK_MINUS);
-            robot.keyRelease(KeyEvent.VK_CONTROL);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-               System.out.println("issue with resolution");     
-               Thread.currentThread().interrupt();//logger.logs( "Interrupted!", e);
-                
-            }
-        }
-    }
+//    private void reduceResolution() throws AWTException {
+//        System.setProperty("java.awt.headless", "false");
+//        Robot robot = new Robot();
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            Thread.currentThread().interrupt();
+//        }
+//        for (int i = 0; i < 1; i++) {
+//            robot.keyPress(KeyEvent.VK_CONTROL);
+//            robot.keyPress(KeyEvent.VK_MINUS);
+//            robot.keyRelease(KeyEvent.VK_MINUS);
+//            robot.keyRelease(KeyEvent.VK_CONTROL);
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//               System.out.println("issue with resolution");     
+//               Thread.currentThread().interrupt();//logger.logs( "Interrupted!", e);
+//                
+//            }
+//        }
+//    }
     public static void captureScreenshot(WebDriver driver, String screenshotName, File downloadFolder) throws InterruptedException {
         File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         //File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
