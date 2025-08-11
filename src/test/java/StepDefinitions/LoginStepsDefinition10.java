@@ -152,7 +152,8 @@ public class LoginStepsDefinition10 {
 			WebElement usernameField = driver.findElement(By.name("username")); // Replace with actual ID
 			
 			usernameField.sendKeys("tanmay.nayak");
-			 ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
+			// ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
+			Thread.sleep(6000);
 			 takeFullPageScreenshot("Login screen");
 			// String Quantity = row.getCell(6).toString();
 		    driver.findElement(By.name("acceptTerms")).click();
