@@ -88,7 +88,7 @@ public class LoginStepsDefinition10 {
 	  
 	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 	   // String downloadDir = "BTLoutputs\\" + timestamp;
-	    String downloadDir = new File("screenshots\\BillTransfer\\" + timestamp).getAbsolutePath();
+	    downloadDir = new File("screenshots\\BillTransfer\\" + timestamp).getAbsolutePath();
 
 	    File downloadFolder = new File(downloadDir);
 	    if (!downloadFolder.exists()) {
