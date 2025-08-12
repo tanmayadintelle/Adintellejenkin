@@ -719,7 +719,8 @@ public class LoginStepsDefinition5 {
 
          // Wait for the element to be clickable
          WebElement noOfInsertionField1 = wait.until(ExpectedConditions.elementToBeClickable(By.id("NoOfInsertion")));
-         noOfInsertionField1.click();
+         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", noOfInsertionField1);
+         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", noOfInsertionField1);
          
          
          Thread.sleep(200);
