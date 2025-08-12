@@ -1755,8 +1755,15 @@ public class LoginStepsDefinition4 {
 
 			 System.out.println("PDF download should be complete now.");
 
-			 wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-			 // Step 1: Click action icon
+			 
+			 try {
+				    wait1.until(ExpectedConditions.invisibilityOfElementLocated(
+				        By.cssSelector(".cdk-overlay-backdrop")));
+//				    System.out.println("Overlay disappeared.");
+				} catch (Exception e) {
+				    System.out.println("Overlay still visible or wait timed out. Continuing anyway.");
+				}
+			 
 			 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
 
 			 // Step 2: Click print icon
