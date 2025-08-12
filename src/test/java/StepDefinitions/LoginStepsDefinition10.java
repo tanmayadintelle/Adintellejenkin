@@ -89,7 +89,7 @@ public class LoginStepsDefinition10 {
 	    String filename = testName + "_" + firstDocNo + ".png";
 	    File destFile = new File(downloadDir + "\\" + filename);
 	    FileUtils.copyFile(screenshot, destFile);
-	    System.out.println("✅ Screenshot saved as: " + destFile.getAbsolutePath());
+	   // System.out.println("✅ Screenshot saved as: " + destFile.getAbsolutePath());
 	}
 
 
@@ -328,10 +328,11 @@ public class LoginStepsDefinition10 {
 	        if (docNoIndex == -1) {
 	            throw new RuntimeException("Doc No column not found");
 	        }
-	        Thread.sleep(4000);
+	        Thread.sleep(10000);
 
 	        // Step 2: Get the first Doc No from the first row
-	        WebElement firstRow =  wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//mat-row[1]")));
+	        WebElement firstRow = wait.until(ExpectedConditions.visibilityOfElementLocated(
+	        	    By.xpath("//mat-row[1]")));
 	        firstDocNo = firstRow.findElement(By.xpath(".//mat-cell[" + docNoIndex + "]")).getText().trim();
 	        System.out.println("First Doc No: " + firstDocNo);
 
