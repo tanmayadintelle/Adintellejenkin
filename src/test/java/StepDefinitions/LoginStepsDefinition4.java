@@ -102,7 +102,7 @@ public class LoginStepsDefinition4 {
 	    reduceResolution();
 	    System.out.print("Website opened");
 	    driver.manage().window().setSize(new Dimension(1920, 1080));
-	    driver.manage().window().maximize();
+	  //  driver.manage().window().maximize();
 	    
 	    String excelFilePath = "Book2.xlsx";  // Path to your Excel file
         FileInputStream file = new FileInputStream(new File(excelFilePath));
