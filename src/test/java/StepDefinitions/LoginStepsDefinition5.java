@@ -189,7 +189,7 @@ public class LoginStepsDefinition5 {
 //	        Thread.sleep(10000);
 	        WebElement iframe = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("appIframe")));
             driver.switchTo().frame(iframe);
-            Thread.sleep(5000);
+            Thread.sleep(8000);
           
 
             String dropdownXpath = "//span[@class='select2-selection select2-selection--single']";
@@ -766,13 +766,22 @@ public class LoginStepsDefinition5 {
 
       js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
       
-      
-      wait.until(ExpectedConditions.elementToBeClickable(By.id("submit_btn"))).click();
-   
       try {
-  	    WebElement okButton = new WebDriverWait(driver, Duration.ofSeconds(80))
-  	        .until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='OK' or text()='Ok']")));
-  	    okButton.click();
+    	    WebElement saveButton = new WebDriverWait(driver, Duration.ofSeconds(80))
+    	        .until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Save' or text()='Save']")));
+    	    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", saveButton);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveButton);
+    	    Thread.sleep(4000); // If needed, else replace with explicit wait
+    	} catch (TimeoutException e) {
+    	    // Element not found or not clickable within timeout, continue with next steps
+    	    System.out.println("save button not present, proceeding to next step.");
+    	}
+      Thread.sleep(5000);
+      try {
+  	    WebElement okButton1 = new WebDriverWait(driver, Duration.ofSeconds(80))
+  	        .until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Ok' or text()='Ok']")));
+  	  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", okButton1);
+      ((JavascriptExecutor) driver).executeScript("arguments[0].click();", okButton1);
   	    Thread.sleep(4000); // If needed, else replace with explicit wait
   	} catch (TimeoutException e) {
   	    // Element not found or not clickable within timeout, continue with next steps
@@ -793,7 +802,13 @@ public class LoginStepsDefinition5 {
     		));
     		schedulingTab.click();
     		Thread.sleep(3000);
-      wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnAutoSch"))).click();  
+    		WebElement btnAutoSch = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("BtnAutoSch")));
+
+    	    // 3. Scroll to it and click via JavaScript
+    	   // JavascriptExecutor js = (JavascriptExecutor) driver;
+    	    js.executeScript("arguments[0].scrollIntoView({block: 'center'});", btnAutoSch);
+    	    Thread.sleep(500); // optional settle
+    	    js.executeScript("arguments[0].click();", btnAutoSch);
       Thread.sleep(3000);
       String insertionToschedule = row.getCell(25).toString();
       WebElement insertionToschedulefield1 = wait.until(ExpectedConditions.elementToBeClickable(By.id("insertionToschedule")));
