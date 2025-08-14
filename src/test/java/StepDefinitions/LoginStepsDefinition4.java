@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -76,7 +77,7 @@ public class LoginStepsDefinition4 {
 //	    System.out.print("WebDriver initalized");
 //	    driver.get("https://pro.adintelle.com/v7/m-box/campaign"); 
 //	    System.out.print("Website opened");
-	    driver.manage().window().setSize(new Dimension(1920, 1080));
+	  //  driver.manage().window().setSize(new Dimension(1920, 1080));
 	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 	   // String downloadDir = "BTLoutputs\\" + timestamp;
 	    String downloadDir = new File("screenshots\\BTLoutputs\\" + timestamp).getAbsolutePath();
@@ -100,8 +101,8 @@ public class LoginStepsDefinition4 {
 	    driver.get("https://pro.adintelle.com/v7/login"); 
 	    reduceResolution();
 	    System.out.print("Website opened");
-	  //  driver.manage().window().setSize(new Dimension(1920, 1080));
-	    //driver.manage().window().maximize();
+	    driver.manage().window().setSize(new Dimension(1920, 1080));
+	    driver.manage().window().maximize();
 	    
 	    String excelFilePath = "Book2.xlsx";  // Path to your Excel file
         FileInputStream file = new FileInputStream(new File(excelFilePath));
@@ -1571,7 +1572,13 @@ public class LoginStepsDefinition4 {
 		 wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
 		 System.out.println("Created Client Bill");
 		 // Wait for modal to disappear
-		 wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
+		 try {
+			    //WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(10));
+			    wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
+			} catch (TimeoutException el) {
+			    // Optional: log it or handle timeout if needed
+			    System.out.println("Overlay did not disappear in time, continuing...");
+			}
 		    
 		 Thread.sleep(5000);
 		    
