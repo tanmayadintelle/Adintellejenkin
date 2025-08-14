@@ -58,12 +58,12 @@ public class LoginStepsDefinition5 {
 	@Given("User completes Press pro sanity flow")
 	public void user_is_on_login_page() throws IOException, InterruptedException {
 		   ChromeOptions options = new ChromeOptions();
-		  // options.addArguments("--headless=new");                      // Use new headless mode
-	      //  options.addArguments("--disable-gpu");                       // Disable GPU (best for CI/CD)
-	       // options.addArguments("--window-size=1920,1080");             // Set proper window size
-	      //  options.addArguments("--no-sandbox");                        // Bypass OS security (required for CI)
-	      //  options.addArguments("--disable-dev-shm-usage");             // Fix for Linux memory limit
-	      //  options.addArguments("--remote-allow-origins=*");            // Allow cross-origin requests
+		   options.addArguments("--headless=new");                      // Use new headless mode
+	        options.addArguments("--disable-gpu");                       // Disable GPU (best for CI/CD)
+	        options.addArguments("--window-size=1920,1080");             // Set proper window size
+	        options.addArguments("--no-sandbox");                        // Bypass OS security (required for CI)
+	        options.addArguments("--disable-dev-shm-usage");             // Fix for Linux memory limit
+	        options.addArguments("--remote-allow-origins=*");            // Allow cross-origin requests
 	        options.addArguments("--disable-blink-features=AutomationControlled"); // Bypass detection
 
 	        // === Setup Download Directory ===
@@ -92,6 +92,7 @@ public class LoginStepsDefinition5 {
 
 	        driver.get("https://pro.adintelle.com/v7/login");
 	        System.out.println("🌐 Website opened.");	
+	        driver.manage().window().setSize(new Dimension(1920, 1080));
 	    JavascriptExecutor js = (JavascriptExecutor) driver;
 	    String excelFilePath = "Presspro.xlsx";  // Path to your Excel file
         FileInputStream file = new FileInputStream(new File(excelFilePath));
@@ -789,11 +790,23 @@ public class LoginStepsDefinition5 {
   	}
    Thread.sleep(5000);
       
-      wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"mySidebar\"]/div/div/span[3]"))).click();  
-      Thread.sleep(500);
-      wait.until(ExpectedConditions.elementToBeClickable(
-    		    By.xpath("//span[text()='Estimate']/following-sibling::span[@class='pull-right']//img[@class='down-arrow']"))
-    		).click();
+// 1st element: Sidebar button
+WebElement sidebarButton = wait.until(ExpectedConditions.elementToBeClickable(
+    By.xpath("//*[@id='mySidebar']/div/div/span[3]")));
+
+// Scroll into view and JS click
+((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", sidebarButton);
+((JavascriptExecutor) driver).executeScript("arguments[0].click();", sidebarButton);
+
+Thread.sleep(500); // Optional wait if needed for stability
+
+// 2nd element: Estimate dropdown arrow
+WebElement estimateDropdownArrow = wait.until(ExpectedConditions.elementToBeClickable(
+    By.xpath("//span[text()='Estimate']/following-sibling::span[@class='pull-right']//img[@class='down-arrow']")));
+
+// Scroll into view and JS click
+((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", estimateDropdownArrow);
+((JavascriptExecutor) driver).executeScript("arguments[0].click();", estimateDropdownArrow);
 
     
       
