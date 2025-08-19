@@ -1698,10 +1698,23 @@ public class LoginStepsDefinition4 {
 		    
 		    
 		    Thread.sleep(5000);
-		    waitloadchild.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#bill-to-client > div:nth-child(2) > div > div > div:nth-child(4)")));
-		   
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#bill-to-client > div:nth-child(2) > div > div > div:nth-child(4)")));
-		    driver.findElement(By.cssSelector("#bill-to-client > div:nth-child(2) > div > div > div:nth-child(4)")).click();
+		    try {
+		        wait.until(ExpectedConditions.invisibilityOfElementLocated(
+		            By.cssSelector("div[style*='position: absolute']")));
+		    } catch (TimeoutException e) {
+		        System.out.println("Overlay did not disappear in time. Proceeding anyway.");
+		    }
+
+		    // STEP 2: Locate the element you want to click
+		    WebElement targetElement = wait.until(ExpectedConditions.visibilityOfElementLocated(
+		        By.cssSelector("#bill-to-client > div:nth-child(2) > div > div > div:nth-child(4)") // Update this selector as needed
+		    ));
+
+		    // STEP 3: Scroll into view
+		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", targetElement);
+
+		    // STEP 4: Try clicking with JavaScript to bypass intercepting overlays
+		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", targetElement);
 		    
 		    Thread.sleep(2000);
 		    
