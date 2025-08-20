@@ -58,13 +58,13 @@ public class LoginStepsDefinition5 {
 	@Given("User completes Press pro sanity flow")
 	public void user_is_on_login_page() throws IOException, InterruptedException {
 		   ChromeOptions options = new ChromeOptions();
-		 //  options.addArguments("--headless=new");                      // Use new headless mode
-//	        options.addArguments("--disable-gpu");                       // Disable GPU (best for CI/CD)
-//	       // options.addArguments("--window-size=1920,1080");             // Set proper window size
-//	        options.addArguments("--no-sandbox");                        // Bypass OS security (required for CI)
-//	        options.addArguments("--disable-dev-shm-usage");             // Fix for Linux memory limit
-//	        options.addArguments("--remote-allow-origins=*");            // Allow cross-origin requests
-//	        options.addArguments("--disable-blink-features=AutomationControlled"); // Bypass detection
+		   options.addArguments("--headless=new");                      // Use new headless mode
+	        options.addArguments("--disable-gpu");                       // Disable GPU (best for CI/CD)
+	        options.addArguments("--window-size=1920,1080");             // Set proper window size
+	        options.addArguments("--no-sandbox");                        // Bypass OS security (required for CI)
+	        options.addArguments("--disable-dev-shm-usage");             // Fix for Linux memory limit
+	        options.addArguments("--remote-allow-origins=*");            // Allow cross-origin requests
+	        options.addArguments("--disable-blink-features=AutomationControlled"); // Bypass detection
 		   options.addArguments("--disable-infobars");
 		   options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
 
@@ -94,7 +94,7 @@ public class LoginStepsDefinition5 {
 
 	        driver.get("https://pro.adintelle.com/v7/login");
 	        System.out.println("🌐 Website opened.");	
-	       //driver.manage().window().setSize(new Dimension(1920, 1080));
+	       driver.manage().window().setSize(new Dimension(1920, 1080));
 	      driver.manage().window().maximize();
 	    JavascriptExecutor js = (JavascriptExecutor) driver;
 	    String excelFilePath = "Presspro.xlsx";  // Path to your Excel file
