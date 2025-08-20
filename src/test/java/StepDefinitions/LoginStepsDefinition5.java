@@ -58,13 +58,15 @@ public class LoginStepsDefinition5 {
 	@Given("User completes Press pro sanity flow")
 	public void user_is_on_login_page() throws IOException, InterruptedException {
 		   ChromeOptions options = new ChromeOptions();
-		   options.addArguments("--headless=new");                      // Use new headless mode
-	        options.addArguments("--disable-gpu");                       // Disable GPU (best for CI/CD)
-	        options.addArguments("--window-size=1920,1080");             // Set proper window size
-	        options.addArguments("--no-sandbox");                        // Bypass OS security (required for CI)
-	        options.addArguments("--disable-dev-shm-usage");             // Fix for Linux memory limit
-	        options.addArguments("--remote-allow-origins=*");            // Allow cross-origin requests
-	        options.addArguments("--disable-blink-features=AutomationControlled"); // Bypass detection
+		 //  options.addArguments("--headless=new");                      // Use new headless mode
+//	        options.addArguments("--disable-gpu");                       // Disable GPU (best for CI/CD)
+//	       // options.addArguments("--window-size=1920,1080");             // Set proper window size
+//	        options.addArguments("--no-sandbox");                        // Bypass OS security (required for CI)
+//	        options.addArguments("--disable-dev-shm-usage");             // Fix for Linux memory limit
+//	        options.addArguments("--remote-allow-origins=*");            // Allow cross-origin requests
+//	        options.addArguments("--disable-blink-features=AutomationControlled"); // Bypass detection
+		   options.addArguments("--disable-infobars");
+		   options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
 
 	        // === Setup Download Directory ===
 	        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -92,7 +94,8 @@ public class LoginStepsDefinition5 {
 
 	        driver.get("https://pro.adintelle.com/v7/login");
 	        System.out.println("🌐 Website opened.");	
-	        driver.manage().window().setSize(new Dimension(1920, 1080));
+	       //driver.manage().window().setSize(new Dimension(1920, 1080));
+	      driver.manage().window().maximize();
 	    JavascriptExecutor js = (JavascriptExecutor) driver;
 	    String excelFilePath = "Presspro.xlsx";  // Path to your Excel file
         FileInputStream file = new FileInputStream(new File(excelFilePath));
@@ -140,7 +143,7 @@ public class LoginStepsDefinition5 {
 	            warningButtonList.get(0).click();
 	            System.out.println("Warning button clicked.");
 	        }
-	        Thread.sleep(4000);
+	       // Thread.sleep(4000);
 //		    driver.findElement(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/m-login-warning-dialog/div/div[2]/div[2]/div/button/div/span")).click();
 	       // waitload1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/images/icons/close.png']"))).click();
 	        try {
@@ -152,6 +155,7 @@ public class LoginStepsDefinition5 {
 	            // Element not found or not clickable within the timeout - continue silently
 	            System.out.println("Close icon not clickable or not present. Continuing...");
 	        }
+	        //Thread.sleep(5000);
 		    WebDriverWait waitload23 = new WebDriverWait(driver, Duration.ofSeconds(60));
 			  
 		    waitload23.until(ExpectedConditions.elementToBeClickable(By.className("show_collapse_icon")));
@@ -161,7 +165,7 @@ public class LoginStepsDefinition5 {
 	        System.out.println("Logged in");
 	        //WebDriverWait waitid = new WebDriverWait(driver, Duration.ofSeconds(60));
 	        JavascriptExecutor jszoom = (JavascriptExecutor) driver;
-		    jszoom.executeScript("document.body.style.zoom='90%'");
+		    //jszoom.executeScript("document.body.style.zoom='90%'");
 	        
 	        List<WebElement> icons = driver.findElements(
 	        	    By.xpath("//*[name()='svg']/*[name()='path' and contains(@d, 'M17.8059')]")
@@ -581,7 +585,7 @@ public class LoginStepsDefinition5 {
                  System.out.println("Attempt " + (attemptss + 1) + " failed. Retrying...");
              }
          }
-         Thread.sleep(5000);
+         Thread.sleep(10000);
          WebElement stpckElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("stpck")));
 
       // Scroll into view
@@ -613,6 +617,22 @@ public class LoginStepsDefinition5 {
         
          
          Thread.sleep(5000); // Wait for suggestions to appear or DOM to update
+      // Wait for the corresponding <li> to appear (using data-packcode attribute)
+         By dynamicPackageLocator = By.cssSelector("li[data-packcode='" + packagecode + "']");
+         WebElement packageListItem = wait.until(ExpectedConditions.elementToBeClickable(dynamicPackageLocator));
+
+         // Scroll into view
+         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", packageListItem);
+         Thread.sleep(300); // Allow any UI animations
+
+         // Try clicking the package item (Selenium first, JS fallback)
+         try {
+             packageListItem.click();
+             System.out.println("✅ Clicked package item: " + packagecode);
+         } catch (Exception e) {
+             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", packageListItem);
+             System.out.println("⚠️ JS fallback: Clicked package item: " + packagecode);
+         }
 
 //         List<WebElement> listItems = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
 //        		    By.xpath("//li[contains(@class, 'list-group-item')]")
@@ -637,33 +657,69 @@ public class LoginStepsDefinition5 {
 //        		}
 
 
-             Thread.sleep(4000);
-         //    wait.until(ExpectedConditions.elementToBeClickable(By.id("SavePackSel"))).click();
+//             Thread.sleep(4000);
+//         //    wait.until(ExpectedConditions.elementToBeClickable(By.id("SavePackSel"))).click();
 
+         
+         
          Thread.sleep(4000);
-        
-             // Wait for element to become visible and clickable
-             WebElement SavePackSel = wait.until(ExpectedConditions.elementToBeClickable(By.id("SavePackSel")));
+         
+         
+         
+       //  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+         //JavascriptExecutor js = (JavascriptExecutor) driver;
 
-             try {
-                 // Try standard click
-            	 SavePackSel.click();
-             }
-             catch(TimeoutException te) {
-            	 js.executeScript("arguments[0].click();", SavePackSel);
-             }
-             
+      // Now wait for the "Select Revision Date" button to appear
+         try {
+             By revisionDateBtnLocator = By.xpath("//button[contains(text(), 'Select Revision Date')]");
+             WebElement revisionDateButton = wait.until(ExpectedConditions.elementToBeClickable(revisionDateBtnLocator));
 
-             By locator = By.xpath("//button[contains(text(), 'Select Revision Date')]");
+             // Scroll and click
+             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", revisionDateButton);
+             Thread.sleep(500);
+             revisionDateButton.click();
 
-             WebElement buttonlocator = wait.until(ExpectedConditions.elementToBeClickable(locator));
+             System.out.println("✅ Clicked 'Select Revision Date' button.");
+         } catch (Exception e) {
+             throw new RuntimeException("❌ Revision Date button not found after selecting package: " + packagecode, e);
+         }
 
-             // Scroll into view for better reliability
-             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", buttonlocator);
-
-             // Click the button
-             js.executeScript("arguments[0].click();", SavePackSel);
-         Thread.sleep(3000);
+//        
+//         try {
+//        	    // Step 1: Wait and click 'SavePackSel'
+//        	    WebElement savePackSel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("SavePackSel")));
+//        	    js.executeScript("arguments[0].scrollIntoView({block: 'center'});", savePackSel);
+//        	    Thread.sleep(2000); // Give time for any UI transitions
+//
+//        	    try {
+//        	        wait.until(ExpectedConditions.elementToBeClickable(savePackSel)).click();
+//        	        System.out.println("✅ Clicked SavePackSel using Selenium.");
+//        	    } catch (Exception e1) {
+//        	    	Thread.sleep(2000);
+//        	        js.executeScript("arguments[0].click();", savePackSel);
+//        	        System.out.println("⚠️ Fallback: Clicked SavePackSel using JavaScript.");
+//        	    }
+//        	    Thread.sleep(2000);
+//        	    // Step 2: Wait and click "Select Revision Date" button
+//        	    By locator = By.xpath("//button[contains(text(), 'Select Revision Date')]");
+//        	    WebElement revisionDateButton = wait.until(ExpectedConditions.elementToBeClickable(locator));
+//        	    js.executeScript("arguments[0].scrollIntoView({block: 'center'});", revisionDateButton);
+//        	    Thread.sleep(500); // Give time for rendering
+//
+//        	    try {
+//        	        wait.until(ExpectedConditions.elementToBeClickable(revisionDateButton)).click();
+//        	        System.out.println("✅ Clicked SavePackSel using Selenium.");
+//        	    } catch (Exception e1) {
+//        	        js.executeScript("arguments[0].click();", revisionDateButton);
+//        	        System.out.println("⚠️ Fallback: Clicked SavePackSel using JavaScript.");
+//        	    }
+//
+//        	    System.out.println("✅ Clicked 'Select Revision Date' using JavaScript.");
+//        	    Thread.sleep(3000);
+//
+//        	} catch (Exception ex) {
+//        	    System.err.println("❌ Error during SavePackSel or Revision Date click: " + ex.getMessage());
+//        	}
          String spacewidth1 = row.getCell(20).toString();
          WebElement spacewidthfield1 = wait.until(ExpectedConditions.elementToBeClickable(By.id("Dimension1")));
          js.executeScript("arguments[0].scrollIntoView({block: 'center'});", spacewidthfield1);
@@ -801,19 +857,19 @@ WebElement sidebarButton = wait.until(ExpectedConditions.elementToBeClickable(
 Thread.sleep(500); // Optional wait if needed for stability
 
 // 2nd element: Estimate dropdown arrow
-WebElement estimateDropdownArrow = wait.until(ExpectedConditions.elementToBeClickable(
-    By.xpath("//span[text()='Estimate']/following-sibling::span[@class='pull-right']//img[@class='down-arrow']")));
+WebElement estimateText = wait.until(ExpectedConditions.elementToBeClickable(
+	    By.xpath("//span[text()='Estimate']")));
+	js.executeScript("arguments[0].scrollIntoView({block: 'center'});", estimateText);
+	Thread.sleep(500);
+	js.executeScript("arguments[0].click();", estimateText);
 
-// Scroll into view and JS click
-((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", estimateDropdownArrow);
-((JavascriptExecutor) driver).executeScript("arguments[0].click();", estimateDropdownArrow);
+	// 2. Wait until its submenu becomes visible (contains Scheduling)
+	WebElement schedulingTab = wait.until(ExpectedConditions.visibilityOfElementLocated(
+	    By.xpath("//span[text()='Scheduling']")));
+	js.executeScript("arguments[0].scrollIntoView({block: 'center'});", schedulingTab);
+	Thread.sleep(500);
+	js.executeScript("arguments[0].click();", schedulingTab);
 
-    
-      
-      WebElement schedulingTab = wait.until(ExpectedConditions.elementToBeClickable(
-    		    By.xpath("//span[@class='navbarsubtext' and text()='Scheduling']")
-    		));
-    		schedulingTab.click();
     		Thread.sleep(3000);
     		WebElement btnAutoSch = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("BtnAutoSch")));
 
@@ -827,19 +883,35 @@ WebElement estimateDropdownArrow = wait.until(ExpectedConditions.elementToBeClic
       WebElement insertionToschedulefield1 = wait.until(ExpectedConditions.elementToBeClickable(By.id("insertionToschedule")));
       insertionToschedulefield1.clear();
       insertionToschedulefield1.sendKeys(insertionToschedule);
-      Thread.sleep(4000);
-      wait.until(ExpectedConditions.elementToBeClickable(By.id("txtAutoSchDate"))).click();
-      String targetDay = row.getCell(26).toString().trim();
+      Thread.sleep(4000); // to settle input
+      WebElement dateInputji = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("txtAutoSchDate")));
+      js.executeScript("arguments[0].scrollIntoView({block: 'center'});", dateInputji);
+      Thread.sleep(300);
 
-		// Remove decimal point if any (e.g., convert "10.0" to "10")
-		targetDay = targetDay.split("\\.")[0];
-		// Output for debugging: Make sure that the correct date value is being read
-		System.out.println("Date to click: " + dateFromExcel2);
-		Thread.sleep(4000);
-      WebElement dateElement = driver.findElement(By.xpath("//td[@class='day' and text()='" + targetDay + "']"));
-      ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dateElement);
+      // Try native click to open calendar
+      try {
+          dateInputji.click();
+          Thread.sleep(500);
+          System.out.println("Clicked via Selenium");
+      } catch (Exception e) {
+          System.out.println("Native click failed, using JS click");
+          js.executeScript("arguments[0].focus(); arguments[0].dispatchEvent(new Event('click'));", dateInputji);
+
+          Thread.sleep(500);
+      }
+
+      js.executeScript("$('#txtAutoSchDate').datepicker('show');");
+      Thread.sleep(500);
+
+      // Select the date from Excel
+      String targetDay = row.getCell(26).toString().trim().split("\\.")[0]; // cleaned date
+      System.out.println("Date to click: " + targetDay);
+
+      // Click the date in the calendar popup
+      By dateLocator = By.xpath("//td[contains(@class,'day') and text()='" + targetDay + "']");
+      WebElement dateElement = wait.until(ExpectedConditions.elementToBeClickable(dateLocator));
       dateElement.click();
-      
+
       String dayincrement = row.getCell(27).toString();
       WebElement dayincrementfield1 = wait.until(ExpectedConditions.elementToBeClickable(By.id("Days_Increment")));
       dayincrementfield1.clear();
@@ -849,59 +921,55 @@ WebElement estimateDropdownArrow = wait.until(ExpectedConditions.elementToBeClic
       js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
       Thread.sleep(3000);
       
-      
-      
-      
-      String xpaths = "btnProceedAutoSch";
+//      js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+   /// Hide or remove the modal overlay forcibly
+      WebElement proceedBtn = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("btnProceedAutoSch")));
 
-      if (driver.findElements(By.id(xpaths)).size() > 0) {
-          boolean clickeddd = false;
-          int attempt = 0;
+   // Wait until it’s visible
+   wait.until(ExpectedConditions.visibilityOf(proceedBtn));
+// Now try to click the Proceed button
+      //WebElement proceedBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"btnProceedAutoSch\"]")));
 
-          while (!clickeddd && attempt < 3) {
-              try {
-                  Thread.sleep(6000);
-                  WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.id(xpaths)));
-                  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-                  wait.until(ExpectedConditions.elementToBeClickable(element));
+   // Scroll so button is fully visible at bottom of viewport
+   js.executeScript("arguments[0].scrollIntoView({block: 'end', inline: 'nearest'});", proceedBtn);
+   Thread.sleep(500);
 
-                  try {
-                      element.click();
-                  } catch (ElementClickInterceptedException e) {
-                      ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
-                  }
+   try {
+       // Use Actions to move and click — more robust than simple click()
+	   proceedBtn.click();
+       System.out.println("Clicked 'Proceed' via Actions");
+   } catch (ElementClickInterceptedException e) {
+       System.out.println("Actions click failed, trying JS click");
+       js.executeScript("arguments[0].click();", proceedBtn);
+   }
 
-                  // ✅ Wait for the page to move on
-                  wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id(xpaths)));
 
-                  clickeddd = true;
-
-              } catch (StaleElementReferenceException e) {
-                  System.out.println("Retrying due to stale element...");
-                  attempt++;
-                  Thread.sleep(1000);
-              }
-          }
-
-          if (!clicked) {
-              throw new RuntimeException("Failed to click the button after retries: " + xpaths);
-          }
-      }
+      // Wait for the next expected element to appear after the click
+   //   wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("txtAutoSchDate")));
+      System.out.println("Auto schedule screen loaded.");
 
       
       
       Thread.sleep(3000);
       wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"mySidebar\"]/div/div/span[3]"))).click();  
-      Thread.sleep(500);
-      
-      wait.until(ExpectedConditions.elementToBeClickable(
-  		    By.xpath("//span[text()='Estimate']/following-sibling::span[@class='pull-right']//img[@class='down-arrow']"))
-  		).click();
       Thread.sleep(2000);
+      
+      WebElement estimateText1 = wait.until(ExpectedConditions.elementToBeClickable(
+    		    By.xpath("//span[text()='Estimate']")));
+    		js.executeScript("arguments[0].scrollIntoView({block: 'center'});", estimateText1);
+    		Thread.sleep(500);
+    		js.executeScript("arguments[0].click();", estimateText1);
+      Thread.sleep(2000);
+      
+      
+      
+      
       WebElement viewTab = wait.until(ExpectedConditions.elementToBeClickable(
-  		    By.xpath("//span[@class='navbarsubtext' and text()='View']")
+    		  By.xpath("//span[text()='View']")
   		));
-      viewTab.click();
+  	js.executeScript("arguments[0].scrollIntoView({block: 'center'});", viewTab);
+  	Thread.sleep(500);
+  	js.executeScript("arguments[0].click();", viewTab);
       Thread.sleep(2000);
       wait.until(ExpectedConditions.presenceOfElementLocated(
     		    By.xpath("//tr[td[contains(normalize-space(),'" + campaignName + "')]]")
@@ -933,28 +1001,28 @@ Thread.sleep(2000);
    POnofield.sendKeys(POno);
 
    Thread.sleep(4000);
-   wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("PODate"))).click();
-   
-   String targettDay = row.getCell(29).toString().trim();
-
-// 2. Remove decimal if the cell contains numeric like "14.0"
-   targettDay = targettDay.contains(".") ? targettDay.split("\\.")[0] : targettDay;
-
-   System.out.println("Date to click: " + targettDay);
-
-// 3. Wait until the datepicker is visible
-   
-   wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
-
-// 4. Build XPath dynamically based on the target day
-   String dateXpath = "//td[contains(@class, 'day') and not(contains(@class, 'old')) and not(contains(@class, 'new')) and text()='" + targettDay + "']";
-   Thread.sleep(4000);
-// 5. Wait for the specific date to be clickable
-   WebElement dateElemen = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(dateXpath)));
-
-// 6. Scroll and click
-   ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dateElemen);
-   dateElemen.click();
+//   wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("PODate"))).click();
+//   
+//   String targettDay = row.getCell(29).toString().trim();
+//
+//// 2. Remove decimal if the cell contains numeric like "14.0"
+//   targettDay = targettDay.contains(".") ? targettDay.split("\\.")[0] : targettDay;
+//
+//   System.out.println("Date to click: " + targettDay);
+//
+//// 3. Wait until the datepicker is visible
+//   
+//   wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker-days")));
+//
+//// 4. Build XPath dynamically based on the target day
+//   String dateXpath = "//td[contains(@class, 'day') and not(contains(@class, 'old')) and not(contains(@class, 'new')) and text()='" + targettDay + "']";
+//   Thread.sleep(4000);
+//// 5. Wait for the specific date to be clickable
+//   WebElement dateElemen = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(dateXpath)));
+//
+//// 6. Scroll and click
+//   ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dateElemen);
+//   dateElemen.click();
 
    
    String POamount = row.getCell(30).toString();
@@ -962,35 +1030,32 @@ Thread.sleep(2000);
    POamountfield.clear();
    POamountfield.sendKeys(POamount);
   
-   wait.until(ExpectedConditions.elementToBeClickable(By.id("btnSubmitApp"))).click();
+   WebElement submitBtnapprove1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("btnSubmitApp")));
+   ((JavascriptExecutor) driver).executeScript("arguments[0].click();", submitBtnapprove1);
+
 	System.out.print("Estimate Approved");
-	Thread.sleep(1000);
+	Thread.sleep(3000);
 	
-	String dynamicXpathh = "//td[contains(normalize-space(), '" + campaignName + "')]";
+	System.out.println("Expected campaign: " + campaignName);
+	String dynamicXpathh = "//td[normalize-space(.) = '" + campaignName + "']";
 
 	WebElement campaignCell = null;
 
 	for (int attempt = 1; attempt <= 3; attempt++) {
 	    try {
-	        // Wait for the cell to be clickable and re-fetch the element
 	        campaignCell = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(dynamicXpathh)));
-
-	        // Scroll into view (just in case)
 	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", campaignCell);
-
-	        // Click the cell (this will trigger rowClick(...))
 	        campaignCell.click();
-
 	        System.out.println("Clicked campaign: " + campaignName);
-	        break;  // Exit the loop if the click is successful
-
+	        break;
 	    } catch (StaleElementReferenceException e) {
 	        System.out.println("Attempt " + attempt + ": StaleElementReferenceException - retrying...");
 	    } catch (Exception e) {
 	        System.out.println("Attempt " + attempt + ": Failed to click due to: " + e.getMessage());
-	        break;  // Exit loop if any other error occurs
+	        break;
 	    }
 	}
+
 	
 	System.out.print("Estimate Outputs print");
 	//Print Estimate
@@ -999,66 +1064,106 @@ Thread.sleep(2000);
 	Thread.sleep(2000);
 	new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver1 -> true);
     
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button"))).click();
-	Thread.sleep(500);
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[1]/a"))).click();
+	WebElement exportbtn = wait.until(ExpectedConditions.elementToBeClickable(
+		    By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button")
+		));
+
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", exportbtn);
+		Thread.sleep(500);
+
+		WebElement listItem = wait.until(ExpectedConditions.elementToBeClickable(
+			    By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[1]/a")
+			));
+
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();", listItem);
+
 	 try {
 		    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loadingModal")));
 		} catch (TimeoutException e) {
 		    System.out.println("Loading modal did not disappear within timeout, continuing anyway...");
 		}
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/input"))).click();
+	 WebElement inputCheckbox101 = wait.until(ExpectedConditions.elementToBeClickable(
+			    By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/input")
+			));
+
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();", inputCheckbox101);
 	
-	 wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK"))).click();
+			WebElement btnOK101 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK")));
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();", btnOK101);
+
 	 Thread.sleep(2000);
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button"))).click();
-	 
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[1]/a"))).click();
+	 WebElement exportbtn1 = wait.until(ExpectedConditions.elementToBeClickable(
+			    By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button")
+			));
+
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();", exportbtn1);
+	 WebElement listItem1 = wait.until(ExpectedConditions.elementToBeClickable(
+			    By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[1]/a")
+			));
+
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();", listItem1);
 	
 	 
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/span[2]/input"))).click();
+			WebElement inputElement102 = wait.until(ExpectedConditions.elementToBeClickable(
+				    By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/span[2]/input")
+				));
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", inputElement102);
 		
-	 wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK"))).click();
+				WebElement btnOK102 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK")));
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", btnOK102);
 	 Thread.sleep(2000);
 	//Print Orignal
 	 wait.until(ExpectedConditions.invisibilityOfElementLocated(
 			    By.cssSelector("div.modal-body") // or a more precise selector if needed
 			));
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button"))).click();
-	 
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div[2]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[2]/a"))).click();
+	 WebElement mainBtn1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button")));
+	 js.executeScript("arguments[0].click();", mainBtn1);
+
+	 WebElement dropdownItem1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div[2]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[2]/a")));
+	 js.executeScript("arguments[0].click();", dropdownItem1);
+
 	 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("modal-body")));
 	 Thread.sleep(2000);
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/span[2]/input"))).click();
-		
-	
-	
-	 wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK"))).click();
-	 wait.until(ExpectedConditions.invisibilityOfElementLocated(
-			    By.cssSelector("div.modal-body") // or a more precise selector if needed
-			));
-	 //Estimate Schedule
-	Thread.sleep(2000);
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button"))).click();
-	 
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div[2]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[2]/a"))).click();
+
+	 WebElement input1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/span[2]/input")));
+	 js.executeScript("arguments[0].click();", input1);
+
+	 WebElement btnOK1 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK")));
+	 js.executeScript("arguments[0].click();", btnOK1);
+
+	 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.modal-body")));
+	 Thread.sleep(2000);
+
+	 // 2nd block
+	 WebElement mainBtn2 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button")));
+	 js.executeScript("arguments[0].click();", mainBtn2);
+
+	 WebElement dropdownItem2 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div[2]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[2]/a")));
+	 js.executeScript("arguments[0].click();", dropdownItem2);
+
 	 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("modal-body")));
 	 Thread.sleep(2000);
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/input"))).click();
-	
-	 wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK"))).click();
-	 wait.until(ExpectedConditions.invisibilityOfElementLocated(
-			    By.cssSelector("div.modal-body") // or a more precise selector if needed
-			));
-	 //Estimate Schedule
-	Thread.sleep(2000);
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button"))).click();
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[4]/a"))).click();
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/input"))).click();
-	 
-	 
-	 
+
+	 WebElement input2 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/input")));
+	 js.executeScript("arguments[0].click();", input2);
+
+	 WebElement btnOK2 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK")));
+	 js.executeScript("arguments[0].click();", btnOK2);
+
+	 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.modal-body")));
+	 Thread.sleep(2000);
+
+	 // 3rd block
+	 WebElement mainBtn3 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button")));
+	 js.executeScript("arguments[0].click();", mainBtn3);
+
+	 WebElement dropdownItem3 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[4]/a")));
+	 js.executeScript("arguments[0].click();", dropdownItem3);
+
+	 WebElement input3 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/input")));
+	 js.executeScript("arguments[0].click();", input3);
 	 wait.until(ExpectedConditions.elementToBeClickable(By.id("Month1"))).click();
+	 
 	 WebElement monthDropdown = driver.findElement(By.id("Month1"));
 
 	// Wrap in Select class
@@ -1101,85 +1206,91 @@ Thread.sleep(2000);
 	    System.out.println("No valid month options found to select.");
 	}
 	 
-	wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK"))).click();
-	
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button"))).click();
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[4]/a"))).click();
-	
-	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/span[2]/input"))).click();
-	//*[@id="loadingModal"]/div/div/div/div/section/fieldset[1]/legend[1]/span[2]/input
-	
-	WebElement monthDropdown12 = driver.findElement(By.id("Month"));
 
-	// Wrap in Select class
-	Select select11 = new Select(monthDropdown12);
-
-	// Get all options
-	List<WebElement> optionse = select11.getOptions();
-
-	// Select the first valid option (skip default with value="-1")
-	for (WebElement option : optionse) {
-	    String value = option.getAttribute("value");
-	    if (!value.equals("-1")) {
-	        select11.selectByValue(value);  // Or use selectByVisibleText(option.getText())
-	        System.out.println("Selected first month: " + option.getText());
-	        break;
-	    }
-	}
-	
-	wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK"))).click();
-	
-	
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button"))).click();
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[4]/a"))).click();
+	 WebElement btnOK3 = wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK")));
+	 js.executeScript("arguments[0].click();", btnOK3);
 	 
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/span[2]/input"))).click();	
-	//*[@id="loadingModal"]/div/div/div/div/section/fieldset[1]/legend[1]/input
-	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MonthSelection\"]/legend/span[2]/input"))).click();
-	 wait.until(ExpectedConditions.elementToBeClickable(By.id("Month1"))).click();
-		
-	 WebElement monthDropdown13 = driver.findElement(By.id("Month1"));
-
-		// Wrap in Select class
-		Select sele = new Select(monthDropdown13);
-
-		// Get all options
-		List<WebElement> optioonss = sele.getOptions();
-
-		// Find and select the first valid (non-default) option
-		for (WebElement option : optioonss) {
-		    String value = option.getAttribute("value");
-
-		    // Skip the default 'Select' option
-		    if (!value.equals("-1")) {
-		        sele.selectByValue(value);  // or select.selectByVisibleText(option.getText());
-		        System.out.println("Selected month: " + option.getText());
-		        break;
-		    }
-		}
-		 
-		WebElement monthDropdown11 = driver.findElement(By.id("Month2"));
-
-		// Scroll into view
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", monthDropdown11);
-
-		wait.until(ExpectedConditions.elementToBeClickable(monthDropdown11)).click();
-
-		// Select logic
-		Select select111 = new Select(monthDropdown11);
-		List<WebElement> options11 = select111.getOptions();
-
-		if (options11.size() > 1) {
-		    WebElement lastMonthOption = options11.get(options11.size() - 1);
-		    select111.selectByValue(lastMonthOption.getAttribute("value"));
-		    System.out.println("Selected last month: " + lastMonthOption.getText());
-		} else {
-		    System.out.println("No valid month options found to select.");
-		}
-
-		 
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK"))).click();
+//	 WebElement mainBtn4 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button")));
+//	 js.executeScript("arguments[0].click();", mainBtn4);
+//
+//	 WebElement dropdownItem4 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[4]/a")));
+//	 js.executeScript("arguments[0].click();", dropdownItem4);
+//	 
+//
+//	 WebElement input4 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/input")));
+//	 js.executeScript("arguments[0].click();", input4);
+//	 
+//	WebElement monthDropdown12 = driver.findElement(By.id("Month"));
+//
+//	// Wrap in Select class
+//	Select select11 = new Select(monthDropdown12);
+//
+//	// Get all options
+//	List<WebElement> optionse = select11.getOptions();
+//
+//	// Select the first valid option (skip default with value="-1")
+//	for (WebElement option : optionse) {
+//	    String value = option.getAttribute("value");
+//	    if (!value.equals("-1")) {
+//	        select11.selectByValue(value);  // Or use selectByVisibleText(option.getText())
+//	        System.out.println("Selected first month: " + option.getText());
+//	        break;
+//	    }
+//	}
+//	
+//	wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK"))).click();
 	
+	
+//	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/button"))).click();
+//	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MainDiv\"]/div[1]/form/div[2]/div[2]/div[1]/div[2]/div[2]/ul/li[4]/a"))).click();
+//	 
+//	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loadingModal\"]/div/div/div/div/section/fieldset[1]/legend[1]/span[2]/input"))).click();	
+//	//*[@id="loadingModal"]/div/div/div/div/section/fieldset[1]/legend[1]/input
+//	 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"MonthSelection\"]/legend/span[2]/input"))).click();
+//	 wait.until(ExpectedConditions.elementToBeClickable(By.id("Month1"))).click();
+//		
+//	 WebElement monthDropdown13 = driver.findElement(By.id("Month1"));
+//
+//		// Wrap in Select class
+//		Select sele = new Select(monthDropdown13);
+//
+//		// Get all options
+//		List<WebElement> optioonss = sele.getOptions();
+//
+//		// Find and select the first valid (non-default) option
+//		for (WebElement option : optioonss) {
+//		    String value = option.getAttribute("value");
+//
+//		    // Skip the default 'Select' option
+//		    if (!value.equals("-1")) {
+//		        sele.selectByValue(value);  // or select.selectByVisibleText(option.getText());
+//		        System.out.println("Selected month: " + option.getText());
+//		        break;
+//		    }
+//		}
+//		 
+//		WebElement monthDropdown11 = driver.findElement(By.id("Month2"));
+//
+//		// Scroll into view
+//		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", monthDropdown11);
+//
+//		wait.until(ExpectedConditions.elementToBeClickable(monthDropdown11)).click();
+//
+//		// Select logic
+//		Select select111 = new Select(monthDropdown11);
+//		List<WebElement> options11 = select111.getOptions();
+//
+//		if (options11.size() > 1) {
+//		    WebElement lastMonthOption = options11.get(options11.size() - 1);
+//		    select111.selectByValue(lastMonthOption.getAttribute("value"));
+//		    System.out.println("Selected last month: " + lastMonthOption.getText());
+//		} else {
+//		    System.out.println("No valid month options found to select.");
+//		}
+//
+//		 
+//		wait.until(ExpectedConditions.elementToBeClickable(By.id("btnOK"))).click();
+//	
 	System.out.print("Estimate Outputs downloaded");
 	
 	System.out.print("RO Creation started");
@@ -2761,7 +2872,7 @@ Thread.sleep(2000);
  		   new WebDriverWait(driver, Duration.ofSeconds(60)).until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal.fade.in")));
  		  Thread.sleep(6000);
  		//button[text()='Proceed']
- 		 By proceedBtn = By.xpath("//button[normalize-space(text())='Proceed']");
+ 		 By proceedBtn22 = By.xpath("//button[normalize-space(text())='Proceed']");
  		boolean proceedClickedSuccessfully = false;
 
  		for (int attempt2 = 1; attempt2 <= 10; attempt2++) {
@@ -2781,7 +2892,7 @@ Thread.sleep(2000);
 
  		        // Wait for Proceed button to be clickable
  		        WebElement proceedElement = new WebDriverWait(driver, Duration.ofSeconds(15))
- 		            .until(ExpectedConditions.elementToBeClickable(proceedBtn));
+ 		            .until(ExpectedConditions.elementToBeClickable(proceedBtn22));
  		        Thread.sleep(300);
 
  		        // Scroll and focus
