@@ -1960,9 +1960,11 @@ public void user_createsclientbill() throws InterruptedException, FileNotFoundEx
 	    actions.sendKeys(Keys.PAGE_UP).perform();
 	}
 	js.executeScript("window.scrollTo(0, 0)");
+	Thread.sleep(2000);
 	System.out.println("navigating to campaigns page and marking the bill as ready for billing");
 	WebElement campaignspage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-d-dashboard/div/div[2]/div/div/div[2]")));
 	campaignspage.click();	
+	Thread.sleep(2000);
 	
 	WebElement actualstab = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab3-link\"]/span")));
 	actualstab.click();	
