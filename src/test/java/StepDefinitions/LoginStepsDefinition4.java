@@ -485,30 +485,39 @@ public class LoginStepsDefinition4 {
 		    objectiveFieldd.clear();
 		    objectiveFieldd.sendKeys(objectivee);
 		    objectiveFieldd.sendKeys(Keys.TAB);
+		 // Step 1: Hit ENTER on objective field (already done)
 		    objectiveFieldd.sendKeys(Keys.ENTER);
-		    Thread.sleep(5000);
+
+		    // Step 2: Wait for overlay to disappear if present
 		    try {
-		       // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("cdk-overlay-backdrop")));
+		        wait.until(ExpectedConditions.invisibilityOfElementLocated(
+		            By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")
+		        ));
+		        System.out.println("✅ Overlay disappeared.");
 		    } catch (TimeoutException e) {
-		        System.out.println("⚠️ Overlay may not be present or didn't disappear in time.");
+		        System.out.println("⚠️ Timeout waiting for overlay to disappear.");
 		    } catch (Exception e) {
 		        System.out.println("❌ Unexpected error: " + e.getMessage());
 		    }
 
-		    //driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
-		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[2]/mat-form-field/div[1]/div[2]/div[2]/mat-datepicker-toggle/button/span[3]")));
+		    // Step 3: Wait until calendar button is actually clickable
+		    WebElement calendarButton7 = wait.until(ExpectedConditions.elementToBeClickable(
+		        By.xpath("//mat-datepicker-toggle/button/span[contains(@class, 'mat-mdc-button-touch-target')]")
+		    ));
+
+		    // Step 4: Scroll into view if needed
+		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", calendarButton7);
+		    Thread.sleep(300); // Allow for smooth scrolling
+
+		    // Step 5: Try clicking using JS to avoid interception
 		    try {
-		        //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-		        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("cdk-overlay-backdrop")));
-		    } catch (TimeoutException e) {
-		        System.out.println("⚠️ Overlay may not be present or didn't disappear in time.");
+		        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", calendarButton7);
+		        System.out.println("✅ Calendar button clicked via JavaScript.");
 		    } catch (Exception e) {
-		        System.out.println("❌ Unexpected error: " + e.getMessage());
+		        System.out.println("❌ JavaScript click failed: " + e.getMessage());
+		        calendarButton7.click(); // fallback
 		    }
 
-		    WebElement calendarButtonn = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-create-job/div/div[5]/div/div/div/div[2]/div[2]/mat-form-field/div[1]/div[2]/div[2]/mat-datepicker-toggle/button/span[3]"));
-			calendarButtonn.click();
 			JavascriptExecutor jsk = (JavascriptExecutor) driver;
 			jsk.executeScript("document.querySelector('.cdk-overlay-backdrop').style.display='none';");
 			Thread.sleep(2000);
