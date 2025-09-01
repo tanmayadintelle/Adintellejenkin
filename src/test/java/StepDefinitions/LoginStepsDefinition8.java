@@ -87,16 +87,16 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    prefs1.put("download.prompt_for_download", false); 
 			    prefs1.put("directory_upgrade", true);             
 			    prefs1.put("safebrowsing.enabled", true);  
-			    options.setExperimentalOption("prefs", prefs);
-			    options.addArguments("--headless=new"); // Use new headless for better rendering
-			    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-			    options.addArguments("--window-size=1920,1080");
-			    options.addArguments("--no-sandbox");
-			    options.addArguments("--disable-dev-shm-usage");
-			    options.addArguments("--remote-allow-origins=*");
-			    options.setExperimentalOption("prefs", prefs1);
+//			    options.setExperimentalOption("prefs", prefs);
+//			    options.addArguments("--headless=new"); // Use new headless for better rendering
+//			    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+//			    options.addArguments("--window-size=1920,1080");
+//			    options.addArguments("--no-sandbox");
+//			    options.addArguments("--disable-dev-shm-usage");
+//			    options.addArguments("--remote-allow-origins=*");
+//			    options.setExperimentalOption("prefs", prefs1);
 			    driver =new ChromeDriver(options);
-			    driver.manage().window().setSize(new Dimension(1920, 1080));
+			   // driver.manage().window().setSize(new Dimension(1920, 1080));
 			    System.out.print("WebDriver initalized");
 			    driver.get("https://pro.adintelle.com/v7/login"); 
 			    System.out.print("Website opened");
@@ -127,7 +127,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 				    waitload1.until(ExpectedConditions.elementToBeClickable(By.name("password")));
 				    
 					WebElement passwordField = driver.findElement(By.name("password")); 
-					passwordField.sendKeys("Citi5bank$1234567");
+					passwordField.sendKeys("Citi5bank$12345678");
 					waitload1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"login_button_text_active\"]")));
 					driver.findElement(By.xpath("//*[@id=\"login_button_text_active\"]")).click();
 				    Thread.sleep(3000);
@@ -192,7 +192,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    
 				waitload.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[contains(@src, 'newjob.svg')]")));
 			    JavascriptExecutor jszoom = (JavascriptExecutor) driver;
-		        jszoom.executeScript("document.body.style.zoom='90%'");
+		      //  jszoom.executeScript("document.body.style.zoom='90%'");
 		        WebElement imgElement = driver.findElement(By.xpath("//img[contains(@src, 'newjob.svg')]"));
 		        js.executeScript("arguments[0].scrollIntoView(true);", imgElement); // Scrolls to the element
 		        js.executeScript("arguments[0].focus();", imgElement);              // Focuses the element

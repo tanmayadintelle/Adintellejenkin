@@ -103,7 +103,7 @@ public class LoginStepsDefinition2 {
 		    waitload1.until(ExpectedConditions.elementToBeClickable(By.name("password")));
 		    String password = row.getCell(1).toString();
 			WebElement passwordField = driver.findElement(By.name("password")); 
-			passwordField.sendKeys(password);
+			passwordField.sendKeys("Citi5bank$12345678");
 			takeScreenshot("LoginPage");
 			driver.findElement(By.xpath("//*[@id=\"login_button_text_active\"]")).click();
 		    Thread.sleep(1000);
