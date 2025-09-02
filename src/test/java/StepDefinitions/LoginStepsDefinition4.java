@@ -1582,8 +1582,9 @@ public class LoginStepsDefinition4 {
 		 System.out.println("Created Client Bill");
 		 // Wait for modal to disappear
 		 try {
-			    //WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(10));
+			 Thread.sleep(5000);			    //WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(10));
 			    wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
+			    
 			} catch (TimeoutException el) {
 			    // Optional: log it or handle timeout if needed
 			    System.out.println("Overlay did not disappear in time, continuing...");
