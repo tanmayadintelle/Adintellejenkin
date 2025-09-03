@@ -512,7 +512,7 @@ public class LoginStepsDefinition11 {
 	            System.out.println("Bill number " + firstDocNo + " is present on the initate screen.");
 	            ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
 	            Thread.sleep(2000);
-	            takeFullPageScreenshot("Success screen");
+	            takeFullPageScreenshot("Bill is present on intitate screen");
 	        } else {
 	        	 Thread.sleep(5000);
 	            WebElement successTab =  wait.until(ExpectedConditions.elementToBeClickable(
