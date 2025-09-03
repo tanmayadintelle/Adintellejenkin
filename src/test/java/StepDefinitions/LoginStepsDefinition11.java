@@ -103,7 +103,7 @@ public class LoginStepsDefinition11 {
 	
 	@SuppressWarnings("deprecation")
 	@Given("User completes Finco Transfer flow")
-	public void user_is_on_login_page_billtransfer() throws IOException, InterruptedException, AWTException {
+	public void user_is_on_login_page_fincotransfer() throws IOException, InterruptedException, AWTException {
 	    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 		   // String downloadDir = "BTLoutputs\\" + timestamp;
 		    downloadDir = new File("screenshots\\FincoTransfer\\" + timestamp).getAbsolutePath();
@@ -120,13 +120,13 @@ public class LoginStepsDefinition11 {
 	    // Block notifications by setting the preference value to 2 (block)
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
 
-	    options.addArguments("--headless=new"); // Use new headless for better rendering
-	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-	    options.addArguments("--window-size=1920,1080");
-	    options.addArguments("--no-sandbox");
-	    options.addArguments("--disable-dev-shm-usage");
-	    options.addArguments("--remote-allow-origins=*");
-
+//	    options.addArguments("--headless=new"); // Use new headless for better rendering
+//	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+//	    options.addArguments("--window-size=1920,1080");
+//	    options.addArguments("--no-sandbox");
+//	    options.addArguments("--disable-dev-shm-usage");
+//	    options.addArguments("--remote-allow-origins=*");
+//
 	  
 	
 	   // Map<String, Object> prefs1 = new HashMap<>();
@@ -970,13 +970,13 @@ public class LoginStepsDefinition11 {
 				 	        applyButton2.click();
 				 	        Thread.sleep(10000);
 				 	       String baseFolder = "screenshots\\BillTransfer";
-				 	      boolean found = isDocNoPresentInLatestExcel(baseFolder, firstDocNo);
-
-				 	      if (found) {
-				 	          System.out.println("Doc number " + firstDocNo + " found in the Excel report.");
-				 	      } else {
-				 	          System.out.println("Doc number " + firstDocNo + " NOT found in the Excel report.");
-				 	      }
+//				 	      boolean found = isDocNoPresentInLatestExcel(baseFolder, firstDocNo);
+//
+//				 	      if (found) {
+//				 	          System.out.println("Doc number " + firstDocNo + " found in the Excel report.");
+//				 	      } else {
+//				 	          System.out.println("Doc number " + firstDocNo + " NOT found in the Excel report.");
+//				 	      }
 				        		
 			        	
 	}
