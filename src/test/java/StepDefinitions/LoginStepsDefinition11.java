@@ -120,12 +120,12 @@ public class LoginStepsDefinition11 {
 	    // Block notifications by setting the preference value to 2 (block)
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
 
-	    options.addArguments("--headless=new"); // Use new headless for better rendering
-	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-	    options.addArguments("--window-size=1920,1080");
-	    options.addArguments("--no-sandbox");
-	    options.addArguments("--disable-dev-shm-usage");
-	    options.addArguments("--remote-allow-origins=*");
+//	    options.addArguments("--headless=new"); // Use new headless for better rendering
+//	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+//	    options.addArguments("--window-size=1920,1080");
+//	    options.addArguments("--no-sandbox");
+//	    options.addArguments("--disable-dev-shm-usage");
+//	    options.addArguments("--remote-allow-origins=*");
 
 	  
 	
@@ -216,11 +216,75 @@ public class LoginStepsDefinition11 {
 	        	    WebElement icon = icons.get(0);
 	        	    icon.click();
 	        	}
-	      
+	        	  Thread.sleep(2000);
+	  		    waitload2.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"apps\"]")));
+	  	        driver.findElement(By.xpath("//*[@id=\"apps\"]")).click();
 //        Thread.sleep(2000);// Replace with your iframe ID
 //	       // Replace with the correct iframe ID
 		    WebDriverWait waitload = new WebDriverWait(driver, Duration.ofSeconds(60));
 		    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		    JavascriptExecutor jls = (JavascriptExecutor) driver;
+	        WebElement searchElement = wait.until(ExpectedConditions.elementToBeClickable(By.id("search_chat_field")));
+	        jls.executeScript("arguments[0].scrollIntoView(true);", searchElement); // Scrolls to the element
+	        // Click the image
+	        searchElement.sendKeys("admin");
+	        Thread.sleep(2000);
+	        
+	        WebElement logo = wait.until(ExpectedConditions.elementToBeClickable(
+	                By.xpath("//img[contains(@src, '828043.png')]")
+	            ));
+	          //  logo.click();
+	        jls.executeScript("arguments[0].scrollIntoView(true);", logo);
+	        // Click the image
+	        logo.click();
+	        Thread.sleep(2000);
+	        
+	       driver.switchTo().frame("appIframe");
+	        Thread.sleep(2000);
+	        WebElement agencyMenu = driver.findElement(By.xpath("//span[text()='Agency']"));
+	       // agencyMenu.click();
+
+	        jls.executeScript("arguments[0].scrollIntoView(true);", agencyMenu);
+	        agencyMenu.click();
+	        Thread.sleep(2000);
+	       
+	     // 1. Locate the row containing the desired text and checkbox
+	        WebElement checkboxzz = driver.findElement(By.xpath(
+	            "//tr[td[contains(text(), 'Mediaware Infotech Pvt Ltd')]]//input[@type='checkbox']"
+	        ));
+	        jls.executeScript("arguments[0].scrollIntoView(true);", checkboxzz);
+	        // 2. Click the checkbox
+	        checkboxzz.click();
+
+	        
+	        jls.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+	        Thread.sleep(2000);
+	        WebElement modifyButton = driver.findElement(By.xpath("//input[@value='Modify' and @type='submit']"));
+
+	        jls.executeScript("arguments[0].scrollIntoView(true);", modifyButton);
+	        modifyButton.click();
+	        Thread.sleep(2000);
+	        Select accountingSystemDropdown = new Select(driver.findElement(By.id("ctl00_ContentPlaceHolder1_drpAccountCompany")));
+	        
+	        
+	        String selectedOption = accountingSystemDropdown.getFirstSelectedOption().getText();
+
+	        if (!selectedOption.equals("Finco")) {
+	            accountingSystemDropdown.selectByVisibleText("Finco");
+	            System.out.println("Dropdown changed to Finco.");
+	        } else {
+	            System.out.println("Finco is already selected.");
+	        }
+	        
+	        jls.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+	        Thread.sleep(2000);
+	        
+	        driver.findElement(By.xpath("//input[@type='submit' and @value='Save']")).click();
+
+	        
+	        driver.switchTo().defaultContent();
+	        
+	        Thread.sleep(2000);
 		    waitload2.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"apps\"]")));
 	        driver.findElement(By.xpath("//*[@id=\"apps\"]")).click();
 //	        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/m-modules/div[1]/div/div/m-app-chat/div/div[2]/m-my-apps/div/div[3]/div/div/div[1]/div[1]/span/span[2]")));
@@ -229,14 +293,14 @@ public class LoginStepsDefinition11 {
 	        
 	      //  driver.findElement(By.xpath("/html/body/m-modules/div[1]/div/div/m-app-chat/div/div[2]/m-my-apps/div/div[3]/div/div/div[1]/div[1]/span/span[2]")).click();
 	    
-	        JavascriptExecutor jls = (JavascriptExecutor) driver;
+	       // JavascriptExecutor jls = (JavascriptExecutor) driver;
 //	        jls.executeScript("window.scrollTo(0, document.body.scrollHeight);");
 //	        Thread.sleep(5000);
 	       
-	        WebElement searchElement = wait.until(ExpectedConditions.elementToBeClickable(By.id("search_chat_field")));
-	        jls.executeScript("arguments[0].scrollIntoView(true);", searchElement); // Scrolls to the element
+	        WebElement searchElement1 = wait.until(ExpectedConditions.elementToBeClickable(By.id("search_chat_field")));
+	        jls.executeScript("arguments[0].scrollIntoView(true);", searchElement1); // Scrolls to the element
 	        // Click the image
-	        searchElement.sendKeys("finco transfer");
+	        searchElement1.sendKeys("finco transfer");
 	        
 	        
 	        WebElement imageElement = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/images/profile-Icon-Not-Found.svg']")));
