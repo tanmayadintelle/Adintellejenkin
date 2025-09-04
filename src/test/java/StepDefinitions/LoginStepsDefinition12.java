@@ -365,7 +365,11 @@ public class LoginStepsDefinition12 {
 	        WebElement pendingdoc = driver.findElement(By.xpath("//a[@href='#/TallyFinance/BillDetailsListComponent']"));
 	        jls.executeScript("arguments[0].scrollIntoView(true);", pendingdoc);
 	     // Click the element
-	        pendingdoc.click();
+	        try {
+	        	pendingdoc.click();
+	        } catch (ElementNotInteractableException e) {
+	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", pendingdoc);
+	        }
 	        Thread.sleep(5000);
 	     // Switch back to the main page DOM
 	        //driver.switchTo().defaultContent();
@@ -761,7 +765,11 @@ public class LoginStepsDefinition12 {
 		 WebElement reportstab = driver.findElement(By.xpath("//a[@href='#/TallyFinance/Report']"));
 	        jls.executeScript("arguments[0].scrollIntoView(true);", reportstab);
 //	     // Click the element
-	        reportstab.click();
+	        try {
+	        	reportstab.click();
+	        } catch (ElementNotInteractableException e) {
+	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", reportstab);
+	        }
 	        Thread.sleep(500);
 	        WebElement selectClientSpan = wait.until(ExpectedConditions.elementToBeClickable(
 	        	    By.xpath("//span[normalize-space()='Select Client']")
