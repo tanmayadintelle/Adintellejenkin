@@ -553,6 +553,8 @@ public class LoginStepsDefinition4 {
 
         // Using JavaScript to click the second date element
         jsk.executeScript("arguments[0].click();", dateElement2);
+        Thread.sleep(2000);
+        
 			driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
 //			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/add-attachment.svg']")));
 //			
