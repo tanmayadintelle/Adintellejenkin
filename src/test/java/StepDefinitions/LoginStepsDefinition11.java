@@ -126,10 +126,7 @@ public class LoginStepsDefinition11 {
 	    options.addArguments("--no-sandbox");
 	    options.addArguments("--disable-dev-shm-usage");
 	    options.addArguments("--remote-allow-origins=*");
-
-	  
-	
-	   // Map<String, Object> prefs1 = new HashMap<>();
+	  	 // Map<String, Object> prefs1 = new HashMap<>();
 	    prefs.put("profile.default_content_setting_values.notifications", 2);
 	    prefs.put("download.default_directory", downloadDir); // ✅ Your download path
 //	    prefs1.put("plugins.always_open_pdf_externally", true);
@@ -321,7 +318,12 @@ public class LoginStepsDefinition11 {
 	        WebElement pendingdoc = driver.findElement(By.xpath("//a[@href='#/FincoFinance/BillDetailsListComponent']"));
 	        jls.executeScript("arguments[0].scrollIntoView(true);", pendingdoc);
 	     // Click the element
-	        pendingdoc.click();
+	        try {
+	        	pendingdoc.click();
+	        } catch (ElementNotInteractableException e) {
+	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", pendingdoc);
+	        }
+	        
 	        Thread.sleep(5000);
 	     // Switch back to the main page DOM
 	        //driver.switchTo().defaultContent();
@@ -735,7 +737,12 @@ public class LoginStepsDefinition11 {
         WebElement pendingdoc = driver.findElement(By.xpath("//a[@href='#/FincoFinance/BillDetailsListComponent']"));
         jls.executeScript("arguments[0].scrollIntoView(true);", pendingdoc);
      // Click the element
-        pendingdoc.click();
+        try {
+        	pendingdoc.click();
+        } catch (ElementNotInteractableException e) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", pendingdoc);
+        }
+        
         Thread.sleep(5000);
      // Switch back to the main page DOM
         //driver.switchTo().defaultContent();
@@ -943,7 +950,12 @@ public class LoginStepsDefinition11 {
 		 WebElement reportstab = driver.findElement(By.xpath("//a[@href='#/FincoFinance/Report']"));
 	        jls.executeScript("arguments[0].scrollIntoView(true);", reportstab);
 //	     // Click the element
-	        reportstab.click();
+	        try {
+	        	reportstab.click();
+	        } catch (ElementNotInteractableException e) {
+	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", reportstab);
+	        }
+	        
 	        Thread.sleep(500);
 	        WebElement selectClientSpan = wait.until(ExpectedConditions.elementToBeClickable(
 	        	    By.xpath("//span[normalize-space()='Select Client']")
