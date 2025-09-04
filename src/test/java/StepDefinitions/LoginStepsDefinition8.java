@@ -1186,9 +1186,9 @@ public void user_createsestimate_withoutputs() throws InterruptedException, File
 			 System.out.println("PDF download should be complete now.");
 			 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
 	         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop.cdk-overlay-backdrop-showing")));
-	         Thread.sleep(2000);
+	         Thread.sleep(4000);
 			 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
-			 Thread.sleep(2000);
+			 Thread.sleep(4000);
 			 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
 			 Thread.sleep(2000);  // Let modal appear
 			 WebElement radioBtn = driver.findElement(By.cssSelector("input[type='radio'][value='Excel'][name='DocumentType']"));
