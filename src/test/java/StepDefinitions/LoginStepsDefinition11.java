@@ -120,13 +120,13 @@ public class LoginStepsDefinition11 {
 	    // Block notifications by setting the preference value to 2 (block)
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
 
-//	    options.addArguments("--headless=new"); // Use new headless for better rendering
-//	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-//	    options.addArguments("--window-size=1920,1080");
-//	    options.addArguments("--no-sandbox");
-//	    options.addArguments("--disable-dev-shm-usage");
-//	    options.addArguments("--remote-allow-origins=*");
-//
+	    options.addArguments("--headless=new"); // Use new headless for better rendering
+	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+	    options.addArguments("--window-size=1920,1080");
+	    options.addArguments("--no-sandbox");
+	    options.addArguments("--disable-dev-shm-usage");
+	    options.addArguments("--remote-allow-origins=*");
+
 	  
 	
 	   // Map<String, Object> prefs1 = new HashMap<>();
@@ -252,7 +252,7 @@ public class LoginStepsDefinition11 {
 //	        System.out.println("Inside iframe");
 //	        // Switch to iframe by id or index
 	        driver.switchTo().frame("appIframe");  // or driver.switchTo().frame(0);
-
+	        Thread.sleep(2000);
 	     // Locate the element inside the iframe using normal XPath or any locator
 	        WebElement pendingdoc = driver.findElement(By.xpath("//a[@href='#/FincoFinance/BillDetailsListComponent']"));
 	        jls.executeScript("arguments[0].scrollIntoView(true);", pendingdoc);
