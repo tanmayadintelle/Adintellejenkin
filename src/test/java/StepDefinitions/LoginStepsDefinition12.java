@@ -236,7 +236,7 @@ public class LoginStepsDefinition12 {
 	        WebElement searchElement = wait.until(ExpectedConditions.elementToBeClickable(By.id("search_chat_field")));
 	        jls.executeScript("arguments[0].scrollIntoView(true);", searchElement); // Scrolls to the element
 	        // Click the image
-	        searchElement.sendKeys("ad");
+	        searchElement.sendKeys("admin");
 	        Thread.sleep(2000);
 	        
 	        WebElement logo = wait.until(ExpectedConditions.elementToBeClickable(

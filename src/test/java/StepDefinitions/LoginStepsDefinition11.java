@@ -120,12 +120,12 @@ public class LoginStepsDefinition11 {
 	    // Block notifications by setting the preference value to 2 (block)
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
 
-//	    options.addArguments("--headless=new"); // Use new headless for better rendering
-//	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-//	    options.addArguments("--window-size=1920,1080");
-//	    options.addArguments("--no-sandbox");
-//	    options.addArguments("--disable-dev-shm-usage");
-//	    options.addArguments("--remote-allow-origins=*");
+	    options.addArguments("--headless=new"); // Use new headless for better rendering
+	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+	    options.addArguments("--window-size=1920,1080");
+	    options.addArguments("--no-sandbox");
+	    options.addArguments("--disable-dev-shm-usage");
+	    options.addArguments("--remote-allow-origins=*");
 
 	  
 	
