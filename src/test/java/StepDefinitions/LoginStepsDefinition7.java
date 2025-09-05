@@ -537,18 +537,33 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 		        	    System.out.println("⚠️ Overlay still visible after wait, proceeding anyway.");
 		        	}
 					Thread.sleep(5000);
-					WebElement nextbutton07 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
+					// Wait for overlay to disappear before waiting for button clickability
+					try {
+					    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.cdk-overlay-backdrop")));
+					} catch (TimeoutException ex) {
+					    System.out.println("⚠️ Overlay may not be present or didn't disappear in time.");
+					    Thread.sleep(1000);
+					}
+
+					// Now wait for the button to be clickable
+					WebElement nextbutton07 = wait.until(ExpectedConditions.elementToBeClickable(
+					    By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")
+					));
 
 					js.executeScript("arguments[0].scrollIntoView(true);", nextbutton07);
 					js.executeScript("arguments[0].focus();", nextbutton07);
+
 					try {
-				        wait.until(ExpectedConditions.invisibilityOfElementLocated(
-				            By.cssSelector("div.cdk-overlay-backdrop")));
-				    } catch (TimeoutException ex) {
-				    	System.out.println("⚠️ Overlay may not be present or didn't disappear in time.");
-				        Thread.sleep(1000);
-				    }
-					nextbutton07.click();
+					    nextbutton07.click();
+					} catch (ElementClickInterceptedException e) {
+					    System.out.println("⚠️ Click intercepted, retrying after waiting for overlay...");
+					    // Wait again for overlay to disappear
+					    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.cdk-overlay-backdrop")));
+					    Thread.sleep(500);
+					    // Try JS click as fallback
+					    js.executeScript("arguments[0].click();", nextbutton07);
+					}
+
 
 					Thread.sleep(2000);
 					WebElement nextbutton08 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > ngb-offcanvas-panel > div.offcanvas-body > app-campaign-new > div > div:nth-child(2) > div:nth-child(2) > div > span.submit-button.ng-star-inserted")));
