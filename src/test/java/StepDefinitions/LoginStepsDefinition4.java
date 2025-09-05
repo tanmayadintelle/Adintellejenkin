@@ -550,11 +550,19 @@ public class LoginStepsDefinition4 {
         String dateXPath2 = "//mat-calendar//span[contains(text(), '" + dateFromExcel2 + "')]";
         wait1.until(ExpectedConditions.elementToBeClickable(By.xpath(dateXPath2)));
         WebElement dateElement2 = driver.findElement(By.xpath(dateXPath2));
-
+      
         // Using JavaScript to click the second date element
         jsk.executeScript("arguments[0].click();", dateElement2);
         Thread.sleep(2000);
-        
+        try {
+        	Thread.sleep(2000);
+        	wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
+        	Thread.sleep(2000);
+        	// ✅ Now click the submit button
+        }
+        catch(Exception e){
+        	System.out.println("Overlay disappeared. Clicking submit...");
+        }
 			driver.findElement(By.cssSelector("body > app-root > div > div > div > main > div > app-create-job > div > div:nth-child(3) > div:nth-child(2) > span.submit-button.ng-star-inserted")).click();
 //			wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/add-attachment.svg']")));
 //			
