@@ -1468,6 +1468,7 @@ Thread.sleep(2000);
 	WebElement firstCheckbox = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@type='checkbox' and contains(@name,'ChkCshIDs')]")));
 	js.executeScript("arguments[0].scrollIntoView(true);", firstCheckbox);
 	js.executeScript("arguments[0].click();", firstCheckbox);
+
  	      
 	Thread.sleep(4000);
 	// Step 1: Get day from Excel (e.g., "26")
@@ -1842,7 +1843,8 @@ Thread.sleep(2000);
 	 	 makegoodSearchField.sendKeys(makegoodSearch);
 				
 		WebElement firstCheckbox1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@type='checkbox' and contains(@name,'ChkCshIDs')]")));
-		firstCheckbox1.click();
+		js.executeScript("arguments[0].scrollIntoView(true);", firstCheckbox1);
+		js.executeScript("arguments[0].click();", firstCheckbox1);
 		Thread.sleep(2000);  
 		// Step 1: Get day from Excel (e.g., "26")
 		// Step 1: Get the day from correct Excel column
@@ -1868,13 +1870,20 @@ Thread.sleep(2000);
 			    int attemptsr = 0;
 			    boolean clicked1 = false;
 
-			    while (attemptsr < 3 && !clicked1) {
+			    while (attemptsr < 5 && !clicked1) {
 			        try {
 			        	 Thread.sleep(2000);
 			            wait.until(ExpectedConditions.visibilityOf(dayElement1));
 			            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", dayElement1);
 			            Thread.sleep(500); // Let scroll finish
-			            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElement1);
+			            try {
+			                dayElement1.click(); // native click
+			                System.out.println("✅ Native click succeeded");
+			            } catch (Exception clickFail) {
+			                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dayElement1);
+			                System.out.println("✅ Fallback JS click succeeded");
+			            }
+
 			            System.out.println("✅ Clicked on date: " + day1);
 			            clicked1 = true;
 			        } catch (Exception e) {
@@ -1920,7 +1929,7 @@ Thread.sleep(2000);
 		
 		WebElement submitButton004 = wait.until(ExpectedConditions.elementToBeClickable(By.id("BtnSetInsertion")));
 		submitButton004.click();
-		Thread.sleep(2000);
+		Thread.sleep(6000);
 		WebElement submitButton005 = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("btnsubmit")));
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton005);
 		Thread.sleep(500);
@@ -1933,12 +1942,12 @@ Thread.sleep(2000);
 		    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", submitButton005);
 		}
 
-		Thread.sleep(2000);
+		Thread.sleep(6000);
 		WebElement saveButton100 = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("GenRoResch")));
 		 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", saveButton100);
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", saveButton100);
 
-		Thread.sleep(2000);
+		Thread.sleep(6000);
 		boolean clicked4 = false;
 
 		for (int attempt5 = 1; attempt5 <= 10; attempt5++) {
