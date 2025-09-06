@@ -1189,14 +1189,8 @@ public void user_createsestimate_withoutputs() throws InterruptedException, File
 	         Thread.sleep(4000);
 			 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
 			 Thread.sleep(4000);
-			 WebElement element = driver.findElement(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"));
-
-			// Scroll into view using JavaScript
-			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-
-			// Optional: Wait for the element to be clickable
-			//WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-			wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+			 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
+			 Thread.sleep(2000);  // Let modal appear
 			 Thread.sleep(2000);  // Let modal appear
 			 WebElement radioBtn = driver.findElement(By.cssSelector("input[type='radio'][value='Excel'][name='DocumentType']"));
 			 js.executeScript("arguments[0].scrollIntoView(true);", radioBtn); // Scrolls to the element
