@@ -246,7 +246,7 @@ public class LoginStepsDefinition12 {
 	        jls.executeScript("arguments[0].scrollIntoView(true);", logo);
 	        // Click the image
 	        logo.click();
-	        Thread.sleep(2000);
+	        Thread.sleep(5000);
 	        
 	       driver.switchTo().frame("appIframe");
 	        Thread.sleep(2000);
