@@ -245,7 +245,7 @@ public class LoginStepsDefinition10 {
 //	        System.out.println("Inside iframe");
 //	        // Switch to iframe by id or index
 	        driver.switchTo().frame("appIframe");  // or driver.switchTo().frame(0);
-
+	        Thread.sleep(4000);
 	     // Locate the element inside the iframe using normal XPath or any locator
 	        WebElement pendingdoc = driver.findElement(By.xpath("//a[@href='#/Finance/BillDetailsListComponent']"));
 	        jls.executeScript("arguments[0].scrollIntoView(true);", pendingdoc);
@@ -286,7 +286,7 @@ public class LoginStepsDefinition10 {
 //	       
 //	        // Click the image
 //	        last30days.click();
-	        Thread.sleep(8000);
+	        Thread.sleep(10000);
 	        WebElement last30Days = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.daterangepicker.dropdown-menu.ltr.opensleft.show-calendar > div.ranges > ul > li:nth-child(4)")));
 	        jls.executeScript("arguments[0].scrollIntoView(true);", last30Days);
 	        jls.executeScript("arguments[0].focus();", last30Days);
@@ -331,9 +331,33 @@ public class LoginStepsDefinition10 {
 	        Thread.sleep(15000);
 
 	        // Step 2: Get the first Doc No from the first row
-	        WebElement firstRow = wait.until(ExpectedConditions.visibilityOfElementLocated(
-	        	    By.xpath("//mat-row[1]")));
-	        firstDocNo = firstRow.findElement(By.xpath(".//mat-cell[" + docNoIndex + "]")).getText().trim();
+	        String firstDocNo = null;
+	        int maxAttempts = 10; // Set a safe max retry count
+	        int attempt = 0;
+
+	        while (attempt < maxAttempts) {
+	            try {
+	                WebElement firstRow = wait.until(ExpectedConditions.visibilityOfElementLocated(
+	                    By.xpath("//mat-row[1]")));
+
+	                firstDocNo = firstRow.findElement(By.xpath(".//mat-cell[" + docNoIndex + "]")).getText().trim();
+
+	                if (!firstDocNo.isEmpty()) {
+	                    System.out.println("Document number found: " + firstDocNo);
+	                    break; // Exit loop once found
+	                }
+	            } catch (Exception e) {
+	                System.out.println("Attempt " + (attempt + 1) + ": first row not found yet.");
+	            }
+
+	            attempt++;
+	            Thread.sleep(1000); // small wait before retry
+	        }
+
+	        if (firstDocNo == null || firstDocNo.isEmpty()) {
+	            throw new RuntimeException("Document number not found after " + maxAttempts + " attempts.");
+	        }
+
 	        System.out.println("First Doc No: " + firstDocNo);
 
 	        // Step 3: Find the row with that Doc No and check its checkbox
