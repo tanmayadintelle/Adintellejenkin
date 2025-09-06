@@ -66,13 +66,13 @@ public class LoginStepsDefinition4 {
 	    // Block notifications by setting the preference value to 2 (block)
 	    prefs.put("profile.default_content_setting_values.notifications", 2); 
 	    // Add preferences to Chrome options
-	    options.setExperimentalOption("prefs", prefs);
-	    options.addArguments("--headless=new"); // Use new headless for better rendering
-	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-	    options.addArguments("--window-size=1920,1080");
-	    options.addArguments("--no-sandbox");
-	    options.addArguments("--disable-dev-shm-usage");
-	    options.addArguments("--remote-allow-origins=*");
+//	    options.setExperimentalOption("prefs", prefs);
+//	    options.addArguments("--headless=new"); // Use new headless for better rendering
+//	    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+//	    options.addArguments("--window-size=1920,1080");
+//	    options.addArguments("--no-sandbox");
+//	    options.addArguments("--disable-dev-shm-usage");
+//	    options.addArguments("--remote-allow-origins=*");
 	    driver =new ChromeDriver(options);
 //	    System.out.print("WebDriver initalized");
 //	    driver.get("https://pro.adintelle.com/v7/m-box/campaign"); 
@@ -1771,7 +1771,7 @@ public class LoginStepsDefinition4 {
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/action_icon.svg']")));
 		    //waitload8.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/action_icon.svg']")));
 		    driver.findElement(By.xpath("//img[@src='./assets/img/svg/action_icon.svg']")).click();
-		    Thread.sleep(2000);
+		    Thread.sleep(4000);
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"action-dialog\"]/div[1]/div/span/img")));
 		    driver.findElement(By.xpath("//*[@id=\"action-dialog\"]/div[1]/div/span/img")).click();
 		    Thread.sleep(2000);
@@ -1796,16 +1796,22 @@ public class LoginStepsDefinition4 {
 			 System.out.println("PDF download should be complete now.");
 
 			 
-			 try {
+			 try { 
+				 Thread.sleep(5000);
+				 
 				    wait1.until(ExpectedConditions.invisibilityOfElementLocated(
 				        By.cssSelector(".cdk-overlay-backdrop")));
+				    Thread.sleep(500);
 //				    System.out.println("Overlay disappeared.");
 				} catch (Exception e) {
 				    System.out.println("Overlay still visible or wait timed out. Continuing anyway.");
 				}
 			 
-			 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
+			 WebElement actionIcon = wait1.until(ExpectedConditions.elementToBeClickable(
+					    By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
+					actionIcon.click();
 
+					Thread.sleep(2000);
 			 // Step 2: Click print icon
 			 wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
 			 Thread.sleep(2000);  // Let modal appear
@@ -1836,7 +1842,7 @@ public class LoginStepsDefinition4 {
 
 				String roNumber = spanElement.getText();
 				System.out.println("Captured RO Number: " + roNumber);
-
+				Thread.sleep(5000);
 		    wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/butt-vendor-bill.svg']")));
 		    WebElement element12 = driver.findElement(By.cssSelector("img[src='./assets/img/svg/butt-vendor-bill.svg']"));
 		   // ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='50%'");
@@ -1913,10 +1919,348 @@ public class LoginStepsDefinition4 {
 		    	Thread.sleep(500);
 		    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", finalizeButton4);
 
-		    Thread.sleep(1000);
+		   // Thread.sleep(1000);
 //		    driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-generate-vendor-bill/div/div[3]/div[2]/span[2]")).click();
 		    Thread.sleep(10000);	
 		    System.out.println("Created Vendor Bill");
+		    Thread.sleep(10000);
+		    List<WebElement> actionIcons = driver.findElements(By.cssSelector("img[src*='action_icon.svg']"));
+		    WebElement lastIcon = actionIcons.get(actionIcons.size() - 1);
+		   try {
+		        
+		        lastIcon.click(); // or use JavaScript click if needed
+		    } catch(Exception e) {
+		    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", lastIcon);
+		        
+		    }
+		    Thread.sleep(2000);
+		    WebElement deleteIcon = driver.findElement(By.cssSelector("img[src*='action-delete.svg']"));
+		    try {
+		        
+		    	deleteIcon.click(); // or use JavaScript click if needed
+		    } catch(Exception e) {
+		    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", deleteIcon);
+		        
+		    }
+		    Thread.sleep(2000);
+		    WebElement yesButton = driver.findElement(By.xpath("//span[text()='Yes']"));
+		    try {
+		        
+		    	yesButton.click(); // or use JavaScript click if needed
+		    } catch(Exception e) {
+		    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", yesButton);
+		        
+		    }
+		    Thread.sleep(2000);
+		    System.out.println("Vendor Bill deleted");
+		    
+		    List<WebElement> actionIcons1 = driver.findElements(By.cssSelector("img[src*='action_icon.svg']"));
+		    WebElement lastIcon1 = actionIcons1.get(actionIcons1.size() - 1);
+		   try {
+		        
+		        lastIcon1.click(); // or use JavaScript click if needed
+		    } catch(Exception e) {
+		    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", lastIcon1);
+		        
+		    }
+		    Thread.sleep(4000);
+		    
+		    WebElement unapprovedIcon = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src*='action-unapproved.svg']")));
+		    try {
+		        
+		    	unapprovedIcon.click(); // or use JavaScript click if needed
+		    } catch(Exception e) {
+		    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", unapprovedIcon);
+		        
+		    }
+		    Thread.sleep(2000);
+		    
+		    WebElement yesButton1 = driver.findElement(By.xpath("//span[text()='Yes']"));
+		    try {
+		        
+		    	yesButton1.click(); // or use JavaScript click if needed
+		    } catch(Exception e) {
+		    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", yesButton1);
+		        
+		    }
+		    Thread.sleep(2000);
+		    System.out.println("Vendor PO Unapproved");
+		    
+		    List<WebElement> actionIcons2 = driver.findElements(By.cssSelector("img[src*='action_icon.svg']"));
+		    WebElement lastIcon2 = actionIcons2.get(actionIcons2.size() - 1);
+		   try {
+		        
+		        lastIcon2.click(); // or use JavaScript click if needed
+		    } catch(Exception e) {
+		    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", lastIcon2);
+		        
+		    }
+		    Thread.sleep(2000);
+		    WebElement cancelIcon  = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src*='action-cancel.svg']")));
+		    try {
+		        
+		    	cancelIcon .click(); // or use JavaScript click if needed
+		    } catch(Exception e) {
+		    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", cancelIcon );
+		        
+		    }
+		    Thread.sleep(2000);
+		    WebElement yesButton2 = driver.findElement(By.xpath("//span[text()='Yes']"));
+		    try {
+		        
+		    	yesButton2.click(); // or use JavaScript click if needed
+		    } catch(Exception e) {
+		    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", yesButton2);
+		        
+		    }
+		    Thread.sleep(2000);
+		    System.out.println("Vendor PO cancelled");
+		    
+		    WebElement clientDocIcon = driver.findElement(By.cssSelector("span.last-up > img[src*='client-doc-icon.svg']"));
+		    clientDocIcon.click();
+
+			By locator1 = By.xpath("//*[@id='bill-to-client']/table/tbody/tr[1]/td[8]/span[1]/img");
+
+			for (int attempt = 0; attempt < 5; attempt++) {
+			    try {
+			        WebElement secondRowAction1 = wait1.until(ExpectedConditions.elementToBeClickable(locator1));
+			        secondRowAction1.click();
+			        break;  // exit loop if click is successful
+			    } catch (StaleElementReferenceException e) {
+			        // Element went stale, retry
+			        System.out.println("Stale element exception caught, retrying... Attempt: " + (attempt + 1));
+			    }
+			}
+
+			 System.out.println("Credit note deletion");
+			wait1.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/icon-credit-Note.svg']"))).click();
+			Thread.sleep(2000);
+		    List<WebElement> actionIcons3 = driver.findElements(By.cssSelector("img[src*='action_icon.svg']"));
+		    WebElement lastIcon3 = actionIcons3.get(actionIcons3.size() - 1);
+		   try {
+		        
+		        lastIcon3.click(); // or use JavaScript click if needed
+		    } catch(Exception e) {
+		    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", lastIcon3);
+		        
+		    }
+		    Thread.sleep(2000);
+		    WebElement cancelIcon3  = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src*='action-cancel.svg']")));
+		    try {
+		        
+		    	cancelIcon3.click(); // or use JavaScript click if needed
+		    } catch(Exception e) {
+		    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", cancelIcon3 );
+		        
+		    }
+		    Thread.sleep(2000);
+		    WebElement yesButton3 = driver.findElement(By.xpath("//span[text()='Yes']"));
+		    try {
+		        
+		    	yesButton3.click(); // or use JavaScript click if needed
+		    } catch(Exception e) {
+		    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", yesButton3);
+		        
+		    }
+			 Thread.sleep(2000);
+			 System.out.println("Credit note cancelled");
+			  WebElement backarrow = driver.findElement(By.cssSelector("img[src*='back-arrow.svg']"));
+			    try {
+			        
+			    	backarrow.click(); // or use JavaScript click if needed
+			    } catch(Exception e) {
+			    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", backarrow);
+			        
+			    }
+				 Thread.sleep(2000);
+				 
+				 
+				 
+				 
+				 
+				 List<WebElement> actionIconsl = driver.findElements(By.cssSelector("img[src*='action_icon.svg']"));
+				    WebElement lastIconl = actionIconsl.get(actionIconsl.size() - 1);
+				   try {
+				        
+				        lastIconl.click(); // or use JavaScript click if needed
+				    } catch(Exception e) {
+				    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", lastIconl);
+				        
+				    }
+				    Thread.sleep(2000);
+				    WebElement cancelincon = driver.findElement(By.cssSelector("img[src*='action-cancel.svg']"));
+				    try {
+				        
+				    	cancelincon.click(); // or use JavaScript click if needed
+				    } catch(Exception e) {
+				    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", cancelincon);
+				        
+				    }
+				    Thread.sleep(2000);
+				    WebElement yesButton4 = driver.findElement(By.xpath("//span[text()='Yes']"));
+				    try {
+				        
+				    	yesButton4.click(); // or use JavaScript click if needed
+				    } catch(Exception e) {
+				    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", yesButton4);
+				        
+				    }
+				    Thread.sleep(2000);
+				    System.out.println("Client Bill Cancelled");
+				    
+				    List<WebElement> actionIcons4 = driver.findElements(By.cssSelector("img[src*='action_icon.svg']"));
+
+				    if (!actionIcons4.isEmpty()) {
+				        WebElement firstIcon1 = actionIcons4.get(0);
+				        try {
+				            firstIcon1.click(); // Normal click
+				        } catch(Exception e) {
+				            // Fallback to JavaScript click if regular click fails
+				            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", firstIcon1);
+				        }
+				    } else {
+				        System.out.println("No action_icon.svg elements found.");
+				    }
+				    Thread.sleep(2000);
+				    
+				    WebElement unapprovedIcon3 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src*='action-unapproved.svg']")));
+				    try {
+				        
+				    	unapprovedIcon3.click(); // or use JavaScript click if needed
+				    } catch(Exception e) {
+				    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", unapprovedIcon3);
+				        
+				    }
+				    Thread.sleep(2000);
+				    
+				    WebElement yesButton5 = driver.findElement(By.xpath("//span[text()='Yes']"));
+				    try {
+				        
+				    	yesButton5.click(); // or use JavaScript click if needed
+				    } catch(Exception e) {
+				    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", yesButton5);
+				        
+				    }
+				    Thread.sleep(2000);
+				    System.out.println("Estimate Unapproved");
+				    List<WebElement> actionIcons5 = driver.findElements(By.cssSelector("img[src*='action_icon.svg']"));
+
+				    if (!actionIcons5.isEmpty()) {
+				        WebElement firstIcon2 = actionIcons5.get(0);
+				        try {
+				            firstIcon2.click(); // Normal click
+				        } catch(Exception e) {
+				            // Fallback to JavaScript click if regular click fails
+				            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", firstIcon2);
+				        }
+				    } else {
+				        System.out.println("No action_icon.svg elements found.");
+				    }
+				    Thread.sleep(2000);
+				    WebElement deleteicon4  = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src*='action-delete.svg']")));
+				    try {
+				        
+				    	deleteicon4 .click(); // or use JavaScript click if needed
+				    } catch(Exception e) {
+				    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", deleteicon4 );
+				        
+				    }
+				    Thread.sleep(2000);
+				    WebElement yesButton6 = driver.findElement(By.xpath("//span[text()='Yes']"));
+				    try {
+				        
+				    	yesButton6.click(); // or use JavaScript click if needed
+				    } catch(Exception e) {
+				    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", yesButton6);
+				        
+				    }
+				    Thread.sleep(2000);
+				    System.out.println("Estimate deleted");
+				    
+				    WebElement costsheet = driver.findElement(By.cssSelector("span.last-up > img[src*='worksheet-icon.svg']"));
+				    costsheet.click();
+				    Thread.sleep(4000);
+				 // Wait until at least one delete icon is present
+				    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("img[src*='delete_icon.svg']")));
+
+				    while (true) {
+				        // Always re-fetch
+				        List<WebElement> deleteIcons = driver.findElements(By.cssSelector("img[src*='delete_icon.svg']"));
+				        System.out.println("🗑️ Found delete icons count: " + deleteIcons.size());
+
+				        if (deleteIcons.isEmpty()) {
+				            System.out.println("✅ All delete icons processed.");
+				            break;
+				        }
+
+				        WebElement deleteIcona = deleteIcons.get(0);
+
+				        try {
+				            deleteIcona.click();
+				        } catch (Exception e) {
+				            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", deleteIcona);
+				        }
+
+				        try {
+				            WebElement yesButtona = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Yes']")));
+				            try {
+				                yesButtona.click();
+				            } catch (Exception e) {
+				                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", yesButtona);
+				            }
+
+				            // ✅ Wait for the icon to disappear OR for deleteIcons count to reduce
+				            wait.until(ExpectedConditions.stalenessOf(deleteIcona));
+
+				            // Wait a bit for DOM to stabilize (important if DOM is slow)
+				            Thread.sleep(1000);
+
+				        } catch (TimeoutException te) {
+				            System.out.println("❌ Yes button not found. Skipping...");
+				        } catch (StaleElementReferenceException se) {
+				            System.out.println("⚠️ Delete icon was already removed. Continuing...");
+				        }
+				    }
+
+				    Thread.sleep(2000);
+				    WebElement homeBreadcrumb = driver.findElement(By.xpath("//span[@routerlink='/home' and contains(@class, 'breadcrumbs')]"));
+
+				    try {
+				        homeBreadcrumb.click(); // Try normal click
+				    } catch (Exception e) {
+				        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", homeBreadcrumb); // JS fallback
+				    }
+				    Thread.sleep(2000);
+				    wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/div/div/div/main/div/app-home/div/div[6]/app-jobs-component/div/div[1]/div/div[1]/input")));
+					// Step 3: Find the form fields on the webpage and fill them with data from Excel
+					WebElement searchField1 = driver.findElement(By.xpath("/html/body/app-root/div/div/div/main/div/app-home/div/div[6]/app-jobs-component/div/div[1]/div/div[1]/input")); // Replace with actual ID
+					
+					searchField1.sendKeys(jobNamee);
+					Thread.sleep(5000); 
+					WebElement actiondashboard1 = wait1.until(
+						    ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/img/svg/action_icon.svg']"))
+						);
+						actiondashboard1.click();
+					    WebElement deleteicon5  = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src*='icon-delete.svg']")));
+					    try {
+					        
+					    	deleteicon5 .click(); // or use JavaScript click if needed
+					    } catch(Exception e) {
+					    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", deleteicon5 );
+					        
+					    }
+					    Thread.sleep(2000);
+					    WebElement yesButton7 = driver.findElement(By.xpath("//span[text()='Yes']"));
+					    try {
+					        
+					    	yesButton7.click(); // or use JavaScript click if needed
+					    } catch(Exception e) {
+					    	((JavascriptExecutor) driver).executeScript("arguments[0].click();", yesButton7);
+					        
+					    }
+					    Thread.sleep(2000);
+					    System.out.println("Job deleted");
+						
 		    driver.switchTo().defaultContent();
 		    
 
