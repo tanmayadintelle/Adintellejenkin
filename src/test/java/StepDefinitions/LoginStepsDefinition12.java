@@ -360,7 +360,7 @@ public class LoginStepsDefinition12 {
 //	        System.out.println("Inside iframe");
 //	        // Switch to iframe by id or index
 	       // driver.switchTo().frame("appIframe");  // or driver.switchTo().frame(0);
-
+	        Thread.sleep(2000);
 	     // Locate the element inside the iframe using normal XPath or any locator
 	        WebElement pendingdoc = driver.findElement(By.xpath("//a[@href='#/TallyFinance/BillDetailsListComponent']"));
 	        jls.executeScript("arguments[0].scrollIntoView(true);", pendingdoc);
