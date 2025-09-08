@@ -1189,7 +1189,11 @@ public void user_createsestimate_withoutputs() throws InterruptedException, File
 	         Thread.sleep(4000);
 			 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
 			 Thread.sleep(4000);
-			 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action-print.svg']"))).click();
+			 WebElement printIcon = wait.until(ExpectedConditions.visibilityOfElementLocated(
+					    By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
+
+					((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", printIcon);
+					((JavascriptExecutor) driver).executeScript("arguments[0].click();", printIcon);
 			 Thread.sleep(2000);  // Let modal appear
 			 Thread.sleep(2000);  // Let modal appear
 			 WebElement radioBtn = driver.findElement(By.cssSelector("input[type='radio'][value='Excel'][name='DocumentType']"));
