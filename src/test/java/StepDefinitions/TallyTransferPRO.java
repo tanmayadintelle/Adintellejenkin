@@ -371,6 +371,7 @@ public class TallyTransferPRO {
 	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", pendingdoc);
 	        }
 	        Thread.sleep(5000);
+	        System.out.println("In pending docs");
 	     // Switch back to the main page DOM
 	        //driver.switchTo().defaultContent();
 
