@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import utils.BaseClass;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -51,24 +50,23 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import utils.BaseClass;
 
 public class ReportsPRO {
 	static WebDriver driver;
-//	driver = BaseClass.getDriver();
+	
 	@SuppressWarnings("deprecation")
 
 @Given("User logs in and navigate to reports page")
-public void user_logs_in_and_navigate_to_reports_page() throws Exception {
+public void user_logs_in_and_navigate_to_reports_page() throws InterruptedException, IOException {
     // Write code here that turns the phrase above into concrete actions
 		   // Write code here that turns the phrase above into concrete actions
-//				ChromeOptions options = new ChromeOptions();
-//				   options.addArguments("--headless=new"); // Use new headless for better rendering
-//				    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-//				    options.addArguments("--window-size=1920,1080");
-//				    options.addArguments("--no-sandbox");
-//				    options.addArguments("--disable-dev-shm-usage");
-//				    options.addArguments("--remote-allow-origins=*");
+				ChromeOptions options = new ChromeOptions();
+				   options.addArguments("--headless=new"); // Use new headless for better rendering
+				    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+				    options.addArguments("--window-size=1920,1080");
+				    options.addArguments("--no-sandbox");
+				    options.addArguments("--disable-dev-shm-usage");
+				    options.addArguments("--remote-allow-origins=*");
 			    // Create a HashMap for preferences
 //				ChromeOptions options = new ChromeOptions();
 //				options.addArguments("--headless=new");
@@ -77,8 +75,6 @@ public void user_logs_in_and_navigate_to_reports_page() throws Exception {
 //				options.addArguments("--no-sandbox");
 //				options.addArguments("--disable-dev-shm-usage");
 			//	String downloadFilepath = Paths.get("reports").toAbsolutePath().toString();
-			//BaseClass.initDriverAndLogin();
-			driver = BaseClass.getDriver();
 			    HashMap<String, Object> prefs = new HashMap<>();  
 			    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 			    Path downloadPath = Paths.get("screenshots\\reports", timestamp).toAbsolutePath(); // ✅ Absolute path
@@ -92,7 +88,7 @@ public void user_logs_in_and_navigate_to_reports_page() throws Exception {
 			    // Block notifications by setting the preference value to 2 (block)
 			    prefs.put("profile.default_content_setting_values.notifications", 2); 
 			    // Add preferences to Chrome options
-			  //  options.setExperimentalOption("prefs", prefs);
+			    options.setExperimentalOption("prefs", prefs);
 			    String timestamp2 = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 			    String downloadDir = "screenshots\\reports\\" + timestamp2;
 
@@ -101,18 +97,18 @@ public void user_logs_in_and_navigate_to_reports_page() throws Exception {
 			        downloadFolder2.mkdirs(); // ✅ Create the folder if not there
 			    }
 			    Map<String, Object> prefs1 = new HashMap<>();
-//			    prefs1.put("profile.default_content_setting_values.notifications", 2);
-//			    prefs1.put("download.default_directory", downloadPath.toString()); // ✅ Your download path
-//			    prefs1.put("plugins.always_open_pdf_externally", true);
-//			    prefs1.put("download.prompt_for_download", false); 
-//			    prefs1.put("directory_upgrade", true);             
-//			    prefs1.put("safebrowsing.enabled", true);          
-//			    options.setExperimentalOption("prefs", prefs1);
-//			    driver =new ChromeDriver(options);
-//			    System.out.print("WebDriver initalized");
-//			    driver.get("https://pro.adintelle.com/v7/login"); 
-//			    System.out.print("Website opened");
-//			    driver.manage().window().setSize(new Dimension(1920, 1080));
+			    prefs1.put("profile.default_content_setting_values.notifications", 2);
+			    prefs1.put("download.default_directory", downloadPath.toString()); // ✅ Your download path
+			    prefs1.put("plugins.always_open_pdf_externally", true);
+			    prefs1.put("download.prompt_for_download", false); 
+			    prefs1.put("directory_upgrade", true);             
+			    prefs1.put("safebrowsing.enabled", true);          
+			    options.setExperimentalOption("prefs", prefs1);
+			    driver =new ChromeDriver(options);
+			    System.out.print("WebDriver initalized");
+			    driver.get("https://pro.adintelle.com/v7/login"); 
+			    System.out.print("Website opened");
+			    driver.manage().window().setSize(new Dimension(1920, 1080));
 			    
 			    String excelFilePath = "Reportsmyjobspage.xlsx";  // Path to your Excel file
 		        FileInputStream file = new FileInputStream(new File(excelFilePath));
@@ -121,66 +117,64 @@ public void user_logs_in_and_navigate_to_reports_page() throws Exception {
 					Row row = sheet.getRow(1); // Get the second row (0-indexed));
 					WebDriverWait waitload2 = new WebDriverWait(driver, Duration.ofSeconds(60));
 					  
-//				    waitload2.until(ExpectedConditions.elementToBeClickable(By.name("username")));
-//					// Step 3: Find the form fields on the webpage and fill them with data from Excel
-//					
-//					WebElement usernameField = driver.findElement(By.name("username")); // Replace with actual ID
-//					
-//					usernameField.sendKeys("tanmay.nayak");
-//					
-//				    driver.findElement(By.name("acceptTerms")).click();
-//				    waitload2.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"identify_user_button_text_active\"]")));
-//				    driver.findElement(By.xpath("//*[@id=\"identify_user_button_text_active\"]")).click();
-//				    
-//				    WebDriverWait waitload1 = new WebDriverWait(driver, Duration.ofSeconds(60));
-//				    WebDriverWait waitloadz = new WebDriverWait(driver, Duration.ofSeconds(10));
-//					   
-//				    waitload1.until(ExpectedConditions.elementToBeClickable(By.name("password")));
-//				    
-//					WebElement passwordField = driver.findElement(By.name("password")); 
-//					passwordField.sendKeys("Citi5bank$12345678");
-//					waitload1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"login_button_text_active\"]")));
-//					driver.findElement(By.xpath("//*[@id=\"login_button_text_active\"]")).click();
-//				    Thread.sleep(3000);
-//				    
-//				 // Initialize the WebDriverWait with a timeout of 10 seconds k
-//				 // Define the XPath to locate the element
-//				    String warningDialogButtonXpath = "/html/body/div[2]/div[2]/div/mat-dialog-container/m-login-warning-dialog/div/div[2]/div[2]/div/button/div/span";
-//
-//			        // Find the elements matching the XPath
-//			        List<WebElement> warningButtonList = driver.findElements(By.xpath(warningDialogButtonXpath));
-//
-//			        // Check if the element is present
-//			        if (!warningButtonList.isEmpty()) {
-//			        	WebDriverWait waitload22 = new WebDriverWait(driver, Duration.ofSeconds(60));
-//						  
-//					    waitload22.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/m-login-warning-dialog/div/div[2]/div[2]/div/button/div/span")));
-//			            // If the element is found, click on it
-//			            warningButtonList.get(0).click();
-//			            System.out.println("Warning button clicked.");
-//			        }
+				    waitload2.until(ExpectedConditions.elementToBeClickable(By.name("username")));
+					// Step 3: Find the form fields on the webpage and fill them with data from Excel
+					
+					WebElement usernameField = driver.findElement(By.name("username")); // Replace with actual ID
+					
+					usernameField.sendKeys("tanmay.nayak");
+					
+				    driver.findElement(By.name("acceptTerms")).click();
+				    waitload2.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"identify_user_button_text_active\"]")));
+				    driver.findElement(By.xpath("//*[@id=\"identify_user_button_text_active\"]")).click();
+				    
+				    WebDriverWait waitload1 = new WebDriverWait(driver, Duration.ofSeconds(60));
+				    WebDriverWait waitloadz = new WebDriverWait(driver, Duration.ofSeconds(10));
+					   
+				    waitload1.until(ExpectedConditions.elementToBeClickable(By.name("password")));
+				    
+					WebElement passwordField = driver.findElement(By.name("password")); 
+					passwordField.sendKeys("Citi5bank$12345678");
+					waitload1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"login_button_text_active\"]")));
+					driver.findElement(By.xpath("//*[@id=\"login_button_text_active\"]")).click();
+				    Thread.sleep(3000);
+				    
+				 // Initialize the WebDriverWait with a timeout of 10 seconds k
+				 // Define the XPath to locate the element
+				    String warningDialogButtonXpath = "/html/body/div[2]/div[2]/div/mat-dialog-container/m-login-warning-dialog/div/div[2]/div[2]/div/button/div/span";
+
+			        // Find the elements matching the XPath
+			        List<WebElement> warningButtonList = driver.findElements(By.xpath(warningDialogButtonXpath));
+
+			        // Check if the element is present
+			        if (!warningButtonList.isEmpty()) {
+			        	WebDriverWait waitload22 = new WebDriverWait(driver, Duration.ofSeconds(60));
+						  
+					    waitload22.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/m-login-warning-dialog/div/div[2]/div[2]/div/button/div/span")));
+			            // If the element is found, click on it
+			            warningButtonList.get(0).click();
+			            System.out.println("Warning button clicked.");
+			        }
 			        Thread.sleep(4000);
 //				    driver.findElement(By.xpath("/html/body/div[2]/div[2]/div/mat-dialog-container/m-login-warning-dialog/div/div[2]/div[2]/div/button/div/span")).click();
 			       // waitload1.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/images/icons/close.png']"))).click();
-//			        try {
-//			            WebElement closeImg = waitloadz.until(
-//			                ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/images/icons/close.png']"))
-//			            );
-//			            closeImg.click();
-//			        } catch (TimeoutException e) {
-//			            // Element not found or not clickable within the timeout - continue silently
-//			            System.out.println("Close icon not clickable or not present. Continuing...");
-//			        }
-//				    WebDriverWait waitload23 = new WebDriverWait(driver, Duration.ofSeconds(60));
-//					  
-//				    waitload23.until(ExpectedConditions.elementToBeClickable(By.className("show_collapse_icon")));
-//				    WebElement elementarrow = driver.findElement(By.className("show_collapse_icon"));
-//			        elementarrow.click();
-			        BaseClass.initDriverAndLogin();
-					//  WebDriver driver = BaseClass.getDriver();
+			        try {
+			            WebElement closeImg = waitloadz.until(
+			                ExpectedConditions.elementToBeClickable(By.xpath("//img[@src='./assets/images/icons/close.png']"))
+			            );
+			            closeImg.click();
+			        } catch (TimeoutException e) {
+			            // Element not found or not clickable within the timeout - continue silently
+			            System.out.println("Close icon not clickable or not present. Continuing...");
+			        }
+				    WebDriverWait waitload23 = new WebDriverWait(driver, Duration.ofSeconds(60));
+					  
+				    waitload23.until(ExpectedConditions.elementToBeClickable(By.className("show_collapse_icon")));
+				    WebElement elementarrow = driver.findElement(By.className("show_collapse_icon"));
+			        elementarrow.click();
+			        
 			        System.out.println("Logged in");
 			        //WebDriverWait waitid = new WebDriverWait(driver, Duration.ofSeconds(60));
-			        driver = BaseClass.getDriver();
 			        List<WebElement> icons = driver.findElements(
 			        	    By.xpath("//*[name()='svg']/*[name()='path' and contains(@d, 'M17.8059')]")
 			        	);
@@ -217,11 +211,10 @@ public void user_logs_in_and_navigate_to_reports_page() throws Exception {
 
 }
 
-@When("User downloads status reports in reports")
+@When("User downloads status reports")
 public void user_downloads_status_reports() throws InterruptedException, FileNotFoundException, IOException {
 	 String excelFilePath = "Reportsmyjobspage.xlsx";  // Path to your Excel file
-	// BaseClass.initDriverAndLogin();
-	  driver = BaseClass.getDriver();
+
 	    // Open workbook and file input stream with try-with-resources for auto-close
 	    try (FileInputStream file = new FileInputStream(new File(excelFilePath));
 	         Workbook workbook = new XSSFWorkbook(file)) {
@@ -520,9 +513,7 @@ public void user_downloads_status_reports() throws InterruptedException, FileNot
 
 @When("User downloads sales register")
 public void user_downloads_sales_register() throws IOException, InterruptedException {
-	//BaseClass.initDriverAndLogin();
-	   driver = BaseClass.getDriver(); 
-	String excelFilePath = "Reportsmyjobspage.xlsx";  // Path to your Excel file
+	 String excelFilePath = "Reportsmyjobspage.xlsx";  // Path to your Excel file
 
 	    // Open workbook and file input stream with try-with-resources for auto-close
 	    try (FileInputStream file = new FileInputStream(new File(excelFilePath));
@@ -777,9 +768,7 @@ public void user_downloads_sales_register() throws IOException, InterruptedExcep
 }
 @Then("User downloads purchase register")
 public void user_downloads_purchase_register() throws FileNotFoundException, IOException, InterruptedException {
-	//BaseClass.initDriverAndLogin();
-	   driver = BaseClass.getDriver();
-	String excelFilePath = "Reportsmyjobspage.xlsx";  // Path to your Excel file
+	 String excelFilePath = "Reportsmyjobspage.xlsx";  // Path to your Excel file
 
 	    // Open workbook and file input stream with try-with-resources for auto-close
 	    try (FileInputStream file = new FileInputStream(new File(excelFilePath));
@@ -1125,7 +1114,7 @@ public void user_downloads_purchase_register() throws FileNotFoundException, IOE
 @Then("Close the chrom3e Browse3r")
 public void close_the_chrom3e_browse3r() {
     // Write code here that turns the phrase above into concrete actions
-   //driver.quit();
+   driver.quit();
 }
 private void waitUntilClickableAndClick(WebElement checkbox) {
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
