@@ -87,16 +87,16 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    prefs1.put("download.prompt_for_download", false); 
 			    prefs1.put("directory_upgrade", true);             
 			    prefs1.put("safebrowsing.enabled", true);  
-//			    options.setExperimentalOption("prefs", prefs);
-//			    options.addArguments("--headless=new"); // Use new headless for better rendering
-//			    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
-//			    options.addArguments("--window-size=1920,1080");
-//			    options.addArguments("--no-sandbox");
-//			    options.addArguments("--disable-dev-shm-usage");
-//			    options.addArguments("--remote-allow-origins=*");
-//			    options.setExperimentalOption("prefs", prefs1);
+			    options.setExperimentalOption("prefs", prefs);
+			    options.addArguments("--headless=new"); // Use new headless for better rendering
+			    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
+			    options.addArguments("--window-size=1920,1080");
+			    options.addArguments("--no-sandbox");
+			    options.addArguments("--disable-dev-shm-usage");
+			    options.addArguments("--remote-allow-origins=*");
+			    options.setExperimentalOption("prefs", prefs1);
 			    driver =new ChromeDriver(options);
-			   // driver.manage().window().setSize(new Dimension(1920, 1080));
+			    driver.manage().window().setSize(new Dimension(1920, 1080));
 			    System.out.print("WebDriver initalized");
 			    driver.get("https://pro.adintelle.com/v7/login"); 
 			    System.out.print("Website opened");
@@ -268,7 +268,7 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
  	 js.executeScript("arguments[0].click();", nextButton);
 	// nextButton.click();
 
-		Thread.sleep(4000);
+		Thread.sleep(5000);
 		 WebElement JobNameField = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("JobName")));
 		    String baseJobName = "digitalcbfautomationsanity";
 		    DateTimeFormatter formatterr = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
@@ -398,8 +398,9 @@ public void user_createsnewjob_and_addsacampaign() throws InterruptedException, 
 				boolean matched = false;
 
 				System.out.println("Dropdown options:");
-				for (int retry = 0; retry < 3 && !matched; retry++) {
+				for (int retry = 0; retry < 5 && !matched; retry++) {
 				    try {
+				    	Thread.sleep(1000);
 				        // Wait explicitly for the options to be visible on each retry
 				        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ng-option")));
 
@@ -1190,12 +1191,13 @@ public void user_createsestimate_withoutputs() throws InterruptedException, File
 			 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[src='./assets/img/svg/action_icon.svg']"))).click();
 			 Thread.sleep(4000);
 			 WebElement printIcon = wait.until(ExpectedConditions.visibilityOfElementLocated(
-					    By.cssSelector("img[src='./assets/img/svg/action_icon.svg']")));
+					    By.cssSelector("img[src='./assets/img/svg/action-print.svg']")));
 
 					((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", printIcon);
 					((JavascriptExecutor) driver).executeScript("arguments[0].click();", printIcon);
 			 Thread.sleep(2000);  // Let modal appear
-			 Thread.sleep(2000);  // Let modal appear
+			 Thread.sleep(2000); 
+			 Thread.sleep(2000);// Let modal appear
 			 WebElement radioBtn = driver.findElement(By.cssSelector("input[type='radio'][value='Excel'][name='DocumentType']"));
 			 js.executeScript("arguments[0].scrollIntoView(true);", radioBtn); // Scrolls to the element
 			 js.executeScript("arguments[0].focus();", radioBtn);              // Focuses the element
@@ -1649,7 +1651,7 @@ public void user_createsclientbill() throws InterruptedException, FileNotFoundEx
 	// 6️⃣ Press ENTER to select the first matching item
 	vendorInput.sendKeys(Keys.ENTER);
 	System.out.println("✅ Sent ENTER — hopefully selected: [" + afterJS + "]");
-	
+	Thread.sleep(3000);
 	WebElement ngSelectInput = wait.until(ExpectedConditions.elementToBeClickable(
 		    By.xpath("//*[@id='selection1']/div[2]/div[1]/div[1]/div[2]/ng-select/div/div/div[3]/input")
 		));
@@ -1907,7 +1909,7 @@ public void user_createsclientbill() throws InterruptedException, FileNotFoundEx
 					 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", nextButton0009);
 					 nextButton0009.click();
 					 Thread.sleep(10000);
-					 
+					 Thread.sleep(2000);
 					 WebElement tax1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"selection2\"]/div/div[1]/div[4]/div[2]/ng-select/div/div/div[2]/input")));
 					 String billtax1 = row.getCell(46).getStringCellValue();
 					 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", tax1);
