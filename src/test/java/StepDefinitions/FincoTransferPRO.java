@@ -87,7 +87,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.cucumber.java.en.Given;
-public class LoginStepsDefinition11 {
+public class FincoTransferPRO {
 	static WebDriver driver;
 	static String downloadDir;   
 	static String firstDocNo;

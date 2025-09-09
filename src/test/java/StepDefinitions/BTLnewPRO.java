@@ -51,7 +51,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class LoginStepsDefinition4 {
+public class BTLnewPRO {
 	static WebDriver driver;
 	
 	@SuppressWarnings("deprecation")

@@ -41,7 +41,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class LoginStepsDefinition2 {
+public class MasterPRO {
 	static WebDriver driver;
 	static String screenshotFolderPath;
 	 public void takeScreenshot(String testName) throws IOException {

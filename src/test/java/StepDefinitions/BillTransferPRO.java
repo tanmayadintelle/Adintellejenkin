@@ -80,7 +80,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.cucumber.java.en.Given;
-public class LoginStepsDefinition10 {
+public class BillTransferPRO {
 	static WebDriver driver;
 	static String downloadDir;   
 	static String firstDocNo;

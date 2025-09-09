@@ -51,7 +51,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class LoginStepsDefinition5 {
+public class PressPRO {
 	static WebDriver driver;
 	
 	@SuppressWarnings("deprecation")

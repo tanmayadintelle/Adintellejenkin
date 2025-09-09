@@ -57,7 +57,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class LoginStepsDefinition7 {
+public class DigitalVBF {
 	static WebDriver driver;
 	
 	@SuppressWarnings("deprecation")

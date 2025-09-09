@@ -38,7 +38,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 
 
-public class LoginStepsDefinition {
+public class BTLexistingUAT {
 	static WebDriver driver;
 	
 	@SuppressWarnings("deprecation")
