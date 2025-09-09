@@ -1,5 +1,7 @@
 package TestRunner;
 
+import org.testng.annotations.Test;
+
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
@@ -26,5 +28,6 @@ import io.cucumber.testng.CucumberOptions;
     // Remove or set tag properly
     // tags = "@Sanity"
 )
+@Test
 public class CucumberTestRunner extends AbstractTestNGCucumberTests {
 }
