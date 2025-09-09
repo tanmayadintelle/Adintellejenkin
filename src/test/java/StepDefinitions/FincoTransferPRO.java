@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.apache.commons.io.FileUtils;
-
+import utils.BaseClass;
 import java.io.BufferedReader;
 import java.io.File;
 import java.time.LocalDateTime;
