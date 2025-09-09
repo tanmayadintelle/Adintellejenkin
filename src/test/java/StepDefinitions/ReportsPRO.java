@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import utils.BaseClass;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -216,7 +217,7 @@ public void user_logs_in_and_navigate_to_reports_page() throws Exception {
 
 }
 
-@When("User downloads status reports")
+@When("User downloads status reports in reports")
 public void user_downloads_status_reports() throws InterruptedException, FileNotFoundException, IOException {
 	 String excelFilePath = "Reportsmyjobspage.xlsx";  // Path to your Excel file
 	// BaseClass.initDriverAndLogin();
