@@ -1600,7 +1600,7 @@ public class BTLnewPRO {
 			    System.out.println("Overlay did not disappear in time, continuing...");
 			}
 		    
-		 Thread.sleep(5000);
+		 Thread.sleep(8000);
 		    
 		 System.out.println("Finalize bill started");
 		 wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='bill-to-client']/table/tbody/tr[1]/td[8]/span[1]/img")));
