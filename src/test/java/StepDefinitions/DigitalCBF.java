@@ -66,12 +66,12 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 		   // Write code here that turns the phrase above into concrete actions
 				ChromeOptions options = new ChromeOptions();
 			
-			    HashMap<String, Object> prefs = new HashMap<>();    
-			    // Block notifications by setting the preference value to 2 (block)
-			    prefs.put("profile.default_content_setting_values.notifications", 2); 
-			 
-			    // Add preferences to Chrome options
-			    options.setExperimentalOption("prefs", prefs);
+//			    HashMap<String, Object> prefs = new HashMap<>();    
+//			    // Block notifications by setting the preference value to 2 (block)
+//			    prefs.put("profile.default_content_setting_values.notifications", 2); 
+//			 
+//			    // Add preferences to Chrome options
+//			    options.setExperimentalOption("prefs", prefs);
 			    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 			  //  String downloadDir = "digitaloutputscbf\\" + timestamp;
 			    String downloadDir = new File("screenshots\\digitaloutputscbf\\" + timestamp).getAbsolutePath();
@@ -87,7 +87,7 @@ public void user_logs_in_and_navigate_to_digital_page() throws InterruptedExcept
 			    prefs1.put("download.prompt_for_download", false); 
 			    prefs1.put("directory_upgrade", true);             
 			    prefs1.put("safebrowsing.enabled", true);  
-			    options.setExperimentalOption("prefs", prefs);
+			    options.setExperimentalOption("prefs", prefs1);
 			    options.addArguments("--headless=new"); // Use new headless for better rendering
 			    options.addArguments("--disable-gpu");  // Prevent GPU issues in headless
 			    options.addArguments("--window-size=1920,1080");
