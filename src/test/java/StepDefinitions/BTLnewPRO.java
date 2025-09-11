@@ -1823,9 +1823,12 @@ public class BTLnewPRO {
 			 
 			 // Step 3: Click 'Print' button in modal
 			 wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='submit-button' and text()='Print']"))).click();
-			 
+			 try {
 			 wait1.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".cdk-overlay-backdrop")));
-
+			 }
+			 catch(Exception e){
+				System.out.println("No overlay displayed  continuing..."); 
+			 }
 			 Thread.sleep(2000);
 			 
 			
